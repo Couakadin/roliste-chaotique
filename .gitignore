@@ -9,6 +9,10 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> jetbrains/framework-phpstorm ###
+/.idea
+###< jetbrains/framework-phpstorm ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
