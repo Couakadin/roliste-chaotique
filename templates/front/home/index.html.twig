@@ -1,0 +1,35 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.home'|trans|capitalize %}
+{% block title 'ui.home'|trans|capitalize %}
+
+{% block body %}
+    <div class="home-intro container">
+        <section>
+            <h1 class="hero-title mb1 divider before">{{ ('ui.hero_title'|trans|capitalize)|raw }}</h1>
+            <p class="hero-text text-justify">{{ 'ui.hero_text'|trans }}</p>
+        </section>
+        <img srcset="{{ asset('build/front/mascot/rolie.svg') }} 180w, {{ asset('build/front/mascot/rolie.svg') }} 280w"
+             sizes="(max-width : 62em) 180px, 280px"
+             src="{{ asset('build/front/mascot/rolie.svg') }}" alt="Rolie Chaos" title="Rolie Chaos !">
+    </div>
+
+    {{ source('@public/build/front/tools/waves.svg') }}
+
+    <div class="home-finder">
+        <h2 class="h2 text-center divider after">{{ 'ui.find_table'|trans|capitalize }}</h2>
+        <div class="text-right mb1 mr2">
+            <a href="{{ path('front.game.index') }}" class="link-line">
+                {{ 'ui.see_all_games'|trans }}
+            </a>
+        </div>
+        <div class="relative" data-carousel="home">
+            {% for game in games %}
+                <div class="carousel"
+                     style="background: url('{{ asset('/uploads/images/games/' ~ game.picture)|imagine_filter('game_home') }}') center / cover;">
+                    <a href="{{ path('front.game.show', {'slug': game.slug}) }}" class="carousel-mask h3">{{ game.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

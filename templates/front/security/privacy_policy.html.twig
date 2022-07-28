@@ -1,0 +1,43 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.privacy_policy'|trans %}
+{% block title 'ui.privacy_policy'|trans|capitalize %}
+
+{% block body %}
+    <div class="container my2">
+        <div class="card">
+            <h1 class="card_title h1">{{ 'ui.privacy_policy'|trans|capitalize }}</h1>
+            <p class="card_body">{{ ('privacy_policy.intro'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.collection_of_personal_information.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.collection_of_personal_information.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.privacy_of_children.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.privacy_of_children.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.use_and_processing_of_collected_information.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.use_and_processing_of_collected_information.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.managing_information.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.managing_information.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.disclosure_of_information.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.disclosure_of_information.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.retention_of_information.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.retention_of_information.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.cookies.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.cookies.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.do_not_track_signals.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.do_not_track_signals.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.links_to_other_resources.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.links_to_other_resources.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.information_security.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.information_security.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.data_breach.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.data_breach.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.changes_and_amendments.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.changes_and_amendments.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.acceptance_of_this_policy.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.acceptance_of_this_policy.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'privacy_policy.contacting_us.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('privacy_policy.contacting_us.body'|trans)|raw }}</p>
+            <p class="card_body">{{ ('privacy_policy.updated_at'|trans({'%updatedAt%': '2022-02-03'|format_datetime('long', 'none')}))|raw }}</p>
+        </div>
+        <a href="{{ path('front.home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+.game {
+  position        : relative;
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  width           : calc(var(--gap) * 31);
+  height          : calc(var(--gap) * 28);
+  border-radius   : var(--border-radius);
+  background      : hsl(var(--clr-widget));
+}
+
+.game-banner {
+  position : relative;
+  height   : calc(var(--gap) * 25);
+}
+
+.game-mask {
+  position        : absolute;
+  top             : 0;
+  right           : 0;
+  bottom          : 0;
+  left            : 0;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  padding         : calc(var(--gap) * 2);
+  background      : hsla(var(--clr-dark), .2);
+  color           : hsl(var(--clr-light));
+  text-align      : center;
+  border-radius   : inherit;
+}
+
+.game-links {
+  @include small-device {
+    flex-direction : row;
+  }
+
+  display        : flex;
+  flex-direction : column;
+  flex-wrap      : wrap;
+}
+
+.game-links-item {
+  flex-shrink : 0;
+
+  @include small-device {
+    &:not(:nth-last-child(2)):not(:last-child) {
+      &:after {
+        content : '|';
+        margin  : 0 16px;
+      }
+    }
+  }
+
+  &:last-of-type {
+    margin-left : auto;
+  }
+}

@@ -1,0 +1,53 @@
+%btn {
+  text-decoration : none;
+  padding         : var(--gap) calc(var(--gap) * 2);
+  border          : none;
+  display         : inline-flex;
+  align-items     : center;
+  box-shadow      : 0 calc(var(--gap) / 10) calc(var(--gap) / 4) hsla(var(--clr-widget), .06);
+  border-radius   : var(--border-radius);
+  line-height     : 1.6;
+  color           : hsl(var(--clr-light));
+  cursor          : pointer;
+  transition      : filter .3s, background .3s, color .3s;
+  font-size       : calc(var(--gap) * 2);
+  filter          : brightness(1);
+  white-space     : nowrap;
+
+  &[disabled] {
+    cursor  : default;
+    filter  : grayscale(1);
+    opacity : .7;
+  }
+
+  &:hover[disabled] {filter : grayscale(1);}
+
+  &:hover {filter : brightness(1.2);}
+}
+
+.btn-primary {
+  @extend %btn;
+  background : hsl(var(--clr-dark));
+  border     : solid calc(var(--gap) / 10) hsl(var(--clr-widget));
+}
+
+.btn-secondary {
+  @extend %btn;
+  background : hsl(var(--clr-light));
+  border     : solid calc(var(--gap) / 10) hsl(var(--clr-widget));
+  color      : hsl(var(--clr-dark));
+}
+
+.btn-ternary {
+  @extend %btn;
+  background : hsl(var(--clr-widget));
+  border     : solid calc(var(--gap) / 10) hsl(var(--clr-dark));
+  color      : hsl(var(--clr-dark));
+}
+
+.btn-danger {
+  @extend %btn;
+  background : hsl(var(--clr-danger));
+  border     : solid calc(var(--gap) / 10) hsl(var(--clr-dark));
+  color      : hsl(var(--clr-dark));
+}

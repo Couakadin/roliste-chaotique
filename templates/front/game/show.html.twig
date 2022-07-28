@@ -1,0 +1,23 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.games.show'|trans({'%game%': game.name})|capitalize %}
+{% block title game.name|capitalize %}
+
+{% block body %}
+    <section class="game-banner"
+             style="background: url('{{ asset('/uploads/images/games/' ~ game.picture) }}') center / cover;">
+        <h1 class="game-mask h1">{{ game.name }}</h1>
+    </section>
+
+    <div class="container mt2">
+        <div class="card">
+            {% if game.content is not null %}
+                {{ game.content|raw }}
+            {% else %}
+                {{ 'ui.no_item'|trans|capitalize }}
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}
+

@@ -1,0 +1,46 @@
+.flash {
+  position        : fixed;
+  top             : 0;
+  left            : 0;
+  right           : 0;
+  z-index         : z-index('flash') + 1; // upper than anything else
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+  align-items     : center;
+  max-height      : calc(var(--gap) * 5);
+  transform       : translateY(-200%);
+  transition      : transform .3s ease-in-out;
+
+  &-success {background : hsl(var(--clr-success));}
+
+  &-error {background : hsl(var(--clr-danger));}
+
+  &-warning {background : hsl(var(--clr-warning));}
+
+  &-info {background : hsl(var(--clr-info));}
+
+  &.show {transform : translateY(0);}
+
+  &-container {
+    margin      : var(--gap) auto;
+    font-size   : var(--fs-200);
+    line-height : calc(var(--gap) * 2);
+  }
+
+  &-cross {
+    position : absolute;
+    top      : calc(100% - calc(var(--gap) / 2));
+    cursor   : pointer;
+
+    .s0-success {fill : hsl(var(--clr-success));}
+
+    .s0-error {fill : hsl(var(--clr-danger));}
+
+    .s0-warning {fill : hsl(var(--clr-warning));}
+
+    .s0-info {fill : hsl(var(--clr-info));}
+
+    .s1 {fill : hsl(var(--clr-dark))}
+  }
+}

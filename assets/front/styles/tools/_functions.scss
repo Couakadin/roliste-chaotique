@@ -1,0 +1,30 @@
+// Chains
+// ==================
+@function str-replace($string, $search, $replace: '') {
+  $index : str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// Z-index
+// ==================
+$z-index : (
+        "flash",
+        "menu",
+        "modal",
+        "overlay",
+);
+@function z-index($name, $z-index-list: $z-index) {
+  @if index($z-index-list, $name) {
+    @return (length($z-index-list) - index($z-index-list, $name)) + 1;
+  } @else {
+    @warn "There is no item \"#{$name}\" in this list; choose one of: #{$z-index-list}";
+
+    @return null;
+  }
+}

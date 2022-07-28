@@ -1,0 +1,11 @@
+.home-intro {
+  display               : grid;
+  grid-template-columns : repeat(auto-fit, minmax(15em, 1fr));
+  justify-items         : center;
+  align-items           : center;
+}
+
+.home-finder {
+  background : linear-gradient(to bottom, hsla(var(--clr-widget), .14), hsl(var(--clr-light)));
+  overflow-x : hidden;
+}

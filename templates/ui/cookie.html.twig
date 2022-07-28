@@ -1,0 +1,8 @@
+<div id="cookie-banner" class="cookie card dark text-center">
+    {{ source('@public/build/front/tools/cookie.svg') }}
+    <p class="card_title h2 mt1">{{ 'cookie_policy.banner.title'|trans|capitalize }}</p>
+    <p class="card_body">{{ 'cookie_policy.banner.body'|trans|raw }}</p>
+    <div class="flex-center">
+        <button id="cookie-btn" type="button" class="btn-primary">{{ 'ui.understood'|trans }}</button>
+    </div>
+</div>

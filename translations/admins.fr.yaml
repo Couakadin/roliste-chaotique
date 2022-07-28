@@ -1,0 +1,71 @@
+admin:
+  chaotic_role_player: rôliste chaotique
+  dashboard: tableau de bord
+  game: |
+    {1}table|{2}tables
+  new_game: nouvelle table
+  new_event: nouvel événement
+  new_user: nouvel utilisateur
+  new_avatar: nouvel avatar
+  new_guild: nouveau groupe
+  new_zone: nouvelle zone
+  role_play: jeu de rôle
+  management: gestion
+  user: |
+    {1}utilisateur|{2}utilisateurs
+  avatar: |
+    {1}avatar|{2}avatars
+  guild: |
+    {1}groupe|{2}groupes
+  profile: profil
+  home: accueil
+
+  ui:
+    id: id
+    avatar: avatar
+    image: image
+    name: nom
+    slug: slug
+    showcase: vignette
+    content: contenu
+    created_at: créé le
+    updated_at: modifié le
+    login_at: connecté le
+    event_month: mois d'événement
+    event_year: année d'événement
+    game: table
+    public: public
+    players: joueurs
+    zone: zone
+    guild: groupe
+    author: auteur
+    members: membres
+    email: email
+    roles: rôles
+    verified: vérifié
+    type: type
+    postal_code: code postal
+    locality: localité
+    longitude: longitude
+    latitude: latitude
+    campaign: campagne
+    one-shot: séance
+    event_author: événements (auteur)
+    event_member: événements (membre)
+    guild_master: maître du groupe
+    guild_members: membres du groupe
+
+  calendar:
+    months:
+      january: janvier
+      february: février
+      march: mars
+      april: avril
+      may: mai
+      june: juin
+      july: juillet
+      august: août
+      september: septembre
+      october: octobre
+      november: novembre
+      december: décembre

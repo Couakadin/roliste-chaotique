@@ -1,0 +1,36 @@
+flash:
+  email:
+    not_found: e-mail inconnu en base de donnée.
+  event:
+    create:
+      success: |
+        l'événement %event% a été créé avec succès.
+    edit:
+      success: |
+        l'événement %event% a été modifié avec succès.
+    delete:
+      success: |
+        l'événement %event% a été supprimé avec succès.
+  contact:
+    success: votre message a bien été envoyé. Une réponse arrivera dans les plus brefs délais.
+  csrf:
+    invalid: csrf_token invalide. Veuillez réessayer votre requête.
+  register:
+    success: |
+      Bienvenue %user%,
+      un email de confirmation a été envoyé.
+  token:
+    invalid: requête invalide.
+    expired: token expiré. Veuillez renouveler la demande via les paramètres du compte.
+    success_email: email correctement vérifié.
+  forgotten_password:
+    send:
+      success: un lien de réinitialisation a été envoyé à cette adresse email.
+      error: token invalide.
+    new:
+      success: mot de passe réinitialisé.
+  schedule:
+    new:
+      success: dates d'événement du %dateStart% au %dateEnd% enregistrées avec succès.
+    delete:
+      success: crénaux horaires supprimés avec succès.

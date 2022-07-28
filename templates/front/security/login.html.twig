@@ -1,0 +1,51 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.login'|trans|capitalize %}
+{% block title 'ui.connexion'|trans|capitalize %}
+
+{% block body %}
+    <div class="container">
+        <form method="post" class="security basic">
+            {% if error %}
+                <div class="color-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <h1 class="h1 mb2">{{ 'ui.connexion'|trans|capitalize }}</h1>
+
+            <div class="form-group">
+                <label for="inputEmail">{{ 'ui.email'|trans|capitalize }}</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email"
+                       required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">{{ 'ui.password'|trans|capitalize }}</label>
+                <div class="form-container">
+                    <input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
+                    <i class="i-password">
+                        <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                             width="20" height="20">
+                    </i>
+                </div>
+                <div class="text-right">
+                    <a href="{{ path('security.forgotten_password.index') }}" class="link-line">
+                        {{ 'ui.forgotten_password'|trans }}
+                    </a>
+                </div>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="checkbox-container">
+                <input id="_remember_me" class="checkbox" type="checkbox" name="_remember_me">
+                <label for="_remember_me" class="checkbox-label">{{ 'ui.remember_me'|trans|capitalize }}</label>
+                <span class="checkbox-title">{{ 'ui.remember_me'|trans|capitalize }}</span>
+            </div>
+
+            <div class="form-group flex column align-center">
+                <button class="btn-secondary" type="submit">{{ 'ui.sign_in'|trans|capitalize }}</button>
+
+                <a href="{{ path('security.registration.register') }}" class="mt1 link-line">{{ 'ui.or_register'|trans }}</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

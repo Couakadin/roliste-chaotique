@@ -1,0 +1,29 @@
+email:
+  forgotten_password:
+    subject: réinitialisation mot de passe
+    body: |
+      Vous recevez ce message car une demande de réinitialisation de mot de passe a été faite via cette adresse e-mail.
+      Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
+      <br>
+      <a href="%signedUrl%" title="Réinitialiser">Réinitialiser le mot de passe</a> (la validation expirera le %expiredAt%).
+
+  new_inscription:
+    subject: bienvenue sur Rôliste chaotique
+  verify_email:
+    subject: vérifier votre email
+    body: |
+      Vous recevez ce message car une nouvelle connexion a été faite via cette adresse e-mail.
+      Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
+      <br>
+      <a href="%signedUrl%" title="Valider">Vérifier votre email</a> (la validation expirera le %expiredAt%).
+
+admin:
+  new_inscription:
+    subject: nouvelle inscription sur Rôliste chaotique
+    body: |
+      Une nouvelle inscription a été faite sur Rôliste chaotique : <br>
+      <a href="%signedUrl%" title="Nouvel utilisateur">%userEmail%</a> (%createdAt%).
+  new_contact: |
+    %content%
+    <br>
+    (Cet e-mail (%email%) provient d'un nouveau contact sur Rôliste chaotique).

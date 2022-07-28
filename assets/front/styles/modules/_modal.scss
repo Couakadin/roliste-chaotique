@@ -1,0 +1,48 @@
+.modal {
+  display          : none;
+  position         : fixed;
+  z-index          : z-index('modal');
+  left             : 0;
+  top              : 0;
+  width            : 100%;
+  height           : 100%;
+  overflow         : auto;
+  background-color : hsla(var(--clr-dark), .4);
+}
+
+.modal-content {
+  background-color : hsl(var(--clr-light));
+  margin           : 15% auto; /* 15% from the top and centered */
+  padding          : calc(var(--gap) * 3);
+  border           : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  width            : 80%;
+}
+
+.modal-header {
+  display          : flex;
+  justify-content  : space-between;
+  align-items      : center;
+  padding          : calc(var(--gap) / 4) calc(var(--gap) * 2);
+  background-color : hsl(var(--clr-widget));
+  color            : hsl(var(--clr-light));
+}
+
+.modal-close {
+  color       : hsl(var(--clr-light));
+  font-size   : var(--fs-600);
+  font-weight : bold;
+  cursor      : pointer;
+}
+
+.modal-body {padding : calc(var(--gap) * 2);}
+
+.modal-content {
+  position      : relative;
+  background    : hsl(var(--clr-light));
+  padding       : 0;
+  border        : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  border-radius : var(--border-radius-small);
+  width         : 80%;
+  box-shadow    : 0 calc(var(--gap) / 2) var(--gap) 0 hsla(var(--clr-dark), .2), 0 var(--gap) calc(var(--gap) * 3) 0 hsla(var(--clr-dark), .19);
+  animation     : animate-top .3s ease-out;
+}

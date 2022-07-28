@@ -1,0 +1,10 @@
+{% for label, messages in app.flashes(['success', 'error', 'warning', 'info']) %}
+    {% for message in messages %}
+        <div id="flash" class="flash flash-{{ label }}">
+            <p class="flash-container">{{ message }}</p>
+            <svg class="flash-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 20" width="96" height="20">
+                <path class="s0-{{ label }}" d="m32 12c-4-4-8-8-16-8c-12.8 0-16-2.7-16-4h96c0 1.3-3.2 4-16 4c-8 0-12 4-16 8c-4 4-8 8-16 8c-8 0-12-4-16-8z" />
+                <path class="s1" d="m48.9 10l4 3.9c0.2 0.3 0.2 0.7 0 1c-0.3 0.2-0.7 0.2-1 0l-3.9-4l-3.9 4c-0.3 0.2-0.7 0.2-1 0c-0.2-0.3-0.2-0.7 0-1l4-3.9l-4-3.9c-0.2-0.3-0.2-0.7 0-1c0.3-0.2 0.7-0.2 1 0l3.9 4l3.9-4c0.3-0.2 0.7-0.2 1 0c0.2 0.3 0.2 0.7 0 1z" /></svg>
+        </div>
+    {% endfor %}
+{% endfor %}

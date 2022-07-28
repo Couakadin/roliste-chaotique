@@ -1,0 +1,51 @@
+.schedule {
+  max-height    : 0;
+  will-change   : max-height;
+  overflow      : hidden;
+  margin-bottom : calc(var(--gap) * 5);
+  background    : #FEFEFE;
+  transition    : max-height .3s ease-out;
+}
+
+.schedule-grid {
+  display               : grid;
+  grid-template-columns : repeat(auto-fit, minmax(11em, 1fr));
+  margin                : calc(var(--gap) * 4);
+  background            : hsl(var(--clr-light));
+
+  &:after {
+    content : '';
+    display : table;
+    clear   : both;
+  }
+}
+
+.schedule-cell {
+  padding     : calc(var(--gap) / 2) var(--gap) calc(var(--gap) * 3) var(--gap);
+  height      : calc(var(--gap) * 20);
+  float       : left;
+  border      : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  margin-left : -1px;
+  margin-top  : -1px;
+
+  &.out-month {
+    @include big-device {display : block;}
+
+    display : none;
+    opacity : .1;
+  }
+}
+
+.schedule-list {
+  height   : calc(var(--gap) * 12);
+  overflow : auto;
+}
+
+.schedule-day {
+  @include big-device {
+    &.day-off {display : none;}
+  }
+
+  font-size   : var(--fs-400);
+  font-weight : bold;
+}

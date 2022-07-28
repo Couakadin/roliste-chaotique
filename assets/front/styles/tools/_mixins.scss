@@ -1,0 +1,97 @@
+@import 'functions';
+
+// Breakpoints - mobile first
+// ==================
+@mixin responsive($breakpoints) {
+  @if $breakpoints == small-device {
+    // Landscape phones, 592px and up
+    @media only screen and (min-width : 37rem) {
+      @content
+    }
+  }
+  @if $breakpoints == medium-device {
+    // Portrait tablets, 768px and up
+    @media only screen and (min-width : 48rem) {
+      @content
+    }
+  }
+  @if $breakpoints == large-device {
+    // Landscape tablets, 992px and up
+    @media only screen and (min-width : 62rem) {
+      @content
+    }
+  }
+  @if $breakpoints == big-device {
+    // Laptops and desktops, 1200px and up
+    @media only screen and (min-width : 75rem) {
+      @content
+    }
+  }
+}
+
+// Breakpoints - shortcuts
+// ==================
+@mixin small-device {
+  @include responsive(small-device) { @content; }
+}
+
+@mixin medium-device {
+  @include responsive(medium-device) { @content; }
+}
+
+@mixin large-device {
+  @include responsive(large-device) { @content; }
+}
+
+@mixin big-device {
+  @include responsive(big-device) { @content; }
+}
+
+// Typography
+// ==================
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src     : null;
+
+  $extmods : (
+          eot: '?',
+          svg: '#' + str-replace($name, ' ', '_')
+  );
+
+  $formats : (
+          otf: 'opentype',
+          ttf: 'truetype'
+  );
+
+  @each $ext in $exts {
+    $extmod : if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format : if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src    : append($src, url(quote($path + '.' + $extmod)) format(quote($format)), comma);
+  }
+
+  @if length($weight) == 1 {
+    @font-face {
+      font-family  : quote($name);
+      font-style   : $style;
+      font-weight  : $weight;
+      font-display : swap;
+      src          : $src;
+    }
+  } @else {
+    $weights : $weight;
+    @each $weight in $weights {
+      $suffix : map-get(
+                      (
+                              200: ExtraLight,
+                              300: Light,
+                              400: Regular,
+                              500: Medium,
+                              600: SemiBold,
+                              700: Bold,
+                              900: Black
+                      ),
+                      $weight
+      );
+      @include font-face($name, $path + '-' + $suffix, $weight, $style, $exts);
+    }
+  }
+}

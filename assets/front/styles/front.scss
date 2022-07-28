@@ -1,0 +1,101 @@
+// Variables
+// ==================
+:root {
+  // Var--Colors
+  --clr-light           : 45, 27%, 91%;
+  --clr-accent          : 350, 26%, 27%;
+  --clr-widget          : 31, 9%, 52%;
+  --clr-dark            : 10, 9%, 13%;
+
+  --clr-success         : 80, 45%, 69%;
+  --clr-danger          : 8, 77%, 56%;
+  --clr-warning         : 29, 82%, 67%;
+  --clr-info            : 170, 35%, 61%;
+  // Var--Font-sizes
+  --fs-900              : 9.375rem;
+  --fs-800              : 6.25rem;
+  --fs-700              : 3.5rem;
+  --fs-600              : 2rem;
+  --fs-500              : 1.75rem;
+  --fs-400              : 1.125rem;
+  --fs-300              : 1rem;
+  --fs-200              : .875rem;
+  // Var--Font-families
+  --ff                  : 'Montaga', serif;
+  --ff-accent           : 'Merienda One', serif;
+  // Var--Spaces
+  --gap                 : .5rem;
+  // Var--Borders
+  --border-radius       : calc(var(--gap) * 2);
+  --border-radius-small : calc(var(--border-radius) / 4);
+}
+
+// Tools
+// ==================
+@import 'tools/reset';
+@import 'tools/functions';
+@import 'tools/mixins';
+@import 'tools/layout';
+@import 'tools/typography';
+
+// Generic
+// ==================
+body {
+  font-size   : var(--fs-300);
+  font-family : var(--ff);
+  word-break  : break-word;
+
+  &.overlay {overflow : hidden;}
+
+  &:not([class~='dark']) {
+    background-color : hsl(var(--clr-light));
+    color            : hsl(var(--clr-dark));
+  }
+}
+
+hr {
+  height     : calc(var(--gap) / 10);
+  background : hsl(var(--clr-dark));
+}
+
+small {font-size : var(--fs-200)}
+
+::selection {
+  background : hsl(var(--clr-accent));
+  color      : hsl(var(--clr-light));
+}
+
+* {
+  scrollbar-color : hsl(var(--clr-accent)) hsl(var(--clr-widget));
+  scrollbar-width : thin;
+}
+
+// Modules
+// ==================
+@import 'modules/accordion';
+@import 'modules/bar';
+@import 'modules/burger';
+@import 'modules/button';
+@import 'modules/card';
+@import 'modules/carousel';
+@import 'modules/checkbox';
+@import 'modules/cookie';
+@import 'modules/divider';
+@import 'modules/flash';
+@import 'modules/form';
+@import 'modules/modal';
+@import 'modules/pagination';
+@import 'modules/tooltip';
+
+// Pages
+// ==================
+@import 'pages/event';
+@import 'pages/footer';
+@import 'pages/game';
+@import 'pages/home';
+@import 'pages/schedule';
+@import 'pages/security';
+
+// Vendor
+// ==================
+@import '~choices.js/public/assets/styles/choices.min.css';

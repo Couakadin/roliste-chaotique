@@ -1,0 +1,34 @@
+<footer class="footer mt5">
+    <div class="container footer-container">
+        <div>
+            <h6 class="h4 my1 text-upper">{{ 'ui.about'|trans }}</h6>
+            <p class="text-justify">{{ 'footer'|trans }}</p>
+        </div>
+
+        <div>
+            <h6 class="h4 my1 text-upper">Categories</h6>
+            <ul>
+                <li><a href="{{ path('front.game.index') }}">{{ 'ui.games'|trans }}</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h6 class="h4 my1 text-upper">{{ 'ui.quick_links'|trans }}</h6>
+            <ul>
+                <li><a href="{{ path('security.contact.index') }}">{{ 'ui.contact'|trans }}</a></li>
+                <li><a href="{{ path('security.terms_and_conditions') }}">{{ 'ui.agree_terms'|trans }}</a></li>
+                <li><a href="{{ path('security.privacy_policy') }}">{{ 'ui.privacy_policy'|trans }}</a></li>
+                <li><a href="{{ path('security.cookie_policy') }}">{{ 'ui.cookies_policy'|trans }}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr class="my2">
+        <div class="flex">
+            <p class="copyright-text">
+                Copyright &copy; 2021 - {{ "now"|date("Y") }} {{ 'ui.all_rights_reserved'|trans|capitalize }}.
+            </p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block base %}
+    <div class="page-wrapper">
+        {% include '@ui/flashes.html.twig' %}
+        {% include '@front/menubar/index.html.twig' %}
+        <div class="wrapper">
+            {% block body %}{% endblock %}
+        </div>
+        {% if app.request.cookies.get('cookie') is empty %}
+            {% include '@ui/cookie.html.twig' %}
+        {% endif %}
+        {% include '@front/footer/index.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('front', null, 'front') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('front', null, 'front') }}
+{% endblock %}

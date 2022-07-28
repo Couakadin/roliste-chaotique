@@ -1,0 +1,19 @@
+.footer {
+  padding     : calc(var(--gap) * 6) 0 calc(var(--gap) * 3);
+  background  : hsl(var(--clr-dark));
+  color       : hsl(var(--clr-light));
+  line-height : calc(var(--gap) * 3);
+
+  hr {
+    border           : calc(var(--gap) / 10) solid;
+    border-top-color : hsla(var(--clr-widget, .2));
+  }
+}
+
+.footer-container {
+  @include large-device {grid-template-columns : 1fr auto auto;}
+
+  display               : grid;
+  grid-template-columns : repeat(auto-fit, 1fr);
+  gap                   : 0 calc(var(--gap) * 13);
+}

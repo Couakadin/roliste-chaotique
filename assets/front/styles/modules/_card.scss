@@ -1,0 +1,36 @@
+// Card
+// =============
+.card {
+  position       : relative;
+  display        : flex;
+  flex-direction : column;
+  padding        : calc(var(--gap) * 4) calc(var(--gap) * 3);
+  background     : hsl(var(--clr-light));
+  border         : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  border-radius  : var(--border-radius);
+  box-shadow     : 0 0 calc(var(--gap) * 5) 0 hsla(var(--clr-widget), .06);
+
+  &.dark {
+    background : hsl(var(--clr-widget));
+    color      : hsl(var(--clr-light));
+  }
+
+  &_body {padding : calc(var(--gap) * 2) 0;}
+
+  &_title {font-weight : bold;}
+
+  &_icon {
+    display               : grid;
+    align-items           : center;
+    grid-template-areas   : "icon title" ". content";
+    grid-template-columns : max-content;
+
+    & > * + * {margin-left : var(--gap);}
+
+    & > *:first-child {grid-area : icon;}
+
+    & > *:nth-child(2) {grid-area : title;}
+
+    & > *:nth-child(3) {grid-area : content;}
+  }
+}

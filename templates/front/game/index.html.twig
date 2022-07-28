@@ -1,0 +1,25 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.games.index'|trans|capitalize %}
+{% block title 'ui.games'|trans|capitalize %}
+
+{% block body %}
+    <div class="container mt2">
+        <h1 class="h1 mb2">{{ 'ui.all_games'|trans|capitalize }}</h1>
+        <div class="grid">
+            {% for game in games %}
+                <div class="game"
+                     style="background: url('{{ asset('/uploads/images/games/' ~ game.picture)|imagine_filter('game_index') }}') center / cover;">
+                    <a href="{{ path('front.game.show', {'slug': game.slug}) }}" class="game-mask h3">
+                        {{ game.name }}
+                    </a>
+                </div>
+            {% else %}
+                <div class="card">
+                    {{ 'ui.no_item'|trans|capitalize }}
+                </div>
+            {% endfor %}
+        </div>
+        {{ knp_pagination_render(games) }}
+    </div>
+{% endblock %}
