@@ -53,6 +53,11 @@
                             {{ 'ui.profile'|trans|capitalize }}
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ path('security.logout.index') }}" class="my1 px1 color-danger">
+                            {{ 'ui.logout'|trans|capitalize }}
+                        </a>
+                    </li>
                 </ul>
             </details>
         </div>
@@ -63,6 +68,8 @@
             <ul>
                 <li>
                     <a href="{{ path('front.game.index') }}" class="my1 px1">{{ 'ui.games'|trans|capitalize }}</a>
+                </li>
+                <li>
                     <a href="{{ path('front.guild.index') }}" class="my1 px1">{{ 'ui.guilds'|trans|capitalize }}</a>
                 </li>
             </ul>

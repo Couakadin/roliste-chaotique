@@ -113,6 +113,10 @@ ui:
   i_participate: je participe
   i_not_participate: je ne participe plus
   i_validate: je valide
+  join_us: nous rejoindre
+  join_us_text: |
+    Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !
+  join_us_discord: rejoignez-nous sur Discord
   key_sentence: phrase-clef
   logout: déconnexion
   message: message

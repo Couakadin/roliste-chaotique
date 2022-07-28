@@ -27,9 +27,18 @@
             {% for game in games %}
                 <div class="carousel"
                      style="background: url('{{ asset('/uploads/images/games/' ~ game.picture)|imagine_filter('game_home') }}') center / cover;">
-                    <a href="{{ path('front.game.show', {'slug': game.slug}) }}" class="carousel-mask h3">{{ game.name }}</a>
+                    <a href="{{ path('front.game.show', {'slug': game.slug}) }}"
+                       class="carousel-mask h3">{{ game.name }}</a>
                 </div>
             {% endfor %}
         </div>
+    </div>
+
+    <div class="home-invitation mt5 py5">
+        <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
+        <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
+        <a href="https://discord.gg/8ZbN7Rmc" target="_blank" class="btn-ternary flex center">
+            {{ 'ui.join_us_discord'|trans|UCFirst }}
+        </a>
     </div>
 {% endblock %}

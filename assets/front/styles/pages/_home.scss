@@ -9,3 +9,11 @@
   background : linear-gradient(to bottom, hsla(var(--clr-widget), .14), hsl(var(--clr-light)));
   overflow-x : hidden;
 }
+
+.home-invitation {
+  display          : flex;
+  flex-direction   : column;
+  justify-content  : center;
+  align-items      : center;
+  background-color : hsla(var(--clr-widget), .14);
+}
