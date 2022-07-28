@@ -17,6 +17,7 @@
         "ezyang/htmlpurifier": "^4.14",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "knplabs/knp-paginator-bundle": "^5.8",
+        "knplabs/knp-time-bundle": "^1.19",
         "league/commonmark": "*",
         "league/html-to-markdown": "^5.0",
         "liip/imagine-bundle": "^2.7",

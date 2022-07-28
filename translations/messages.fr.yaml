@@ -71,12 +71,14 @@ meta:
         Découvrez touts les groupes sur Rôliste chaotique.
       show: |
         Toutes les infos sur le groupe %guild% de Rôliste chaotique.
+    account: Voir le profil de %user% sur Rôliste chaotique.
 
 ui:
   about: à propos
   account: compte
   admin: administration
   agree_terms: conditions d'utilisation
+  badges: badges
   privacy_policy: politique de confidentialité
   cookies_policy: politique de cookies
   all_games: toutes les tables
@@ -125,6 +127,7 @@ ui:
   profile: profil
   public: public
   register: créer un compte
+  registered: inscrit
   remember_me: se souvenir de moi ?
   reset: réinitialiser
   reset_password: réinitialiser mot de passe

@@ -1,0 +1,41 @@
+{% set user = (user is defined and user is not null) ? user : app.user %}
+{% set currentPath = app.request.attributes.get('_route') %}
+
+{% if user.avatar %}
+    {% set avatar = asset('/uploads/images/avatars/'~ user.avatar.path)|imagine_filter('avatar_account') %}
+{% else %}
+    {% set avatar = '/build/front/mascot/default_avatar.svg' %}
+{% endif %}
+
+<section class="container mt2">
+    <div class="flex">
+        <img src="{{ avatar }}" alt="Avatar" width="106" height="106" class="rounded mr1">
+        <div class="flex column justify-center">
+            <h1 class="h1">{{ user.username|UCFirst }}</h1>
+            <small class="main-mark">{{ 'ui.registered'|trans|UCFirst ~ ' ' ~ user.createdAt|ago }}</small>
+        </div>
+    </div>
+</section>
+
+<div class="account-menu mt2">
+    <ul class="container flex center">
+        <li class="px1 account-menu_lines py1 {% if currentPath is same as 'front.account.index' %}active{% endif %}">
+            <a href="{{ path('front.account.index') }}">
+                {{ 'ui.profile'|trans|capitalize }}
+            </a>
+        </li>
+        {% if app.user is same as user %}
+            <li class="px1 account-menu_user py1 {% if currentPath is same as 'front.account.edit' %}active{% endif %}">
+                <a href="{{ path('front.account.edit', {'slug': app.user.slug}) }}">
+                    {{ 'ui.edit'|trans|capitalize }}
+                </a>
+            </li>
+        {% endif %}
+        <li class="px1 account-menu_badge py1 {% if currentPath is same as 'front.account.badge' %}active{% endif %}">
+            <a href="{{ path('front.account.badge', {'slug': user.slug}) }}">
+                {{ 'ui.badges' |trans|capitalize }}
+            </a>
+        </li>
+
+    </ul>
+</div>

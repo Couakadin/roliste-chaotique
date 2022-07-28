@@ -1,0 +1,27 @@
+.account-menu {
+  border-top : 1px solid hsla(var(--clr-dark), .2);
+  box-shadow : 0 10px 10px -1px hsla(var(--clr-dark), .3);
+
+  &_lines, &_user, &_badge {
+    position   : relative;
+    border-top : 2px solid transparent;
+  }
+
+  &_lines:before, &_user:before, &_badge:before {
+    display      : inline-block;
+    width        : 1rem;
+    height       : 1rem;
+    font-size    : 1rem;
+    margin-right : .5rem;
+  }
+
+  &_lines:before {content : url('/public/build/front/icons/lines.svg');}
+
+  &_user:before {content : url('/public/build/front/icons/user.svg');}
+
+  &_badge:before {content : url('/public/build/front/icons/badge.svg');}
+
+  .active {
+    border-top : 2px solid hsl(var(--clr-accent));
+  }
+}

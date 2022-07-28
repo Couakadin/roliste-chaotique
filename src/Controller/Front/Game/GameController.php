@@ -14,13 +14,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GameController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-    private TranslatorInterface    $translator;
-
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator)
+    public function __construct(public EntityManagerInterface $entityManager, public TranslatorInterface $translator)
     {
-        $this->entityManager = $entityManager;
-        $this->translator = $translator;
     }
 
     /**
