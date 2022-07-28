@@ -1,4 +1,6 @@
 flash:
+  account:
+    edit: profil modifié avec succès !
   email:
     not_found: e-mail inconnu en base de donnée.
   event:

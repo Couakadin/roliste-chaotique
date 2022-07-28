@@ -12,7 +12,11 @@
         <img src="{{ avatar }}" alt="Avatar" width="106" height="106" class="rounded mr1">
         <div class="flex column justify-center">
             <h1 class="h1">{{ user.username|UCFirst }}</h1>
-            <small class="main-mark">{{ 'ui.registered'|trans|UCFirst ~ ' ' ~ user.createdAt|ago }}</small>
+            <small class="main-mark">
+                {{ 'ui.registered'|trans|UCFirst ~ ' ' ~ user.createdAt|ago }}
+                |
+                {{ 'ui.last_login'|trans|UCFirst ~ ' ' ~ user.loginAt|ago }}
+            </small>
         </div>
     </div>
 </section>

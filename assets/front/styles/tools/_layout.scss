@@ -94,10 +94,12 @@
 
   &.align-center {align-items : center;}
 
-  &.justify-center {justify-content: center;}
+  &.justify-center {justify-content : center;}
 
   &.space-between {justify-content : space-between;}
 }
+
+.flex-grow {flex-grow : 1;}
 
 .flex-center {
   justify-content : center;
@@ -108,15 +110,15 @@
 
 @for $i from 0 through 5 {
   .gap-#{$i} {
-    padding : #{$i}rem;
+    gap : #{$i}rem;
   }
 
   .gap-t#{$i} {
-    padding-top : #{$i}rem 0 0 0;
+    gap : #{$i}rem 0 0 0;
   }
 
   .gap-b#{$i} {
-    padding-bottom : 0 0 #{$i}rem 0;
+    gap : 0 0 #{$i}rem 0;
   }
 
   .gap-x#{$i} {

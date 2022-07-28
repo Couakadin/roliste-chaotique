@@ -119,6 +119,7 @@ ui:
   join_us_discord: rejoignez-nous sur Discord
   key_sentence: phrase-clef
   logout: déconnexion
+  last_login: dernière connexion
   message: message
   name: nom
   no_item: aucun élément disponible
