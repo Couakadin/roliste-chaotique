@@ -20,7 +20,7 @@
 <div class="account-menu mt2">
     <ul class="container flex center">
         <li class="px1 account-menu_lines py1 {% if currentPath is same as 'front.account.index' %}active{% endif %}">
-            <a href="{{ path('front.account.index') }}">
+            <a href="{{ path('front.account.index', {'slug': user.slug}) }}">
                 {{ 'ui.profile'|trans|capitalize }}
             </a>
         </li>
@@ -36,6 +36,12 @@
                 {{ 'ui.badges' |trans|capitalize }}
             </a>
         </li>
-
+        {% if app.user is same as user %}
+            <li class="px1 account-menu_logout py1 color-danger">
+                <a href="{{ path('security.logout.index') }}">
+                    {{ 'ui.logout'|trans|capitalize }}
+                </a>
+            </li>
+        {% endif %}
     </ul>
 </div>
