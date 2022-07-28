@@ -66,6 +66,11 @@ meta:
         Découvrez toutes les tables de jeu de rôle sur Rôliste chaotique.
       show: |
         Tous les évènement et infos sur la table %game% de Rôliste chaotique.
+    guilds:
+      index: |
+        Découvrez touts les groupes sur Rôliste chaotique.
+      show: |
+        Toutes les infos sur le groupe %guild% de Rôliste chaotique.
 
 ui:
   about: à propos
@@ -75,6 +80,7 @@ ui:
   privacy_policy: politique de confidentialité
   cookies_policy: politique de cookies
   all_games: toutes les tables
+  all_guilds: touts les groupes
   all_rights_reserved : tous droits réservés
   campaign: campagne
   chaotic_roleplayer: rôliste chaotique
@@ -95,6 +101,7 @@ ui:
   forgotten_password: mot de passe oublié ?
   games: tables
   guild: groupe
+  guilds: groupes
   go_back: retour
   hero_text: |
     Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Créé courant 2019, la communauté n'a eu de cesse de grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement !

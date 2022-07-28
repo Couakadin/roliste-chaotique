@@ -43,7 +43,7 @@ class Game
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private string $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="string", length=180, nullable=true)

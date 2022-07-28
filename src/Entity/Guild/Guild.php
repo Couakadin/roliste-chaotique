@@ -44,6 +44,16 @@ class Guild
     private string $slug;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $content;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     */
+    private ?string $picture = null;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
@@ -117,6 +127,18 @@ class Guild
         return $this;
     }
 
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
     /**
      * @return DateTime|null
      */
@@ -183,5 +205,21 @@ class Guild
         $this->members->removeElement($member);
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     */
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
     }
 }
