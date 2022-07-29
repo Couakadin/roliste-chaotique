@@ -28,6 +28,47 @@
                     {{ form_errors(form.name) }}
                 </div>
             </div>
+
+            <div class="form-group">
+                <p>{{ 'ui.all_games'|trans|capitalize }}</p>
+                <div id="{{ form.games.vars.id }}" class="card">
+                    <div class="grid justify-left">
+                        {% for game in form.games %}
+                            <div class="checkbox-container">
+                                <input id="{{ game.vars.id }}" name="{{ game.vars.full_name }}"
+                                       value="{{ game.vars.value }}"
+                                       type="checkbox" {% if game.vars.checked %}checked{% endif %} class="checkbox">
+                                <label for="{{ game.vars.id }}" class="checkbox-label">{{ game.vars.label }}</label>
+                                <span class="checkbox-title">{{ game.vars.label }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="color-danger">
+                        {{ form_errors(form.games) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p>{{ 'ui.all_members'|trans|capitalize }}</p>
+                <div id="{{ form.members.vars.id }}" class="card">
+                    <div class="grid justify-left">
+                        {% for member in form.members|filter(member => member.vars.label in guild.members) %}
+                            <div class="checkbox-container">
+                                <input id="{{ member.vars.id }}" name="{{ member.vars.full_name }}"
+                                       value="{{ member.vars.value }}"
+                                       type="checkbox" {% if member.vars.checked %}checked{% endif %} class="checkbox">
+                                <label for="{{ member.vars.id }}" class="checkbox-label">{{ member.vars.label }}</label>
+                                <span class="checkbox-title">{{ member.vars.label }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="color-danger">
+                        {{ form_errors(form.members) }}
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 {{ form_label(form.content) }}
                 {{ form_widget(form.content) }}
@@ -39,7 +80,8 @@
             <a href="{{ path('front.guild.show', {'slug': guild.slug}) }}" class="btn-secondary">
                 {{ 'ui.go_back'|trans|capitalize }}
             </a>
-            {{ form_end(form) }}
+            {{ form_widget(form._token) }}
+            {{ form_end(form, {render_rest: false}) }}
         </div>
     </div>
 {% endblock %}

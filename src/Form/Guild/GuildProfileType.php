@@ -2,8 +2,11 @@
 
 namespace App\Form\Guild;
 
+use App\Entity\Game\Game;
 use App\Entity\Guild\Guild;
+use App\Entity\User\User;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +38,20 @@ class GuildProfileType extends AbstractType
             ])
             ->add('content', CKEditorType::class, [
                 'label' => 'ui.content',
+            ])
+            ->add('games', EntityType::class, [
+                'required'     => false,
+                'class'        => Game::class,
+                'choice_label' => 'name',
+                'multiple'     => true,
+                'expanded'     => true,
+            ])
+            ->add('members', EntityType::class, [
+                'required'     => false,
+                'class'        => User::class,
+                'choice_label' => 'username',
+                'multiple'     => true,
+                'expanded'     => true
             ])
             ->add('picture', FileType::class, [
                 'required'    => false,

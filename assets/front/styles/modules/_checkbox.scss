@@ -27,7 +27,7 @@
   left          : 0;
   width         : calc(var(--gap) * 3);
   height        : calc(var(--gap) * 3);
-  background    : hsl(var(--clr-light));
+  background    : hsl(var(--clr-widget));
   border-radius : var(--border-radius);
   transition    : .3s;
 }
