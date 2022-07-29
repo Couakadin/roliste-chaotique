@@ -17,10 +17,10 @@
         {% endif %}
         <div class="guild mt2">
             <div class="guild-info card">
-                <h2 class="card-title main-mark link-line">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <h2 class="h3 mb1 card-title main-mark link-line">{{ 'ui.info_general'|trans|capitalize }}</h2>
                 <h3 class="card-title">{{ 'ui.creation_date'|trans|capitalize }}</h3>
                 <ul class="card-body">
-                    <li>{{ guild.createdAt|ago }}</li>
+                    <li class="list-circle-inside">{{ guild.createdAt|ago }}</li>
                 </ul>
                 <h3 class="card-title">{{ 'ui.all_games'|trans|capitalize }}</h3>
                 <ul class="card-body guild-lis">
@@ -32,10 +32,10 @@
                         {{ 'ui.no_item'|trans|capitalize }}
                     {% endfor %}
                 </ul>
-                <h2 class="card-title main-mark mt1 link-line">{{ 'ui.info_members'|trans|capitalize }}</h2>
+                <h2 class="h3 card-title main-mark my1 link-line">{{ 'ui.info_members'|trans|capitalize }}</h2>
                 <h3 class="card-title">{{ 'ui.master'|trans|capitalize }}</h3>
                 <ul class="card-body">
-                    <li>
+                    <li class="list-circle-inside">
                         <a href="{{ path('front.account.index', {'slug': guild.master.slug}) }}">
                             {{ guild.master.username }}
                         </a>

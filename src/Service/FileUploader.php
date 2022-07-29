@@ -16,9 +16,9 @@ class FileUploader
     /**
      * @throws Exception
      */
-    public function upload(string $targetDirectory, UploadedFile $file, string $currentFile = ''): string
+    public function upload(string $targetDirectory, UploadedFile $file, ?string $currentFile = ''): string
     {
-        if ('' === $currentFile) {
+        if ('' === $currentFile || is_null($currentFile)) {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();

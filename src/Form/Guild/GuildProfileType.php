@@ -37,6 +37,7 @@ class GuildProfileType extends AbstractType
                 'label' => 'ui.content',
             ])
             ->add('picture', FileType::class, [
+                'required'    => false,
                 'label'       => 'ui.picture',
                 'data_class'  => null,
                 'constraints' => [

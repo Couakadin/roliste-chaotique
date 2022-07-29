@@ -92,10 +92,12 @@ class GuildController extends AbstractController
             $form->getData();
 
             $file = $form->get('picture')->getData();
-
-            if ($file) {
+            if (!is_null($file)) {
                 $newFile = $fileUploader->upload($this->getParameter('guild_directory'), $file, $formPicture);
                 $guild->setPicture($newFile);
+            }
+            else {
+                $guild->setPicture($formPicture);
             }
 
             $this->entityManager->flush();
