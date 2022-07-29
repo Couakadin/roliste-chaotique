@@ -17,7 +17,8 @@
                         <img alt="{{ choice.data.name }}" class="rounded"
                              src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
                         <input value="{{ choice.value }}" type="radio"
-                               name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}">
+                               name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}"
+                                {% if app.user.avatar and choice.data.path is same as app.user.avatar.path %}checked{% endif %}>
                     </label>
                 {% endfor %}
                 <div class="color-danger">
