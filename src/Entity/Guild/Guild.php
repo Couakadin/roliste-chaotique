@@ -3,6 +3,7 @@
 namespace App\Entity\Guild;
 
 use App\Entity\User\User;
+use App\Entity\Game\Game;
 use App\Repository\Guild\GuildRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,10 +78,17 @@ class Guild
      */
     private Collection $members;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Game::class, inversedBy="guildGames")
+     * @ORM\JoinTable(name="rc_guild_game")
+     */
+    private Collection $games;
+
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function __toString()
@@ -127,6 +135,16 @@ class Guild
         return $this;
     }
 
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+
     public function getPicture(): ?string
     {
         return $this->picture;
@@ -139,33 +157,21 @@ class Guild
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     */
     public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime $updatedAt
-     */
     public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
@@ -183,9 +189,6 @@ class Guild
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getMembers(): Collection
     {
         return $this->members;
@@ -207,19 +210,24 @@ class Guild
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getContent(): ?string
+    public function getGames(): Collection
     {
-        return $this->content;
+        return $this->games;
     }
 
-    /**
-     * @param string $content
-     */
-    public function setContent(string $content): void
+    public function addGame(Game $game): self
     {
-        $this->content = $content;
+        if (!$this->games->contains($game)) {
+            $this->games[] = $game;
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): self
+    {
+        $this->games->removeElement($game);
+
+        return $this;
     }
 }

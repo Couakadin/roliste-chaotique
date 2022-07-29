@@ -53,6 +53,7 @@ class GameCrudController extends AbstractCrudController
                 ->hideOnForm(),
 
             FormField::addPanel(''),
+            BooleanField::new('showcase', $this->trans('admin.ui.showcase')),
             ImageField::new('picture', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/games')
                 ->setBasePath('/uploads/images/games'),
@@ -65,11 +66,10 @@ class GameCrudController extends AbstractCrudController
                 ->onlyOnForms(),
 
             FormField::addPanel(''),
-            BooleanField::new('showcase', $this->trans('admin.ui.showcase')),
             DateTimeField::new('createdAt', $this->trans('admin.ui.created_at'))
                 ->onlyOnDetail(),
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
-                ->onlyOnDetail()
+                ->onlyOnDetail(),
         ];
     }
 }

@@ -88,9 +88,6 @@ class Avatar
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getUser(): Collection
     {
         return $this->user;

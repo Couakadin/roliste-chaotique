@@ -2,8 +2,11 @@
 
 namespace App\Entity\Game;
 
+use App\Entity\Guild\Guild;
 use App\Repository\Game\GameRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -67,6 +70,16 @@ class Game
      */
     private DateTime $updatedAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Guild::class, mappedBy="games")
+     */
+    private Collection $guildGames;
+
+    public function __construct()
+    {
+        $this->guildGames = new ArrayCollection();
+    }
+
     public function __toString()
     {
         return $this->name;
@@ -106,6 +119,16 @@ class Game
         return $this;
     }
 
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+
     public function getPicture(): ?string
     {
         return $this->picture;
@@ -130,51 +153,47 @@ class Game
         return $this;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime $createdAt
-     */
     public function setCreatedAt(DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return DateTime|null
-     */
     public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime $updatedAt
-     */
     public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getContent(): ?string
+    public function getGuildGames(): Collection
     {
-        return $this->content;
+        return $this->guildGames;
     }
 
-    /**
-     * @param string $content
-     */
-    public function setContent(string $content): void
+    public function addGuildGames(Guild $guildGame): self
     {
-        $this->content = $content;
+        if (!$this->guildGames->contains($guildGame)) {
+            $this->guildGames[] = $guildGame;
+            $guildGame->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGuildGame(Guild $guildGame): self
+    {
+        if ($this->guildGames->removeElement($guildGame)) {
+            $guildGame->removeGame($this);
+        }
+
+        return $this;
     }
 }

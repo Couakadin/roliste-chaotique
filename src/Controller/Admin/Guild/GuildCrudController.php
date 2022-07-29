@@ -51,7 +51,7 @@ class GuildCrudController extends AbstractCrudController
             IdField::new('id', $this->trans('admin.ui.id'))
                 ->hideOnForm(),
 
-            FormField::addPanel(''),
+            FormField::addTab('Général'),
             ImageField::new('picture', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/guilds')
                 ->setBasePath('/uploads/images/guilds'),
@@ -69,9 +69,11 @@ class GuildCrudController extends AbstractCrudController
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
                 ->onlyOnDetail(),
 
-            FormField::addPanel(''),
+            FormField::addTab('Relations'),
             AssociationField::new('master', $this->trans('admin.ui.guild_master')),
             AssociationField::new('members', $this->trans('admin.ui.guild_members'))
+                ->hideOnIndex(),
+            AssociationField::new('games', $this->trans('admin.ui.guild_games'))
                 ->hideOnIndex(),
         ];
     }

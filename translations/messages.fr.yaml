@@ -91,6 +91,7 @@ ui:
   content: contenu
   create: créer
   create_account: créer un compte
+  creation_date: date de création
   date_start: date de départ
   date_end: date de fin
   days: jours
@@ -114,6 +115,8 @@ ui:
     Bienvenue au domaine <span class="main-mark">rôliste chaotique</span> !
   home: accueil
   i_participate: je participe
+  info_general: infos générales
+  info_members: infos membres
   i_not_participate: je ne participe plus
   i_validate: je valide
   join_us: nous rejoindre
@@ -124,6 +127,8 @@ ui:
   logout: déconnexion
   last_login: dernière connexion
   message: message
+  master: maître du jeu
+  members: membres
   modify: modifier
   name: nom
   no_item: aucun élément disponible

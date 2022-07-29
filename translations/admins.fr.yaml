@@ -54,6 +54,7 @@ admin:
     event_member: événements (membre)
     guild_master: maître du groupe
     guild_members: membres du groupe
+    guild_games: tables du groupe
 
   calendar:
     months:

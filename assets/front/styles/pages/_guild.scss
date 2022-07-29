@@ -1,0 +1,12 @@
+.guild {
+  display               : grid;
+  grid-template-columns : repeat(12, 1fr);
+}
+
+.guild-info {
+  grid-column : 1/4;
+}
+
+.guild-content {
+  grid-column : 5/span 8;
+}

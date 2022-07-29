@@ -10,13 +10,53 @@
     </section>
 
     <div class="container mt2">
-        <div class="card">
-            {% if guild.content is not null %}
-                {{ guild.content|raw }}
-            {% else %}
-                {{ 'ui.no_item'|trans|capitalize }}
-            {% endif %}
+        <div class="guild mt2">
+            <div class="guild-info card">
+                <h2 class="card-title main-mark link-line">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <h3 class="card-title">{{ 'ui.creation_date'|trans|capitalize }}</h3>
+                <ul class="card-body">
+                    <li>{{ guild.createdAt|ago }}</li>
+                </ul>
+                <h3 class="card-title">{{ 'ui.all_games'|trans|capitalize }}</h3>
+                <ul class="card-body guild-lis">
+                    {% for game in guild.games %}
+                        <li class="list-circle-inside">
+                            <a href="{{ path('front.game.show', {'slug': game.slug}) }}">{{ game.name }}</a>
+                        </li>
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endfor %}
+                </ul>
+                <h2 class="card-title main-mark mt1 link-line">{{ 'ui.info_members'|trans|capitalize }}</h2>
+                <h3 class="card-title">{{ 'ui.master'|trans|capitalize }}</h3>
+                <ul class="card-body">
+                    <li>
+                        <a href="{{ path('front.account.index', {'slug': guild.master.slug}) }}">
+                            {{ guild.master.username }}
+                        </a>
+                    </li>
+                </ul>
+                <h3 class="card-title">{{ 'ui.members'|trans|capitalize }}</h3>
+                <ul class="card-body">
+                    {% for member in guild.members %}
+                        <li class="list-circle-inside">
+                            <a href="{{ path('front.account.index', {'slug': member.slug}) }}">{{ member.username }}</a>
+                        </li>
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="guild-content card">
+                {% if guild.content %}
+                    {{ guild.content|raw }}
+                {% else %}
+                    {{ 'ui.no_item'|trans|capitalize }}
+                {% endif %}
+            </div>
         </div>
+
     </div>
 {% endblock %}
 
