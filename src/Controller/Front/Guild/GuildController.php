@@ -2,15 +2,20 @@
 
 namespace App\Controller\Front\Guild;
 
-use App\Entity\Game\Game;
 use App\Entity\Guild\Guild;
+use App\Form\Guild\GuildProfileType;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GuildController extends AbstractController
@@ -52,7 +57,56 @@ class GuildController extends AbstractController
         }
 
         return $this->render('@front/guild/show.html.twig', [
-            'guild'      => $guild
+            'guild' => $guild
+        ]);
+    }
+
+    /**
+     * @Route("/guilds/{slug}/edit", name="front.guild.edit")
+     * @param string $slug
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return Response
+     * @throws Exception
+     */
+    public function edit(string $slug, Request $request, FileUploader $fileUploader): Response
+    {
+        $guildRepo = $this->entityManager->getRepository(Guild::class);
+        $guild = $guildRepo->findOneBy(['slug' => $slug]);
+
+        if (!$guild) {
+            return $this->redirectToRoute('front.guild.index');
+        }
+
+        if ($this->getUser() !== $guild->getMaster()) {
+            return $this->redirectToRoute('front.guild.index');
+        }
+
+        $form = $this->createForm(GuildProfileType::class, $guild);
+
+        // Store the filename to reuse it when the picture is set
+        $formPicture = $guild->getPicture();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->getData();
+
+            $file = $form->get('picture')->getData();
+
+            if ($file) {
+                $newFile = $fileUploader->upload($this->getParameter('guild_directory'), $file, $formPicture);
+                $guild->setPicture($newFile);
+            }
+
+            $this->entityManager->flush();
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.guild.edit')));
+            return $this->redirectToRoute('front.guild.edit', ['slug' => $guild->getSlug()]);
+        }
+
+        return $this->render('@front/guild/edit.html.twig', [
+            'guild' => $guild,
+            'form'  => $form->createView()
         ]);
     }
 }

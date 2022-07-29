@@ -3,10 +3,9 @@
 namespace App\Form\Guild;
 
 use App\Entity\Guild\Guild;
-use Doctrine\DBAL\Types\DateTimeType;
-use Liip\ImagineBundle\Form\Type\ImageType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -51,8 +50,9 @@ class GuildType extends AbstractType
             ->add('content', TextType::class, [
                 'label'       => 'ui.content',
             ])
-            ->add('picture', ImageType::class)
-            ->add('showcase', CheckboxType::class)
+            ->add('picture', FileType::class, [
+                'required' => false
+            ])
             ->add('createdAt', DateTimeType::class)
             ->add('updatedAt', DateTimeType::class)
             ;

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Form\Game;
+namespace App\Form\Guild;
 
-use App\Entity\Game\Game;
-use Doctrine\DBAL\Types\DateTimeType;
-use Liip\ImagineBundle\Form\Type\ImageType;
+use App\Entity\Guild\Guild;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class GameType extends AbstractType
+class GuildProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -33,37 +33,31 @@ class GameType extends AbstractType
                     ])
                 ],
             ])
-            ->add('slug', TextType::class, [
-                'label'       => 'ui.slug',
+            ->add('content', CKEditorType::class, [
+                'label' => 'ui.content',
+            ])
+            ->add('picture', FileType::class, [
+                'label'       => 'ui.picture',
+                'data_class'  => null,
                 'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.slug.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.slug.length'
+                    new File([
+                        'maxSize'          => '3000k',
+                        'mimeTypes'        => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/svg+xml'
+                        ],
+                        'mimeTypesMessage' => 'form.file.type',
+                        'maxSizeMessage'   => 'form.file.size'
                     ])
                 ],
-            ])
-            ->add('content', TextType::class, [
-                'label'       => 'ui.content',
-            ])
-            ->add('picture', ImageType::class, [
-                'required' => false
-            ])
-            ->add('showcase', CheckboxType::class)
-            ->add('createdAt', DateTimeType::class)
-            ->add('updatedAt', DateTimeType::class)
-            ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Game::class,
+            'data_class' => Guild::class,
         ]);
     }
 }

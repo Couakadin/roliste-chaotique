@@ -15,6 +15,8 @@ flash:
         l'événement %event% a été supprimé avec succès.
   contact:
     success: votre message a bien été envoyé. Une réponse arrivera dans les plus brefs délais.
+  guild:
+    edit: groupe modifié avec succès !
   csrf:
     invalid: csrf_token invalide. Veuillez réessayer votre requête.
   register:

@@ -11,3 +11,5 @@ import './modules/navbar';
 import './modules/modal';
 import './modules/password';
 import './modules/tooltip';
+
+CKEDITOR.config.uiColor = '#eeebe2';

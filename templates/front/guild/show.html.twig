@@ -10,6 +10,11 @@
     </section>
 
     <div class="container mt2">
+        {% if app.user is same as guild.master %}
+            <a class="btn-secondary" href="{{ path('front.guild.edit', {'slug': guild.slug}) }}">
+                {{ 'ui.edit_groupe'|trans|capitalize }}
+            </a>
+        {% endif %}
         <div class="guild mt2">
             <div class="guild-info card">
                 <h2 class="card-title main-mark link-line">{{ 'ui.info_general'|trans|capitalize }}</h2>
@@ -56,7 +61,6 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
 {% endblock %}
 

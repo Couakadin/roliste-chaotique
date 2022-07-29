@@ -101,6 +101,7 @@ ui:
   edit_avatar: changer d'avatar
   edit_profile: modifier le profil
   edit_password: changer le mot de passe
+  edit_groupe: modifier le groupe
   email: e-mail
   exit_impersonification: quitter impersonification
   find_table: trouvez une table avec votre jeu préféré !
@@ -135,8 +136,11 @@ ui:
   one-shot: séance
   or_connexion: ou se connecter ?
   or_register: ou créer un compte ?
+  only_dm_edit_guild: |
+    Vous seul pouvez gérer cette page en tant que maître du jeu de ce groupe.
   quick_links: liens rapides
   password: mot de passe
+  picture: image
   players: joueurs
   profile: profil
   public: public

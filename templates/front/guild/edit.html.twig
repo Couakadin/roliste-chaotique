@@ -1,0 +1,46 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.guilds.show'|trans({'%guild%': guild.name})|capitalize %}
+{% block title guild.name|capitalize %}
+
+{% block body %}
+    <section class="game-banner"
+             style="background: url('{{ asset('/uploads/images/guilds/' ~ guild.picture) }}') center / cover;">
+        <h1 class="game-mask h1">{{ 'ui.edit'|trans|capitalize }} ~ {{ guild.name }}</h1>
+    </section>
+
+    <div class="container mt2">
+        <div class="flash-info card">{{ 'ui.only_dm_edit_guild'|trans|UCFirst }}</div>
+
+        <div class="card mt2">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.picture) }}
+                {{ form_widget(form.picture) }}
+                <div class="color-danger">
+                    {{ form_errors(form.picture) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <div class="color-danger">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.content) }}
+                {{ form_widget(form.content) }}
+                <div class="color-danger">
+                    {{ form_errors(form.content) }}
+                </div>
+            </div>
+            <button class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
+            <a href="{{ path('front.guild.show', {'slug': guild.slug}) }}" class="btn-secondary">
+                {{ 'ui.go_back'|trans|capitalize }}
+            </a>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
