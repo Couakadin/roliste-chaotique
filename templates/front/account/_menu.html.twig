@@ -8,13 +8,11 @@
 {% endif %}
 
 <section class="container mt2">
-    <div class="flex">
+    <div class="account-menu_profil">
         <img src="{{ avatar }}" alt="Avatar" width="106" height="106" class="rounded mr1">
         <div class="flex column justify-center">
             <h1 class="h1">{{ user.username|UCFirst }}</h1>
             <small class="main-mark">
-                {{ 'ui.registered'|trans|UCFirst ~ ' ' ~ user.createdAt|ago }}
-                |
                 {{ 'ui.last_login'|trans|UCFirst ~ ' ' ~ user.loginAt|ago }}
             </small>
         </div>
@@ -22,7 +20,7 @@
 </section>
 
 <div class="account-menu mt2">
-    <ul class="container flex center">
+    <ul class="container account-menu_list">
         <li class="px1 account-menu_lines py1 {% if currentPath is same as 'front.account.index' %}active{% endif %}">
             <a href="{{ path('front.account.index', {'slug': user.slug}) }}">
                 {{ 'ui.profile'|trans|capitalize }}

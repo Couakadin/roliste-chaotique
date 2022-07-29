@@ -40,6 +40,7 @@ user:
     length: slug au maxium {{ limit }} caractères.
   password:
     not_blank: mot de passe requis.
+    not_same: les deux champs doivent correspondre.
     length: mot de passe au minimum {{ limit }} caractères.
 entity:
   name:

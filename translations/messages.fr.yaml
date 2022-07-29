@@ -97,6 +97,9 @@ ui:
   delete: supprimer
   description: description
   edit: éditer
+  edit_avatar: changer d'avatar
+  edit_profile: modifier le profil
+  edit_password: changer le mot de passe
   email: e-mail
   exit_impersonification: quitter impersonification
   find_table: trouvez une table avec votre jeu préféré !
@@ -121,6 +124,7 @@ ui:
   logout: déconnexion
   last_login: dernière connexion
   message: message
+  modify: modifier
   name: nom
   no_item: aucun élément disponible
   one-shot: séance

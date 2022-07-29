@@ -16,7 +16,7 @@
 
     {{ source('@public/build/front/tools/waves.svg') }}
 
-    <div class="home-finder">
+    <section class="home-finder">
         <h2 class="h2 text-center divider after">{{ 'ui.find_table'|trans|capitalize }}</h2>
         <div class="text-right mb1 mr2">
             <a href="{{ path('front.game.index') }}" class="link-line">
@@ -32,13 +32,15 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 
     <div class="home-invitation mt5 py5">
-        <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
-        <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
-        <a href="https://discord.gg/8ZbN7Rmc" target="_blank" class="btn-ternary flex center">
-            {{ 'ui.join_us_discord'|trans|UCFirst }}
-        </a>
+        <section class="container text-center">
+            <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
+            <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
+            <a href="https://discord.gg/8ZbN7Rmc" target="_blank" class="btn-ternary flex center">
+                {{ 'ui.join_us_discord'|trans|UCFirst }}
+            </a>
+        </section>
     </div>
 {% endblock %}

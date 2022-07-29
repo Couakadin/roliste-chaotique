@@ -29,3 +29,22 @@
     border-top : 2px solid hsl(var(--clr-accent));
   }
 }
+
+.account-menu_profil {
+  @include small-device {
+    display    : flex;
+    text-align : left;
+  }
+
+  text-align : center;
+}
+
+.account-menu_list {
+  @include small-device {
+    flex-direction : row;
+  }
+
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+}

@@ -4,18 +4,26 @@ namespace App\Controller\Front\Account;
 
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
+use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AccountController extends AbstractController
 {
-    public function __construct(public EntityManagerInterface $entityManager, public TranslatorInterface $translator)
+    public function __construct
+    (
+        public UserPasswordHasherInterface $passwordHasher,
+        public EntityManagerInterface $entityManager,
+        public TranslatorInterface $translator
+    )
     {
     }
 
@@ -50,16 +58,31 @@ class AccountController extends AbstractController
 
         $formProfile = $this->getForm(UserProfileType::class, $user, $request);
         $formAvatar = $this->getForm(UserAvatarType::class, $user, $request);
+        $formPassword = $this->getForm(UserPasswordType::class, $user, $request);
 
-        if ($formProfile->isSubmitted() && $formProfile->isValid()
+        if (($formProfile->isSubmitted() && $formProfile->isValid())
             ||
-            $formAvatar->isSubmitted() && $formAvatar->isValid()) {
+            ($formAvatar->isSubmitted() && $formAvatar->isValid())) {
+            return $this->redirectToRoute('front.account.edit', ['slug' => $user->getSlug()]);
+        }
+
+        if (($formPassword->isSubmitted() && $formPassword->isValid())) {
+            // encode the plain password
+            $user->setPassword(
+                $this->passwordHasher->hashPassword(
+                    $user,
+                    $formPassword->get('password')->getData()
+                )
+            );
+            $this->entityManager->flush();
+
             return $this->redirectToRoute('front.account.edit', ['slug' => $user->getSlug()]);
         }
 
         return $this->render('@front/account/edit.html.twig', [
             'formProfile' => $formProfile->createView(),
-            'formAvatar'  => $formAvatar->createView()
+            'formAvatar' => $formAvatar->createView(),
+            'formPassword' => $formPassword->createView(),
         ]);
     }
 
