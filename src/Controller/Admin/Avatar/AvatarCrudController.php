@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AvatarCrudController extends AbstractCrudController
 {
@@ -45,6 +46,7 @@ class AvatarCrudController extends AbstractCrudController
                 ->hideOnForm(),
 
             FormField::addPanel(''),
+            TextField::new('name', $this->trans('admin.ui.name')),
             ImageField::new('path', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/avatars')
                 ->setBasePath('/uploads/images/avatars'),

@@ -10,15 +10,23 @@
         <div class="card">
             <h2 class="card-title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
             {{ form_start(formAvatar) }}
-            <div class="form-group card-body">
-                {{ form_label(formAvatar.avatar) }}
-                {{ form_widget(formAvatar.avatar) }}
+
+            <div class="card-body my2 flex gap-1 flex-wrap">
+                {% for choice in formAvatar.avatar.vars.choices %}
+                    <label for="avatar-{{ choice.data.id }}">
+                        <img alt="{{ choice.data.name }}" class="rounded"
+                             src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
+                        <input value="{{ choice.value }}" type="radio"
+                               name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}">
+                    </label>
+                {% endfor %}
                 <div class="color-danger">
                     {{ form_errors(formAvatar.avatar) }}
                 </div>
             </div>
+            {{ form_widget(formAvatar._token) }}
             <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
-            {{ form_end(formAvatar) }}
+            {{ form_end(formAvatar, {render_rest: false}) }}
         </div>
     </section>
 
@@ -57,7 +65,8 @@
                     <div class="form-container">
                         {{ form_widget(formPassword.password.first) }}
                         <i class="i-password">
-                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
+                                 alt="{{ 'tooltip.tooltip'|trans }}"
                                  width="20" height="20">
                         </i>
                     </div>
@@ -70,7 +79,8 @@
                     <div class="form-container">
                         {{ form_widget(formPassword.password.second) }}
                         <i class="i-password">
-                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
+                                 alt="{{ 'tooltip.tooltip'|trans }}"
                                  width="20" height="20">
                         </i>
                     </div>
