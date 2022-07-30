@@ -23,7 +23,7 @@
                     <li class="list-circle-inside">{{ guild.createdAt|ago }}</li>
                 </ul>
                 <h3 class="card-title">{{ 'ui.all_games'|trans|capitalize }}</h3>
-                <ul class="card-body guild-lis">
+                <ul class="card-body">
                     {% for game in guild.games %}
                         <li class="list-circle-inside">
                             <a href="{{ path('front.game.show', {'slug': game.slug}) }}">{{ game.name }}</a>
@@ -42,7 +42,7 @@
                     </li>
                 </ul>
                 <h3 class="card-title">{{ 'ui.members'|trans|capitalize }}</h3>
-                <ul class="card-body">
+                <ul class="card-body guild-members">
                     {% for member in guild.members %}
                         <li class="list-circle-inside">
                             <a href="{{ path('front.account.index', {'slug': member.slug}) }}">{{ member.username }}</a>

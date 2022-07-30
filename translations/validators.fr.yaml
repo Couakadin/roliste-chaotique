@@ -2,6 +2,8 @@ form:
   file:
     type: veuillez télécharger une image avec les formats suivants - JPG/PNG/SVG.
     size: taille des images maximum limitée à 1024k.
+  guild:
+    number_game: le nombre maximum de tables autorisées dans un groupe est de 5.
   terms:
     is_true: veuillez accepter les conditions d'utilisation.
   subject:

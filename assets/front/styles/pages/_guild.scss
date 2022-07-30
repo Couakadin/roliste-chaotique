@@ -15,3 +15,8 @@
 .guild-content {
   grid-column : 5/span 8;
 }
+
+.guild-members {
+  display               : grid;
+  grid-template-columns : repeat(auto-fit, minmax(5rem, 1fr));
+}

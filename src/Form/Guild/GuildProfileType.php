@@ -9,11 +9,15 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GuildProfileType extends AbstractType
@@ -21,6 +25,12 @@ class GuildProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $data = $event->getData();
+                $data['totalGames'] = count($data['games']);
+
+                $event->setData($data);
+            })
             ->add('name', TextType::class, [
                 'label'       => 'ui.name',
                 'constraints' => [
@@ -52,6 +62,17 @@ class GuildProfileType extends AbstractType
                 'choice_label' => 'username',
                 'multiple'     => true,
                 'expanded'     => true
+            ])
+            ->add('totalGames', IntegerType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new LessThanOrEqual(
+                        [
+                            'message' => 'form.guild.number_game',
+                            'value' => 5
+                        ]
+                    )
+                ],
             ])
             ->add('picture', FileType::class, [
                 'required'    => false,

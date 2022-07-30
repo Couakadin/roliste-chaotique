@@ -14,23 +14,31 @@
 
         <div class="card mt2">
             {{ form_start(form) }}
-            <div class="form-group">
-                {{ form_label(form.picture) }}
-                {{ form_widget(form.picture) }}
-                <div class="color-danger">
-                    {{ form_errors(form.picture) }}
+            <div class="card-body flex-no-mobile gap-2">
+                <div class="form-group flex-grow">
+                    {{ form_label(form.picture) }}
+                    {{ form_widget(form.picture) }}
+                    <div class="color-danger">
+                        {{ form_errors(form.picture) }}
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(form.name) }}
-                {{ form_widget(form.name) }}
-                <div class="color-danger">
-                    {{ form_errors(form.name) }}
+                <div class="form-group flex-grow">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    <div class="color-danger">
+                        {{ form_errors(form.name) }}
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <p>{{ 'ui.all_games'|trans|capitalize }}</p>
+                <div class="flex align-center">
+                    <p>{{ 'ui.all_games'|trans|capitalize }}</p>
+                    <i data-tooltip="{{ ('tooltip.maximum_game_in_guild'|trans|UCFirst)|raw }}">
+                        <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                             width="20" height="20">
+                    </i>
+                </div>
                 <div id="{{ form.games.vars.id }}" class="card">
                     <div class="grid justify-left">
                         {% for game in form.games %}
@@ -45,12 +53,19 @@
                     </div>
                     <div class="color-danger">
                         {{ form_errors(form.games) }}
+                        {{ form_errors(form.totalGames) }}
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <p>{{ 'ui.all_members'|trans|capitalize }}</p>
+                <div class="flex align-center">
+                    <p>{{ 'ui.all_members'|trans|capitalize }}</p>
+                    <i data-tooltip="{{ ('tooltip.delete_user_from_guild'|trans|UCFirst)|raw }}">
+                        <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                             width="20" height="20">
+                    </i>
+                </div>
                 <div id="{{ form.members.vars.id }}" class="card">
                     <div class="grid justify-left">
                         {% for member in form.members|filter(member => member.vars.label in guild.members) %}

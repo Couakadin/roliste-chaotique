@@ -172,6 +172,10 @@ tooltip:
     <strong>&lsquo;%key%&rsquo;</strong>.
   forgotten_password: |
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
+  delete_user_from_guild: |
+    Attention : décocher un membre du groupe le supprimera définitivement de votre groupe. C'est une action irréversible. Ce joueur devra être réinvité pour rejoindre le groupe à nouveau.
+  maximum_game_in_guild: |
+    Un groupe peut être affilié simultanément jusqu'à 5 tables maximum. Astuce : vous devez afficher les jeux auquels vous jouez actuellement et régulièrement. Voyez ceci comme une vitrine de vos licenses préférées !
 
 terms_and_conditions:
   agree_terms:
