@@ -27,3 +27,5 @@ admin:
     %content%
     <br>
     (Cet e-mail (%email%) provient d'un nouveau contact sur Rôliste chaotique).
+  guild_join_request: |
+    Une demande d'adhésion de groupe faite par %username% pour les groupes : %content%.

@@ -5,4 +5,38 @@
 
 {% block body %}
     {% include '@front/account/_menu.html.twig' %}
+
+    <div class="container mt2">
+        <div class="flex flex-wrap space-between">
+            <section class="card">
+                <h2 class="card-title">{{ 'ui.all_guilds'|trans|capitalize }}</h2>
+                <ul class="card-body">
+                    {% for guild in user.guildMembers %}
+                        <li class="list-circle-inside">{{ guild.name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            {% if user is same as app.user %}
+                <section class="card">
+                    <h2 class="card-title">Demander à rejoindre un groupe</h2>
+                    {{ form_start(form, {'attr': {'class': 'card-body'}}) }}
+                    {% for guild in form.guildMembers|filter(guild => guild.vars.label not in user.guildMembers) %}
+                        <div class="checkbox-container">
+                            <input id="{{ guild.vars.id }}" name="{{ guild.vars.full_name }}"
+                                   value="{{ guild.vars.value }}"
+                                   type="checkbox" {% if guild.vars.checked %}checked{% endif %} class="checkbox">
+                            <label for="{{ guild.vars.id }}" class="checkbox-label">{{ guild.vars.label }}</label>
+                            <span class="checkbox-title">{{ guild.vars.label }}</span>
+                        </div>
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endfor %}
+                    <button type="submit" class="btn-primary mt2">{{ 'ui.send'|trans|capitalize }}</button>
+                    {{ form_widget(form._token) }}
+                    {{ form_end(form, {render_rest: false}) }}
+                </section>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

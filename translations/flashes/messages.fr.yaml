@@ -1,6 +1,7 @@
 flash:
   account:
     edit: profil modifié avec succès !
+    guild: demande d'adhésion envoyée !
   email:
     not_found: e-mail inconnu en base de donnée.
   event:

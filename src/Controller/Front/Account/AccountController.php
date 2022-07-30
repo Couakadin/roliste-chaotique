@@ -2,8 +2,10 @@
 
 namespace App\Controller\Front\Account;
 
+use App\Email\EmailAdmin;
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
+use App\Form\User\UserGuildType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,8 +31,9 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account/{slug}", name="front.account.index")
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function index(string $slug = null): Response
+    public function index(Request $request, EmailAdmin $emailAdmin, string $slug = null): Response
     {
         if (is_null($slug)) {
             $user = $this->getUser();
@@ -39,8 +42,27 @@ class AccountController extends AbstractController
             $user = $userRepo->findOneBy(['slug' => $slug]);
         }
 
+        $form = $this->createForm(UserGuildType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->get('guildMembers')->getData();
+
+            $guilds = [];
+            foreach ($data as $item) {
+                $guilds[] = $item->getName();
+            }
+
+            $emailAdmin->guildJoinRequest($user->getUsername(), $user->getEmail(), 'Nouvelle demande de groupe', $guilds);
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.guild')));
+
+            return $this->redirectToRoute('front.account.index', ['slug' => $user->getSlug()]);
+        }
+
         return $this->render('@front/account/index.html.twig', [
-            'user' => $user
+            'user' => $user,
+            'form' => $form->createView()
         ]);
     }
 

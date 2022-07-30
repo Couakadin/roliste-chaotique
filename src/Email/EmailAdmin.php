@@ -27,17 +27,17 @@ class EmailAdmin extends AbstractController
     /**
      * EmailController constructor.
      *
-     * @param MailerInterface        $mailer
-     * @param TranslatorInterface    $translator
+     * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
      */
     public function __construct(
-        MailerInterface $mailer,
+        MailerInterface     $mailer,
         TranslatorInterface $translator
     )
     {
-        $this->mailer        = $mailer;
-        $this->translator    = $translator;
-        $this->admin         = 'contact@roliste-chaotique.be';
+        $this->mailer = $mailer;
+        $this->translator = $translator;
+        $this->admin = 'contact@roliste-chaotique.be';
     }
 
     /**
@@ -82,6 +82,25 @@ class EmailAdmin extends AbstractController
                 'subject'      => $subject,
                 'emailContact' => $emailContact,
                 'content'      => $content
+            ]);
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function guildJoinRequest($username, $emailContact, $subject, $content)
+    {
+        $email = (new TemplatedEmail())
+            ->from($emailContact)
+            ->to($this->admin)
+            ->replyTo($emailContact)
+            ->subject(ucfirst($subject))
+            ->htmlTemplate('@email/admin/admin_guild_join_request.html.twig')
+            ->context([
+                'subject'  => $subject,
+                'username' => $username,
+                'content'  => implode(', ', $content)
             ]);
         $this->mailer->send($email);
     }
