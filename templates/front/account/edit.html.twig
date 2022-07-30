@@ -13,12 +13,13 @@
 
             <div class="card-body my2 flex gap-1 flex-wrap">
                 {% for choice in formAvatar.avatar.vars.choices %}
-                    <label for="avatar-{{ choice.data.id }}">
-                        <img alt="{{ choice.data.name }}" class="rounded"
-                             src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
-                        <input value="{{ choice.value }}" type="radio"
+                    <label for="avatar-{{ choice.data.id }}" class="radio-label">
+                        <input value="{{ choice.value }}" type="radio" class="radio"
                                name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}"
                                 {% if app.user.avatar and choice.data.path is same as app.user.avatar.path %}checked{% endif %}>
+                        <span class="radio-border"></span>
+                        <img alt="{{ choice.data.name }}" class="rounded"
+                             src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
                     </label>
                 {% endfor %}
                 <div class="color-danger">

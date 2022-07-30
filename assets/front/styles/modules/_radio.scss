@@ -1,0 +1,27 @@
+.radio[type=radio] {
+  display    : none;
+  height     : 0;
+  width      : 0;
+  visibility : hidden;
+}
+
+.radio-label {
+  position  : relative;
+  display   : block;
+  font-size : 0;
+  cursor    : pointer;
+}
+
+.radio:checked + .radio-border {
+  position      : absolute;
+  top           : 0;
+  right         : 0;
+  bottom        : 0;
+  left          : 0;
+  border-radius : 50%;
+  border        : 5px solid;
+}
+
+.radio:checked + .radio-border {border-color : hsl(var(--clr-success));}
+
+.radio:invalid + .radio-border {border-color : hsl(var(--clr-warning));}
