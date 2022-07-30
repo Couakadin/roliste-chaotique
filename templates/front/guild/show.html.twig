@@ -10,11 +10,17 @@
     </section>
 
     <div class="container mt2">
-        {% if app.user is same as guild.master %}
-            <a class="btn-secondary" href="{{ path('front.guild.edit', {'slug': guild.slug}) }}">
-                {{ 'ui.edit_groupe'|trans|capitalize }}
+        <div class="flex space-between align-center">
+            {% if app.user is same as guild.master %}
+                <a class="btn-secondary" href="{{ path('front.guild.edit', {'slug': guild.slug}) }}">
+                    {{ 'ui.edit_groupe'|trans|capitalize }}
+                </a>
+            {% endif %}
+            <a href="{{ path('front.guild.index') }}" class="btn-secondary mt2">
+                {{ 'ui.go_back'|trans|capitalize }}
             </a>
-        {% endif %}
+        </div>
+
         <div class="guild mt2">
             <div class="guild-info card">
                 <h2 class="h3 mb1 card-title main-mark link-line">{{ 'ui.info_general'|trans|capitalize }}</h2>
@@ -42,7 +48,7 @@
                     </li>
                 </ul>
                 <h3 class="card-title">{{ 'ui.members'|trans|capitalize }}</h3>
-                <ul class="card-body guild-members">
+                <ul class="card-body guild-list">
                     {% for member in guild.members %}
                         <li class="list-circle-inside">
                             <a href="{{ path('front.account.index', {'slug': member.slug}) }}">{{ member.username }}</a>
@@ -61,10 +67,6 @@
                 {% endif %}
             </div>
         </div>
-
-        <a href="{{ path('front.guild.index') }}" class="btn-secondary mt2">
-            {{ 'ui.go_back'|trans|capitalize }}
-        </a>
     </div>
 {% endblock %}
 

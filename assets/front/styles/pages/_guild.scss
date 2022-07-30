@@ -16,7 +16,12 @@
   grid-column : 5/span 8;
 }
 
-.guild-members {
+.guild-block {
+  max-height : 25vh;
+  overflow-y : auto;
+}
+
+.guild-list {
   display               : grid;
   grid-template-columns : repeat(auto-fit, minmax(5rem, 1fr));
 }

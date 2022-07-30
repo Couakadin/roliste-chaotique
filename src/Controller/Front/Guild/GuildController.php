@@ -9,12 +9,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -42,7 +39,7 @@ class GuildController extends AbstractController
     }
 
     /**
-     * @Route("/guilds/{slug}", name="front.guild.show")
+     * @Route("/guilds/guild/{slug}", name="front.guild.show")
      * @param string $slug
      * @return Response
      * @throws Exception
@@ -62,7 +59,7 @@ class GuildController extends AbstractController
     }
 
     /**
-     * @Route("/guilds/{slug}/edit", name="front.guild.edit")
+     * @Route("/guilds/edit/{slug}", name="front.guild.edit")
      * @param string $slug
      * @param Request $request
      * @param FileUploader $fileUploader
@@ -95,8 +92,7 @@ class GuildController extends AbstractController
             if (!is_null($file)) {
                 $newFile = $fileUploader->upload($this->getParameter('guild_directory'), $file, $formPicture);
                 $guild->setPicture($newFile);
-            }
-            else {
+            } else {
                 $guild->setPicture($formPicture);
             }
 
@@ -109,6 +105,50 @@ class GuildController extends AbstractController
         return $this->render('@front/guild/edit.html.twig', [
             'guild' => $guild,
             'form'  => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/guilds/new", name="front.guild.new")
+     * @throws Exception
+     */
+    public function new(Request $request, FileUploader $fileUploader, SluggerInterface $slugger): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('security.login.index');
+        }
+
+        $guild = new Guild();
+        $formPicture = $guild->getPicture();
+
+        $form = $this->createForm(GuildProfileType::class, $guild);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $data->setMaster($this->getUser());
+            $data->setSlug($slugger->slug(strtolower($data->getName())));
+
+            $file = $form->get('picture')->getData();
+            if (!is_null($file)) {
+                $newFile = $fileUploader->upload($this->getParameter('guild_directory'), $file, $formPicture);
+                $guild->setPicture($newFile);
+            } else {
+                $guild->setPicture($formPicture);
+            }
+
+            $this->entityManager->persist($data);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.guild.new', [
+                '%guild%' => $guild->getName()
+            ])));
+
+            return $this->redirectToRoute('front.guild.edit', ['slug' => $guild->getSlug()]);
+        }
+
+        return $this->render('@front/guild/new.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

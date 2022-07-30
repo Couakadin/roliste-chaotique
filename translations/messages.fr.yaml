@@ -71,6 +71,8 @@ meta:
         Découvrez touts les groupes sur Rôliste chaotique.
       show: |
         Toutes les infos sur le groupe %guild% de Rôliste chaotique.
+      new: |
+        Créez un nouveau groupe sur Rôliste chaotique.
     account: Voir le profil de %user% sur Rôliste chaotique.
 
 ui:
@@ -133,6 +135,8 @@ ui:
   members: membres
   modify: modifier
   name: nom
+  new_guild: nouveau groupe
+  new_guild_create: créer un nouveau groupe et invitez vos compagnons à vous rejoindre !
   no_item: aucun élément disponible
   one-shot: séance
   or_connexion: ou se connecter ?

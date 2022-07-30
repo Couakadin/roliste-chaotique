@@ -5,7 +5,10 @@
 
 {% block body %}
     <div class="container mt2">
-        <h1 class="h1 mb2">{{ 'ui.all_guilds'|trans|capitalize }}</h1>
+        <div class="flex space-between">
+            <h1 class="h1 mb2">{{ 'ui.all_guilds'|trans|capitalize }}</h1>
+            <a href="{{ path('front.guild.new') }}" class="link-line">{{ 'ui.new_guild'|trans }}</a>
+        </div>
         <div class="grid">
             {% for guild in guilds %}
                 <div class="game"

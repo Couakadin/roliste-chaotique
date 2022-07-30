@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
@@ -22,12 +23,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GuildProfileType extends AbstractType
 {
+    public function __construct(public SluggerInterface $slugger) { }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $data = $event->getData();
-                $data['totalGames'] = count($data['games']);
+                $data['totalGames'] = isset($data['games']) ? count($data['games']) : 0;
 
                 $event->setData($data);
             })
@@ -64,12 +67,12 @@ class GuildProfileType extends AbstractType
                 'expanded'     => true
             ])
             ->add('totalGames', IntegerType::class, [
-                'mapped' => false,
+                'mapped'      => false,
                 'constraints' => [
                     new LessThanOrEqual(
                         [
                             'message' => 'form.guild.number_game',
-                            'value' => 5
+                            'value'   => 5
                         ]
                     )
                 ],
