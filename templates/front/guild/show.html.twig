@@ -10,6 +10,7 @@
     </section>
 
     <div class="container mt2">
+        {#
         <div class="flex space-between align-center">
             {% if app.user is same as guild.master %}
                 <a class="btn-secondary" href="{{ path('front.guild.edit', {'slug': guild.slug}) }}">
@@ -20,6 +21,7 @@
                 {{ 'ui.go_back'|trans|capitalize }}
             </a>
         </div>
+        #}
 
         <div class="guild mt2">
             <div class="guild-info card">

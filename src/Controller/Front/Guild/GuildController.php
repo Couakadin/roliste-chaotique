@@ -58,6 +58,7 @@ class GuildController extends AbstractController
         ]);
     }
 
+    /*
     /**
      * @Route("/guilds/edit/{slug}", name="front.guild.edit")
      * @param string $slug
@@ -66,6 +67,7 @@ class GuildController extends AbstractController
      * @return Response
      * @throws Exception
      */
+    /*
     public function edit(string $slug, Request $request, FileUploader $fileUploader): Response
     {
         $guildRepo = $this->entityManager->getRepository(Guild::class);
@@ -107,11 +109,13 @@ class GuildController extends AbstractController
             'form'  => $form->createView()
         ]);
     }
+    */
 
     /**
      * @Route("/guilds/new", name="front.guild.new")
      * @throws Exception
      */
+    /*
     public function new(Request $request, FileUploader $fileUploader, SluggerInterface $slugger): Response
     {
         if (!$this->getUser()) {
@@ -151,4 +155,5 @@ class GuildController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    */
 }
