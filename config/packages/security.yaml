@@ -24,19 +24,19 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: security.login.index
-                check_path: security.login.index
+                login_path: security.index
+                check_path: security.index
                 username_parameter: email
                 password_parameter: password
                 enable_csrf: true
-                default_target_path: front.account.index
+                default_target_path: account.index
                 use_referer: true
             entry_point: form_login
             login_throttling: true
             logout:
-                path: security.logout.index
+                path: security.logout
                 # where to redirect after logout
-                target: front.home.index
+                target: home.index
             remember_me:
                 secret: '%kernel.secret%' # required
                 lifetime: 604800 # 1 week in seconds
@@ -65,7 +65,7 @@ when@test:
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
+            # are not significant, waste resources and increase test times. The following
             # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto

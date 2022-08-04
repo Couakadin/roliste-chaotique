@@ -2,6 +2,8 @@
 
 namespace App\Form\User;
 
+use App\Entity\Avatar\Avatar;
+use App\Entity\Table\Table;
 use App\Entity\User\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,16 +28,8 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label'       => 'ui.email',
                 'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.email.not_blank',
-                        ]
-                    ),
-                    new Email(
-                        [
-                            'message' => 'user.email.not_email',
-                        ]
-                    ),
+                    new NotBlank(['message' => 'user.email.not_blank',]),
+                    new Email(['message' => 'user.email.not_email',]),
                     new Length([
                         // max length allowed by Symfony for security reasons
                         'max'        => 180,
@@ -46,11 +40,7 @@ class UserType extends AbstractType
             ->add('username', TextType::class, [
                 'label'       => 'ui.username',
                 'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.username.not_blank',
-                        ]
-                    ),
+                    new NotBlank(['message' => 'user.username.not_blank',]),
                     new Length([
                         // max length allowed by Symfony for security reasons
                         'max'        => 180,
@@ -62,11 +52,7 @@ class UserType extends AbstractType
                 'required' => false,
                 'label'       => 'ui.slug',
                 'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.slug.not_blank',
-                        ]
-                    ),
+                    new NotBlank(['message' => 'user.slug.not_blank',]),
                     new Length([
                         // max length allowed by Symfony for security reasons
                         'max'        => 180,
@@ -95,13 +81,11 @@ class UserType extends AbstractType
             ->add('isVerified', CheckboxType::class)
             ->add('createdAt', DateTimeType::class)
             ->add('updatedAt', DateTimeType::class)
-            ->add('loginAt', DateTimeType::class)
+            ->add('loggedAt', DateTimeType::class)
             ->add('avatar', EntityType::class, [
-                'class'        => 'App\Entity\Avatar\Avatar',
+                'class'        => Avatar::class,
                 'choice_label' => 'path',
-                'constraints'  => [
-                    new Valid()
-                ]
+                'constraints'  => [new Valid()]
             ]);
     }
 

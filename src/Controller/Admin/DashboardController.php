@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Utils\TranslatorTrait;
 use App\Entity\Avatar\Avatar;
-use App\Entity\Game\Game;
-use App\Entity\Guild\Guild;
+use App\Entity\Event\Event;
+use App\Entity\Table\Table;
 use App\Entity\User\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -20,9 +20,7 @@ class DashboardController extends AbstractDashboardController
     // $this->trans('');
     use TranslatorTrait;
 
-    /**
-     * @Route("/oversight")
-     */
+    #[Route('/oversight')]
     public function index(): Response
     {
         // you can also render some template to display a proper Dashboard
@@ -40,14 +38,14 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToRoute($this->trans('admin.home'), 'fa fa-home', 'front.home.index');
+        yield MenuItem::linkToRoute($this->trans('admin.home'), 'fa fa-home', 'home.index');
         yield MenuItem::linkToDashboard($this->trans('admin.dashboard'), 'fas fa-columns');
         yield MenuItem::section($this->trans('admin.management'));
         yield MenuItem::linkToCrud($this->trans('admin.user', ['%count%' => 2]), 'fas fa-users', User::class);
         yield MenuItem::linkToCrud($this->trans('admin.avatar', ['%count%' => 2]), 'fas fa-image', Avatar::class);
         yield MenuItem::section($this->trans('admin.role_play'));
-        yield MenuItem::linkToCrud($this->trans('admin.game', ['%count%' => 2]), 'fas fa-layer-group', Game::class);
-        yield MenuItem::linkToCrud($this->trans('admin.guild', ['%count%' => 2]), 'fas fa-gopuram', Guild::class);
+        yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-layer-group', Table::class);
+        yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-layer-group', Event::class);
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu

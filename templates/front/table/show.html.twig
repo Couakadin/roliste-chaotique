@@ -1,0 +1,22 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.tables.show'|trans({'%table%': table.name})|capitalize %}
+{% block title table.name|capitalize %}
+
+{% block body %}
+    <section class="table-banner"
+             style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture) }}') center / cover;">
+        <h1 class="table-mask h1">{{ table.name }}</h1>
+    </section>
+
+    <div class="container mt2">
+        <div class="card">
+            {% if table.content is not null %}
+                {{ table.content|raw }}
+            {% else %}
+                {{ 'ui.no_item'|trans|capitalize }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

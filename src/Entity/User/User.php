@@ -2,9 +2,9 @@
 
 namespace App\Entity\User;
 
-use App\Entity\Guild\Guild;
-use App\Entity\Token\Token;
 use App\Entity\Avatar\Avatar;
+use App\Entity\Table\Table;
+use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
 use DateTime;
 use DateTimeInterface;
@@ -16,22 +16,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="rc_user")
- * @UniqueEntity(
- *     message="user.email.unique",
- *     fields={"email"}
- * )
- * @UniqueEntity(
- *     message="user.username.unique",
- *     fields={"username"}
- * )
- * @UniqueEntity(
- *     message="entity.slug.unique",
- *     fields={"slug"}
- * )
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'rc_user')]
+#[UniqueEntity(fields: ['email', 'username', 'slug'], message: 'entity.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const ROLES = [
@@ -40,86 +27,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'ROLE_EDITOR' => 'ROLE_EDITOR'
     ];
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(length: 180, unique: true)]
     private string $email;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(length: 180, unique: true)]
     private string $username;
 
-    /**
-     * @Gedmo\Slug(fields={"username"})
-     * @ORM\Column(length=128, unique=true)
-     */
+    #[ORM\Column(length: 128, unique: true)]
+    #[Gedmo\Slug(fields: ['username'])]
     private string $slug;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(length: 4096)]
     private string $password;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="create")
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'create')]
     private DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Gedmo\Timestampable(on="update")
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Gedmo\Timestampable(on: 'update')]
     private DateTime $updatedAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true, options={"default": "CURRENT_TIMESTAMP"})
-     */
-    private ?DateTimeInterface $loginAt = null;
+    #[ORM\Column(type: 'datetime', nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?DateTimeInterface $loggedAt = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Token::class, mappedBy="user")
-     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class, orphanRemoval: true)]
     private Collection $tokens;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Avatar::class, inversedBy="user")
-     */
+    #[ORM\ManyToOne(targetEntity: Avatar::class, inversedBy: 'user')]
     private ?Avatar $avatar = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Guild::class, mappedBy="master")
-     */
-    private Collection $guildMaster;
+    #[ORM\OneToMany(mappedBy: 'master', targetEntity: Table::class)]
+    private Collection $tableMaster;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Guild::class, mappedBy="members")
-     */
-    private Collection $guildMembers;
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'members')]
+    private Collection $tableMembers;
 
     public function __construct()
     {
-        $this->guildMaster = new ArrayCollection();
-        $this->guildMembers = new ArrayCollection();
+        $this->tableMaster = new ArrayCollection();
+        $this->tableMembers = new ArrayCollection();
     }
 
     public function __toString()
@@ -249,28 +210,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLoginAt(): ?DateTimeInterface
+    public function getLoggedAt(): ?DateTimeInterface
     {
-        return $this->loginAt;
+        return $this->loggedAt;
     }
 
-    public function setLoginAt(?DateTimeInterface $loginAt): self
+    public function setLoggedAt(?DateTimeInterface $loggedAt): self
     {
-        $this->loginAt = $loginAt;
+        $this->loggedAt = $loggedAt;
 
         return $this;
     }
 
     /**
-     * If loginAt is smaller than the current date from 20min, we suppose the user is logout.
+     * If loggedAt is smaller than the current date from 20min, we suppose the user is logout.
      *
      * @return bool
      */
-    public function isLoginAt(): bool
+    public function isLoggedAt(): bool
     {
         $now = new DateTime('now -20min');
 
-        if ($this->loginAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
+        if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
             return false;
         }
         return true;
@@ -331,52 +292,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getGuildMaster(): Collection
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTableMaster(): Collection
     {
-        return $this->guildMaster;
+        return $this->tableMaster;
     }
 
-    public function addGuildMaster(Guild $guild): self
+    public function addTableMaster(Table $tableMaster): self
     {
-        if (!$this->guildMaster->contains($guild)) {
-            $this->guildMaster[] = $guild;
-            $guild->setMaster($this);
+        if (!$this->tableMaster->contains($tableMaster)) {
+            $this->tableMaster->add($tableMaster);
+            $tableMaster->setMaster($this);
         }
 
         return $this;
     }
 
-    public function removeGuildMaster(Guild $guild): self
+    public function removeTableMaster(Table $tableMaster): self
     {
-        if ($this->guildMaster->removeElement($guild)) {
+        if ($this->tableMaster->removeElement($tableMaster)) {
             // set the owning side to null (unless already changed)
-            if ($guild->getMaster() === $this) {
-                $guild->setMaster(null);
+            if ($tableMaster->getMaster() === $this) {
+                $tableMaster->setMaster(null);
             }
         }
 
         return $this;
     }
 
-    public function getGuildMembers(): Collection
+    /**
+     * @return Collection<int, Table>
+     */
+    public function getTableMembers(): Collection
     {
-        return $this->guildMembers;
+        return $this->tableMembers;
     }
 
-    public function addGuildMember(Guild $guildMember): self
+    public function addTableMember(Table $tableMember): self
     {
-        if (!$this->guildMembers->contains($guildMember)) {
-            $this->guildMembers[] = $guildMember;
-            $guildMember->addMember($this);
+        if (!$this->tableMembers->contains($tableMember)) {
+            $this->tableMembers->add($tableMember);
+            $tableMember->addMember($this);
         }
 
         return $this;
     }
 
-    public function removeGuildMember(Guild $guildMember): self
+    public function removeTableMember(Table $tableMember): self
     {
-        if ($this->guildMembers->removeElement($guildMember)) {
-            $guildMember->removeMember($this);
+        if ($this->tableMembers->removeElement($tableMember)) {
+            $tableMember->removeMember($this);
         }
 
         return $this;

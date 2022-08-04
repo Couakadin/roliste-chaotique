@@ -11,34 +11,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailAdmin extends AbstractController
 {
-    /**
-     * @var MailerInterface
-     */
-    private MailerInterface $mailer;
-    /**
-     * @var TranslatorInterface
-     */
-    private TranslatorInterface $translator;
-    /**
-     * @var string
-     */
-    private string $admin;
+    private const ADMIN_NAME = 'Rôliste chaotique';
+    private const ADMIN_EMAIL = 'contact@roliste-chaotique.be';
 
     /**
-     * EmailController constructor.
-     *
      * @param MailerInterface $mailer
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        MailerInterface     $mailer,
-        TranslatorInterface $translator
-    )
-    {
-        $this->mailer = $mailer;
-        $this->translator = $translator;
-        $this->admin = 'contact@roliste-chaotique.be';
-    }
+    public function __construct(private readonly MailerInterface $mailer, private readonly TranslatorInterface $translator) { }
 
     /**
      * @param $user
@@ -50,14 +30,14 @@ class EmailAdmin extends AbstractController
         $subject = $this->translator->trans('admin.new_inscription.subject');
 
         $email = (new TemplatedEmail())
-            ->from(new Address($this->admin, 'Rôliste chaotique'))
-            ->to($this->admin)
+            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->to(self::ADMIN_EMAIL)
             ->subject(ucfirst($subject))
             ->htmlTemplate('@email/admin/admin_new_inscription.html.twig')
             ->context([
                 'subject'   => $subject,
                 'userEmail' => $user->getEmail(),
-                'signedUrl' => $this->generateUrl('front.account.index', ['slug' => $user->getSlug()], 0),
+                'signedUrl' => $this->generateUrl('account.index', ['slug' => $user->getSlug()], 0),
                 'createdAt' => $user->getCreatedAt()->format('H:i:s Y-m-d')
             ]);
         $this->mailer->send($email);
@@ -74,7 +54,7 @@ class EmailAdmin extends AbstractController
     {
         $email = (new TemplatedEmail())
             ->from($emailContact)
-            ->to($this->admin)
+            ->to(self::ADMIN_EMAIL)
             ->replyTo($emailContact)
             ->subject(ucfirst($subject))
             ->htmlTemplate('@email/admin/admin_new_contact.html.twig')
@@ -82,25 +62,6 @@ class EmailAdmin extends AbstractController
                 'subject'      => $subject,
                 'emailContact' => $emailContact,
                 'content'      => $content
-            ]);
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function guildJoinRequest($username, $emailContact, $subject, $content)
-    {
-        $email = (new TemplatedEmail())
-            ->from($emailContact)
-            ->to($this->admin)
-            ->replyTo($emailContact)
-            ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/admin/admin_guild_join_request.html.twig')
-            ->context([
-                'subject'  => $subject,
-                'username' => $username,
-                'content'  => implode(', ', $content)
             ]);
         $this->mailer->send($email);
     }

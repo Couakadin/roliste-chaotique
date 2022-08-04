@@ -13,13 +13,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="security.login.index")
-     */
+    #[Route('/login', name: 'security.index')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('front.account.index');
+            return $this->redirectToRoute('account.index');
         }
 
         // get the login error if there is one
@@ -30,33 +28,25 @@ class SecurityController extends AbstractController
         return $this->render('@front/security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/logout", name="security.logout.index")
-     */
+    #[Route('/logout', name: 'security.logout')]
     public function logout(): void
     {
         throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-    /**
-     * @Route("/terms-and-conditions", name="security.terms_and_conditions")
-     */
+    #[Route('/terms-and-conditions', name: 'security.terms-and-conditions')]
     public function termsAndConditions(): Response
     {
         return $this->render('@front/security/terms_and_conditions.html.twig');
     }
 
-    /**
-     * @Route("/privacy-policy", name="security.privacy_policy")
-     */
+    #[Route('/privacy-policy', name: 'security.privacy-policy')]
     public function privacyPolicy(): Response
     {
         return $this->render('@front/security/privacy_policy.html.twig');
     }
 
-    /**
-     * @Route("/cookie-policy", name="security.cookie_policy")
-     */
+    #[Route('/cookie-policy', name: 'security.cookie-policy')]
     public function cookiePolicy(Request $request): Response
     {
         $data = $request->query->get('cookie');

@@ -20,6 +20,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@fullcalendar/core": "^5.11.2",
+        "@fullcalendar/daygrid": "^5.11.2",
         "choices.js": "^10.1.0"
     }
 }

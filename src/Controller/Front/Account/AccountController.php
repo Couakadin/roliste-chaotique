@@ -2,10 +2,8 @@
 
 namespace App\Controller\Front\Account;
 
-use App\Email\EmailAdmin;
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
-use App\Form\User\UserGuildType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,25 +13,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AccountController extends AbstractController
 {
     public function __construct
     (
-        public UserPasswordHasherInterface $passwordHasher,
-        public EntityManagerInterface $entityManager,
-        public TranslatorInterface $translator
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TranslatorInterface $translator
     )
     {
     }
 
-    /**
-     * @Route("/account/{slug}", name="front.account.index")
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
-     */
-    public function index(Request $request, EmailAdmin $emailAdmin, string $slug = null): Response
+    #[Route('/account/{slug}', name: 'account.index')]
+    public function index(string $slug = null): Response
     {
         if (is_null($slug)) {
             $user = $this->getUser();
@@ -42,33 +36,12 @@ class AccountController extends AbstractController
             $user = $userRepo->findOneBy(['slug' => $slug]);
         }
 
-        $form = $this->createForm(UserGuildType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->get('guildMembers')->getData();
-
-            $guilds = [];
-            foreach ($data as $item) {
-                $guilds[] = $item->getName();
-            }
-
-            $emailAdmin->guildJoinRequest($user->getUsername(), $user->getEmail(), 'Nouvelle demande de groupe', $guilds);
-
-            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.guild')));
-
-            return $this->redirectToRoute('front.account.index', ['slug' => $user->getSlug()]);
-        }
-
         return $this->render('@front/account/index.html.twig', [
             'user' => $user,
-            'form' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route("/account/{slug}/edit", name="front.account.edit")
-     */
+    #[Route('/account/{slug}/edit', name: 'account.edit')]
     public function edit(Request $request, string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
@@ -108,9 +81,7 @@ class AccountController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/account/{slug}/badges", name="front.account.badge")
-     */
+    #[Route('/account/{slug}/badges', name: 'account.badge')]
     public function badge(string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);

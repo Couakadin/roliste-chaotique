@@ -9,11 +9,11 @@ liip_imagine:
             web_path: ~
     filter_sets:
         cache: ~
-        game_home:
+        table_home:
             quality: 100
             filters:
                 thumbnail: { size: [ 445, 445 ], mode: outbound }
-        game_index:
+        table_index:
             quality: 100
             filters:
                 thumbnail: { size: [ 250, 230 ], mode: outbound }

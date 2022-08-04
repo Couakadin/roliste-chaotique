@@ -10,20 +10,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
-    public const ADMIN_USERNAME = 'MJ Sadique';
+    private const ADMIN_USERNAME = 'MJ Sadique';
+    private const ADMIN_EMAIL = 'contact@roliste-chaotique.be';
 
-    private UserPasswordHasherInterface $passwordHash;
-
-    public function __construct(UserPasswordHasherInterface $passwordHash)
-    {
-        $this->passwordHash = $passwordHash;
-    }
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHash) { }
 
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i < 20; $i++) {
             $user = new User();
-            $user->setEmail('user.email.' . $i . '@fixtures.wip');
+            $user->setEmail('email.' . $i . '@fixtures.wip');
             $user->setUsername('user' . $i);
 
             $password = $this->passwordHash->hashPassword($user, 'password');
@@ -33,7 +29,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         }
 
         $admin = new User();
-        $admin->setEmail("contact@roliste-chaotique.be");
+        $admin->setEmail(self::ADMIN_EMAIL);
         $admin->setUsername(self::ADMIN_USERNAME);
         $admin->setRoles(['ROLE_ADMIN']);
 

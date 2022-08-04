@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Avatar\Avatar;
-use App\Entity\Game\Game;
+use App\Entity\Table\Table;
 use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent;
@@ -16,19 +16,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
-
-    private EntityManagerInterface      $entityManager;
-    private UserPasswordHasherInterface $hash;
-    private ParameterBagInterface       $parameterBag;
-
     public function __construct(
-        EntityManagerInterface      $entityManager,
-        UserPasswordHasherInterface $hash,
-        ParameterBagInterface       $parameterBag)
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly UserPasswordHasherInterface $hash,
+        private readonly ParameterBagInterface       $parameterBag)
     {
-        $this->entityManager = $entityManager;
-        $this->hash = $hash;
-        $this->parameterBag = $parameterBag;
     }
 
     #[ArrayShape([BeforeEntityPersistedEvent::class => "string[]", AfterEntityDeletedEvent::class => "string[]", BeforeEntityDeletedEvent::class => "string[]"])]
@@ -77,9 +69,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $imgPath = $this->parameterBag->get('kernel.project_dir') .
                 '/public/uploads/images/avatars/' . $entity->getPath();
         }
-        if ($entity instanceof Game) {
+        if ($entity instanceof Table) {
             $imgPath = $this->parameterBag->get('kernel.project_dir') .
-                '/public/uploads/images/games/' . $entity->getPicture();
+                '/public/uploads/images/tables/' . $entity->getPicture();
         }
         if (file_exists($imgPath)) unlink($imgPath);
     }

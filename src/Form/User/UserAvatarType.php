@@ -18,9 +18,7 @@ class UserAvatarType extends AbstractType
             ->add('avatar', EntityType::class, [
                 'class'        => Avatar::class,
                 'choice_label' => 'name',
-                'constraints'  => [
-                    new Valid()
-                ]
+                'constraints'  => [new Valid()]
             ]);
     }
 

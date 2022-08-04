@@ -18,13 +18,13 @@ class LoginListener
         $this->entityManager = $entityManager;
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         // Get the User entity.
         $user = $event->getAuthenticationToken()->getUser();
 
         // Update your field here.
-        $user->setLoginAt(new DateTime());
+        $user->setLoggedAt(new DateTime());
 
         // Persist the data to database.
         $this->entityManager->persist($user);

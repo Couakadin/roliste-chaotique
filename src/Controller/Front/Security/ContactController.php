@@ -13,19 +13,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactController extends AbstractController
 {
-    private EmailAdmin          $emailAdmin;
-    private TranslatorInterface $translator;
-
-    public function __construct(EmailAdmin $emailAdmin, TranslatorInterface $translator)
-    {
-        $this->emailAdmin = $emailAdmin;
-        $this->translator = $translator;
-    }
+    public function __construct(private readonly EmailAdmin $emailAdmin, private readonly TranslatorInterface $translator) { }
 
     /**
-     * @Route("/contact", name="security.contact.index")
      * @throws TransportExceptionInterface
      */
+    #[Route('/contact', name: 'contact.index')]
     public function index(Request $request): Response
     {
         $form = $this->createForm(ContactFormType::class);

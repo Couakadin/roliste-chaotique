@@ -2,30 +2,17 @@ form:
   file:
     type: veuillez télécharger une image avec les formats suivants - JPG/PNG/SVG.
     size: taille des images maximum limitée à 1024k.
-  guild:
-    number_game: le nombre maximum de tables autorisées dans un groupe est de 5.
   terms:
     is_true: veuillez accepter les conditions d'utilisation.
   subject:
     not_blank: veuillez insérer un sujet.
   message:
     not_blank: veuillez insérer un message.
-  date:
-    month: veuillez choisir un mois valide.
-    year: veuillez choisir une année valide.
   event:
     type: veuillez choisir un type valide.
-  player:
-    equal: un nombre de joueurs supérieur est requis.
-    not_blank: veuillez insérer un nombre total de joueur.
-    type: veuillez insérer une valeur numérique.
-    positive: veuillez insérer une valeur positive.
-    length: la limite numérique est de {{ limit }} unités.
+
 user:
-  path:
-    unique: le chemin {{ value }} existe déjà.
   email:
-    unique: adresse {{ value }} déjà utilisée.
     not_blank: adresse e-mail requise.
     not_email: adresse e-mail incorrecte.
     length: adresse e-mail au maximum {{ limit }} caractères.
@@ -34,7 +21,6 @@ user:
     not_equal: phrase-clef incorrecte.
   name:
     not_blank: nom requis.
-    unique: nom {{ value }} déjà pris.
     length: nom maximum {{ limit }} caractères.
   username:
     not_blank: nom d'utilisateur requis.
@@ -48,9 +34,8 @@ user:
     not_same: les deux champs doivent correspondre.
     length: mot de passe au minimum {{ limit }} caractères.
 entity:
-  name:
-    unique: nom {{ value }} déjà utilisé.
   slug:
     unique: slug {{ value }} déjà utilisé.
   guild:
     unique: nom de groupe {{ value }} déjà utilisé.
+  unique: le champs {{ value }} est déjà utilisé.

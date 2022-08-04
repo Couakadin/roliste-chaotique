@@ -17,21 +17,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ForgottenPasswordController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(private readonly EntityManagerInterface $entityManager) { }
 
     /**
-     * @Route("/forgotten_password", name="security.forgotten_password.index")
      * @param Request $request
      * @param Email $email
      * @param TranslatorInterface $translator
+     *
      * @return Response
+     *
      * @throws Exception|TransportExceptionInterface|\Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
+    #[Route('/forgotten-password', name: 'forgotten-password.index')]
     public function index(Request $request, Email $email, TranslatorInterface $translator): Response
     {
         if ($this->getUser()) {
@@ -63,7 +60,7 @@ class ForgottenPasswordController extends AbstractController
 
                 $this->addFlash('success', $translator->trans('flash.forgotten_password.send.success'));
 
-                return $this->redirectToRoute('front.home.index');
+                return $this->redirectToRoute('home.index');
             }
         }
 
@@ -73,13 +70,14 @@ class ForgottenPasswordController extends AbstractController
     }
 
     /**
-     * @Route("/forgotten_password/{token}", name="front.home.forgotten_password.new")
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param string $token
      * @param UserPasswordHasherInterface $encoder
+     *
      * @return Response
      */
+    #[Route('/forgotten-password/{token}', name: 'forgotten-password.new')]
     public function new(
         Request $request,
         TranslatorInterface $translator,

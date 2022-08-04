@@ -51,3 +51,10 @@
   border     : solid calc(var(--gap) / 10) hsl(var(--clr-dark));
   color      : hsl(var(--clr-dark));
 }
+
+.fc-button-primary {
+  @extend %btn;
+  background-color : hsl(var(--clr-dark)) !important; // Important to override the vendor style
+  background-image : none;
+  border           : solid calc(var(--gap) / 10) hsl(var(--clr-widget));
+}

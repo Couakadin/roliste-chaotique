@@ -38,6 +38,6 @@
             <p class="card_body">{{ ('privacy_policy.contacting_us.body'|trans)|raw }}</p>
             <p class="card_body">{{ ('privacy_policy.updated_at'|trans({'%updatedAt%': '2022-02-03'|format_datetime('long', 'none')}))|raw }}</p>
         </div>
-        <a href="{{ path('front.home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
     </div>
 {% endblock %}

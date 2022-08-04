@@ -25,10 +25,10 @@
             <h2 class="card_title h2">{{ 'terms_and_conditions.acceptance_of_these_terms.title'|trans|capitalize }}</h2>
             <p class="card_body">{{ ('terms_and_conditions.acceptance_of_these_terms.body'|trans)|raw }}</p>
             <h2 class="card_title h2">{{ 'terms_and_conditions.contacting_us.title'|trans|capitalize }}</h2>
-            <p class="card_body">{{ ('terms_and_conditions.contacting_us.body'|trans({'%path%': path('security.contact.index')}))|raw }}</p>
+            <p class="card_body">{{ ('terms_and_conditions.contacting_us.body'|trans({'%path%': path('contact.index')}))|raw }}</p>
             {# Don't forget to update any changes #}
             <p>{{ 'terms_and_conditions.updated_at'|trans({'%updatedAt%': '2022-01-29'|format_datetime('long', 'none')}) }}</p>
         </div>
-        <a href="{{ path('front.home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
     </div>
 {% endblock %}

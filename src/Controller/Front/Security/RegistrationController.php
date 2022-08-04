@@ -23,38 +23,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    private TranslatorInterface        $translator;
-    private UserAuthenticatorInterface $userAuthenticator;
-    private FormLoginAuthenticator     $formLoginAuthenticator;
-    private Email                      $email;
-    private EmailAdmin                 $emailAdmin;
-    private EntityManagerInterface     $entityManager;
-
     public function __construct(
-        TranslatorInterface        $translator,
-        UserAuthenticatorInterface $userAuthenticator, FormLoginAuthenticator $formLoginAuthenticator,
-        Email                      $email,
-        EmailAdmin                 $emailAdmin,
-        EntityManagerInterface     $entityManager
+        private readonly TranslatorInterface        $translator,
+        private readonly UserAuthenticatorInterface $userAuthenticator,
+        private readonly FormLoginAuthenticator $formLoginAuthenticator,
+        private readonly Email                      $email,
+        private readonly EmailAdmin                 $emailAdmin,
+        private readonly EntityManagerInterface     $entityManager
     )
     {
-        $this->translator = $translator;
-        $this->userAuthenticator = $userAuthenticator;
-        $this->formLoginAuthenticator = $formLoginAuthenticator;
-        $this->email = $email;
-        $this->emailAdmin = $emailAdmin;
-        $this->entityManager = $entityManager;
     }
 
     /**
-     * @Route("/register", name="security.registration.register")
      * @throws TransportExceptionInterface
      * @throws Exception
      */
+    #[Route('/register', name: 'registration.register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): RedirectResponse|Response|null
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('front.account.index');
+            return $this->redirectToRoute('account.index');
         }
 
         $user = new User();
@@ -70,7 +58,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setLoginAt(new DateTime());
+            $user->setLoggedAt(new DateTime());
 
             $newToken = new Token($user, Token::EMAIL_VERIFY);
 
@@ -92,15 +80,13 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/verify/email", name="security.registration.verify_user_email")
-     */
+    #[Route('/verify/email', name: 'registration.verify-email')]
     public function verifyEmail(Request $request): Response
     {
         if (!$this->getUser()) {
             $this->addFlash('warning', $this->translator->trans('flash.verify_email.not_login'));
 
-            return $this->redirectToRoute('front.home.index');
+            return $this->redirectToRoute('home.index');
         }
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -113,11 +99,11 @@ class RegistrationController extends AbstractController
         if (!$token || $this->getUser()->isVerified()) {
             $this->addFlash('error', $this->translator->trans('flash.token.invalid'));
 
-            return $this->redirectToRoute('front.home.index');
+            return $this->redirectToRoute('home.index');
         } elseif ($now > $token->getExpiredAt() || !$token->getExpiredAt()) {
             $this->addFlash('error', $this->translator->trans('flash.token.expired'));
 
-            return $this->redirectToRoute('front.home.index');
+            return $this->redirectToRoute('home.index');
         }
 
         $verified = $this->getUser();
@@ -130,14 +116,15 @@ class RegistrationController extends AbstractController
 
         $this->addFlash('success', ucfirst($this->translator->trans('flash.token.success_email')));
 
-        return $this->redirectToRoute('front.home.index');
+        return $this->redirectToRoute('home.index');
     }
 
 
     /**
      * @Route("/verify/resend", name="security.registration.verify_resend_email")
      */
-    public function resendVerifyEmail()
+    #[Route('/verify/resend', name: 'registration.resend-verify-email')]
+    public function resendVerifyEmail(): Response
     {
         return $this->render('@front/security/resend_verify_email.html.twig');
     }

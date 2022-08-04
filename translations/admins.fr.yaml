@@ -1,9 +1,9 @@
 admin:
   chaotic_role_player: rôliste chaotique
   dashboard: tableau de bord
-  game: |
+  table: |
     {1}table|{2}tables
-  new_game: nouvelle table
+  new_table: nouvelle table
   new_event: nouvel événement
   new_user: nouvel utilisateur
   new_avatar: nouvel avatar
@@ -33,7 +33,7 @@ admin:
     login_at: connecté le
     event_month: mois d'événement
     event_year: année d'événement
-    game: table
+    table: table
     public: public
     players: joueurs
     zone: zone
@@ -52,21 +52,3 @@ admin:
     one-shot: séance
     event_author: événements (auteur)
     event_member: événements (membre)
-    guild_master: maître du groupe
-    guild_members: membres du groupe
-    guild_games: tables du groupe
-
-  calendar:
-    months:
-      january: janvier
-      february: février
-      march: mars
-      april: avril
-      may: mai
-      june: juin
-      july: juillet
-      august: août
-      september: septembre
-      october: octobre
-      november: novembre
-      december: décembre

@@ -61,11 +61,11 @@ meta:
       Rôliste chaotique utilise des cookies pour une meilleure expérience. Veuillez lire notre politique sur les cookies.
     contact: |
       Besoin d'aide ? Contactez-nous sur Rôliste chaotique via notre formulaire de contact.
-    games:
+    tables:
       index: |
         Découvrez toutes les tables de jeu de rôle sur Rôliste chaotique.
       show: |
-        Tous les évènement et infos sur la table %game% de Rôliste chaotique.
+        Tous les évènement et infos sur la table %table% de Rôliste chaotique.
     guilds:
       index: |
         Découvrez touts les groupes sur Rôliste chaotique.
@@ -83,7 +83,7 @@ ui:
   badges: badges
   privacy_policy: politique de confidentialité
   cookies_policy: politique de cookies
-  all_games: toutes les tables
+  all_tables: toutes les tables
   all_guilds: touts les groupes
   all_members: touts les membres
   all_rights_reserved : tous droits réservés
@@ -100,6 +100,7 @@ ui:
   days: jours
   delete: supprimer
   description: description
+  discover_calendar: découvrez nos évènements
   edit: éditer
   edit_avatar: changer d'avatar
   edit_profile: modifier le profil
@@ -109,7 +110,7 @@ ui:
   exit_impersonification: quitter impersonification
   find_table: trouvez une table avec votre jeu préféré !
   forgotten_password: mot de passe oublié ?
-  games: tables
+  tables: tables
   guild: groupe
   guilds: groupes
   go_back: retour
@@ -155,7 +156,7 @@ ui:
   reset: réinitialiser
   reset_password: réinitialiser mot de passe
   search: recherche
-  see_all_games: voir toutes les tables
+  see_all_tables: voir toutes les tables
   send: envoyer
   sign_in: se connecter
   sign_up: s'inscrire
@@ -178,7 +179,7 @@ tooltip:
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
   delete_user_from_guild: |
     Attention : décocher un membre du groupe le supprimera définitivement de votre groupe. C'est une action irréversible. Ce joueur devra être réinvité pour rejoindre le groupe à nouveau.
-  maximum_game_in_guild: |
+  maximum_table_in_guild: |
     Un groupe peut être affilié simultanément jusqu'à 5 tables maximum. Astuce : vous devez afficher les jeux auquels vous jouez actuellement et régulièrement. Voyez ceci comme une vitrine de vos licenses préférées !
 
 terms_and_conditions:

@@ -1,6 +1,6 @@
 {# Top menubar #}
 <div class="menubar">
-    <a href="{{ path('front.home.index') }}">
+    <a href="{{ path('home.index') }}">
         <img width="96" height="64" src="{{ asset('build/front/mascot/rc.svg') }}"
              alt="{{ 'ui.chaotic_roleplayer'|trans }}">
     </a>
@@ -29,16 +29,16 @@
                     </small>
                 {% endif %}
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <a class="color-warning px1" href="{{ path('front.home.index', {'_switch_user': '_exit'}) }}">
+                    <a class="color-warning px1" href="{{ path('home.index', {'_switch_user': '_exit'}) }}">
                         <small>{{ 'ui.exit_impersonification'|trans|capitalize }}</small>
                     </a>
                 {% endif %}
             </div>
         {% else %}
             <div class="flex align-center mt1">
-                <a href="{{ path('security.login.index') }}">{{ 'ui.connexion'|trans|capitalize }}</a>
+                <a href="{{ path('security.index') }}">{{ 'ui.connexion'|trans|capitalize }}</a>
                 <span class="mx1">|</span>
-                <a href="{{ path('security.registration.register') }}">{{ 'ui.register'|trans|capitalize }}</a>
+                <a href="{{ path('registration.register') }}">{{ 'ui.register'|trans|capitalize }}</a>
             </div>
         {% endif %}
     </div>
@@ -49,12 +49,12 @@
                 <summary class="accordion h3">{{ 'ui.account'|trans|capitalize }}</summary>
                 <ul>
                     <li>
-                        <a href="{{ path('front.account.index') }}" class="my1 px1">
+                        <a href="{{ path('account.index') }}" class="my1 px1">
                             {{ 'ui.profile'|trans|capitalize }}
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('security.logout.index') }}" class="my1 px1 color-danger">
+                        <a href="{{ path('security.logout') }}" class="my1 px1 color-danger">
                             {{ 'ui.logout'|trans|capitalize }}
                         </a>
                     </li>
@@ -67,10 +67,7 @@
             <summary class="accordion h3">{{ 'ui.search'|trans|capitalize }}</summary>
             <ul>
                 <li>
-                    <a href="{{ path('front.game.index') }}" class="my1 px1">{{ 'ui.games'|trans|capitalize }}</a>
-                </li>
-                <li>
-                    <a href="{{ path('front.guild.index') }}" class="my1 px1">{{ 'ui.guilds'|trans|capitalize }}</a>
+                    <a href="{{ path('table.index') }}" class="my1 px1">{{ 'ui.tables'|trans|capitalize }}</a>
                 </li>
             </ul>
         </details>
