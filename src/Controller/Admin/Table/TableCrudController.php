@@ -72,6 +72,7 @@ class TableCrudController extends AbstractCrudController
                 ->onlyOnDetail(),
 
             FormField::addTab('Relations'),
+            AssociationField::new('members', $this->trans('admin.ui.members')),
             AssociationField::new('events', $this->trans('admin.ui.events'))
                 ->hideOnIndex(),
         ];

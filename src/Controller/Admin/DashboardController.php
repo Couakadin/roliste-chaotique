@@ -6,7 +6,7 @@ use App\Controller\Admin\Utils\TranslatorTrait;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
-use App\Entity\Table\TableMember;
+use App\Entity\Table\TableInscription;
 use App\Entity\User\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -46,7 +46,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud($this->trans('admin.avatar', ['%count%' => 2]), 'fas fa-image', Avatar::class);
         yield MenuItem::section($this->trans('admin.role_play'));
         yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-layer-group', Table::class);
-        yield MenuItem::linkToCrud($this->trans('admin.table_member', ['%count%' => 2]), 'fas fa-layer-group', TableMember::class);
+        yield MenuItem::linkToCrud($this->trans('admin.table_inscription', ['%count%' => 2]), 'fas fa-layer-group', TableInscription::class);
         yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-layer-group', Event::class);
     }
 

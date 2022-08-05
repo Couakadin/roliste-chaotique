@@ -5,10 +5,10 @@ admin:
     {1}événement|{2}événements
   table: |
     {1}table|{2}tables
-  table_member: |
-    {1}table-membre|{2}table-membres
+  table_inscription: |
+    {1}inscription de table|{2}inscriptions de table
   new_table: nouvelle table
-  new_table_member: nouvelle table-membre
+  new_table_inscription: nouvelle inscription de table
   new_event: nouvel événement
   new_user: nouvel utilisateur
   new_avatar: nouvel avatar
@@ -50,6 +50,7 @@ admin:
     email: email
     roles: rôles
     verified: vérifié
+    status: status
     type: type
     postal_code: code postal
     locality: localité

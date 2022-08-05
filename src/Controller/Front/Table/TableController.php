@@ -3,9 +3,8 @@
 namespace App\Controller\Front\Table;
 
 use App\Entity\Table\Table;
-use App\Entity\Table\TableMember;
+use App\Entity\Table\TableInscription;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,9 +52,6 @@ class TableController extends AbstractController
             return $this->redirectToRoute('table.index');
         }
 
-        $tableMemberRepo = $this->entityManager->getRepository(TableMember::class);
-        $tableMembers = $tableMemberRepo->findBy(['table' => $table]);
-
         $submittedToken = $request->request->get('token');
         $submittedParticipate = $request->request->get('join');
 
@@ -63,7 +59,12 @@ class TableController extends AbstractController
             if ('true' === $submittedParticipate) {
                 $data = $this->getUser();
 
+                $inscription = (new TableInscription())
+                    ->setTable($table)
+                    ->setUser($data)
+                    ->setStatus(TableInscription::STATUS['waiting']);
 
+                $this->entityManager->persist($inscription);
                 $this->entityManager->flush();
 
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.table.join.in')));
@@ -82,8 +83,7 @@ class TableController extends AbstractController
         }
 
         return $this->render('@front/table/show.html.twig', [
-            'table'      => $table,
-            'tableMembers' => $tableMembers
+            'table'      => $table
         ]);
     }
 }

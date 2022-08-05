@@ -3,6 +3,7 @@
 namespace App\Entity\Table;
 
 use App\Entity\Event\Event;
+use App\Entity\User\User;
 use App\Repository\Table\TableRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,13 +48,18 @@ class Table
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
-    #[ORM\OneToMany(mappedBy: 'table', targetEntity: TableMember::class, orphanRemoval: true)]
-    private Collection $tableMembers;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tables')]
+    #[ORM\JoinTable(name: 'rc_table_member')]
+    private Collection $members;
+
+    #[ORM\OneToMany(mappedBy: 'table', targetEntity: TableInscription::class, orphanRemoval: true)]
+    private Collection $tableInscriptions;
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->tableMembers = new ArrayCollection();
+        $this->members = new ArrayCollection();
+        $this->tableInscriptions = new ArrayCollection();
     }
 
     public function __toString()
@@ -179,28 +185,54 @@ class Table
     }
 
     /**
-     * @return Collection<int, TableMember>
+     * @return Collection<int, User>
      */
-    public function getTableMembers(): Collection
+    public function getMembers(): Collection
     {
-        return $this->tableMembers;
+        return $this->members;
     }
 
-    public function addTableMember(TableMember $tableMember): self
+    public function addMember(User $member): self
     {
-        if (!$this->tableMembers->contains($tableMember)) {
-            $this->tableMembers->add($tableMember);
-            $tableMember->setTable($this);
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
         }
 
         return $this;
     }
 
-    public function removeTableMember(TableMember $tableMember): self
+    public function removeMember(User $member): self
     {
-        // set the owning side to null (unless already changed)
-        if ($this->tableMembers->removeElement($tableMember) && $tableMember->getTable() === $this) {
-            $tableMember->setTable(null);
+        $this->members->removeElement($member);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TableInscription>
+     */
+    public function getTableInscriptions(): Collection
+    {
+        return $this->tableInscriptions;
+    }
+
+    public function addTableInscription(TableInscription $tableInscription): self
+    {
+        if (!$this->tableInscriptions->contains($tableInscription)) {
+            $this->tableInscriptions->add($tableInscription);
+            $tableInscription->setTables($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTableInscription(TableInscription $tableInscription): self
+    {
+        if ($this->tableInscriptions->removeElement($tableInscription)) {
+            // set the owning side to null (unless already changed)
+            if ($tableInscription->getTables() === $this) {
+                $tableInscription->setTables(null);
+            }
         }
 
         return $this;

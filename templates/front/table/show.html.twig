@@ -16,17 +16,18 @@
                 <div class="card_body">
                     <p>{{ 'ui.creation_date'|trans|capitalize }} : {{ table.createdAt|ago }}</p>
                     <p>{{ 'ui.members'|trans|capitalize }} :</p>
-                    {% for member in tableMembers %}
-                        <a href="{{ path('account.index', {'slug': member.user.slug}) }}">{{ member.user.username }}</a>
+                    {% for member in table.members %}
+                        <a href="{{ path('account.index', {'slug': member.slug}) }}">{{ member.username }}</a>
                         {% if not loop.last %}<span class="mx-1">|</span>{% endif %}
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
                     {% endfor %}
 
                     <div class="mt2 flex space-between">
                         <form action="{{ path('table.show', { 'slug': table.slug }) }}" method="post">
-                            {{ dump(tableMembers) }}
-                        {% if app.user and app.user not in tableMembers %}
-                            <input type="hidden" name="join" value="true">
-                            <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
+                            {% if app.user and app.user not in table.members %}
+                                <input type="hidden" name="join" value="true">
+                                <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
                             <button type="submit" class="btn-primary">
                                 {{ 'ui.i_ask_join'|trans|capitalize }}
                             </button>

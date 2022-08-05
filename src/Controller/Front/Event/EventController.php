@@ -3,7 +3,6 @@
 namespace App\Controller\Front\Event;
 
 use App\Entity\Event\Event;
-use App\Form\Event\EventParticipateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
