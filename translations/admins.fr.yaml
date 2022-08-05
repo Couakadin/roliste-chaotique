@@ -51,6 +51,7 @@ admin:
     roles: rôles
     verified: vérifié
     status: status
+    send_email_to_user: envoyer un e-mail à l'utilisateur
     type: type
     postal_code: code postal
     locality: localité
@@ -58,6 +59,4 @@ admin:
     latitude: latitude
     campaign: campagne
     one-shot: séance
-    event_author: événements (auteur)
-    event_member: événements (membre)
     validate: validé

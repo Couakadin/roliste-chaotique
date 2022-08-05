@@ -1,0 +1,13 @@
+{% extends '@email/email.html.twig' %}
+
+{% block subject %}
+    {{ subject|capitalize }}
+{% endblock %}
+
+{% block email %}
+    {% if 'accepted' is same as status %}
+        {{ ('email.new_table_inscription.accepted.body'|trans({'%signedUrl%': signedUrl, '%username%': username, '%table%': table})|UCFirst)|raw }}
+    {% elseif 'declined' is same as status %}
+        {{ ('email.new_table_inscription.declined.body'|trans({'%signedUrl%': signedUrl, '%username%': username, '%table%': table})|UCFirst)|raw }}
+    {% endif %}
+{% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\Email;
 
+use App\Entity\Table\Table;
+use App\Entity\User\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -21,11 +23,11 @@ class EmailAdmin extends AbstractController
     public function __construct(private readonly MailerInterface $mailer, private readonly TranslatorInterface $translator) { }
 
     /**
-     * @param $user
+     * @param User $user
      *
      * @throws TransportExceptionInterface
      */
-    public function emailNewInscriptionAdmin($user)
+    public function emailNewInscriptionAdmin(User $user)
     {
         $subject = $this->translator->trans('admin.new_inscription.subject');
 
@@ -44,13 +46,13 @@ class EmailAdmin extends AbstractController
     }
 
     /**
-     * @param $emailContact
-     * @param $subject
-     * @param $content
+     * @param string $emailContact
+     * @param string $subject
+     * @param string $content
      *
      * @throws TransportExceptionInterface
      */
-    public function newContactAdmin($emailContact, $subject, $content)
+    public function newContactAdmin(string $emailContact, string $subject, string $content)
     {
         $email = (new TemplatedEmail())
             ->from($emailContact)
@@ -62,6 +64,28 @@ class EmailAdmin extends AbstractController
                 'subject'      => $subject,
                 'emailContact' => $emailContact,
                 'content'      => $content
+            ]);
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function newTableInscriptionAdmin(User $user, Table $table)
+    {
+        $subject = $this->translator->trans('admin.new_inscription.subject');
+
+        $email = (new TemplatedEmail())
+            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->to(self::ADMIN_EMAIL)
+            ->subject(ucfirst($subject))
+            ->htmlTemplate('@email/admin/admin_new_table_inscription.html.twig')
+            ->context([
+                'subject'   => $subject,
+                'table'     => $table->getName(),
+                'username'  => $user->getUsername(),
+                'userEmail' => $user->getEmail(),
+                'createdAt' => $user->getCreatedAt()->format('H:i:s Y-m-d')
             ]);
         $this->mailer->send($email);
     }

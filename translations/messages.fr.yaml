@@ -103,6 +103,8 @@ ui:
   i_validate: je valide
   i_ask_join: faire une demande pour rejoindre cette table
   i_no_join: quitter cette table
+  i_join_waiting: votre demande d'inscription est en attente
+  i_join_declined: votre demande d'inscription a été refusée
   join_us: nous rejoindre
   join_us_text: |
     Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !

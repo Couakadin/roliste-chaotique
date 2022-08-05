@@ -43,6 +43,8 @@ class TableInscription
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
+    private ?bool $isEmailSending = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +106,18 @@ class TableInscription
     public function setUpdatedAt(DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isEmailSending(): bool
+    {
+        return $this->isEmailSending;
+    }
+
+    public function setIsEmailSending(bool $isEmailSending): self
+    {
+        $this->isEmailSending = $isEmailSending;
 
         return $this;
     }

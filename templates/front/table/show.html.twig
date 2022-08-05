@@ -10,6 +10,7 @@
     </section>
 
     <div class="container mt2">
+        <a href="{{ path('table.index') }}" class="btn-primary mb2">{{ 'ui.go_back'|trans|capitalize }}</a>
         <div class="table-grid">
             <div class="card">
                 <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
@@ -25,19 +26,25 @@
 
                     <div class="mt2 flex space-between">
                         <form action="{{ path('table.show', { 'slug': table.slug }) }}" method="post">
-                            {% if app.user and app.user not in table.members %}
+                            {% if app.user and tableInscription is not null %}
+                                {% if 'waiting' is same as tableInscription.status %}
+                                    <p class="btn-primary">{{ 'ui.i_join_waiting'|trans|capitalize }}</p>
+                                {% elseif 'declined' is same as tableInscription.status %}
+                                    <p class="btn-ternary">{{ 'ui.i_join_declined'|trans|capitalize }}</p>
+                                {% elseif 'accepted' is same as tableInscription.status %}
+                                    <input type="hidden" name="join" value="false">
+                                    <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
+                                    <button type="submit" class="btn-secondary">
+                                        {{ 'ui.i_no_join'|trans|capitalize }}
+                                    </button>
+                                {% endif %}
+                            {% elseif app.user and tableInscription is null %}
                                 <input type="hidden" name="join" value="true">
                                 <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
-                            <button type="submit" class="btn-primary">
-                                {{ 'ui.i_ask_join'|trans|capitalize }}
-                            </button>
-                        {% else %}
-                            <input type="hidden" name="join" value="false">
-                            <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
-                            <button type="submit" class="btn-secondary">
-                                {{ 'ui.i_no_join'|trans|capitalize }}
-                            </button>
-                        {% endif %}
+                                <button type="submit" class="btn-primary">
+                                    {{ 'ui.i_ask_join'|trans|capitalize }}
+                                </button>
+                            {% endif %}
                         </form>
                     </div>
                 </div>

@@ -58,6 +58,7 @@ class TableInscriptionCrudController extends AbstractCrudController
                 ->hideOnForm(),
 
             FormField::addPanel(''),
+            BooleanField::new('isEmailSending', $this->trans('admin.ui.send_email_to_user'))->onlyOnForms(),
             ChoiceField::new('status', $this->trans('admin.ui.status'))
                 ->setChoices(TableInscription::STATUS),
             DateTimeField::new('createdAt', $this->trans('admin.ui.created_at'))
