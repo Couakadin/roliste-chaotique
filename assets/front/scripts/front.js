@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         timeZone     : 'Europe/paris',
         locale       : 'fr',
         headerToolbar: {
-            left  : 'prev',
+            left  : 'prev next today',
             center: 'title',
-            right : 'next'
+            right : 'dayGridDay dayGridWeek dayGridMonth'
         },
         eventSources : [{
             url        : '/fc-load-events',
@@ -38,7 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
             failure    : () => {
                 console.error('There was an error while fetching FullCalendar!');
             }
-        }]
+        }],
+        buttonText: {
+            today: 'aujourd\'hui',
+            month: 'mois',
+            week: 'semaine',
+            day: 'jour'
+        }
     });
     calendar.render();
 });
