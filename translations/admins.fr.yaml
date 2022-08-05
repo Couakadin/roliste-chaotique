@@ -5,7 +5,10 @@ admin:
     {1}événement|{2}événements
   table: |
     {1}table|{2}tables
+  table_member: |
+    {1}table-membre|{2}table-membres
   new_table: nouvelle table
+  new_table_member: nouvelle table-membre
   new_event: nouvel événement
   new_user: nouvel utilisateur
   new_avatar: nouvel avatar
@@ -56,3 +59,4 @@ admin:
     one-shot: séance
     event_author: événements (auteur)
     event_member: événements (membre)
+    validate: validé

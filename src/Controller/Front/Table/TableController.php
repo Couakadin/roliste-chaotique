@@ -3,6 +3,7 @@
 namespace App\Controller\Front\Table;
 
 use App\Entity\Table\Table;
+use App\Entity\Table\TableMember;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
@@ -52,6 +53,9 @@ class TableController extends AbstractController
             return $this->redirectToRoute('table.index');
         }
 
+        $tableMemberRepo = $this->entityManager->getRepository(TableMember::class);
+        $tableMembers = $tableMemberRepo->findBy(['table' => $table]);
+
         $submittedToken = $request->request->get('token');
         $submittedParticipate = $request->request->get('join');
 
@@ -78,7 +82,8 @@ class TableController extends AbstractController
         }
 
         return $this->render('@front/table/show.html.twig', [
-            'table'      => $table
+            'table'      => $table,
+            'tableMembers' => $tableMembers
         ]);
     }
 }
