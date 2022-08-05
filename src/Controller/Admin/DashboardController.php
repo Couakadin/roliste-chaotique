@@ -45,9 +45,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud($this->trans('admin.user', ['%count%' => 2]), 'fas fa-users', User::class);
         yield MenuItem::linkToCrud($this->trans('admin.avatar', ['%count%' => 2]), 'fas fa-image', Avatar::class);
         yield MenuItem::section($this->trans('admin.role_play'));
-        yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-layer-group', Table::class);
-        yield MenuItem::linkToCrud($this->trans('admin.table_inscription', ['%count%' => 2]), 'fas fa-layer-group', TableInscription::class);
-        yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-layer-group', Event::class);
+        yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-calendar', Table::class);
+        yield MenuItem::linkToCrud($this->trans('admin.table_inscription', ['%count%' => 2]), 'fas fa-calendar-plus', TableInscription::class);
+        yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-calendar-days', Event::class);
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu

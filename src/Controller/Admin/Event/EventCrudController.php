@@ -55,9 +55,6 @@ class EventCrudController extends AbstractCrudController
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('name')
                 ->onlyOnForms(),
-            AssociationField::new('master', $this->trans('admin.ui.master')),
-            AssociationField::new('table', $this->trans('admin.ui.table'))
-                ->hideOnIndex(),
             TextField::new('content')->hideOnIndex()->setFormType(CKEditorType::class),
             DateTimeField::new('start', $this->trans('admin.ui.created_at'))
                 ->onlyOnDetail(),
@@ -71,6 +68,12 @@ class EventCrudController extends AbstractCrudController
             FormField::addTab('Couleur'),
             ColorField::new('bgColor', $this->trans('admin.ui.bg_color'))->hideOnIndex(),
             ColorField::new('borderColor', $this->trans('admin.ui.border_color'))->hideOnIndex(),
+
+            FormField::addTab('relation'),
+            AssociationField::new('master', $this->trans('admin.ui.master')),
+            AssociationField::new('table', $this->trans('admin.ui.table'))
+                ->hideOnIndex(),
+            AssociationField::new('zone', $this->trans('admin.ui.zone')),
         ];
     }
 }
