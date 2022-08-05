@@ -10,12 +10,47 @@
     </section>
 
     <div class="container mt2">
-        <div class="card">
-            {% if table.content is not null %}
-                {{ table.content|raw }}
-            {% else %}
-                {{ 'ui.no_item'|trans|capitalize }}
-            {% endif %}
+        <div class="table-grid">
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    <p>{{ 'ui.creation_date'|trans|capitalize }} : {{ table.createdAt|ago }}</p>
+                    <p>{{ 'ui.members'|trans|capitalize }} :</p>
+                    {% for member in table.tableMembers %}
+                        <a href="{{ path('account.index', {'slug': member.slug}) }}">{{ member.username }}</a>
+                        {% if not loop.last %}<span class="mx-1">|</span>{% endif %}
+                    {% endfor %}
+
+                    <div class="mt2 flex space-between">
+                        <form action="{{ path('table.show', { 'slug': table.slug }) }}" method="post">
+                        {% if app.user and app.user not in table.members %}
+                            <input type="hidden" name="join" value="true">
+                            <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
+                            <button type="submit" class="btn-primary">
+                                {{ 'ui.i_ask_join'|trans|capitalize }}
+                            </button>
+                        {% else %}
+                            <input type="hidden" name="join" value="false">
+                            <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
+                            <button type="submit" class="btn-secondary">
+                                {{ 'ui.i_no_join'|trans|capitalize }}
+                            </button>
+                        {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    {% if table.content is not null %}
+                        {{ table.content|raw }}
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

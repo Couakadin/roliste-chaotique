@@ -38,19 +38,43 @@ class TableController extends AbstractController
 
     /**
      * @param string $slug
-     *
+     * @param Request $request
      * @return Response
      *
-     * @throws Exception
      */
     #[Route('/tables/{slug}', name: 'table.show')]
-    public function show(string $slug): Response
+    public function show(string $slug, Request $request): Response
     {
         $tableRepo = $this->entityManager->getRepository(Table::class);
         $table = $tableRepo->findOneBy(['slug' => $slug]);
 
         if (!$table) {
             return $this->redirectToRoute('table.index');
+        }
+
+        $submittedToken = $request->request->get('token');
+        $submittedParticipate = $request->request->get('join');
+
+        if ($this->isCsrfTokenValid('join-table', $submittedToken)) {
+            if ('true' === $submittedParticipate) {
+                $data = $this->getUser();
+
+
+                $this->entityManager->flush();
+
+                $this->addFlash('success', ucfirst($this->translator->trans('flash.table.join.in')));
+            }
+
+            if ('false' === $submittedParticipate) {
+                $data = $this->getUser();
+
+                $table->removeMember($data);
+                $this->entityManager->flush();
+
+                $this->addFlash('success', ucfirst($this->translator->trans('flash.table.join.out')));
+            }
+
+            return $this->redirectToRoute('table.show', ['slug' => $table->getSlug()]);
         }
 
         return $this->render('@front/table/show.html.twig', [

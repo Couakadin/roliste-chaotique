@@ -10,10 +10,6 @@
   background     : hsl(var(--clr-widget));
   color          : hsl(var(--clr-light));
   cursor         : pointer;
-
-  &[data-accordion='false'] .event-sortable {
-    transform : rotateX(180deg);
-  }
 }
 
 .event-header {
@@ -24,12 +20,4 @@
   gap             : var(--gap);
   align-items     : center;
   justify-content : center;
-}
-
-.event-sortable {
-  display         : flex;
-  align-items     : center;
-  justify-content : center;
-  margin-left     : auto;
-  transition      : transform .3s ease-out;
 }

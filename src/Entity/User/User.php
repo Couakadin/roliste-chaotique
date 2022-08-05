@@ -3,7 +3,8 @@
 namespace App\Entity\User;
 
 use App\Entity\Avatar\Avatar;
-use App\Entity\Table\Table;
+use App\Entity\Event\Event;
+use App\Entity\Table\TableMember;
 use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
 use DateTime;
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email', 'username', 'slug'], message: 'entity.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    const ROLES = [
+    public const ROLES = [
         'ROLE_ADMIN'  => 'ROLE_ADMIN',
         'ROLE_USER'   => 'ROLE_USER',
         'ROLE_EDITOR' => 'ROLE_EDITOR'
@@ -71,15 +72,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: Avatar::class, inversedBy: 'user')]
     private ?Avatar $avatar = null;
 
-    #[ORM\OneToMany(mappedBy: 'master', targetEntity: Table::class)]
-    private Collection $tableMaster;
+    #[ORM\OneToMany(mappedBy: 'master', targetEntity: Event::class)]
+    private Collection $eventMaster;
 
-    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'members')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TableMember::class, orphanRemoval: true)]
     private Collection $tableMembers;
 
     public function __construct()
     {
-        $this->tableMaster = new ArrayCollection();
+        $this->eventMaster = new ArrayCollection();
         $this->tableMembers = new ArrayCollection();
     }
 
@@ -293,57 +294,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Table>
+     * @return Collection<int, Event>
      */
-    public function getTableMaster(): Collection
+    public function getEventMaster(): Collection
     {
-        return $this->tableMaster;
+        return $this->eventMaster;
     }
 
-    public function addTableMaster(Table $tableMaster): self
+    public function addEventMaster(Event $eventMaster): self
     {
-        if (!$this->tableMaster->contains($tableMaster)) {
-            $this->tableMaster->add($tableMaster);
-            $tableMaster->setMaster($this);
+        if (!$this->eventMaster->contains($eventMaster)) {
+            $this->eventMaster->add($eventMaster);
+            $eventMaster->setMaster($this);
         }
 
         return $this;
     }
 
-    public function removeTableMaster(Table $tableMaster): self
+    public function removeEventMaster(Event $eventMaster): self
     {
-        if ($this->tableMaster->removeElement($tableMaster)) {
-            // set the owning side to null (unless already changed)
-            if ($tableMaster->getMaster() === $this) {
-                $tableMaster->setMaster(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->eventMaster->removeElement($eventMaster) && $eventMaster->getMaster() === $this) {
+            $eventMaster->setMaster(null);
         }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Table>
+     * @return Collection<int, TableMember>
      */
     public function getTableMembers(): Collection
     {
         return $this->tableMembers;
     }
 
-    public function addTableMember(Table $tableMember): self
+    public function addTableMember(TableMember $tableMember): self
     {
         if (!$this->tableMembers->contains($tableMember)) {
             $this->tableMembers->add($tableMember);
-            $tableMember->addMember($this);
+            $tableMember->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeTableMember(Table $tableMember): self
+    public function removeTableMember(TableMember $tableMember): self
     {
         if ($this->tableMembers->removeElement($tableMember)) {
-            $tableMember->removeMember($this);
+            // set the owning side to null (unless already changed)
+            if ($tableMember->getUser() === $this) {
+                $tableMember->setUser(null);
+            }
         }
 
         return $this;

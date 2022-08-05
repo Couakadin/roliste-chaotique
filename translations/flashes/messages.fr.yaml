@@ -14,6 +14,11 @@ flash:
     delete:
       success: |
         l'événement %event% a été supprimé avec succès.
+    participate:
+      add: |
+        Vous êtes inscrit à cet événement.
+      remove: |
+        Vous êtes désinscrit de cet événement.
   contact:
     success: votre message a bien été envoyé. Une réponse arrivera dans les plus brefs délais.
   guild:
@@ -25,6 +30,12 @@ flash:
     success: |
       Bienvenue %user%,
       un email de confirmation a été envoyé.
+  table:
+    join:
+      in: |
+        votre demande d'adhésion a été envoyée.
+      out: |
+        vous avez quitté cette table.
   token:
     invalid: requête invalide.
     expired: token expiré. Veuillez renouveler la demande via les paramètres du compte.
@@ -35,8 +46,3 @@ flash:
       error: token invalide.
     new:
       success: mot de passe réinitialisé.
-  schedule:
-    new:
-      success: dates d'événement du %dateStart% au %dateEnd% enregistrées avec succès.
-    delete:
-      success: crénaux horaires supprimés avec succès.

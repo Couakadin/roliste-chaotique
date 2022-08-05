@@ -3,9 +3,12 @@
 namespace App\Entity\Event;
 
 use App\Entity\Table\Table;
+use App\Entity\User\User;
 use App\Entity\Zone\Zone;
 use App\Repository\Event\EventRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -14,7 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Table(name: 'rc_event')]
 class Event
 {
-    const TYPE = [
+    public const TYPE = [
         'campaign' => 'campaign',
         'one-shot' => 'one-shot'
     ];
@@ -30,6 +33,9 @@ class Event
     #[ORM\Column(length: 128)]
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
 
     #[ORM\Column(length: 15)]
     private ?string $type = null;
@@ -54,12 +60,29 @@ class Event
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'eventMaster')]
+    private ?User $master = null;
+
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Table $table = null;
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Zone $zone = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'eventParticipate')]
+    #[ORM\JoinTable(name: 'rc_event_participate')]
+    private Collection $participate;
+
+    public function __construct()
+    {
+        $this->participate = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?? 'n/a';
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +109,17 @@ class Event
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }
@@ -174,6 +208,18 @@ class Event
         return $this;
     }
 
+    public function getMaster(): ?User
+    {
+        return $this->master;
+    }
+
+    public function setMaster(?User $master): self
+    {
+        $this->master = $master;
+
+        return $this;
+    }
+
     public function getTable(): ?Table
     {
         return $this->table;
@@ -194,6 +240,30 @@ class Event
     public function setZone(?Zone $zone): self
     {
         $this->zone = $zone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getParticipate(): Collection
+    {
+        return $this->participate;
+    }
+
+    public function addParticipate(User $participate): self
+    {
+        if (!$this->participate->contains($participate)) {
+            $this->participate->add($participate);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipate(User $participate): self
+    {
+        $this->participate->removeElement($participate);
 
         return $this;
     }

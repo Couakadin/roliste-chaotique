@@ -1,26 +1,3 @@
-calendar:
-  days:
-    monday: lundi
-    tuesday: mardi
-    wednesday: mercredi
-    thursday: jeudi
-    friday: vendredi
-    saturday: samedi
-    sunday: dimanche
-  months:
-    january: janvier
-    february: février
-    march: mars
-    april: avril
-    may: mai
-    june: juin
-    july: juillet
-    august: août
-    september: septembre
-    october: octobre
-    november: novembre
-    december: décembre
-
 error:
   general:
     title: erreur générale
@@ -41,10 +18,15 @@ error:
 
 footer: |
   rôliste-chaotique.be est une initiative afin d'aider une communauté de jeu de rôle avec son organisation, que ce soit via un agenda, la recherche d'un compagnon ou d'une table de jeu.
-  Rôliste chaotique se concentre sur l'affichage simples de ses évènements et de ses groupes afin de concentrer sur le principal : le jeu de rôle.
+  Rôliste chaotique se concentre sur l'affichage simples de ses événements et de ses groupes afin de concentrer sur le principal : le jeu de rôle.
 
 meta:
   description:
+    events:
+      index: |
+        Découvrez touts les événements sur Rôliste chaotique.
+      show: |
+        Toutes les informations sur l'événement %event% de Rôliste chaotique.
     home: |
       Rôliste chaotique est un club de jeu de rôle. Découvrez notre agenda et organisez une séance chez nous.
     login: |
@@ -66,13 +48,6 @@ meta:
         Découvrez toutes les tables de jeu de rôle sur Rôliste chaotique.
       show: |
         Tous les évènement et infos sur la table %table% de Rôliste chaotique.
-    guilds:
-      index: |
-        Découvrez touts les groupes sur Rôliste chaotique.
-      show: |
-        Toutes les infos sur le groupe %guild% de Rôliste chaotique.
-      new: |
-        Créez un nouveau groupe sur Rôliste chaotique.
     account: Voir le profil de %user% sur Rôliste chaotique.
 
 ui:
@@ -83,8 +58,8 @@ ui:
   badges: badges
   privacy_policy: politique de confidentialité
   cookies_policy: politique de cookies
+  all_events: touts les événements
   all_tables: toutes les tables
-  all_guilds: touts les groupes
   all_members: touts les membres
   all_rights_reserved : tous droits réservés
   campaign: campagne
@@ -100,19 +75,21 @@ ui:
   days: jours
   delete: supprimer
   description: description
-  discover_calendar: découvrez nos évènements
+  discover_calendar: découvrez nos événements
+  dm: mj
   edit: éditer
   edit_avatar: changer d'avatar
   edit_profile: modifier le profil
   edit_password: changer le mot de passe
   edit_groupe: modifier le groupe
   email: e-mail
+  events: événements
+  event: événement
   exit_impersonification: quitter impersonification
   find_table: trouvez une table avec votre jeu préféré !
   forgotten_password: mot de passe oublié ?
+  table: table
   tables: tables
-  guild: groupe
-  guilds: groupes
   go_back: retour
   hero_text: |
     Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Créé courant 2019, la communauté n'a eu de cesse de grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement !
@@ -124,6 +101,8 @@ ui:
   info_members: infos membres
   i_not_participate: je ne participe plus
   i_validate: je valide
+  i_ask_join: faire une demande pour rejoindre cette table
+  i_no_join: quitter cette table
   join_us: nous rejoindre
   join_us_text: |
     Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !
@@ -136,17 +115,17 @@ ui:
   members: membres
   modify: modifier
   name: nom
-  new_guild: nouveau groupe
-  new_guild_create: créer un nouveau groupe et invitez vos compagnons à vous rejoindre !
   no_item: aucun élément disponible
   one-shot: séance
+  online: en ligne
+  only_members: | 
+    vous devez être membre de la table %table% pour y participer.
   or_connexion: ou se connecter ?
   or_register: ou créer un compte ?
-  only_dm_edit_guild: |
-    Vous seul pouvez gérer cette page en tant que maître du jeu de ce groupe.
   quick_links: liens rapides
   password: mot de passe
   picture: image
+  player: joueur
   players: joueurs
   profile: profil
   public: public
@@ -177,10 +156,6 @@ tooltip:
     <strong>&lsquo;%key%&rsquo;</strong>.
   forgotten_password: |
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
-  delete_user_from_guild: |
-    Attention : décocher un membre du groupe le supprimera définitivement de votre groupe. C'est une action irréversible. Ce joueur devra être réinvité pour rejoindre le groupe à nouveau.
-  maximum_table_in_guild: |
-    Un groupe peut être affilié simultanément jusqu'à 5 tables maximum. Astuce : vous devez afficher les jeux auquels vous jouez actuellement et régulièrement. Voyez ceci comme une vitrine de vos licenses préférées !
 
 terms_and_conditions:
   agree_terms:

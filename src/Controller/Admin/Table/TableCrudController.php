@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -17,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TableCrudController extends AbstractCrudController
 {
@@ -49,10 +51,9 @@ class TableCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            FormField::addTab('Général'),
             IdField::new('id', $this->trans('admin.ui.id'))
                 ->hideOnForm(),
-
-            FormField::addPanel(''),
             BooleanField::new('showcase', $this->trans('admin.ui.showcase')),
             ImageField::new('picture', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/tables')
@@ -64,12 +65,15 @@ class TableCrudController extends AbstractCrudController
             TextEditorField::new('content', $this->trans('admin.ui.content'))
                 ->setFormType(CKEditorType::class)
                 ->onlyOnForms(),
-
             FormField::addPanel(''),
             DateTimeField::new('createdAt', $this->trans('admin.ui.created_at'))
                 ->onlyOnDetail(),
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
                 ->onlyOnDetail(),
+
+            FormField::addTab('Relations'),
+            AssociationField::new('events', $this->trans('admin.ui.events'))
+                ->hideOnIndex(),
         ];
     }
 }

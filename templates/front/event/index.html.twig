@@ -1,7 +1,38 @@
 {% extends '@front/front.html.twig' %}
 
-{% block title %}Hello EventController!{% endblock %}
+{% block description 'meta.description.events.index'|trans|capitalize %}
+{% block title 'ui.events'|trans|capitalize %}
 
 {% block body %}
+    <div class="container mt2">
+        <h1 class="h1 mb2">{{ 'ui.all_events'|trans|capitalize }}</h1>
+            {% for event in events %}
+                <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">
+                    <p class="event-header h4">{{ event.name }}</p>
+                    <p class="event-header">{{ event.table.name }}</p>
+                    <p class="event-header">{{ ('ui.'~event.type)|trans|capitalize }}</p>
+                    <p class="event-header">
+                        {% if event.zone is not null %}
+                            {{ event.zone.locality }}
+                        {% else %}
+                            {{ 'ui.online'|trans|capitalize }}
+                        {% endif %}
+                    </p>
+                    <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
+                    <p class="event-header">
+                     {% if 1 >= event.table.members|length %}
+                        {{ event.table.members|length }} {{ 'ui.player'|trans }}
+                     {% else %}
+                        {{ event.table.members|length }} {{ 'ui.players'|trans }}
+                     {% endif %}
+                    </p>
+                </a>
+            {% else %}
+                <div class="card">
+                    {{ 'ui.no_item'|trans|capitalize }}
+                </div>
+            {% endfor %}
 
+        {{ knp_pagination_render(events) }}
+    </div>
 {% endblock %}

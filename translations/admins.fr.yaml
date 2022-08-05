@@ -1,6 +1,8 @@
 admin:
   chaotic_role_player: rôliste chaotique
   dashboard: tableau de bord
+  event: |
+    {1}événement|{2}événements
   table: |
     {1}table|{2}tables
   new_table: nouvelle table
@@ -15,14 +17,15 @@ admin:
     {1}utilisateur|{2}utilisateurs
   avatar: |
     {1}avatar|{2}avatars
-  guild: |
-    {1}groupe|{2}groupes
   profile: profil
   home: accueil
 
   ui:
     id: id
     avatar: avatar
+    bg_color: couleur background
+    border_color: couleur bordure
+    events: événements
     image: image
     name: nom
     slug: slug
@@ -39,6 +42,7 @@ admin:
     zone: zone
     guild: groupe
     author: auteur
+    master: maître du jeu
     members: membres
     email: email
     roles: rôles

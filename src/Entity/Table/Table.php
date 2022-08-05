@@ -3,7 +3,6 @@
 namespace App\Entity\Table;
 
 use App\Entity\Event\Event;
-use App\Entity\User\User;
 use App\Repository\Table\TableRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -45,20 +44,21 @@ class Table
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tableMaster')]
-    private ?User $master = null;
-
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tableMembers')]
-    #[ORM\JoinTable(name: 'rc_table_user')]
-    private Collection $members;
-
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
+    #[ORM\OneToMany(mappedBy: 'table', targetEntity: TableMember::class, orphanRemoval: true)]
+    private Collection $tableMembers;
+
     public function __construct()
     {
-        $this->members = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->tableMembers = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?? 'n/a';
     }
 
     public function getId(): ?int
@@ -150,42 +150,6 @@ class Table
         return $this;
     }
 
-    public function getMaster(): ?User
-    {
-        return $this->master;
-    }
-
-    public function setMaster(?User $master): self
-    {
-        $this->master = $master;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getMembers(): Collection
-    {
-        return $this->members;
-    }
-
-    public function addMember(User $member): self
-    {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(User $member): self
-    {
-        $this->members->removeElement($member);
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Event>
      */
@@ -206,11 +170,37 @@ class Table
 
     public function removeEvent(Event $event): self
     {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getTable() === $this) {
-                $event->setTable(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->events->removeElement($event) && $event->getTable() === $this) {
+            $event->setTable(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TableMember>
+     */
+    public function getTableMembers(): Collection
+    {
+        return $this->tableMembers;
+    }
+
+    public function addTableMember(TableMember $tableMember): self
+    {
+        if (!$this->tableMembers->contains($tableMember)) {
+            $this->tableMembers->add($tableMember);
+            $tableMember->setTable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTableMember(TableMember $tableMember): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->tableMembers->removeElement($tableMember) && $tableMember->getTable() === $this) {
+            $tableMember->setTable(null);
         }
 
         return $this;
