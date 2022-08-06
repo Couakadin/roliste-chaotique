@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('event.delete', {'id': event.id}) }}"
+      onsubmit="return confirm('{{ 'ui.delete_event_ask'|trans|capitalize }}');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+    <button class="btn-danger">{{ 'ui.delete'|trans|capitalize }}</button>
+</form>

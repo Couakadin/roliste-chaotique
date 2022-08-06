@@ -56,6 +56,8 @@ ui:
   admin: administration
   agree_terms: conditions d'utilisation
   badges: badges
+  bg_color: couleur de fond
+  border_color: couleur des bordures
   privacy_policy: politique de confidentialité
   cookies_policy: politique de cookies
   all_events: touts les événements
@@ -72,8 +74,10 @@ ui:
   creation_date: date de création
   date_start: date de départ
   date_end: date de fin
+  date: date
   days: jours
   delete: supprimer
+  delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
   description: description
   discover_calendar: découvrez nos événements
   dm: mj
@@ -82,6 +86,7 @@ ui:
   edit_profile: modifier le profil
   edit_password: changer le mot de passe
   edit_groupe: modifier le groupe
+  edit_event: modifier l'événement %event%
   email: e-mail
   events: événements
   event: événement
@@ -117,6 +122,7 @@ ui:
   members: membres
   modify: modifier
   name: nom
+  new_event: créer un nouvel événement
   no_item: aucun élément disponible
   one-shot: séance
   online: en ligne

@@ -4,8 +4,11 @@ namespace App\Form\Event;
 
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
+use App\Entity\User\User;
 use App\Entity\Zone\Zone;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -25,7 +30,7 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class EventType extends AbstractType
 {
-    public function __construct(private readonly Security $security){}
+    public function __construct(private readonly Security $security, private readonly EntityManagerInterface $entityManager){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -45,6 +50,7 @@ class EventType extends AbstractType
                     ])
                 ],
             ])
+            /*
             ->add('slug', TextType::class, [
                 'label'       => 'ui.slug',
                 'constraints' => [
@@ -60,12 +66,26 @@ class EventType extends AbstractType
                     ])
                 ],
             ])
-            ->add('bgColor', ColorType::class)
-            ->add('borderColor', ColorType::class)
-            ->add('start', DateTimeType::class)
-            ->add('end', DateTimeType::class)
+            */
+            ->add('bgColor', ColorType::class, [
+                'label'        => 'ui.bg_color',
+            ])
+            ->add('borderColor', ColorType::class, [
+                'label'        => 'ui.border_color',
+            ])
+            ->add('start', DateTimeType::class, [
+                'label'        => 'ui.date_start',
+                'widget' => 'single_text'
+            ])
+            ->add('end', DateTimeType::class, [
+                'label'        => 'ui.date_end',
+                'widget' => 'single_text'
+            ])
+            /*
             ->add('createdAt', DateTimeType::class)
             ->add('updatedAt', DateTimeType::class)
+            */
+
             ->add('type', ChoiceType::class, [
                 'label'        => 'ui.type',
                 'choices'      => Event::TYPE,
@@ -94,6 +114,10 @@ class EventType extends AbstractType
                 'label'        => 'ui.zone',
                 'class'        => Zone::class,
                 'choice_label' => 'locality',
+                'constraints'  => [new Valid()]
+            ])
+            ->add('content', CKEditorType::class, [
+                'label'        => 'ui.content',
                 'constraints'  => [new Valid()]
             ]);
     }

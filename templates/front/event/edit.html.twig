@@ -1,0 +1,16 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <section class="container mt2">
+        <h1 class="card-title h1">{{ 'ui.edit_event'|trans({'%event%': event.name})|UCFirst }}</h1>
+
+        {{ include('@front/event/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <div class="flex-no-mobile space-between gap-1 mt2">
+            <a href="{{ path('event.index') }}" class="btn-secondary mb1">{{ 'ui.go_back'|trans|capitalize }}</a>
+            {{ include('@front/event/_delete_form.html.twig') }}
+        </div>
+    </section>
+{% endblock %}

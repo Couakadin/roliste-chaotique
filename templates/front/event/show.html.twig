@@ -18,7 +18,13 @@
     </section>
 
     <div class="container mt2">
-        <a href="{{ path('event.index') }}" class="btn-primary mb2">{{ 'ui.go_back'|trans|capitalize }}</a>
+        <div class="flex space-between align-center gap-1 mb2">
+            <a href="{{ path('event.index') }}" class="btn-secondary">{{ 'ui.go_back'|trans|capitalize }}</a>
+            {% if app.user and app.user is same as event.master %}
+                <a href="{{ path('event.edit', {'slug': event.slug}) }}"
+                   class="btn-primary">{{ 'ui.edit'|trans|capitalize }}</a>
+            {% endif %}
+        </div>
         <div class="table-grid">
             <div class="card">
                 <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
@@ -43,21 +49,25 @@
 
                     <div class="mt2 flex space-between">
                         {% if app.user and app.user in event.table.members %}
-                            <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
-                                {% if app.user not in event.participate %}
-                                    <input type="hidden" name="participate" value="true">
-                                    <input type="hidden" name="token" value="{{ csrf_token('participate-event') }}"/>
-                                    <button type="submit" class="btn-primary">
-                                        {{ 'ui.i_participate'|trans|capitalize }}
-                                    </button>
-                                {% else %}
-                                    <input type="hidden" name="participate" value="false">
-                                    <input type="hidden" name="token" value="{{ csrf_token('participate-event') }}"/>
-                                    <button type="submit" class="btn-secondary">
-                                        {{ 'ui.i_not_participate'|trans|capitalize }}
-                                    </button>
-                                {% endif %}
-                            </form>
+                            {% if app.user is not same as event.master %}
+                                <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
+                                    {% if app.user not in event.participate %}
+                                        <input type="hidden" name="participate" value="true">
+                                        <input type="hidden" name="token"
+                                               value="{{ csrf_token('participate-event') }}"/>
+                                        <button type="submit" class="btn-primary">
+                                            {{ 'ui.i_participate'|trans|capitalize }}
+                                        </button>
+                                    {% else %}
+                                        <input type="hidden" name="participate" value="false">
+                                        <input type="hidden" name="token"
+                                               value="{{ csrf_token('participate-event') }}"/>
+                                        <button type="submit" class="btn-secondary">
+                                            {{ 'ui.i_not_participate'|trans|capitalize }}
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            {% endif %}
                         {% else %}
                             <em>{{ 'ui.only_members'|trans({'%table%': event.table.name})|capitalize }}</em>
                         {% endif %}

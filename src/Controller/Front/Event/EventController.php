@@ -3,6 +3,8 @@
 namespace App\Controller\Front\Event;
 
 use App\Entity\Event\Event;
+use App\Form\Event\EventType;
+use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,11 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/events')]
 class EventController extends AbstractController
 {
     public function __construct(private readonly EntityManagerInterface $entityManager, private readonly TranslatorInterface $translator){ }
 
-    #[Route('/events', name: 'event.index')]
+    #[Route('/', name: 'event.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $eventRepo = $this->entityManager->getRepository(Event::class);
@@ -26,7 +29,7 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/events/{slug}', name: 'event.show')]
+    #[Route('/event/{slug}', name: 'event.show', methods: ['GET', 'POST'])]
     public function show(string $slug, Request $request): Response
     {
         $eventRepo = $this->entityManager->getRepository(Event::class);
@@ -64,5 +67,58 @@ class EventController extends AbstractController
         return $this->render('@front/event/show.html.twig', [
             'event' => $event
         ]);
+    }
+
+    #[Route('/new', name: 'event.new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EventRepository $eventRepository): Response
+    {
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->setMaster($this->getUser());
+            $eventRepository->add($event, true);
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.create.success', ['%event%' => $event->getName()])));
+
+            return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('@front/event/new.html.twig', [
+            'event' => $event,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    {
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $eventRepository->add($event, true);
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event->getName()])));
+
+            return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('@front/event/edit.html.twig', [
+            'event' => $event,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/{id}', name: 'event.delete', methods: ['POST'])]
+    public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.delete.success', ['%event%' => $event->getName()])));
+            $eventRepository->remove($event, true);
+        }
+
+        return $this->redirectToRoute('event.index', [], Response::HTTP_SEE_OTHER);
     }
 }

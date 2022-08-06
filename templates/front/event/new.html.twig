@@ -1,0 +1,14 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}New Event{% endblock %}
+
+{% block body %}
+    <section class="container mt2">
+        <h1 class="card-title h1">{{ 'ui.new_event'|trans|UCFirst }}</h1>
+        {{ include('@front/event/_form.html.twig') }}
+
+        <div class="flex-no-mobile space-between gap-1 mt2">
+            <a href="{{ path('event.index') }}" class="btn-secondary mb1">{{ 'ui.go_back'|trans|capitalize }}</a>
+        </div>
+    </section>
+{% endblock %}

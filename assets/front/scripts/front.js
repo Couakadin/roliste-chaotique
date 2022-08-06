@@ -17,6 +17,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('calendar-holder');
+
+    if (!calendarEl) {
+        return;
+    }
+
     calendarEl.innerHTML = '';
 
     const calendar = new Calendar(calendarEl, {
@@ -49,4 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     calendar.render();
 });
 
-//CKEDITOR.config.uiColor = '#eeebe2';
+if (CKEDITOR) {
+    CKEDITOR.config.uiColor = '#eeebe2';
+}
