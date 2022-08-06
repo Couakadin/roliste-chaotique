@@ -27,6 +27,10 @@ meta:
         Découvrez touts les événements sur Rôliste chaotique.
       show: |
         Toutes les informations sur l'événement %event% de Rôliste chaotique.
+      new: |
+        Créez un nouvel événement sur Rôliste chaotique.
+      edit: |
+        Modifiez votre événement sur Rôliste chaotique
     home: |
       Rôliste chaotique est un club de jeu de rôle. Découvrez notre agenda et organisez une séance chez nous.
     login: |

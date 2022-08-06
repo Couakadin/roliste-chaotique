@@ -1,6 +1,7 @@
 {% extends '@front/front.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block description 'meta.description.events.edit'|trans|capitalize %}
+{% block title 'ui.edit_event'|trans({'%event%': event.name})|capitalize %}
 
 {% block body %}
     <section class="container mt2">
