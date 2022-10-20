@@ -2,7 +2,6 @@
 
 namespace App\Email;
 
-use App\Entity\Table\Table;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -10,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Email extends AbstractController
 {
@@ -19,11 +17,9 @@ class Email extends AbstractController
 
     /**
      * @param MailerInterface $mailer
-     * @param TranslatorInterface $translator
      */
     public function __construct(
         private readonly MailerInterface     $mailer,
-        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -68,33 +64,6 @@ class Email extends AbstractController
                 'subject'   => $subject,
                 'signedUrl' => $this->generateUrl('forgotten-password.new', ['token' => $newToken->getToken()], 0),
                 'expiredAt' => $newToken->getExpiredAt()
-            ]);
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function tableInscription(string $status, User $user, Table $table)
-    {
-        $subject = '';
-        if ('accepted' === $status) {
-            $subject = $this->translator->trans('email.new_table_inscription.accepted.subject');
-        } elseif ('declined' === $status) {
-            $subject = $this->translator->trans('email.new_table_inscription.declined.subject');
-        }
-
-        $email = (new TemplatedEmail())
-            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
-            ->to($user->getEmail())
-            ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/website/table_inscription.html.twig')
-            ->context([
-                'subject'   => $subject,
-                'status'    => $status,
-                'username'  => $user->getUsername(),
-                'table'     => $table->getName(),
-                'signedUrl' => $this->generateUrl('table.show', ['slug' => $table->getSlug()], 0),
             ]);
         $this->mailer->send($email);
     }

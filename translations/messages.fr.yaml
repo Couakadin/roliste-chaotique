@@ -91,6 +91,7 @@ ui:
   edit_password: changer le mot de passe
   edit_groupe: modifier le groupe
   edit_event: modifier l'événement %event%
+  editor: éditeur
   email: e-mail
   events: événements
   event: événement
@@ -99,6 +100,8 @@ ui:
   forgotten_password: mot de passe oublié ?
   table: table
   tables: tables
+  theme: thème
+  genre: genre
   go_back: retour
   hero_text: |
     Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Créé courant 2019, la communauté n'a eu de cesse de grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement !
@@ -122,12 +125,14 @@ ui:
   logout: déconnexion
   last_login: dernière connexion
   message: message
+  mature: âge requis
   master: maître du jeu
   members: membres
   modify: modifier
   name: nom
   new_event: créer un nouvel événement
   no_item: aucun élément disponible
+  no_specified: non précisé
   one-shot: séance
   online: en ligne
   only_members: | 
@@ -151,12 +156,15 @@ ui:
   send: envoyer
   sign_in: se connecter
   sign_up: s'inscrire
+  system: système
   type: type
   understood: compris
   slug: slug
   subject: sujet
   username: nom d'utilisateur
   zone: lieu d'événement
+  participant: participants
+  no_participant: aucun participant
 
 tooltip:
   tooltip: info-bulle

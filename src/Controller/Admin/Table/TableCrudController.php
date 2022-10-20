@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -62,6 +63,7 @@ class TableCrudController extends AbstractCrudController
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('name')
                 ->onlyOnForms(),
+            IntegerField::new('maturity', $this->trans('admin.ui.maturity')),
             TextEditorField::new('content', $this->trans('admin.ui.content'))
                 ->setFormType(CKEditorType::class)
                 ->onlyOnForms(),
@@ -72,8 +74,11 @@ class TableCrudController extends AbstractCrudController
                 ->onlyOnDetail(),
 
             FormField::addTab('Relations'),
-            AssociationField::new('members', $this->trans('admin.ui.members'))->onlyOnForms(),
-            AssociationField::new('events', $this->trans('admin.ui.events'))
+            AssociationField::new('genre', $this->trans('admin.ui.genre'))
+                ->hideOnIndex(),
+            AssociationField::new('editor', $this->trans('admin.ui.editor'))
+                ->hideOnIndex(),
+            AssociationField::new('system', $this->trans('admin.ui.system'))
                 ->hideOnIndex(),
         ];
     }

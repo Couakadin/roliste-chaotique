@@ -1,9 +1,0 @@
-{% extends '@email/email.html.twig' %}
-
-{% block subject %}
-    {{ subject|capitalize }}
-{% endblock %}
-
-{% block email %}
-    {{ ('admin.new_table_inscription.body'|trans({'%table%': table, '%username%': username, '%userEmail%': userEmail, '%createdAt%': createdAt|format_datetime('medium', 'short')})|capitalize)|raw }}
-{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller\Front\Security;
 
 use App\Email\Email;
 use App\Entity\Token\Token;
+use App\Entity\User\User;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -32,7 +33,7 @@ class ForgottenPasswordController extends AbstractController
     public function index(Request $request, Email $email, TranslatorInterface $translator): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('front.account.index', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
         }
 
         $submittedToken = $request->request->get('_csrf_token');
@@ -45,7 +46,7 @@ class ForgottenPasswordController extends AbstractController
                 $errors[] = $translator->trans('flash.csrf.invalid');
             }
 
-            $repository = $this->entityManager->getRepository('App:User\User');
+            $repository = $this->entityManager->getRepository(User::class);
             $user = $repository->findOneBy(['email' => $submittedEmail]);
 
             if (!$user) {$errors[] = ucfirst($translator->trans('flash.email.not_found'));}
@@ -85,7 +86,7 @@ class ForgottenPasswordController extends AbstractController
         UserPasswordHasherInterface $encoder): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('front.account.index', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
         }
 
         $now = new DateTime();
@@ -96,11 +97,11 @@ class ForgottenPasswordController extends AbstractController
         if (!$token) {
             $this->addFlash('error', $translator->trans('flash.token.invalid'));
 
-            return $this->redirectToRoute('front.home.index');
+            return $this->redirectToRoute('home.index');
         } elseif ($now > $token->getExpiredAt() || !$token->getExpiredAt()) {
             $this->addFlash('error', $translator->trans('flash.token.expired'));
 
-            return $this->redirectToRoute('front.home.index');
+            return $this->redirectToRoute('home.index');
         }
 
         $submittedToken = $request->request->get('_csrf_token');
@@ -125,7 +126,7 @@ class ForgottenPasswordController extends AbstractController
 
                 $this->addFlash('success', $translator->trans('flash.forgotten_password.new.success'));
 
-                return $this->redirectToRoute('security.login.index');
+                return $this->redirectToRoute('security.index');
             }
         }
 

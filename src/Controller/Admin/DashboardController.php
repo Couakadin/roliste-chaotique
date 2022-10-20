@@ -4,9 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Utils\TranslatorTrait;
 use App\Entity\Avatar\Avatar;
+use App\Entity\Editor\Editor;
 use App\Entity\Event\Event;
+use App\Entity\Genre\Genre;
+use App\Entity\System\System;
 use App\Entity\Table\Table;
-use App\Entity\Table\TableInscription;
 use App\Entity\User\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -46,7 +48,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud($this->trans('admin.avatar', ['%count%' => 2]), 'fas fa-image', Avatar::class);
         yield MenuItem::section($this->trans('admin.role_play'));
         yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-calendar', Table::class);
-        yield MenuItem::linkToCrud($this->trans('admin.table_inscription', ['%count%' => 2]), 'fas fa-calendar-plus', TableInscription::class);
+        yield MenuItem::linkToCrud($this->trans('admin.genre', ['%count%' => 2]), 'fas fa-film', Genre::class);
+        yield MenuItem::linkToCrud($this->trans('admin.editor', ['%count%' => 2]), 'fas fa-newspaper', Editor::class);
+        yield MenuItem::linkToCrud($this->trans('admin.system', ['%count%' => 2]), 'fas fa-dice', System::class);
         yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-calendar-days', Event::class);
     }
 

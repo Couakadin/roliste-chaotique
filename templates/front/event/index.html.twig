@@ -23,10 +23,10 @@
                 </p>
                 <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
                 <p class="event-header">
-                    {% if 1 >= event.table.members|length %}
-                        {{ event.table.members|length }} {{ 'ui.player'|trans }}
+                    {% if 1 >= event.participate|length %}
+                        {{ event.participate|length }} {{ 'ui.player'|trans }}
                     {% else %}
-                        {{ event.table.members|length }} {{ 'ui.players'|trans }}
+                        {{ event.participate|length }} {{ 'ui.players'|trans }}
                     {% endif %}
                 </p>
                 <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>

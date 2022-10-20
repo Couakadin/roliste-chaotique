@@ -10,21 +10,12 @@ use Doctrine\Persistence\ObjectManager;
 class TableFixtures extends Fixture implements OrderedFixtureInterface
 {
     public const TABLES = [
-        'Donjons et Dragons',
         'Symbaroum',
         'Coriolis, le Troisième Horizon',
-        'Cthulhu',
         'Les Oubliés',
         'Alien',
-        'Cyberpunk RED',
-        'Pathfinder',
-        'Naheulbeuk',
-        'Shadowrun',
-        'Pavillon noir',
-        'Vampire : La Mascarade',
-        'Chroniques Oubliées',
-        'L\'œil noir',
-        'Tales from the Loop'
+        'Tales from the Loop',
+        'Things from the Flood',
     ];
 
     public function load(ObjectManager $manager): void

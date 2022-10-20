@@ -5,7 +5,6 @@ namespace App\Entity\User;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
-use App\Entity\Table\TableInscription;
 use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
 use DateTime;
@@ -78,12 +77,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participate')]
     private Collection $eventParticipate;
-
-    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'members')]
-    private Collection $tables;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TableInscription::class, orphanRemoval: true)]
-    private Collection $tableInscriptions;
 
     public function __construct()
     {
@@ -352,63 +345,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->eventParticipate->removeElement($eventParticipate)) {
             $eventParticipate->removeParticipate($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Table>
-     */
-    public function getTables(): Collection
-    {
-        return $this->tables;
-    }
-
-    public function addTable(Table $table): self
-    {
-        if (!$this->tables->contains($table)) {
-            $this->tables->add($table);
-            $table->addMember($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTable(Table $table): self
-    {
-        if ($this->tables->removeElement($table)) {
-            $table->removeMember($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, TableInscription>
-     */
-    public function getTableInscriptions(): Collection
-    {
-        return $this->tableInscriptions;
-    }
-
-    public function addTableInscription(TableInscription $tableInscription): self
-    {
-        if (!$this->tableInscriptions->contains($tableInscription)) {
-            $this->tableInscriptions->add($tableInscription);
-            $tableInscription->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTableInscription(TableInscription $tableInscription): self
-    {
-        if ($this->tableInscriptions->removeElement($tableInscription)) {
-            // set the owning side to null (unless already changed)
-            if ($tableInscription->getUser() === $this) {
-                $tableInscription->setUser(null);
-            }
         }
 
         return $this;

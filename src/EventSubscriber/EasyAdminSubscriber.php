@@ -2,10 +2,8 @@
 
 namespace App\EventSubscriber;
 
-use App\Email\Email;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Table\Table;
-use App\Entity\Table\TableInscription;
 use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent;
@@ -15,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
@@ -24,7 +21,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         private readonly EntityManagerInterface      $entityManager,
         private readonly UserPasswordHasherInterface $hash,
         private readonly ParameterBagInterface       $parameterBag,
-        private readonly Email                       $email
     )
     {
     }
@@ -41,7 +37,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => ['addUser'],
             AfterEntityDeletedEvent::class    => ['deleteImage'],
             BeforeEntityDeletedEvent::class   => ['removeRelation'],
-            AfterEntityUpdatedEvent::class    => ['emailTableInscription']
         ];
     }
 
@@ -99,40 +94,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             foreach ($users as $user) {
                 $entity->removeUser($user);
             }
-        }
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function emailTableInscription(AfterEntityUpdatedEvent $event)
-    {
-        $entity = $event->getEntityInstance();
-
-        if (!($entity instanceof TableInscription)) {
-            return;
-        }
-
-        if (TableInscription::STATUS['accepted'] === $entity->getStatus()) {
-            if ($entity->isEmailSending()) {
-                $this->email->tableInscription('accepted', $entity->getUser(), $entity->getTable());
-            }
-
-            $tableRepo = $this->entityManager->getRepository(Table::class);
-            $table = $tableRepo->find($entity->getTable());
-            $table->addMember($entity->getUser());
-
-            $this->entityManager->flush();
-        } elseif (TableInscription::STATUS['declined'] === $entity->getStatus()) {
-            if ($entity->isEmailSending()) {
-                $this->email->tableInscription('declined', $entity->getUser(), $entity->getTable());
-            }
-
-            $tableRepo = $this->entityManager->getRepository(Table::class);
-            $table = $tableRepo->find($entity->getTable());
-            $table->removeMember($entity->getUser());
-
-            $this->entityManager->flush();
         }
     }
 }

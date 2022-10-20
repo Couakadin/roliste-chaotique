@@ -34,7 +34,7 @@ class ContactController extends AbstractController
 
             $this->addFlash('success', $this->translator->trans('flash.contact.success'));
 
-            return $this->redirectToRoute('security.contact.index');
+            return $this->redirectToRoute('contact.index');
         }
 
         return $this->render('@front/security/contact.html.twig', [

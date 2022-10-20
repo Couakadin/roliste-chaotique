@@ -15,38 +15,44 @@
             <div class="card">
                 <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
                 <div class="card_body">
-                    <p>{{ 'ui.creation_date'|trans|capitalize }} : {{ table.createdAt|ago }}</p>
-                    <p>{{ 'ui.members'|trans|capitalize }} :</p>
-                    {% for member in table.members %}
-                        <a href="{{ path('account.index', {'slug': member.slug}) }}">{{ member.username }}</a>
-                        {% if not loop.last %}<span class="mx-1">|</span>{% endif %}
-                    {% else %}
-                        {{ 'ui.no_item'|trans|capitalize }}
-                    {% endfor %}
+                    <p>
+                        {{ 'ui.genre'|trans|capitalize }} :
+                        {% for genre in table.genre %}
+                            {{ genre.name }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ 'ui.editor'|trans|capitalize }} :
+                        {% if table.editor is not null %}
+                            {% set editor = table.editor %}
 
-                    <div class="mt2 flex space-between">
-                        <form action="{{ path('table.show', { 'slug': table.slug }) }}" method="post">
-                            {% if app.user and tableInscription is not null %}
-                                {% if 'waiting' is same as tableInscription.status %}
-                                    <p class="btn-primary">{{ 'ui.i_join_waiting'|trans|capitalize }}</p>
-                                {% elseif 'declined' is same as tableInscription.status %}
-                                    <p class="btn-ternary">{{ 'ui.i_join_declined'|trans|capitalize }}</p>
-                                {% elseif 'accepted' is same as tableInscription.status %}
-                                    <input type="hidden" name="join" value="false">
-                                    <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
-                                    <button type="submit" class="btn-secondary">
-                                        {{ 'ui.i_no_join'|trans|capitalize }}
-                                    </button>
-                                {% endif %}
-                            {% elseif app.user and tableInscription is null %}
-                                <input type="hidden" name="join" value="true">
-                                <input type="hidden" name="token" value="{{ csrf_token('join-table') }}"/>
-                                <button type="submit" class="btn-primary">
-                                    {{ 'ui.i_ask_join'|trans|capitalize }}
-                                </button>
+                            {% if editor.url is not null %}
+                                <a href="{{ editor.url }}" target="_blank">{{ editor.name }}</a>
+                            {% else %}
+                                {{ editor.name }}
                             {% endif %}
-                        </form>
-                    </div>
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ 'ui.system'|trans|capitalize }} :
+                        {% if table.system is not null %}
+                            {{ table.system.name }}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ 'ui.mature'|trans|capitalize }} :
+                        {% if table.maturity is not null %}
+                            {{ table.maturity ~ ' ans' }}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
                 </div>
             </div>
 

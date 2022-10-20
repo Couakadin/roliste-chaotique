@@ -2,8 +2,10 @@
 
 namespace App\Entity\Table;
 
+use App\Entity\Editor\Editor;
 use App\Entity\Event\Event;
-use App\Entity\User\User;
+use App\Entity\Genre\Genre;
+use App\Entity\System\System;
 use App\Repository\Table\TableRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,6 +36,9 @@ class Table
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $picture = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $maturity = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
@@ -48,18 +53,20 @@ class Table
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tables')]
-    #[ORM\JoinTable(name: 'rc_table_member')]
-    private Collection $members;
+    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'tables')]
+    #[ORM\JoinTable(name: 'rc_table_genre')]
+    private Collection $genre;
 
-    #[ORM\OneToMany(mappedBy: 'table', targetEntity: TableInscription::class, orphanRemoval: true)]
-    private Collection $tableInscriptions;
+    #[ORM\ManyToOne(inversedBy: 'tables')]
+    private ?Editor $editor = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tables')]
+    private ?System $system = null;
 
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->members = new ArrayCollection();
-        $this->tableInscriptions = new ArrayCollection();
+        $this->genre = new ArrayCollection();
     }
 
     public function __toString()
@@ -116,6 +123,18 @@ class Table
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getMaturity(): ?int
+    {
+        return $this->maturity;
+    }
+
+    public function setMaturity(?int $maturity): self
+    {
+        $this->maturity = $maturity;
 
         return $this;
     }
@@ -185,55 +204,49 @@ class Table
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Genre>
      */
-    public function getMembers(): Collection
+    public function getGenre(): Collection
     {
-        return $this->members;
+        return $this->genre;
     }
 
-    public function addMember(User $member): self
+    public function addGenre(Genre $genre): self
     {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
+        if (!$this->genre->contains($genre)) {
+            $this->genre->add($genre);
         }
 
         return $this;
     }
 
-    public function removeMember(User $member): self
+    public function removeGenre(Genre $genre): self
     {
-        $this->members->removeElement($member);
+        $this->genre->removeElement($genre);
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, TableInscription>
-     */
-    public function getTableInscriptions(): Collection
+    public function getEditor(): ?Editor
     {
-        return $this->tableInscriptions;
+        return $this->editor;
     }
 
-    public function addTableInscription(TableInscription $tableInscription): self
+    public function setEditor(?Editor $editor): self
     {
-        if (!$this->tableInscriptions->contains($tableInscription)) {
-            $this->tableInscriptions->add($tableInscription);
-            $tableInscription->setTables($this);
-        }
+        $this->editor = $editor;
 
         return $this;
     }
 
-    public function removeTableInscription(TableInscription $tableInscription): self
+    public function getSystem(): ?System
     {
-        if ($this->tableInscriptions->removeElement($tableInscription)) {
-            // set the owning side to null (unless already changed)
-            if ($tableInscription->getTables() === $this) {
-                $tableInscription->setTables(null);
-            }
-        }
+        return $this->system;
+    }
+
+    public function setSystem(?System $system): self
+    {
+        $this->system = $system;
 
         return $this;
     }

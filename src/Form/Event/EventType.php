@@ -4,10 +4,7 @@ namespace App\Form\Event;
 
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
-use App\Entity\User\User;
 use App\Entity\Zone\Zone;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,8 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -30,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class EventType extends AbstractType
 {
-    public function __construct(private readonly Security $security, private readonly EntityManagerInterface $entityManager){}
+    public function __construct(){}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -103,11 +98,6 @@ class EventType extends AbstractType
                 'label'         => 'ui.table',
                 'class'         => Table::class,
                 'choice_label'  => 'name',
-                'query_builder' => function (EntityRepository $entityRepository) {
-                    return $entityRepository->createQueryBuilder('t')
-                        ->where(':user MEMBER OF t.members')
-                        ->setParameter('user', $this->security->getUser());
-                },
                 'constraints'   => [new Valid()]
             ])
             ->add('zone', EntityType::class, [
