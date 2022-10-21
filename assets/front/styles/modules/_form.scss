@@ -35,6 +35,31 @@
   background-color : hsla(var(--clr-widget), .2);
 }
 
+.form-search {position : relative;}
+
+.form-search input {
+  display          : block;
+  min-height       : calc(var(--gap) * 4);
+  padding-right    : 2rem;
+  outline          : none;
+  border           : none;
+  border-bottom    : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  background-color : hsl(var(--clr-light));
+  color            : hsl(var(--clr-dark));
+  transition       : all .3s ease;
+
+  &:focus:invalid {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-danger));}
+
+  &:focus:valid {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-success));}
+}
+
+.form-search button[type='submit'] {
+  position : absolute;
+  top      : 0;
+  right    : 0;
+  width    : 1.5rem;
+}
+
 .form-container {
   position : relative;
 

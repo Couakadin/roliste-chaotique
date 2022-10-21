@@ -38,4 +38,22 @@ class EventRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function search(?string $search)
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.table', 't')
+            ->leftJoin('e.zone', 'z')
+            ->leftJoin('e.master', 'm')
+            ->where(
+                'e.name LIKE :search OR 
+                t.name LIKE :search OR
+                z.locality LIKE :search OR
+                m.username LIKE :search
+                ')
+            ->orderBy('e.createdAt', 'DESC')
+            ->setParameter(':search', '%'.$search.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

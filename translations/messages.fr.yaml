@@ -152,6 +152,7 @@ ui:
   reset: réinitialiser
   reset_password: réinitialiser mot de passe
   search: recherche
+  search_event: rechercher un événement
   see_all_tables: voir toutes les tables
   send: envoyer
   sign_in: se connecter

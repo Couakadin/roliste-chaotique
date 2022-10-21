@@ -8,6 +8,7 @@ use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,11 +22,19 @@ class EventController extends AbstractController
     #[Route('/', name: 'event.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        $form = $this->createForm(SearchType::class, null, ['method' => 'GET']);
+        $form->handleRequest($request);
+
         $eventRepo = $this->entityManager->getRepository(Event::class);
-        $events = $paginator->paginate($eventRepo->findBy([], ['createdAt' => 'DESC']), $request->query->getInt('page', 1), 15);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $events = $paginator->paginate($eventRepo->search($form->getData()), $request->query->getInt('page', 1), 5);
+        } else {
+            $events = $paginator->paginate($eventRepo->findBy([], ['createdAt' => 'DESC']), $request->query->getInt('page', 1), 5);
+        }
 
         return $this->render('@front/event/index.html.twig', [
-            'events' => $events
+            'events'     => $events,
+            'searchForm' => $form->createView()
         ]);
     }
 
