@@ -163,6 +163,9 @@ ui:
   slug: slug
   subject: sujet
   username: nom d'utilisateur
+  verify_email: vérifier l'e-mail
+  verify_email_warning: |
+    Afin de pouvoir éditer votre compte, merci de vérifier votre e-mail.
   zone: lieu d'événement
   participant: participants
   no_participant: aucun participant

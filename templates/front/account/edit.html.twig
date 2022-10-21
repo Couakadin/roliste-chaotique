@@ -6,93 +6,103 @@
 {% block body %}
     {% include '@front/account/_menu.html.twig' %}
 
-    <section class="container mt2">
-        <div class="card">
-            <h2 class="card-title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
-            {{ form_start(formAvatar) }}
+    {% if app.user.isVerified %}
+        <section class="container mt2">
+            <div class="card">
+                <h2 class="card-title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
+                {{ form_start(formAvatar) }}
 
-            <div class="card-body my2 flex gap-1 flex-wrap">
-                {% for choice in formAvatar.avatar.vars.choices %}
-                    <label for="avatar-{{ choice.data.id }}" class="radio-label">
-                        <input value="{{ choice.value }}" type="radio" class="radio"
-                               name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}"
-                                {% if app.user.avatar and choice.data.path is same as app.user.avatar.path %}checked{% endif %}>
-                        <span class="radio-border"></span>
-                        <img alt="{{ choice.data.name }}" class="rounded"
-                             src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
-                    </label>
-                {% endfor %}
-                <div class="color-danger">
-                    {{ form_errors(formAvatar.avatar) }}
+                <div class="card-body my2 flex gap-1 flex-wrap">
+                    {% for choice in formAvatar.avatar.vars.choices %}
+                        <label for="avatar-{{ choice.data.id }}" class="radio-label">
+                            <input value="{{ choice.value }}" type="radio" class="radio"
+                                   name="{{ formAvatar.avatar.vars.full_name }}" id="avatar-{{ choice.data.id }}"
+                                   {% if app.user.avatar and choice.data.path is same as app.user.avatar.path %}checked{% endif %}>
+                            <span class="radio-border"></span>
+                            <img alt="{{ choice.data.name }}" class="rounded"
+                                 src="{{ asset('/uploads/images/avatars/'~ choice.data.path)|imagine_filter('avatar_account') }}">
+                        </label>
+                    {% endfor %}
+                    <div class="color-danger">
+                        {{ form_errors(formAvatar.avatar) }}
+                    </div>
                 </div>
+                {{ form_widget(formAvatar._token) }}
+                <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
+                {{ form_end(formAvatar, {render_rest: false}) }}
             </div>
-            {{ form_widget(formAvatar._token) }}
-            <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
-            {{ form_end(formAvatar, {render_rest: false}) }}
-        </div>
-    </section>
+        </section>
 
-    <section class="container mt2">
-        <div class="card">
-            <h2 class="card-title">{{ 'ui.edit_profile'|trans|capitalize }}</h2>
-            {{ form_start(formProfile) }}
-            <div class="card-body flex-no-mobile gap-2">
-                <div class="form-group flex-grow">
-                    {{ form_label(formProfile.email) }}
-                    {{ form_widget(formProfile.email) }}
-                    <div class="color-danger">
-                        {{ form_errors(formProfile.email) }}
+        <section class="container mt2">
+            <div class="card">
+                <h2 class="card-title">{{ 'ui.edit_profile'|trans|capitalize }}</h2>
+                {{ form_start(formProfile) }}
+                <div class="card-body flex-no-mobile gap-2">
+                    <div class="form-group flex-grow">
+                        {{ form_label(formProfile.email) }}
+                        {{ form_widget(formProfile.email) }}
+                        <div class="color-danger">
+                            {{ form_errors(formProfile.email) }}
+                        </div>
+                    </div>
+                    <div class="form-group flex-grow">
+                        {{ form_label(formProfile.username) }}
+                        {{ form_widget(formProfile.username) }}
+                        <div class="color-danger">
+                            {{ form_errors(formProfile.username) }}
+                        </div>
                     </div>
                 </div>
-                <div class="form-group flex-grow">
-                    {{ form_label(formProfile.username) }}
-                    {{ form_widget(formProfile.username) }}
-                    <div class="color-danger">
-                        {{ form_errors(formProfile.username) }}
-                    </div>
-                </div>
+                <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
+                {{ form_end(formProfile) }}
             </div>
-            <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
-            {{ form_end(formProfile) }}
-        </div>
-    </section>
+        </section>
 
-    <section class="container mt2">
-        <div class="card">
-            <h2 class="card-title">{{ 'ui.edit_password'|trans|capitalize }}</h2>
-            {{ form_start(formPassword) }}
-            <div class="card-body flex-no-mobile gap-2">
-                <div class="form-group flex-grow">
-                    {{ form_label(formPassword.password.first) }}
-                    <div class="form-container">
-                        {{ form_widget(formPassword.password.first) }}
-                        <i class="i-password">
-                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
-                                 alt="{{ 'tooltip.tooltip'|trans }}"
-                                 width="20" height="20">
-                        </i>
+        <section class="container mt2">
+            <div class="card">
+                <h2 class="card-title">{{ 'ui.edit_password'|trans|capitalize }}</h2>
+                {{ form_start(formPassword) }}
+                <div class="card-body flex-no-mobile gap-2">
+                    <div class="form-group flex-grow">
+                        {{ form_label(formPassword.password.first) }}
+                        <div class="form-container">
+                            {{ form_widget(formPassword.password.first) }}
+                            <i class="i-password">
+                                <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
+                                     alt="{{ 'tooltip.tooltip'|trans }}"
+                                     width="20" height="20">
+                            </i>
+                        </div>
+                        <div class="color-danger">
+                            {{ form_errors(formPassword.password.first) }}
+                        </div>
                     </div>
-                    <div class="color-danger">
-                        {{ form_errors(formPassword.password.first) }}
+                    <div class="form-group flex-grow">
+                        {{ form_label(formPassword.password.second) }}
+                        <div class="form-container">
+                            {{ form_widget(formPassword.password.second) }}
+                            <i class="i-password">
+                                <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
+                                     alt="{{ 'tooltip.tooltip'|trans }}"
+                                     width="20" height="20">
+                            </i>
+                        </div>
+                        <div class="color-danger">
+                            {{ form_errors(formPassword.password.second) }}
+                        </div>
                     </div>
                 </div>
-                <div class="form-group flex-grow">
-                    {{ form_label(formPassword.password.second) }}
-                    <div class="form-container">
-                        {{ form_widget(formPassword.password.second) }}
-                        <i class="i-password">
-                            <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}"
-                                 alt="{{ 'tooltip.tooltip'|trans }}"
-                                 width="20" height="20">
-                        </i>
-                    </div>
-                    <div class="color-danger">
-                        {{ form_errors(formPassword.password.second) }}
-                    </div>
-                </div>
+                <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
+                {{ form_end(formPassword) }}
             </div>
-            <button type="submit" class="btn-primary">{{ 'ui.modify'|trans|capitalize }}</button>
-            {{ form_end(formPassword) }}
-        </div>
-    </section>
+        </section>
+    {% else %}
+        <section class="container mt2">
+            <div class="card flash-warning">{{ 'ui.verify_email_warning'|trans|UCFirst }}
+            <a href="{{ path('security.registration.verify_resend_email') }}" class="btn-primary mt2 flex-center">
+                {{ 'ui.verify_email'|trans|capitalize }}
+            </a>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}

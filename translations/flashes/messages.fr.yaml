@@ -4,6 +4,7 @@ flash:
     guild: demande d'adhésion envoyée !
   email:
     not_found: e-mail inconnu en base de donnée.
+    verify_sent: demande de vérification e-mail envoyée.
   event:
     create:
       success: |
@@ -46,3 +47,5 @@ flash:
       error: token invalide.
     new:
       success: mot de passe réinitialisé.
+  verify_email:
+    not_login: vous devez être connecté pour continuer.

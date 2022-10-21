@@ -93,7 +93,7 @@ class RegistrationController extends AbstractController
 
         $now = new DateTime('now');
 
-        $tokenRepository = $this->entityManager->getRepository('App:Token\Token');
+        $tokenRepository = $this->entityManager->getRepository(Token::class);
         $token = $tokenRepository->findOneBy(['token' => $request->query->get('token')]);
 
         if (!$token || $this->getUser()->isVerified()) {
@@ -116,16 +116,30 @@ class RegistrationController extends AbstractController
 
         $this->addFlash('success', ucfirst($this->translator->trans('flash.token.success_email')));
 
-        return $this->redirectToRoute('home.index');
+        return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
     }
 
 
     /**
      * @Route("/verify/resend", name="security.registration.verify_resend_email")
+     * @throws TransportExceptionInterface
+     * @throws Exception
      */
     #[Route('/verify/resend', name: 'registration.resend-verify-email')]
     public function resendVerifyEmail(): Response
     {
-        return $this->render('@front/security/resend_verify_email.html.twig');
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('home.index');
+        }
+
+        $newToken = new Token($this->getUser(), Token::EMAIL_VERIFY);
+        $this->entityManager->persist($newToken);
+        $this->entityManager->flush();
+
+        $this->email->emailVerify($this->getUser(), $newToken, $this->translator->trans('email.verify_email.subject'));
+
+        $this->addFlash('success', ucfirst($this->translator->trans('flash.email.verify_sent')));
+
+        return $this->render('@front/account/edit.html.twig');
     }
 }
