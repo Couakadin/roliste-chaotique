@@ -1,0 +1,51 @@
+flash:
+  account:
+    edit: profil modifié avec succès !
+    guild: demande d'adhésion envoyée !
+  email:
+    not_found: e-mail inconnu en base de donnée.
+    verify_sent: demande de vérification e-mail envoyée.
+  event:
+    create:
+      success: |
+        l'événement %event% a été créé avec succès.
+    edit:
+      success: |
+        l'événement %event% a été modifié avec succès.
+    delete:
+      success: |
+        l'événement %event% a été supprimé avec succès.
+    participate:
+      add: |
+        Vous êtes inscrit à cet événement.
+      remove: |
+        Vous êtes désinscrit de cet événement.
+  contact:
+    success: votre message a bien été envoyé. Une réponse arrivera dans les plus brefs délais.
+  guild:
+    edit: groupe modifié avec succès !
+    new: le groupe %guild% a été créé avec succès !
+  csrf:
+    invalid: csrf_token invalide. Veuillez réessayer votre requête.
+  register:
+    success: |
+      Bienvenue %user%,
+      un email de confirmation a été envoyé.
+  table:
+    join:
+      in: |
+        votre demande d'adhésion a été envoyée.
+      out: |
+        vous avez quitté cette table.
+  token:
+    invalid: requête invalide.
+    expired: token expiré. Veuillez renouveler la demande via les paramètres du compte.
+    success_email: email correctement vérifié.
+  forgotten_password:
+    send:
+      success: un lien de réinitialisation a été envoyé à cette adresse email.
+      error: token invalide.
+    new:
+      success: mot de passe réinitialisé.
+  verify_email:
+    not_login: vous devez être connecté pour continuer.

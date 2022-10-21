@@ -1,0 +1,8 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.account'|trans({'%user%': app.user.username})|capitalize %}
+{% block title 'ui.account'|trans|capitalize %}
+
+{% block body %}
+    {% include '@front/account/_menu.html.twig' %}
+{% endblock %}

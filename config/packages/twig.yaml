@@ -1,6 +1,8 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-
-when@test:
-    twig:
-        strict_variables: true
+    paths:
+        '%kernel.project_dir%/templates/front': front
+        '%kernel.project_dir%/templates/ui': ui
+        '%kernel.project_dir%/templates/email': email
+        '%kernel.project_dir%/public': public
+        '%kernel.project_dir%/templates/bundles': bundles

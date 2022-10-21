@@ -1,0 +1,9 @@
+{% extends '@email/email.html.twig' %}
+
+{% block subject %}
+    {{ subject }}
+{% endblock %}
+
+{% block email %}
+    {{ ('email.verify_email.body'|trans({'%signedUrl%': signedUrl, '%expiredAt%': expiredAt|format_datetime('medium', 'short')})|capitalize)|raw }}
+{% endblock %}

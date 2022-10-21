@@ -1,0 +1,39 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.contact'|trans %}
+{% block title 'ui.contact'|trans|capitalize %}
+
+{% block body %}
+    <div class="container mt2">
+        <h1 class="h1 mb2">{{ 'ui.contact'|trans|capitalize }}</h1>
+        <div class="card dark">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.subject) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.message) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.keySentence) }}
+                <div class="form-container">
+                    {{ form_widget(form.keySentence) }}
+                    <i data-tooltip="{{ ('tooltip.key_sentence'|trans({'%key%' : 'réussite critique'})|capitalize)|raw }}">
+                        <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                             width="20" height="20">
+                    </i>
+                </div>
+                <div class="color-danger">
+                    {{ form_errors(form.keySentence) }}
+                </div>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn-secondary">{{ 'ui.send'|trans }}</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

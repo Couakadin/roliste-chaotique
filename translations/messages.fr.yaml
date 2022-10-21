@@ -1,0 +1,453 @@
+error:
+  general:
+    title: erreur générale
+    body: |
+      Une erreur est survenue. Nos gobelins sont déjà en route pour réparer tout ça.
+      En attendant, vous pouvez revenir <a href="%link%" class="link-line">ici</a>.
+  404:
+    title: erreur 404
+    body: |
+      La page que vous cherchez est introuvable. Nos gobelins sont déjà en route pour la débusquer.
+      En attendant, vous pouvez revenir <a href="%link%" class="link-line">ici</a>.
+    or_chance: Ou tentez votre chance contre Rolie...
+    guess: deviner
+    welcome: |
+      <p>Bienvenue, aventurier !</p>
+      <p>Devine combien de voyageurs j'ai massacré aujourd'hui et je te laisserai partir !
+      <br>Tu as droit à <span id="rolie-chance"></span>.</p>
+
+footer: |
+  rôliste-chaotique.be est une initiative afin d'aider une communauté de jeu de rôle avec son organisation, que ce soit via un agenda, la recherche d'un compagnon ou d'une table de jeu.
+  Rôliste chaotique se concentre sur l'affichage simples de ses événements et de ses groupes afin de concentrer sur le principal : le jeu de rôle.
+
+meta:
+  description:
+    events:
+      index: |
+        Découvrez touts les événements sur Rôliste chaotique.
+      show: |
+        Toutes les informations sur l'événement %event% de Rôliste chaotique.
+      new: |
+        Créez un nouvel événement sur Rôliste chaotique.
+      edit: |
+        Modifiez votre événement sur Rôliste chaotique
+    home: |
+      Rôliste chaotique est un club de jeu de rôle. Découvrez notre agenda et organisez une séance chez nous.
+    login: |
+      Connectez-vous à Rôliste Chaotique et retrouvez nos tables de jeu de rôle ainsi que nos compagnons.
+    register: |
+      Créez un compte sur Rôliste chaotique et découvrez nos tables de jeux.
+    forgotten_password: |
+      Mot de passe oublié ? Réinitialisez votre mot de passe sur Rôliste chaotique.
+    agree_terms: |
+      Rôliste chaotique comporte certains termes et conditions d'utilisation. Veuillez lire ceux-ci avant de continuer à naviguer sur le site.
+    privacy_policy: |
+      Politique de confidientialité de Rôliste chaotique.
+    cookie_policy: |
+      Rôliste chaotique utilise des cookies pour une meilleure expérience. Veuillez lire notre politique sur les cookies.
+    contact: |
+      Besoin d'aide ? Contactez-nous sur Rôliste chaotique via notre formulaire de contact.
+    tables:
+      index: |
+        Découvrez toutes les tables de jeu de rôle sur Rôliste chaotique.
+      show: |
+        Tous les évènement et infos sur la table %table% de Rôliste chaotique.
+    account: Voir le profil de %user% sur Rôliste chaotique.
+
+ui:
+  about: à propos
+  account: compte
+  admin: administration
+  agree_terms: conditions d'utilisation
+  badges: badges
+  bg_color: couleur de fond
+  border_color: couleur des bordures
+  privacy_policy: politique de confidentialité
+  cookies_policy: politique de cookies
+  all_events: touts les événements
+  all_tables: toutes les tables
+  all_members: touts les membres
+  all_rights_reserved : tous droits réservés
+  campaign: campagne
+  chaotic_roleplayer: rôliste chaotique
+  connexion: connexion
+  contact: contact
+  content: contenu
+  create: créer
+  create_account: créer un compte
+  creation_date: date de création
+  date_start: date de départ
+  date_end: date de fin
+  date: date
+  days: jours
+  delete: supprimer
+  delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
+  description: description
+  discover_calendar: découvrez nos événements
+  dm: mj
+  edit: éditer
+  edit_avatar: changer d'avatar
+  edit_profile: modifier le profil
+  edit_password: changer le mot de passe
+  edit_groupe: modifier le groupe
+  edit_event: modifier l'événement %event%
+  editor: éditeur
+  email: e-mail
+  events: événements
+  event: événement
+  exit_impersonification: quitter impersonification
+  find_table: trouvez une table avec votre jeu préféré !
+  forgotten_password: mot de passe oublié ?
+  table: table
+  tables: tables
+  theme: thème
+  genre: genre
+  go_back: retour
+  hero_text: |
+    Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Créé courant 2019, la communauté n'a eu de cesse de grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement !
+  hero_title: |
+    Bienvenue au domaine <span class="main-mark">rôliste chaotique</span> !
+  home: accueil
+  i_participate: je participe
+  info_general: infos générales
+  info_members: infos membres
+  i_not_participate: je ne participe plus
+  i_validate: je valide
+  i_ask_join: faire une demande pour rejoindre cette table
+  i_no_join: quitter cette table
+  i_join_waiting: votre demande d'inscription est en attente
+  i_join_declined: votre demande d'inscription a été refusée
+  join_us: nous rejoindre
+  join_us_text: |
+    Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !
+  join_us_discord: rejoignez-nous sur Discord
+  key_sentence: phrase-clef
+  logout: déconnexion
+  last_login: dernière connexion
+  message: message
+  mature: âge requis
+  master: maître du jeu
+  members: membres
+  modify: modifier
+  name: nom
+  new_event: créer un nouvel événement
+  no_item: aucun élément disponible
+  no_specified: non précisé
+  one-shot: séance
+  online: en ligne
+  only_members: | 
+    vous devez être membre de la table %table% pour y participer.
+  or_connexion: ou se connecter ?
+  or_register: ou créer un compte ?
+  quick_links: liens rapides
+  password: mot de passe
+  picture: image
+  player: joueur
+  players: joueurs
+  profile: profil
+  public: public
+  register: créer un compte
+  registered: inscrit
+  remember_me: se souvenir de moi ?
+  reset: réinitialiser
+  reset_password: réinitialiser mot de passe
+  search: recherche
+  search_event: rechercher un événement
+  see_all_tables: voir toutes les tables
+  send: envoyer
+  sign_in: se connecter
+  sign_up: s'inscrire
+  system: système
+  type: type
+  understood: compris
+  slug: slug
+  subject: sujet
+  username: nom d'utilisateur
+  verify_email: vérifier l'e-mail
+  verify_email_warning: |
+    Afin de pouvoir éditer votre compte, merci de vérifier votre e-mail.
+  zone: lieu d'événement
+  participant: participants
+  no_participant: aucun participant
+
+tooltip:
+  tooltip: info-bulle
+  event_new_player: |
+    Veuillez choisir le nombre total de joueurs que vous désirez dans votre événement. 
+    <strong>Attention :</strong> vous n'êtes pas considérez comme joueur de cet événement.
+  key_sentence: |
+    afin de vérifier que vous n'êtes pas un robot, merci de retranscrire le message suivant dans le champ <em>phrase-clef</em> :
+    <strong>&lsquo;%key%&rsquo;</strong>.
+  forgotten_password: |
+    Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
+
+terms_and_conditions:
+  agree_terms:
+    body: |
+      Les présentes conditions générales ("contrat") définissent les conditions générales d'utilisation du site internet
+      <a target="_blank" rel="nofollow" class="link-color" href="https://www.roliste-chaotique.be">roliste-chaotique.be</a>
+      (« site internet » ou « service ») et tous ses produits et services connexes (collectivement, les « services »).
+      Cet accord est juridiquement relié entre vous ("Utilisateur", "vous" ou "votre") et l'opérateur de ce site Web ("opérateur", "nous", "nous" ou "notre").
+      Si vous concluez cet accord au nom d'une entreprise ou d'une autre entité juridique, vous déclarez que vous avez le pouvoir de lier cette entité à cet accord, auquel cas les termes "utilisateur", "vous" ou "votre" feront référence à une telle entité.
+      Si vous ne disposez pas d'une telle autorité, ou si vous n'êtes pas d'accord avec les termes de cet accord, vous ne devez pas accepter cet accord et ne pouvez pas accéder et utiliser le site internet et ses services.
+      En accédant et en utilisant le site internet et ses services, vous reconnaissez avoir lu, compris et accepté d'être lié par les termes du présent accord.
+      Vous reconnaissez que le présent accord est un contrat entre vous et l'opérateur, même s'il est électronique et n'est pas physiquement signé par vous, et qu'il régit votre utilisation du site internet et des services.
+  account_and_membership:
+    title: compte et adhésion
+    body: |
+      Si vous créez un compte sur le site internet, vous êtes responsable du maintien de la sécurité de votre compte et vous êtes entièrement responsable de toutes les activités qui se produisent sous le compte et de toute autre action entreprise en relation avec celui-ci.
+      Nous pouvons, sans y être obligés, surveiller et examiner les nouveaux comptes avant que vous puissiez vous connecter et commencer à utiliser les services.
+      La fourniture de fausses coordonnées de quelque nature que ce soit peut entraîner la résiliation de votre compte.
+      Vous devez nous informer immédiatement de toute utilisation non autorisée de votre compte ou de toute autre violation de la sécurité.
+      Nous ne serons pas responsables des actes ou omissions de votre part, y compris des dommages de toute nature subis à la suite de tels actes ou omissions.
+      Nous pouvons suspendre, désactiver ou supprimer votre compte (ou une partie de celui-ci) si nous déterminons que vous avez violé une disposition du présent accord ou que votre conduite ou votre contenu tendrait à nuire à notre réputation et à notre bonne volonté.
+      Si nous supprimons votre compte pour les raisons susmentionnées, vous ne pourrez pas vous réinscrire à nos services.
+      Nous pouvons bloquer votre adresse e-mail et votre adresse de protocole internet pour empêcher toute inscription ultérieure.
+  user_content:
+    title: contenu utilisateur
+    body: |
+      Nous ne possédons aucune donnée, information ou matériel (collectivement, le « contenu ») que vous soumettez sur le site internet dans le cadre de l'utilisation du service.
+      Vous serez seul responsable de l'exactitude, de la qualité, de l'intégrité, de la légalité, de la fiabilité, de la pertinence et de la propriété intellectuelle ou du droit d'utilisation de tout le contenu soumis.
+      Nous pouvons, mais n'avons aucune obligation de surveiller et d'examiner le contenu du site internet que vous avez soumis ou créé à l'aide de nos services.
+      Vous nous accordez l'autorisation d'accéder, de copier, de distribuer, de stocker, de transmettre, de reformater, d'afficher et d'exécuter le contenu de votre compte d'utilisateur uniquement dans le but de vous fournir les services.
+      Sans limiter aucune de ces représentations ou garanties, nous avons le droit, mais pas l'obligation, à notre seule discrétion, de refuser ou de supprimer tout contenu qui, à notre avis raisonnable, viole l'une de nos politiques ou est de quelque manière que ce soit nuisible, ou répréhensible.
+      Sauf autorisation expresse de votre part, votre utilisation du site internet et des services ne nous accorde pas la licence d'utiliser, de reproduire, d'adapter, de modifier, de publier ou de distribuer le contenu créé par vous ou stocké dans votre compte d'utilisateur à des fins commerciales, de marketing ou à des fins similaires.
+  adult_content:
+    title: contenu adulte
+    body: |
+      Veuillez noter qu'il peut y avoir certains contenus pour adultes ou matures disponibles sur le site internet. Lorsqu'il existe un contenu mature ou pour adultes, les personnes âgées de moins de 18 ans ou qui ne sont pas autorisées à accéder à ce contenu en vertu des lois de toute juridiction applicable ne peuvent pas accéder à ce contenu.
+      Si nous apprenons qu'une personne de moins de 18 ans cherche à effectuer une transaction via les services, nous aurons besoin d'un consentement parental vérifié, conformément à la loi sur la protection de la vie privée en ligne des enfants de 1998 ("COPPA").
+      Certaines zones du site internet et des services peuvent ne pas être accessibles aux enfants de moins de 18 ans en toutes circonstances.
+  backups:
+    title: sauvegardes
+    body: |
+      Nous ne sommes pas responsables du contenu résidant sur le site internet.
+      En aucun cas, nous ne serons tenus responsables de toute perte de contenu.
+      Il est de votre seule responsabilité de maintenir une sauvegarde appropriée de votre contenu.
+      Nonobstant ce qui précède, à certaines occasions et dans certaines circonstances, sans aucune obligation, nous pouvons être en mesure de restaurer tout ou partie de vos données qui ont été supprimées à partir d'une certaine date et heure lorsque nous avons pu sauvegarder des données pour notre propre fins.
+      Nous ne garantissons pas que les données dont vous avez besoin seront disponibles.
+  links_to_another_resources:
+    title: liens vers d'autres ressources
+    body: |
+      Bien que le site internet et les services puissent être liés à d'autres ressources (telles que des sites internet, des applications mobiles, etc.), nous n'impliquons pas, directement ou indirectement, une approbation, une association, un parrainage, une approbation ou une affiliation avec une ressource liée, sauf indication contraire ici-même.
+      Nous ne sommes pas responsables de l'examen ou de l'évaluation, et nous ne garantissons pas les offres de toute entreprise ou individu ou le contenu de leurs ressources.
+      Nous n'assumons aucune responsabilité pour les actions, produits, services et contenus de tout autre tiers.
+      Vous devez lire attentivement les déclarations légales et autres conditions d'utilisation de toute ressource à laquelle vous accédez via un lien sur le site internet.
+      Votre lien vers d'autres ressources hors site est à vos risques et périls.
+  intellectual property rights:
+    title: droits de propriété intellectuelle
+    body: |
+      « Droits de propriété intellectuelle » désigne tous les droits présents et futurs conférés par la loi, la loi commune ou l'équité dans ou en relation avec les droits d'auteur et les droits connexes, les marques, les dessins, les brevets, les inventions, la clientèle et le droit de poursuivre en justice pour commercialisation frauduleuse, les droits des inventions, les droits d'utilisation et tous les autres droits de propriété intellectuelle, dans chaque cas, qu'ils soient enregistrés ou non, y compris toutes les demandes et les droits de demander et d'être accordés, les droits de revendiquer la priorité de ces droits et tous les droits similaires ou équivalents ou formes de protection et tout autre résultat de l'activité intellectuelle qui subsiste ou subsistera maintenant ou à l'avenir dans n'importe quelle partie du monde.
+      Le présent accord ne vous transfère aucune propriété intellectuelle détenue par l'opérateur ou des tiers, et tous les droits, titres et intérêts dans et sur cette propriété resteront (entre les parties) uniquement avec l'opérateur.
+      Toutes les marques de commerce, marques de service, graphiques et logos utilisés en relation avec le site internet et les services sont des marques de commerce ou des marques déposées de l'opérateur ou de ses concédants de licence.
+      Les autres marques de commerce, marques de service, graphiques et logos utilisés en relation avec le site internet et les services peuvent être des marques de commerce d'autres tiers.
+      Votre utilisation du site internet et des services ne vous accorde aucun droit ou licence de reproduire ou d'utiliser autrement l'une des marques de commerce de l'opérateur ou de tiers.
+  changes_and_amendments:
+    title: changements et amendements
+    body: |
+      Nous nous réservons le droit de modifier le présent accord ou ses conditions relatives au site internet et aux services à tout moment, à notre discrétion.
+      Lorsque nous le ferons, nous réviserons la date de mise à jour au bas de cette page.
+      Nous pouvons également vous informer d'autres manières à notre discrétion, par exemple via les coordonnées que vous avez fournies.
+      Une version mise à jour du présent accord entrera en vigueur immédiatement après la publication de l'accord révisé, sauf indication contraire.
+      Votre utilisation continue du site internet et des services après la date d'entrée en vigueur de l'accord révisé (ou de tout autre acte spécifié à ce moment-là) constituera votre consentement à ces modifications.
+  acceptance_of_these_terms:
+    title: acceptation de ces termes
+    body: |
+      Vous reconnaissez que vous avez lu le présent accord et acceptez tous ses termes et conditions.
+      En accédant et en utilisant le site internet et les services, vous acceptez d'être lié par le présent accord.
+      Si vous n'acceptez pas de respecter les termes du présent accord, vous n'êtes pas autorisé à accéder ou à utiliser le site internet et ses services.
+  contacting_us:
+    title: nous contacter
+    body: |
+      Si vous avez des questions, des préoccupations ou des plaintes concernant le présent accord, nous vous encourageons à nous contacter utilisant les détails ci-dessous :
+      <a target="_blank" class="link-color" rel="nofollow" href="%path%">https://roliste-chaotique.be/contact</a>.
+  updated_at: Ce document a été modifié dernièrement le %updatedAt%.
+
+privacy_policy:
+  intro: |
+    Nous respectons votre vie privée et nous nous engageons à la protéger en nous conformant à cette politique de confidentialité ("politique"). 
+    Cette politique décrit les types d'informations que nous pouvons collecter auprès de vous ou que vous pouvez fournir ("informations personnelles") sur <a target="_blank" class="link-color" rel="nofollow" href="https://www.roliste-chaotique.be">roliste-chaotique.be</a> (« site internet » ou « service ») et tous ses produits et services connexes (collectivement, les « services »), et nos pratiques de collecte, d'utilisation, de maintenance, de protection, et divulguer ces informations personnelles. 
+    Il décrit également les choix qui s'offrent à vous concernant notre utilisation de vos informations personnelles et comment vous pouvez y accéder et les mettre à jour.
+    Cette politique est un accord juridiquement contraignant entre vous (« utilisateur », « vous » ou « votre ») et l'opérateur de ce site internet (« opérateur », « nous », « notre » ou « notre »). 
+    Si vous concluez cet accord au nom d'une entreprise ou d'une autre entité juridique, vous déclarez que vous avez le pouvoir de lier cette entité à cet accord, auquel cas les termes "Utilisateur", "vous" ou "votre" feront référence à une telle entité. 
+    Si vous ne disposez pas d'une telle autorité, ou si vous n'êtes pas d'accord avec les termes de cet accord, vous ne devez pas accepter cet accord et ne pouvez pas accéder et utiliser le site internet et les services. 
+    En accédant et en utilisant le site internet et les services, vous reconnaissez avoir lu, compris et accepté d'être lié par les termes de cette politique. 
+    Cette politique ne s'applique pas aux pratiques des entreprises que nous ne possédons ni ne contrôlons, ni aux personnes que nous n'employons ni ne gérons.
+  collection_of_personal_information:
+    title: collecte de renseignements personnels
+    body: |
+      Vous pouvez accéder et utiliser le site internet et les services sans nous dire qui vous êtes ni révéler aucune information par laquelle quelqu'un pourrait vous identifier en tant qu'individu spécifique et identifiable. 
+      Si, toutefois, vous souhaitez utiliser certaines des fonctionnalités proposées sur le site internet, il peut vous être demandé de fournir certaines informations personnelles (par exemple, votre nom et votre adresse e-mail).
+      Nous recevons et stockons toutes les informations que vous nous fournissez sciemment lorsque vous créez un compte, publiez du contenu ou remplissez des formulaires sur le site internet. Si nécessaire, ces informations peuvent inclure les éléments suivants :
+        <br>Détails du compte (tels que nom d'utilisateur, ID utilisateur unique, mot de passe, etc.)
+        <br>Coordonnées (telles que l'adresse e-mail, le numéro de téléphone, etc.)
+        <br>Données de géolocalisation de votre appareil (telles que la latitude et la longitude)
+        <br>Tout autre matériel que vous nous soumettez volontairement (tel que des articles, des images, des commentaires, etc.)
+      Vous pouvez choisir de ne pas nous fournir vos informations personnelles, mais vous ne pourrez peut-être pas profiter de certaines fonctionnalités du site internet. 
+      Les utilisateurs qui ne sont pas sûrs des informations obligatoires sont invités à nous contacter.
+  privacy_of_children:
+    title: confidientalité des enfants
+    body: |
+      Nous ne collectons sciemment aucune information personnelle d'enfants de moins de 13 ans. 
+      Si vous avez moins de 13 ans, veuillez ne pas soumettre d'informations personnelles via le site internet et les services. 
+      Si vous avez des raisons de croire qu'un enfant de moins de 13 ans nous a fourni des informations personnelles via le site internet et les services, veuillez nous contacter pour nous demander de supprimer les informations personnelles de cet enfant de nos services.
+      Nous encourageons les parents et les tuteurs légaux à surveiller l'utilisation d'internet par leurs enfants et à contribuer à l'application de cette politique en demandant à leurs enfants de ne jamais fournir d'informations personnelles via le site internet et les services sans leur autorisation. 
+      Nous demandons également à tous les parents et tuteurs légaux qui supervisent la garde des enfants de prendre les précautions nécessaires pour s'assurer que leurs enfants reçoivent l'instruction de ne jamais divulguer d'informations personnelles lorsqu'ils sont en ligne sans leur permission.
+  use_and_processing_of_collected_information:
+    title: use and processing of collected information
+    body: |
+      Nous agissons en tant que contrôleur de données et processeur de données lors du traitement des informations personnelles, sauf si nous avons conclu un accord de traitement de données avec vous, auquel cas vous seriez le contrôleur de données et nous serions le processeur de données.
+      Notre rôle peut également différer en fonction de la situation spécifique impliquant des informations personnelles. Nous agissons en qualité de contrôleur de données lorsque nous vous demandons de soumettre vos informations personnelles qui sont nécessaires pour garantir votre accès et votre utilisation du site internet et ses services. Dans de tels cas, nous sommes un contrôleur de données car nous déterminons les finalités et les moyens du traitement des informations personnelles.
+      Afin de mettre le site internet et ses services à votre disposition, ou pour répondre à une obligation légale, nous pouvons être amenés à collecter et à utiliser certaines informations personnelles. 
+      Si vous ne fournissez pas les informations que nous demandons, nous pourrions ne pas être en mesure de vous fournir les produits ou services demandés. 
+      Toutes les informations que nous recueillons auprès de vous peuvent être utilisées aux fins suivantes :
+      <br>- Créer et gérer des comptes d'utilisateurs
+      <br>- Améliorer l'expérience utilisateur
+      <br>- Exécuter et exploiter le site internet et ses services
+      <br>
+      Le traitement de vos informations personnelles dépend de la manière dont vous interagissez avec le site internet et ses services, de l'endroit où vous vous trouvez dans le monde et si l'une des conditions suivantes s'applique : (i) vous avez donné votre consentement pour une ou plusieurs finalités spécifiques ; (ii) la fourniture d'informations est nécessaire à l'exécution d'un accord avec vous et/ou pour toute obligation précontractuelle de celui-ci ; (iii) le traitement est nécessaire au respect d'une obligation légale à laquelle vous êtes soumis ; (iv) le traitement est lié à une tâche effectuée dans l'intérêt public ou dans l'exercice de l'autorité publique dont nous sommes investis ; (v) le traitement est nécessaire aux fins des intérêts légitimes poursuivis par nous ou par un tiers. 
+      Nous pouvons également combiner ou agréger certaines de vos informations personnelles afin de mieux vous servir et d'améliorer et de mettre à jour notre site Web et nos services.
+      Notez qu'en vertu de certaines législations, nous pouvons être autorisés à traiter des informations jusqu'à ce que vous vous y opposiez en vous désinscrivant, sans avoir à vous fier au consentement ou à toute autre base juridique. Dans tous les cas, nous serons heureux de clarifier la base juridique spécifique qui s'applique au traitement, et en particulier si la fourniture d'informations personnelles est une exigence légale ou contractuelle, ou une exigence nécessaire pour conclure un contrat.
+  managing_information:
+    title: gestion des informations
+    body: |
+      Vous pouvez supprimer certaines informations personnelles que nous détenons à votre sujet. Les informations personnelles que vous pouvez supprimer peuvent changer à mesure que le site internet et ses services changent. 
+      Cependant, lorsque vous supprimez des informations personnelles, nous pouvons conserver une copie des informations personnelles non révisées dans nos dossiers pendant la durée nécessaire pour nous conformer à nos obligations envers nos sociétés affiliées et partenaires, et aux fins décrites ci-dessous. 
+      Si vous souhaitez supprimer vos informations personnelles ou supprimer définitivement votre compte, vous pouvez le faire en nous contactant.
+  disclosure_of_information:
+    title: divulgation d'informations
+    body: |
+      Afin de maintenir le plus haut niveau de confidentialité et de protéger pleinement vos informations personnelles, nous ne partageons vos informations personnelles avec personne et pour quelque raison que ce soit.
+  retention_of_information:
+    title: conservation des informations
+    body: |
+      Nous conserverons et utiliserons vos informations personnelles pendant la période nécessaire tant que votre compte d'utilisateur reste actif, pour faire respecter nos accords, résoudre les litiges et à moins qu'une période de conservation plus longue ne soit requise ou autorisée par la loi.
+      Nous pouvons utiliser toutes les données agrégées dérivées de ou incorporant vos informations personnelles après que vous les ayez mises à jour ou supprimées, mais pas d'une manière qui vous identifierait personnellement. Une fois la période de conservation expirée, les renseignements personnels seront supprimés. Par conséquent, le droit d'accès, le droit d'effacement, le droit de rectification et le droit à la portabilité des données ne peuvent être exercés après l'expiration de la période de conservation.
+  cookies:
+    title: cookies
+    body: |
+      Notre site internet et nos services utilisent des "cookies" pour vous aider à personnaliser votre expérience en ligne. 
+      Un cookie est un fichier texte placé sur votre disque dur par un serveur de pages internet. 
+      Les cookies ne peuvent pas être utilisés pour exécuter des programmes ou transmettre des virus à votre ordinateur. 
+      Les cookies vous sont attribués de manière unique et ne peuvent être lus que par un serveur internet du domaine qui vous a envoyé le cookie. 
+      Si vous choisissez de refuser les cookies, vous ne pourrez peut-être pas profiter pleinement des fonctionnalités du site internet et ses services.
+      Nous pouvons utiliser des cookies pour collecter, stocker et suivre des informations à des fins de sécurité et de personnalisation, pour exploiter le site internet et ses services, et à des fins statistiques. 
+      Veuillez noter que vous avez la possibilité d'accepter ou de refuser les cookies. 
+      La plupart des navigateurs internet acceptent automatiquement les cookies par défaut, mais vous pouvez modifier les paramètres de votre navigateur pour refuser les cookies si vous préférez.
+  do_not_track_signals:
+    title: en-tête « Ne pas suivre »
+    body: |
+      Certains navigateurs intègrent une fonctionnalité "Ne pas suivre" qui signale aux sites internet que vous visitez que vous ne souhaitez pas que votre activité en ligne soit suivie. 
+      Le suivi n'est pas la même chose que l'utilisation ou la collecte d'informations en relation avec un site internet. 
+      À ces fins, le suivi fait référence à la collecte d'informations personnellement identifiables auprès des consommateurs qui utilisent ou visitent un site internet ou un service en ligne lorsqu'ils se déplacent sur différents sites internet au fil du temps. 
+      La façon dont les navigateurs communiquent le signal "Ne pas suivre" n'est pas encore uniforme. 
+      Par conséquent, le site internet et ses services ne sont pas encore configurés pour interpréter ou répondre aux signaux "Ne pas suivre" communiqués par votre navigateur. 
+      Même ainsi, comme décrit plus en détail tout au long de cette politique, nous limitons notre utilisation et notre collecte de vos informations personnelles.
+  links_to_other_resources:
+    title: liens vers d'autres ressources
+    body: |
+      Le site internet et ses services contiennent des liens vers d'autres ressources qui ne nous appartiennent pas ou ne sont pas contrôlées par nous. 
+      Veuillez noter que nous ne sommes pas responsables des pratiques de confidentialité de ces autres ressources ou tiers. 
+      Nous vous encourageons à être conscient lorsque vous quittez le site internet et les services et à lire les déclarations de confidentialité de chaque ressource susceptible de collecter des informations personnelles.
+  information_security:
+    title: sécurité des informations
+    body: |
+      Nous sécurisons les informations que vous fournissez sur des serveurs informatiques dans un environnement contrôlé et sécurisé, protégé contre tout accès, utilisation ou divulgation non autorisés. 
+      Nous maintenons des mesures de protection administratives, techniques et physiques raisonnables dans le but de nous protéger contre l'accès, l'utilisation, la modification et la divulgation non autorisés des renseignements personnels sous notre contrôle et notre garde. 
+      Cependant, aucune transmission de données sur internet ou un réseau sans fil ne peut être garantie.
+      Par conséquent, bien que nous nous efforcions de protéger vos informations personnelles, vous reconnaissez que (i) il existe des limites de sécurité et de confidentialité sur internet qui échappent à notre contrôle ; (ii) la sécurité, l'intégrité et la confidentialité de toutes les informations et données échangées entre vous et le site internet et les services ne peuvent être garanties ; et (iii) ces informations et données peuvent être consultées ou altérées en transit par un tiers, malgré tous les efforts.
+      Étant donné que la sécurité des informations personnelles dépend en partie de la sécurité de l'appareil que vous utilisez pour communiquer avec nous et de la sécurité que vous utilisez pour protéger vos informations d'identification, veuillez prendre les mesures appropriées pour protéger ces informations.
+  data_breach:
+    title: violation de données
+    body: |
+      Dans le cas où nous prendrions conscience que la sécurité du site internet et ses services a été compromise ou que les informations personnelles des utilisateurs ont été divulguées à des tiers non liés à la suite d'une activité externe, y compris, mais sans s'y limiter, des attaques de sécurité ou des fraudes , nous nous réservons le droit de prendre des mesures raisonnablement appropriées, y compris, mais sans s'y limiter, des enquêtes et des rapports, ainsi que la notification et la coopération avec les autorités chargées de l'application de la loi. 
+      En cas de violation de données, nous ferons des efforts raisonnables pour informer les personnes concernées si nous pensons qu'il existe un risque raisonnable de préjudice pour l'utilisateur à la suite de la violation ou si un avis est autrement requis par la loi. 
+      Lorsque nous le ferons, nous publierons un avis sur le site internet, vous enverrons un e-mail.
+  changes_and_amendments:
+    title: changements et amendements
+    body: |
+      Nous nous réservons le droit de modifier cette politique ou ses conditions relatives au site internet et aux services à tout moment, à notre discrétion. 
+      Lorsque nous le ferons, nous réviserons la date de mise à jour au bas de cette page. 
+      Nous pouvons également vous informer d'autres manières à notre discrétion, par exemple via les coordonnées que vous avez fournies.
+      Une version mise à jour de cette politique entrera en vigueur immédiatement après la publication de la politique révisée, sauf indication contraire. 
+      Votre utilisation continue du site internet et ses services après la date d'entrée en vigueur de la politique révisée (ou de tout autre acte spécifié à ce moment-là) constituera votre consentement à ces modifications. 
+      Cependant, nous n'utiliserons pas, sans votre consentement, vos informations personnelles d'une manière substantiellement différente de ce qui a été indiqué au moment où vos informations personnelles ont été collectées.
+  acceptance_of_this_policy:
+    title: acceptation de cette politique
+    body: |
+      Vous reconnaissez avoir lu cette politique et acceptez tous ses termes et conditions. 
+      En accédant et en utilisant le site internet et ses services et en soumettant vos informations, vous acceptez d'être lié par cette politique. 
+      Si vous n'acceptez pas de respecter les termes de cette politique, vous n'êtes pas autorisé à accéder ou à utiliser le site internet et ses services.
+  contacting_us:
+    title: nous contacter
+    body: |
+      Si vous avez des questions, des préoccupations ou des plaintes concernant cette politique, les informations que nous détenons à votre sujet, ou si vous souhaitez exercer vos droits, nous vous encourageons à nous contacter en utilisant les détails ci-dessous :
+      <a target="_blank" rel="nofollow" class="link-color" href="https://roliste-chaotique.be/contact">https://roliste-chaotique.be/contact</a>.
+      Nous nous efforcerons de résoudre les réclamations et les litiges et ferons tous les efforts raisonnables pour honorer votre souhait d'exercer vos droits aussi rapidement que possible et, en tout état de cause, dans les délais prévus par les lois applicables en matière de protection des données.
+  updated_at: Ce document a été modifié dernièrement le %updatedAt%.
+
+cookie_policy:
+  banner:
+    title: des cookies ! Akala miam-miam !
+    body: |
+      Rôliste chaotique utilise des cookies afin d'améliorer votre expérience utilisateur. 
+      Pour mieux connaître notre politique sur les cookies, rendez-vous <a target="_blank" class="link-line" rel="nofollow" href="https://www.roliste-chaotique.be/cookie-policy">ici</a>.
+      <br>
+      <small>P.S. : nos cookies sont certifiés 100% sans gluten de monstres.</small>
+  title: politique relative aux cookies
+  intro: |
+    Cette politique de cookies ("politique") décrit ce que sont les cookies et comment ils sont utilisés par <a target="_blank" class="link-color" rel="nofollow" href="https://www.roliste-chaotique.be">roliste-chaotique.be</a> (« Site internet » ou « service ») et tous ses produits et services connexes (collectivement, les « services »). 
+    Cette politique est un accord juridiquement contraignant entre vous ("utilisateur", "vous" ou "votre") et l'opérateur de ce site internet ("opérateur", "nous", "notre" ou "notre"). 
+    Si vous concluez cet accord au nom d'une entreprise ou d'une autre entité juridique, vous déclarez que vous avez le pouvoir de lier cette entité à cet accord, auquel cas les termes "utilisateur", "vous" ou "votre" feront référence à une telle entité. 
+    Si vous ne disposez pas d'une telle autorité, ou si vous n'êtes pas d'accord avec les termes de cet accord, vous ne devez pas accepter cet accord et ne pouvez pas accéder et utiliser le site internet et ses services. 
+    Vous devez lire cette politique afin de comprendre les types de cookies que nous utilisons, les informations que nous collectons à l'aide de cookies et la manière dont ces informations sont utilisées. 
+    Il décrit également les choix qui s'offrent à vous concernant l'acceptation ou le refus de l'utilisation des cookies. 
+    Pour plus d'informations sur la manière dont nous utilisons, stockons et sécurisons vos données personnelles, consultez notre <a target="_blank" rel="nofollow" class="link-color" href="https://roliste-chaotique.be/privacy-policy">politique de confidentialité</a>.
+  what_are_cookies:
+    title: que sont les cookies ?
+    body: |
+      Les cookies sont de petits éléments de données stockés dans des fichiers texte qui sont enregistrés sur votre ordinateur ou d'autres appareils lorsque des sites internet sont chargés dans un navigateur. 
+      Ils sont largement utilisés pour se souvenir de vous et de vos préférences, soit pour une seule visite (via un "cookie de session"), soit pour plusieurs visites répétées (à l'aide d'un "cookie persistant").
+      Les cookies de session sont des cookies temporaires qui sont utilisés au cours de votre visite sur le site internet et qui expirent lorsque vous fermez le navigateur internet.
+      Les cookies persistants sont utilisés pour mémoriser vos préférences sur notre site internet et restent sur votre ordinateur de bureau ou votre appareil mobile même après la fermeture de votre navigateur ou le redémarrage de votre ordinateur. 
+      Ils vous garantissent une expérience cohérente et efficace lors de la visite du site internet et ses services.
+      Les cookies peuvent être définis par le site internet ("cookies propriétaires") ou par des tiers, tels que ceux qui diffusent du contenu ou fournissent des services de publicité ou d'analyse sur le site internet ("cookies tiers"). 
+      Ces tiers peuvent vous reconnaître lorsque vous visitez notre site internet et également lorsque vous visitez certains autres sites internet.
+  what_type_of_cookie_do_we_use:
+    title: quel type de cookies utilisons-nous ?
+  necessary_cookies:
+    title: cookies essentiels
+    body: |
+      Les cookies essentiels nous permettent de vous offrir la meilleure expérience possible lors de l'accès et de la navigation sur notre site internet et de l'utilisation de ses fonctionnalités. 
+      Par exemple, ces cookies nous permettent de reconnaître que vous avez créé un compte et que vous vous êtes connecté à ce compte pour accéder au contenu.
+  functionality_cookies:
+    title: cookies de fonctionnalité
+    body: |
+      Les cookies de fonctionnalité nous permettent d'exploiter le site internet et ses services conformément aux choix que vous faites. 
+      Par exemple, nous reconnaîtrons votre nom d'utilisateur et nous nous souviendrons de la façon dont vous avez personnalisé le site internet et ses services lors de vos prochaines visites.
+  what_are_your_cookie_options:
+    title: quelles sont vos options de cookies ?
+    body: |
+      Si vous n'aimez pas l'idée des cookies ou certains types de cookies, vous pouvez modifier les paramètres de votre navigateur pour supprimer les cookies qui ont déjà été définis et pour ne pas accepter de nouveaux cookies. 
+      Visitez <a target="_blank" class="link-color" href="https://www.internetcookies.com" rel="noopener">internetcookies.com</a> pour en savoir plus sur la façon de procéder.
+      Veuillez noter, cependant, que si vous supprimez les cookies ou ne les acceptez pas, vous ne pourrez peut-être pas utiliser toutes les fonctionnalités offertes par le site internet et ses services.
+  changes_and_amendments:
+    title: changements et amendements
+    body: |
+      Nous nous réservons le droit de modifier cette politique ou ses conditions relatives au site internet et aux services à tout moment, à notre discrétion. 
+      Lorsque nous le ferons, nous réviserons la date de mise à jour au bas de cette page. 
+      Nous pouvons également vous informer d'autres manières, à notre discrétion, par exemple via les coordonnées que vous avez fournies.
+      Une version mise à jour de cette politique entrera en vigueur immédiatement après la publication de la politique révisée, sauf indication contraire. 
+      Votre utilisation continue du site internet et des services après la date d'entrée en vigueur de la politique révisée (ou de tout autre acte spécifié à ce moment-là) constituera votre consentement à ces modifications.
+  acceptance_of_this_policy:
+    title: acceptation de cette politique
+    body: |
+      Vous reconnaissez avoir lu cette politique et acceptez tous ses termes et conditions. 
+      En accédant et en utilisant le site internet et ses services, vous acceptez d'être lié par cette politique. 
+      Si vous n'acceptez pas de respecter les termes de cette politique, vous n'êtes pas autorisé à accéder ou à utiliser le site internet et ses services.
+  contacting_us:
+    title: nous contacter
+    body: |
+      Si vous avez des questions, des préoccupations ou des réclamations concernant cette politique ou l'utilisation de cookies, nous vous encourageons à nous contacter en utilisant les détails ci-dessous :
+      <a target="_blank" class="link-color" rel="nofollow" href="https://roliste-chaotique.be/contact">https://roliste-chaotique.be/contact</a>.
+  updated_at: Ce document a été modifié dernièrement le %updatedAt%.

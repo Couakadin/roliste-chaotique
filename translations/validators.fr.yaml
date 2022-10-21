@@ -1,0 +1,43 @@
+form:
+  date:
+    greater: la date de fin doit être supérieure à la date de départ.
+  file:
+    type: veuillez télécharger une image avec les formats suivants - JPG/PNG/SVG.
+    size: taille des images maximum limitée à 1024k.
+  terms:
+    is_true: veuillez accepter les conditions d'utilisation.
+  subject:
+    not_blank: veuillez insérer un sujet.
+  message:
+    not_blank: veuillez insérer un message.
+  event:
+    type: veuillez choisir un type valide.
+
+user:
+  email:
+    not_blank: adresse e-mail requise.
+    not_email: adresse e-mail incorrecte.
+    length: adresse e-mail au maximum {{ limit }} caractères.
+  key_sentence:
+    not_blank: phrase-clef requise.
+    not_equal: phrase-clef incorrecte.
+  name:
+    not_blank: nom requis.
+    length: nom maximum {{ limit }} caractères.
+  username:
+    not_blank: nom d'utilisateur requis.
+    unique: nom d'utilisateur {{ value }} déjà pris.
+    length: nom d'utilisateur au maximum {{ limit }} caractères.
+  slug:
+    not_blank: le slug ne peut être vide.
+    length: slug au maxium {{ limit }} caractères.
+  password:
+    not_blank: mot de passe requis.
+    not_same: les deux champs doivent correspondre.
+    length: mot de passe au minimum {{ limit }} caractères.
+entity:
+  slug:
+    unique: slug {{ value }} déjà utilisé.
+  guild:
+    unique: nom de groupe {{ value }} déjà utilisé.
+  unique: le champs {{ value }} est déjà utilisé.

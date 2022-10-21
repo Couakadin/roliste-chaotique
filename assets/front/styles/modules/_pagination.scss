@@ -1,0 +1,12 @@
+.pagination {
+  margin : calc(var(--gap) * 10) 0 0 0;
+
+  a, span.current {
+    background    : var(--clr-accent);
+    color         : var(--clr-light);
+    border-radius : var(--border-radius-small);
+    padding       : var(--gap) calc(var(--gap) * 2);
+  }
+
+  span.current {background : hsla(var(--clr-widget), .2);}
+}

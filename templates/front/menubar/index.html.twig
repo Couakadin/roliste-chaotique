@@ -1,0 +1,75 @@
+{# Top menubar #}
+<div class="menubar">
+    <a href="{{ path('home.index') }}">
+        <img width="96" height="64" src="{{ asset('build/front/mascot/rc.svg') }}"
+             alt="{{ 'ui.chaotic_roleplayer'|trans }}">
+    </a>
+    <div id="burger" class="burger">
+        <div id="burger-menu" class="burger-menu"></div>
+    </div>
+</div>
+
+{# Navbar sliding from right #}
+<div id="navbar" class="navbar">
+    <div class="flex align-center">
+        {% if app.user %}
+            {% if app.user.avatar %}
+                {% set avatar = asset('/uploads/images/avatars/'~ app.user.avatar.path)|imagine_filter('avatar') %}
+            {% else %}
+                {% set avatar = '/build/front/mascot/default_avatar.svg' %}
+            {% endif %}
+            <img src="{{ avatar }}" alt="Avatar" width="96" height="96" class="rounded">
+            <div class="flex column">
+                <span class="ml1 h2">{{ app.user.username }}</span>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <small>
+                        <a class="color-warning px1" href="{{ path('app_admin_dashboard_index') }}">
+                            {{ 'ui.admin'|trans|capitalize }}
+                        </a>
+                    </small>
+                {% endif %}
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <a class="color-warning px1" href="{{ path('home.index', {'_switch_user': '_exit'}) }}">
+                        <small>{{ 'ui.exit_impersonification'|trans|capitalize }}</small>
+                    </a>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="flex align-center mt1">
+                <a href="{{ path('security.index') }}">{{ 'ui.connexion'|trans|capitalize }}</a>
+                <span class="mx1">|</span>
+                <a href="{{ path('registration.register') }}">{{ 'ui.register'|trans|capitalize }}</a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if app.user %}
+        <div class="my2">
+            <details open>
+                <summary class="accordion h3">{{ 'ui.account'|trans|capitalize }}</summary>
+                <ul>
+                    <li>
+                        <a href="{{ path('account.index') }}" class="my1 px1">
+                            {{ 'ui.profile'|trans|capitalize }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('security.logout') }}" class="my1 px1 color-danger">
+                            {{ 'ui.logout'|trans|capitalize }}
+                        </a>
+                    </li>
+                </ul>
+            </details>
+        </div>
+    {% endif %}
+    <div class="my2">
+        <details open>
+            <summary class="accordion h3">{{ 'ui.search'|trans|capitalize }}</summary>
+            <ul>
+                <li>
+                    <a href="{{ path('table.index') }}" class="my1 px1">{{ 'ui.tables'|trans|capitalize }}</a>
+                </li>
+            </ul>
+        </details>
+    </div>
+</div>

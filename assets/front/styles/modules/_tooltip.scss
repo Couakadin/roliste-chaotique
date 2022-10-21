@@ -1,0 +1,13 @@
+.tooltip-modal {
+  @include medium-device {max-width : 20vw;}
+
+  position      : absolute;
+  z-index       : z-index('modal');
+  margin        : var(--gap);
+  padding       : var(--gap);
+  background    : hsl(var(--clr-light));
+  border        : calc(var(--gap) / 10) solid hsl(var(--clr-accent));
+  border-radius : var(--border-radius-small);
+  color         : hsl(var(--clr-dark));
+  font-size     : var(--fs-200);
+}

@@ -1,0 +1,75 @@
+admin:
+  chaotic_role_player: rôliste chaotique
+  dashboard: tableau de bord
+  editor: |
+    {1}éditeur|{2}éditeurs
+  event: |
+    {1}événement|{2}événements
+  genre: |
+    {1}genre|{2}genres
+  system: |
+    {1}système|{2}systèmes
+  table: |
+    {1}table|{2}tables
+  table_inscription: |
+    {1}inscription de table|{2}inscriptions de table
+  new_table: nouvelle table
+  new_table_inscription: nouvelle inscription de table
+  new_editor: nouvel éditeur
+  new_event: nouvel événement
+  new_user: nouvel utilisateur
+  new_avatar: nouvel avatar
+  new_genre: nouveau genre
+  new_guild: nouveau groupe
+  new_zone: nouvelle zone
+  role_play: jeu de rôle
+  management: gestion
+  user: |
+    {1}utilisateur|{2}utilisateurs
+  avatar: |
+    {1}avatar|{2}avatars
+  profile: profil
+  home: accueil
+
+  ui:
+    id: id
+    avatar: avatar
+    bg_color: couleur background
+    border_color: couleur bordure
+    editor: éditeur
+    events: événements
+    genre: genre
+    image: image
+    name: nom
+    slug: slug
+    showcase: vignette
+    content: contenu
+    created_at: créé le
+    updated_at: modifié le
+    login_at: connecté le
+    event_month: mois d'événement
+    event_year: année d'événement
+    table: table
+    url: url
+    public: public
+    players: joueurs
+    zone: zone
+    guild: groupe
+    author: auteur
+    master: maître du jeu
+    maturity: âge minimum
+    members: membres
+    email: email
+    roles: rôles
+    verified: vérifié
+    status: status
+    send_email_to_user: envoyer un e-mail à l'utilisateur
+    system: système
+    type: type
+    postal_code: code postal
+    locality: localité
+    longitude: longitude
+    latitude: latitude
+    campaign: campagne
+    one-shot: séance
+    validate: validé

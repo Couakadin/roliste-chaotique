@@ -1,0 +1,72 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.tables.show'|trans({'%table%': table.name})|capitalize %}
+{% block title table.name|capitalize %}
+
+{% block body %}
+    <section class="table-banner"
+             style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture) }}') center / cover;">
+        <h1 class="table-mask h1">{{ table.name }}</h1>
+    </section>
+
+    <div class="container mt2">
+        <a href="{{ path('table.index') }}" class="btn-secondary mb2">{{ 'ui.go_back'|trans|capitalize }}</a>
+        <div class="table-grid">
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    <p>
+                        {{ 'ui.genre'|trans|capitalize }} :
+                        {% for genre in table.genre %}
+                            {{ genre.name }}{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ 'ui.editor'|trans|capitalize }} :
+                        {% if table.editor is not null %}
+                            {% set editor = table.editor %}
+
+                            {% if editor.url is not null %}
+                                <a href="{{ editor.url }}" target="_blank">{{ editor.name }}</a>
+                            {% else %}
+                                {{ editor.name }}
+                            {% endif %}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ 'ui.system'|trans|capitalize }} :
+                        {% if table.system is not null %}
+                            {{ table.system.name }}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        {{ 'ui.mature'|trans|capitalize }} :
+                        {% if table.maturity is not null %}
+                            {{ table.maturity ~ ' ans' }}
+                        {% else %}
+                            {{ 'ui.no_specified'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    {% if table.content is not null %}
+                        {{ table.content|raw }}
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

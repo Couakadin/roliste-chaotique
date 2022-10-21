@@ -1,0 +1,76 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.register'|trans|capitalize %}
+{% block title 'ui.sign_up'|trans|capitalize %}
+
+{% block body %}
+
+    <div class="container">
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="color-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+
+
+        {{ form_start(registrationForm, {attr: {'class': 'security plus'}}) }}
+        <h1 class="h1">{{ 'ui.create_account'|trans|capitalize }}</h1>
+        <div class="form-group">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email) }}
+            <div class="color-danger">
+                {{ form_errors(registrationForm.email) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(registrationForm.username) }}
+            {{ form_widget(registrationForm.username) }}
+            <div class="color-danger">
+                {{ form_errors(registrationForm.username) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(registrationForm.plainPassword) }}
+            <div class="form-container">
+                {{ form_widget(registrationForm.plainPassword) }}
+                <i class="i-password">
+                    <img src="{{ asset('/build/front/tools/password_eye_open.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                         width="20" height="20">
+                </i>
+            </div>
+            <div class="color-danger">
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(registrationForm.keySentence) }}
+            <div class="form-container">
+                {{ form_widget(registrationForm.keySentence) }}
+                <i data-tooltip="{{ ('tooltip.key_sentence'|trans({'%key%' : 'le maître du jeu a toujours raison'})|capitalize)|raw }}">
+                    <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                         width="20" height="20">
+                </i>
+            </div>
+            <div class="color-danger">
+                {{ form_errors(registrationForm.keySentence) }}
+            </div>
+        </div>
+        <div class="checkbox-container">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            {{ form_label(registrationForm.agreeTerms) }}
+            <a href="{{ path('security.terms-and-conditions') }}" class="checkbox-title link-line">
+                {{ 'ui.agree_terms'|trans|capitalize }}
+            </a>
+            <div class="color-danger">
+                {{ form_errors(registrationForm.agreeTerms) }}
+            </div>
+        </div>
+
+        <div class="form-group flex column align-center">
+            <button class="btn-secondary" type="submit">
+                {{ 'ui.sign_up'|trans|capitalize }}
+            </button>
+
+            <a href="{{ path('security.index') }}" class="mt1 link-line">{{ 'ui.or_connexion'|trans }}</a>
+        </div>
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+.security {
+  @include small-device {
+    width   : calc(var(--gap) * 62);
+    padding : calc(var(--gap) * 15) calc(var(--gap) * 6) calc(var(--gap) * 4);
+  }
+
+  position      : relative;
+  margin        : calc(var(--gap) * 15) auto 0;
+  padding       : calc(var(--gap) * 15) calc(var(--gap) * 4) calc(var(--gap) * 4);
+  border-radius : var(--border-radius);
+  background    : hsl(var(--clr-widget));
+  color         : hsl(var(--clr-light));
+
+  &:before {
+    position      : absolute;
+    left          : 0;
+    right         : 0;
+    top           : calc(var(--gap) * 12 * -1);
+    content       : '';
+    display       : block;
+    width         : calc(var(--gap) * 24);
+    height        : calc(var(--gap) * 24);
+    margin        : 0 auto;
+    border-radius : 50%;
+    color         : hsl(var(--clr-light));
+  }
+
+  &.basic:before {background : hsl(var(--clr-widget)) url('/public/build/front/tools/user_hat.svg') no-repeat center / contain;}
+  &.plus:before {background : hsl(var(--clr-widget)) url('/public/build/front/tools/user_hat_plus.svg') no-repeat center / contain;}
+  &.question:before {background : hsl(var(--clr-widget)) url('/public/build/front/tools/user_hat_question.svg') no-repeat center / contain;}
+}

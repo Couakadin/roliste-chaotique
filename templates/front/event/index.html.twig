@@ -1,0 +1,50 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.events.index'|trans|capitalize %}
+{% block title 'ui.events'|trans|capitalize %}
+
+{% block body %}
+    <div class="container mt2">
+        <div class="flex space-between">
+            <h1 class="h1 mb2">{{ 'ui.all_events'|trans|capitalize }}</h1>
+            <a href="{{ path('event.new') }}" class="link-line">{{ 'ui.new_event'|trans|capitalize }}</a>
+        </div>
+        {{ form_start(searchForm, {'attr': {'class': 'flex'}}) }}
+        <div class="form-search">
+        {{ form_widget(searchForm, {'attr': {'placeholder': 'ui.search_event'}}) }}
+            <button type="submit">
+                <img src="{{ asset('build/front/tools/search.svg') }}" alt="{{ 'ui.search'|trans }}">
+            </button>
+        </div>
+        {{ form_end(searchForm) }}
+        {% for event in events %}
+            <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">
+                <p class="event-header h4">{{ event.name|u.truncate(15, '...') }}</p>
+                <p class="event-header">{{ ('ui.'~event.type)|trans|capitalize }}</p>
+                <p class="event-header">{{ event.table.name }}</p>
+                <p class="event-header">
+                    {% if event.zone is not null %}
+                        {{ event.zone.locality }}
+                    {% else %}
+                        {{ 'ui.online'|trans|capitalize }}
+                    {% endif %}
+                </p>
+                <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
+                <p class="event-header">
+                    {% if 1 >= event.participate|length %}
+                        {{ event.participate|length }} {{ 'ui.player'|trans }}
+                    {% else %}
+                        {{ event.participate|length }} {{ 'ui.players'|trans }}
+                    {% endif %}
+                </p>
+                <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>
+            </a>
+        {% else %}
+            <div class="card">
+                {{ 'ui.no_item'|trans|capitalize }}
+            </div>
+        {% endfor %}
+
+        {{ knp_pagination_render(events) }}
+    </div>
+{% endblock %}

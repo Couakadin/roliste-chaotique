@@ -1,0 +1,34 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.agree_terms'|trans %}
+{% block title 'ui.agree_terms'|trans|capitalize %}
+
+{% block body %}
+    <div class="container my2">
+        <div class="card">
+            <h1 class="card_title h1">{{ 'ui.agree_terms'|trans|capitalize }}</h1>
+            <p class="card_body">{{ ('terms_and_conditions.agree_terms.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.account_and_membership.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.account_and_membership.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.user_content.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.user_content.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.adult_content.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.adult_content.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.backups.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.backups.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.links_to_another_resources.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.links_to_another_resources.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.intellectual property rights.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.intellectual property rights.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.changes_and_amendments.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.changes_and_amendments.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.acceptance_of_these_terms.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.acceptance_of_these_terms.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'terms_and_conditions.contacting_us.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('terms_and_conditions.contacting_us.body'|trans({'%path%': path('contact.index')}))|raw }}</p>
+            {# Don't forget to update any changes #}
+            <p>{{ 'terms_and_conditions.updated_at'|trans({'%updatedAt%': '2022-01-29'|format_datetime('long', 'none')}) }}</p>
+        </div>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+    </div>
+{% endblock %}

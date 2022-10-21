@@ -1,0 +1,10 @@
+.divider {
+  &.before:before, &.after:after {
+    content    : '';
+    display    : block;
+    width      : calc(var(--gap) * 39);
+    height     : calc(var(--gap) * 8);
+    margin     : calc(var(--gap) * 2) auto;
+    background : url('/public/build/front/tools/divider.svg') center / contain;
+  }
+}

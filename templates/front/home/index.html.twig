@@ -1,0 +1,51 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.home'|trans|capitalize %}
+{% block title 'ui.home'|trans|capitalize %}
+
+{% block body %}
+    <div class="home-intro container">
+        <section>
+            <h1 class="hero-title mb1 divider before">{{ ('ui.hero_title'|trans|capitalize)|raw }}</h1>
+            <p class="hero-text text-justify">{{ 'ui.hero_text'|trans }}</p>
+        </section>
+        <img srcset="{{ asset('build/front/mascot/rolie.svg') }} 180w, {{ asset('build/front/mascot/rolie.svg') }} 280w"
+             sizes="(max-width : 62em) 180px, 280px"
+             src="{{ asset('build/front/mascot/rolie.svg') }}" alt="Rolie Chaos" title="Rolie Chaos !">
+    </div>
+
+    {{ source('@public/build/front/tools/waves.svg') }}
+
+    <section class="home-finder">
+        <h2 class="h2 text-center divider after">{{ 'ui.find_table'|trans|capitalize }}</h2>
+        <div class="text-right mb1 mr2">
+            <a href="{{ path('table.index') }}" class="link-line">
+                {{ 'ui.see_all_tables'|trans }}
+            </a>
+        </div>
+        <div class="relative" data-carousel="home">
+            {% for table in tables %}
+                <div class="carousel"
+                     style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_home') }}') center / cover;">
+                    <a href="{{ path('table.show', {'slug': table.slug}) }}"
+                       class="carousel-mask h3">{{ table.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="home-invitation mt5 py5">
+        <section class="container text-center">
+            <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
+            <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
+            <a href="https://discord.gg/8ZbN7Rmc" target="_blank" class="btn-ternary flex center">
+                {{ 'ui.join_us_discord'|trans|UCFirst }}
+            </a>
+        </section>
+    </div>
+
+    <section class="container mt5">
+        <h2 class="h2 text-center divider after">{{ 'ui.discover_calendar'|trans|capitalize }}</h2>
+        <div id="calendar-holder"></div>
+    </section>
+{% endblock %}

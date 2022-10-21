@@ -1,0 +1,31 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.cookie_policy'|trans %}
+{% block title 'ui.cookies_policy'|trans|capitalize %}
+
+{% block body %}
+    <div class="container my2">
+        <div class="card">
+            <h1 class="card_title h1">{{ 'cookie_policy.title'|trans|capitalize }}</h1>
+            <p class="card_body">{{ ('cookie_policy.intro'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.what_are_cookies.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('cookie_policy.what_are_cookies.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.what_type_of_cookie_do_we_use.title'|trans|capitalize }}</h2>
+            <h3 class="card_title h3 mt1">{{ 'cookie_policy.necessary_cookies.title'|trans|capitalize }}</h3>
+            <p class="card_body">{{ ('cookie_policy.necessary_cookies.body'|trans)|raw }}</p>
+            <h3 class="card_title h3">{{ 'cookie_policy.functionality_cookies.title'|trans|capitalize }}</h3>
+            <p class="card_body">{{ ('cookie_policy.functionality_cookies.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.what_are_your_cookie_options.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('cookie_policy.what_are_your_cookie_options.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.changes_and_amendments.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('cookie_policy.changes_and_amendments.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.acceptance_of_this_policy.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('cookie_policy.acceptance_of_this_policy.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'cookie_policy.contacting_us.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('cookie_policy.contacting_us.body'|trans)|raw }}</p>
+            {# Don't forget to update any changes #}
+            <p>{{ 'cookie_policy.updated_at'|trans({'%updatedAt%': '2022-02-05'|format_datetime('long', 'none')}) }}</p>
+        </div>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+    </div>
+{% endblock %}

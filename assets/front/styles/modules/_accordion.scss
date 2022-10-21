@@ -1,0 +1,30 @@
+.accordion {
+  display         : flex;
+  justify-content : space-between;
+  align-items     : center;
+  width           : 100%;
+  padding         : calc(var(--gap) / 2) calc(var(--gap) * 2);
+  background      : hsl(var(--clr-widget));
+  color           : hsl(var(--clr-light));
+  cursor          : pointer;
+  border          : none;
+  border-radius   : var(--border-radius-small);
+  outline         : none;
+  user-select     : none;
+
+  details[open] &:after, details:not([open]) &:after {
+    content      : '';
+    display      : block;
+    width        : calc(var(--gap) * 2);
+    aspect-ratio : 1;
+    background   : url('/public/build/front/tools/anchor.png') center / cover;
+    color        : hsl(var(--clr-light));
+    transition   : all .3s ease-in-out;
+  }
+
+  details:not([open]) &:after {transform : rotate(180deg);}
+
+  & ~ ul li:not(:last-of-type) {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-light));}
+
+  & ~ ul a {display : block;}
+}

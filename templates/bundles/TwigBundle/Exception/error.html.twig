@@ -1,0 +1,11 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}{{ 'error.general.title'|trans|capitalize }}{% endblock %}
+
+{% block body %}
+    {# Error #}
+    <section class="container card mt2">
+        <h1 class="h1 card_title">{{ 'error.general.title'|trans|capitalize }}</h1>
+        <p class="card_body">{{ ('error.general.body'|trans({'%link%': path('home.index')}))|raw }}</p>
+    </section>
+{% endblock %}

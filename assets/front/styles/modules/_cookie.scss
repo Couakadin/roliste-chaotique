@@ -1,0 +1,13 @@
+.cookie {
+  @include medium-device {
+    width  : calc(var(--gap) * 75);
+    margin : calc(var(--gap) / 2) auto;
+  }
+
+  position : fixed;
+  z-index  : z-index('flash');
+  bottom   : 0;
+  left     : 0;
+  right    : 0;
+  margin   : calc(var(--gap) / 2);
+}

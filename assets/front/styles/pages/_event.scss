@@ -1,0 +1,25 @@
+.event {
+  @include medium-device {flex-direction : row;}
+
+  display         : flex;
+  flex-direction  : column;
+  justify-content : space-between;
+  gap             : 0 calc(var(--gap) * 11);
+  margin          : calc(var(--gap) * 5) auto auto;
+  padding         : calc(var(--gap) * 3) calc(var(--gap) * 5);
+  border-radius   : var(--border-radius-small);
+  background      : hsl(var(--clr-widget));
+  color           : hsl(var(--clr-light));
+  cursor          : pointer;
+}
+
+.event-header {
+  @include big-device {flex-direction : row;}
+
+  display         : flex;
+  flex-direction  : column;
+  gap             : var(--gap);
+  align-items     : center;
+  justify-content : center;
+  text-align      : center;
+}

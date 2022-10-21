@@ -1,19 +1,26 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ app.request.locale }}">
     <head>
+        {# Responsive #}
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
-
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {# Favicon #}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('build/front/favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('build/front/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('build/front/favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('build/front/favicon/site.webmanifest') }}">
+        <link rel="mask-icon" href="{{ asset('build/front/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#efece3">
+        <meta name="theme-color" content="#ffffff">
+        {# SEO #}
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <title>{% block title %}{% endblock %} – {{ 'ui.chaotic_roleplayer'|trans|capitalize }}</title>
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block base %}{% endblock %}
     </body>
 </html>

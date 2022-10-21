@@ -1,0 +1,50 @@
+.carousel {
+  display       : flex;
+  align-items   : flex-end;
+  height        : calc(var(--gap) * 55);
+  border-radius : var(--border-radius);
+  background    : grey;
+  margin        : 0 calc(var(--gap) * 2);
+}
+
+.carousel-container {
+  display    : flex;
+  transition : transform .3s;
+  cursor     : grab;
+
+  &:active {cursor : grabbing;}
+}
+
+.carousel-mask {
+  width         : 100%;
+  height        : calc(var(--gap) * 12);
+  padding       : calc(var(--gap) * 2);
+  background    : hsla(var(--clr-dark), .2);
+  color         : hsl(var(--clr-light));
+  border-radius : 0 0 var(--border-radius) var(--border-radius);
+  box-shadow    : inset 0 calc(var(--gap) / 2) calc(var(--gap) * 4) hsla(var(--clr-dark), .2);
+}
+
+.carousel-next, .carousel-prev {
+  position      : absolute;
+  top           : 50%;
+  width         : calc(var(--gap) * 5);
+  height        : calc(var(--gap) * 5);
+  margin        : 0 var(--gap);
+  border-radius : 50%;
+  cursor        : pointer;
+  user-select   : none;
+  transition    : transform .3s;
+
+  &:hover {transform : scale(1.2);}
+}
+
+.carousel-prev {
+  background : hsl(var(--clr-light)) url('/public/build/front/tools/arrow-left.svg') no-repeat 50% / calc(var(--gap) * 3) calc(var(--gap) * 3);
+
+}
+
+.carousel-next {
+  right      : 0;
+  background : hsl(var(--clr-light)) url('/public/build/front/tools/arrow-right.svg') no-repeat 50% / calc(var(--gap) * 3) calc(var(--gap) * 3);
+}

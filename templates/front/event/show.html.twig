@@ -1,0 +1,95 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.events.show'|trans({'%event': event.name})|capitalize %}
+{% block title 'ui.events'|trans|capitalize %}
+
+{% block body %}
+    <section class="table-banner"
+             style="background: url('{{ asset('/uploads/images/tables/' ~ event.table.picture) }}') center / cover;">
+        <h1 class="table-mask column h1">
+            {{ event.name }}
+            <small class="mt1">
+                {{ event.start|format_date('long') }}
+                {% if event.end %}
+                    - {{ event.end|format_date('long') }}
+                {% endif %}
+            </small>
+        </h1>
+    </section>
+
+    <div class="container mt2">
+        <div class="flex space-between align-center gap-1 mb2">
+            <a href="{{ path('event.index') }}" class="btn-secondary">{{ 'ui.go_back'|trans|capitalize }}</a>
+            {% if app.user and app.user is same as event.master %}
+                <a href="{{ path('event.edit', {'slug': event.slug}) }}"
+                   class="btn-primary">{{ 'ui.edit'|trans|capitalize }}</a>
+            {% endif %}
+        </div>
+        <div class="table-grid">
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    <p>
+                        {{ 'ui.dm'|trans|upper }} :
+                        {% if event.master %}
+                            <a href="{{ path('account.index', {'slug': event.master}) }}">
+                                {{ event.master.username }}
+                            </a>
+                        {% else %}
+                            {{ 'n/a' }}
+                        {% endif %}
+                    </p>
+                    <p>{{ 'ui.type'|trans|capitalize }} : {{ ('ui.'~event.type)|trans }}</p>
+                    <p>
+                        {{ 'ui.table'|trans|capitalize }} :
+                        <a href="{{ path('table.show', {'slug': event.table.slug}) }}">{{ event.table.name }}</a>
+                    </p>
+                    <p>{{ 'ui.zone'|trans|capitalize }} : {{ event.zone ?? 'ui.online'|trans }}</p>
+                    <p>
+                        {{ 'ui.participant'|trans|capitalize }} :
+                        {% for participant in event.participate %}
+                        <a href="{{ path('account.index', {'slug': participant.slug}) }}">
+                            {{ participant.username }}
+                            </a>{% if not loop.last %}, {% endif %}
+                        {% else %}
+                            {{ 'ui.no_participant'|trans }}
+                        {% endfor %}
+                    </p>
+
+                    <div class="mt2 flex space-between">
+                        {% if app.user is not same as event.master %}
+                            <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
+                                {% if app.user not in event.participate %}
+                                    <input type="hidden" name="participate" value="true">
+                                    <input type="hidden" name="token"
+                                           value="{{ csrf_token('participate-event') }}"/>
+                                    <button type="submit" class="btn-primary">
+                                        {{ 'ui.i_participate'|trans|capitalize }}
+                                    </button>
+                                {% else %}
+                                    <input type="hidden" name="participate" value="false">
+                                    <input type="hidden" name="token"
+                                           value="{{ csrf_token('participate-event') }}"/>
+                                    <button type="submit" class="btn-secondary">
+                                        {{ 'ui.i_not_participate'|trans|capitalize }}
+                                    </button>
+                                {% endif %}
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    {% if event.content is not null %}
+                        {{ event.content|raw }}
+                    {% else %}
+                        {{ 'ui.no_item'|trans|capitalize }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

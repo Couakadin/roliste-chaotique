@@ -1,0 +1,25 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.tables.index'|trans|capitalize %}
+{% block title 'ui.tables'|trans|capitalize %}
+
+{% block body %}
+    <div class="container mt2">
+        <h1 class="h1 mb2">{{ 'ui.all_tables'|trans|capitalize }}</h1>
+        <div class="grid">
+            {% for table in tables %}
+                <div class="table"
+                     style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_index') }}') center / cover;">
+                    <a href="{{ path('table.show', {'slug': table.slug}) }}" class="table-mask h3">
+                        {{ table.name }}
+                    </a>
+                </div>
+            {% else %}
+                <div class="card">
+                    {{ 'ui.no_item'|trans|capitalize }}
+                </div>
+            {% endfor %}
+        </div>
+        {{ knp_pagination_render(tables) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}{{ 'error.404.title'|trans|capitalize }}{% endblock %}
+
+{% block body %}
+    {# Error 404 #}
+    <section class="container card mt2">
+        <h1 class="card_title h1">{{ 'error.404.title'|trans|capitalize }}</h1>
+        <p>{{ ('error.404.body'|trans)|raw }}</p>
+
+        <span id="rolie-trigger">{{ 'error.404.or_chance'|trans }}</span>
+        <div id="rolie-block" style="display: none;">
+            <blockquote class="mt3">{{ ('error.404.welcome'|trans)|raw }}</blockquote>
+
+            <div class="form-group">
+                <label for="rolie-input" hidden></label>
+                <input type="number" id="rolie-input" placeholder="{{ 'error.404.guess'|trans|capitalize }}" min="0"
+                       max="100" class="input" style="cursor: help; appearance: textfield;" required>
+
+                <p id="rolie-answer"></p>
+                <p id="rolie-clue"></p>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rolieClue = document.getElementById('rolie-clue');
+            const rolieAnswer = document.getElementById('rolie-answer');
+            const rolieInput = document.getElementById('rolie-input');
+            const rolieTrigger = document.getElementById('rolie-trigger');
+            const rolieBlock = document.getElementById('rolie-block');
+            let rolieChance = document.getElementById('rolie-chance');
+
+            let randomNumber = Math.floor(Math.random() * 100) + 1;
+            let guessCount = 1;
+            let rolieChanceNumber = 5; // Here to change total of chances !
+            const total = rolieChanceNumber
+
+            rolieTrigger.addEventListener('click', () => {
+                rolieChance.innerHTML = rolieChanceNumber + ' essais';
+                rolieBlock.style.display = 'block';
+            });
+
+            function checkGuess() {
+                const userGuess = Number(rolieInput.value);
+
+                if (userGuess > 100 || userGuess < 1) {
+                    rolieClue.textContent = 'Tu dois choisir une valeur entre 1 à 100 !';
+                    return;
+                } else if (userGuess === randomNumber) {
+                    rolieAnswer.textContent = `Hmpf. Tu as gagné... C'était bien ${userGuess}. Pars vite avant que je ne change d'avis !`;
+                    rolieClue.textContent = '';
+                    setGameOver();
+                } else if (guessCount === total) {
+                    rolieAnswer.textContent = 'Tu as perdu ! Et ta vie avec !';
+                    rolieClue.textContent = '';
+                    rolieChance.innerHTML = 0 + ' essai';
+                    setGameOver();
+                } else {
+                    rolieAnswer.textContent = '';
+                    rolieChanceNumber--;
+                    if (rolieChanceNumber > 1) rolieChance.innerHTML = rolieChanceNumber + ' essais';
+                    if (rolieChanceNumber <= 1) rolieChance.innerHTML = rolieChanceNumber + ' essai';
+                    if (userGuess < randomNumber) {
+                        rolieClue.textContent = 'Tu es trop bas !';
+                    } else if (userGuess > randomNumber) {
+                        rolieClue.textContent = 'Tu es trop haut !';
+                    }
+                }
+
+                guessCount++;
+                rolieInput.value = '';
+                rolieInput.focus();
+            }
+
+            rolieInput.addEventListener('keyup', (evt) => {if (evt.key === 'Enter') checkGuess();});
+
+            function setGameOver() {
+                rolieInput.disabled = true;
+                setTimeout(function() {window.location.href = '/'}, 5000);
+            }
+        });
+    </script>
+{% endblock %}

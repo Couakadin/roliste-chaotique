@@ -1,0 +1,82 @@
+.form-group {margin : calc(var(--gap) * 3) auto;}
+
+.form-group .choices-inner,
+.form-group .choices-list_dropdown,
+.form-group .choices-input,
+.form-group .choices-input_clone,
+.form-group input,
+.form-group textarea,
+.form-group select {
+  display          : block;
+  width            : 100%;
+  min-height       : calc(var(--gap) * 6);
+  padding          : calc(var(--gap) * 2) calc(var(--gap) * 5) calc(var(--gap) * 2) var(--gap);
+  outline          : none;
+  border           : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  border-radius    : var(--border-radius-small);
+  background-color : hsl(var(--clr-light));
+  color            : hsl(var(--clr-dark));
+  transition       : all .3s ease;
+
+  &:focus:invalid {border : calc(var(--gap) / 10) solid hsl(var(--clr-danger));}
+
+  &:focus:valid {border : calc(var(--gap) / 10) solid hsl(var(--clr-success));}
+}
+
+.form-group textarea {min-height : calc(var(--gap) * 31);}
+
+.form-group label {
+  display : block;
+
+  &:first-letter {text-transform : capitalize;}
+}
+
+.form-group .choices-item {
+  background-color : hsla(var(--clr-widget), .2);
+}
+
+.form-search {position : relative;}
+
+.form-search input {
+  display          : block;
+  min-height       : calc(var(--gap) * 4);
+  padding-right    : 2rem;
+  outline          : none;
+  border           : none;
+  border-bottom    : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  background-color : hsl(var(--clr-light));
+  color            : hsl(var(--clr-dark));
+  transition       : all .3s ease;
+
+  &:focus:invalid {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-danger));}
+
+  &:focus:valid {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-success));}
+}
+
+.form-search button[type='submit'] {
+  position : absolute;
+  top      : 0;
+  right    : 0;
+  width    : 1.5rem;
+}
+
+.form-container {
+  position : relative;
+
+  i {
+    position        : absolute;
+    z-index         : 2;
+    top             : 0;
+    bottom          : 0;
+    right           : 0;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    padding         : var(--gap);
+    border-radius   : calc(var(--gap) * 7);
+    cursor          : pointer;
+    user-select     : none;
+  }
+
+  i[data-tooltip] {cursor : help;}
+}

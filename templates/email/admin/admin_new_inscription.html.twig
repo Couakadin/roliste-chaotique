@@ -1,0 +1,9 @@
+{% extends '@email/email.html.twig' %}
+
+{% block subject %}
+    {{ subject|capitalize }}
+{% endblock %}
+
+{% block email %}
+    {{ ('admin.new_inscription.body'|trans({'%signedUrl%': signedUrl, '%userEmail%': userEmail, '%createdAt%': createdAt|format_datetime('medium', 'short')})|capitalize)|raw }}
+{% endblock %}
