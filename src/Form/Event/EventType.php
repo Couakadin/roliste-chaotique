@@ -15,10 +15,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @property Security $security
@@ -69,12 +73,33 @@ class EventType extends AbstractType
                 'label'        => 'ui.border_color',
             ])
             ->add('start', DateTimeType::class, [
-                'label'        => 'ui.date_start',
-                'widget' => 'single_text'
+                'label'       => 'ui.date_start',
+                'widget'      => 'single_text',
+                'constraints' => [
+                    new DateTime(),
+                    new GreaterThanOrEqual([
+                        'value' => 'today'
+                    ])
+                ]
             ])
             ->add('end', DateTimeType::class, [
-                'label'        => 'ui.date_end',
-                'widget' => 'single_text'
+                'label'       => 'ui.date_end',
+                'widget'      => 'single_text',
+                'constraints' => [
+                    new DateTime(),
+                    new Callback(function($object, ExecutionContextInterface $context) {
+                        $start = $context->getRoot()->getData()->getStart();
+                        $end = $object;
+
+                        if (is_a($start, \DateTime::class) && is_a($end, \DateTime::class)) {
+                            if ($end->format('U') - $start->format('U') < 0) {
+                                $context
+                                    ->buildViolation('form.date.greater')
+                                    ->addViolation();
+                            }
+                        }
+                    }),
+                ]
             ])
             /*
             ->add('createdAt', DateTimeType::class)

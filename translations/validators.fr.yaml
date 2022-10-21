@@ -1,4 +1,6 @@
 form:
+  date:
+    greater: la date de fin doit être supérieure à la date de départ.
   file:
     type: veuillez télécharger une image avec les formats suivants - JPG/PNG/SVG.
     size: taille des images maximum limitée à 1024k.

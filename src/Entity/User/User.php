@@ -82,8 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->eventMaster = new ArrayCollection();
         $this->eventParticipate = new ArrayCollection();
-        $this->tables = new ArrayCollection();
-        $this->tableInscriptions = new ArrayCollection();
     }
 
     public function __toString()
