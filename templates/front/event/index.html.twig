@@ -9,13 +9,15 @@
             <h1 class="h1 mb2">{{ 'ui.all_events'|trans|capitalize }}</h1>
             <a href="{{ path('event.new') }}" class="link-line">{{ 'ui.new_event'|trans|capitalize }}</a>
         </div>
-        {{ form_start(searchForm, {'attr': {'class': 'flex'}}) }}
-        <div class="form-search">
-        {{ form_widget(searchForm, {'attr': {'placeholder': 'ui.search_event'}}) }}
-            <button type="submit">
-                <img src="{{ asset('build/front/tools/search.svg') }}" alt="{{ 'ui.search'|trans }}">
-            </button>
-        </div>
+        {% if events.items is not empty %}
+            {{ form_start(searchForm, {'attr': {'class': 'flex'}}) }}
+            <div class="form-search">
+                {{ form_widget(searchForm, {'attr': {'placeholder': 'ui.search_event'|trans|capitalize}}) }}
+                <button type="submit">
+                    <img src="{{ asset('build/front/tools/search.svg') }}" alt="{{ 'ui.search'|trans }}">
+                </button>
+            </div>
+        {% endif %}
         {{ form_end(searchForm) }}
         {% for event in events %}
             <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">

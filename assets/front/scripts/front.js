@@ -54,6 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
     calendar.render();
 });
 
-if (CKEDITOR) {
+if (typeof(CKEDITOR) !== 'undefined') {
     CKEDITOR.config.uiColor = '#eeebe2';
 }

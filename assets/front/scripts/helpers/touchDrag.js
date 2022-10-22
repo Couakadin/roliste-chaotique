@@ -61,7 +61,6 @@ export class TouchDragCarousel {
      * @param {MouseEvent|TouchEvent} e
      */
     endDrag(e) {
-        console.log(this.origin)
         if (this.origin && this.lastTranslate) {
             e.preventDefault();
             this.carousel.enableTransition();

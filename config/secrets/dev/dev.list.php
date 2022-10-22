@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'MAILER_DSN' => null,
     'db_name' => null,
     'db_password' => null,
     'db_server' => null,

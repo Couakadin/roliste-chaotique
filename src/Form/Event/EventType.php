@@ -5,6 +5,7 @@ namespace App\Form\Event;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
 use App\Entity\Zone\Zone;
+use DateTime;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -17,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -76,7 +76,6 @@ class EventType extends AbstractType
                 'label'       => 'ui.date_start',
                 'widget'      => 'single_text',
                 'constraints' => [
-                    new DateTime(),
                     new GreaterThanOrEqual([
                         'value' => 'today'
                     ])
@@ -86,12 +85,11 @@ class EventType extends AbstractType
                 'label'       => 'ui.date_end',
                 'widget'      => 'single_text',
                 'constraints' => [
-                    new DateTime(),
                     new Callback(function($object, ExecutionContextInterface $context) {
                         $start = $context->getRoot()->getData()->getStart();
                         $end = $object;
 
-                        if (is_a($start, \DateTime::class) && is_a($end, \DateTime::class)) {
+                        if (is_a($start, DateTime::class) && is_a($end, DateTime::class)) {
                             if ($end->format('U') - $start->format('U') < 0) {
                                 $context
                                     ->buildViolation('form.date.greater')
