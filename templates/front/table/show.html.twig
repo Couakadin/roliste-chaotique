@@ -12,7 +12,7 @@
     <div class="container mt2">
         <a href="{{ path('table.index') }}" class="btn-secondary mb2">{{ 'ui.go_back'|trans|capitalize }}</a>
         <div class="table-grid">
-            <div class="card">
+            <div class="card table-info">
                 <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
                 <div class="card_body">
                     <p>
@@ -58,7 +58,7 @@
 
             <div class="card">
                 <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
-                <div class="card_body">
+                <div class="card_body table-description">
                     {% if table.content is not null %}
                         {{ table.content|raw }}
                     {% else %}

@@ -67,3 +67,15 @@
   grid-template-columns : 1fr;
   gap                   : 5rem;
 }
+
+.table-info {
+  position : sticky;
+  top      : 2rem;
+  height   : max-content;
+}
+
+.table-description {
+  .h1, h2, h3, h4, h5, h6, p {
+    margin : 1rem 0;
+  }
+}
