@@ -48,7 +48,7 @@ class AccountController extends AbstractController
         $user = $userRepo->findOneBy(['slug' => $slug]);
 
         if ($user !== $this->getUser()) {
-            return $this->redirectToRoute('front.account.edit', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
         }
 
         $formProfile = $this->getForm(UserProfileType::class, $user, $request);
@@ -58,7 +58,7 @@ class AccountController extends AbstractController
         if (($formProfile->isSubmitted() && $formProfile->isValid())
             ||
             ($formAvatar->isSubmitted() && $formAvatar->isValid())) {
-            return $this->redirectToRoute('front.account.edit', ['slug' => $user->getSlug()]);
+            return $this->redirectToRoute('account.edit', ['slug' => $user->getSlug()]);
         }
 
         if (($formPassword->isSubmitted() && $formPassword->isValid())) {
@@ -71,7 +71,7 @@ class AccountController extends AbstractController
             );
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('front.account.edit', ['slug' => $user->getSlug()]);
+            return $this->redirectToRoute('account.edit', ['slug' => $user->getSlug()]);
         }
 
         return $this->render('@front/account/edit.html.twig', [
