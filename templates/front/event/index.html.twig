@@ -7,7 +7,9 @@
     <div class="container mt2">
         <div class="flex space-between">
             <h1 class="h1 mb2">{{ 'ui.all_events'|trans|capitalize }}</h1>
-            <a href="{{ path('event.new') }}" class="link-line">{{ 'ui.new_event'|trans|capitalize }}</a>
+            {% if app.user %}
+                <a href="{{ path('event.new') }}" class="link-line">{{ 'ui.new_event'|trans|capitalize }}</a>
+            {% endif %}
         </div>
         {% if events.items is not empty %}
             {{ form_start(searchForm, {'attr': {'class': 'flex'}}) }}

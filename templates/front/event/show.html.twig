@@ -57,7 +57,7 @@
                     </p>
 
                     <div class="mt2 flex space-between">
-                        {% if app.user is not same as event.master %}
+                        {% if app.user and app.user is not same as event.master %}
                             <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
                                 {% if app.user not in event.participate %}
                                     <input type="hidden" name="participate" value="true">

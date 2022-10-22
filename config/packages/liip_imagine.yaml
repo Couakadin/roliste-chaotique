@@ -4,6 +4,8 @@ liip_imagine:
         redirect_response_code: 302
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
+    twig:
+        mode: lazy
     resolvers:
         default:
             web_path: ~

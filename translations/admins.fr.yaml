@@ -13,6 +13,7 @@ admin:
     {1}table|{2}tables
   table_inscription: |
     {1}inscription de table|{2}inscriptions de table
+  new_system: nouveau système
   new_table: nouvelle table
   new_table_inscription: nouvelle inscription de table
   new_editor: nouvel éditeur
