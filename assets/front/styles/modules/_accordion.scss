@@ -24,7 +24,17 @@
 
   details:not([open]) &:after {transform : rotate(180deg);}
 
-  & ~ ul li:not(:last-of-type) {border-bottom : calc(var(--gap) / 10) solid hsl(var(--clr-light));}
+  & ~ ul li:not(:last-of-type):after {
+    content       : '';
+    display       : block;
+    width         : 15rem;
+    margin        : auto;
+    border-bottom : calc(var(--gap) / 10) solid hsla(var(--clr-light), .3);
+  }
 
-  & ~ ul a {display : block;}
+  & ~ ul a {
+    display : block;
+    margin  : .5rem 0;
+    padding : 0 .5rem;
+  }
 }

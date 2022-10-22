@@ -49,12 +49,12 @@
                 <summary class="accordion h3">{{ 'ui.account'|trans|capitalize }}</summary>
                 <ul>
                     <li>
-                        <a href="{{ path('account.index') }}" class="my1 px1">
+                        <a href="{{ path('account.index') }}">
                             {{ 'ui.profile'|trans|capitalize }}
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('security.logout') }}" class="my1 px1 color-danger">
+                        <a href="{{ path('security.logout') }}" class="color-danger">
                             {{ 'ui.logout'|trans|capitalize }}
                         </a>
                     </li>
@@ -67,10 +67,10 @@
             <summary class="accordion h3">{{ 'ui.search'|trans|capitalize }}</summary>
             <ul>
                 <li>
-                    <a href="{{ path('table.index') }}" class="my1 px1">{{ 'ui.tables'|trans|capitalize }}</a>
+                    <a href="{{ path('table.index') }}">{{ 'ui.tables'|trans|capitalize }}</a>
                 </li>
                 <li>
-                    <a href="{{ path('event.index') }}" class="my1 px1">{{ 'ui.events'|trans|capitalize }}</a>
+                    <a href="{{ path('event.index') }}">{{ 'ui.events'|trans|capitalize }}</a>
                 </li>
             </ul>
         </details>
