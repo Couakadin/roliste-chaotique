@@ -170,6 +170,31 @@
   to {top : 0; opacity : 1}
 }
 
+@keyframes bounce-trophy {
+  50% {
+    transform : translateY(-0.62rem);
+  }
+}
+
+@keyframes scale-trophy-shadow {
+  50% {
+    transform : scale(0.9);
+  }
+}
+
+@keyframes gradient-trophy {
+  0% {
+    background-position : 0 50%;
+  }
+  50% {
+    background-position : 100% 50%;
+  }
+  100% {
+    background-position : 0 50%;
+  }
+}
+
+
 // Stats
 // ==============
 .is-highlight {background-color : hsla(var(--clr-accent), .2);}

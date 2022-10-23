@@ -7,11 +7,20 @@
     {% include '@front/account/_menu.html.twig' %}
 
     <section class="container mt2">
-        <div class="card flash-info">
+        <div class="account-badge">
             {% for badge in badges %}
-                {{ badge.name }}
-            {% else %}
-                Pas de badge
+                {% for unlock in user.badgeUnlocks|filter(unlock => badge is same as unlock.badge) %}
+                    <div class="account-badge_trophy unlocked">
+                        <img src="{{ asset('build/front/tools/badge.png') }}" alt="" width="96">
+                        <h6 class="account-badge_title">Jeunot</h6>
+                        <p>{{ badge.name }}</p>
+                    </div>
+                {% else %}
+                    <div class="account-badge_trophy">
+                        <img src="{{ asset('build/front/tools/badge.png') }}" alt="" width="96">
+                        <div>{{ badge.name }}</div>
+                    </div>
+                {% endfor %}
             {% endfor %}
         </div>
     </section>

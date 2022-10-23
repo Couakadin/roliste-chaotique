@@ -44,6 +44,26 @@
     flex-direction : row;
   }
 
-  display         : flex;
-  flex-direction  : column;
+  display        : flex;
+  flex-direction : column;
+}
+
+.account-badge {
+  display               : grid;
+  gap                   : 3rem 0;
+  grid-template-columns : repeat(auto-fit, minmax(15rem, 1fr));
+  text-align            : center;
+}
+
+.account-badge_trophy {
+  opacity : .2;
+
+  &.unlocked {
+    opacity : 1;
+  }
+}
+
+.account-badge_title {
+  font-weight : bold;
+  font-size   : var(--fs-400);
 }

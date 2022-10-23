@@ -6,7 +6,9 @@ import './modules/accordion';
 import './modules/carousel';
 import './modules/choices';
 import './modules/cookie';
+import './modules/dragon';
 import './modules/flash';
+import './modules/konami';
 import './modules/navbar';
 import './modules/modal';
 import './modules/password';
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const calendar = new Calendar(calendarEl, {
         plugins      : [dayGridPlugin],
-        initialView  : 'dayGridWeek',
+        initialView  : 'dayGridMonth',
         timeZone     : 'Europe/paris',
         locale       : 'fr',
         headerToolbar: {

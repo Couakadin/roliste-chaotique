@@ -11,7 +11,19 @@
 
 {% for label, messages in app.flashes(['badge']) %}
     {% for message in messages %}
-        {{ label }}
-        {{ message }}
+        <div class="badge">
+            <div class="badge-box">
+                <div class="badge-dot"></div>
+                <div class="badge-trophy"></div>
+                <div class="badge-shadow"></div>
+                <div class="badge-message">
+                    <h6 class="badge-title">{{ 'ui.trophy'|trans }} !</h6>
+                    <p class="badge-subtitle">{{ message|UCFirst }}</p>
+                </div>
+                <a href="{{ path('account.badge', {'slug': app.user.slug }) }}" class="badge-button">
+                    {{ 'ui.see'|trans|capitalize }}
+                </a>
+            </div>
+        </div>
     {% endfor %}
 {% endfor %}

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Utils\TranslatorTrait;
 use App\Entity\Avatar\Avatar;
+use App\Entity\Badge\Badge;
 use App\Entity\Editor\Editor;
 use App\Entity\Event\Event;
 use App\Entity\Genre\Genre;
@@ -46,6 +47,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section($this->trans('admin.management'));
         yield MenuItem::linkToCrud($this->trans('admin.user', ['%count%' => 2]), 'fas fa-users', User::class);
         yield MenuItem::linkToCrud($this->trans('admin.avatar', ['%count%' => 2]), 'fas fa-image', Avatar::class);
+        yield MenuItem::linkToCrud($this->trans('admin.badge', ['%count%' => 2]), 'fas fa-award', Badge::class);
         yield MenuItem::section($this->trans('admin.role_play'));
         yield MenuItem::linkToCrud($this->trans('admin.table', ['%count%' => 2]), 'fas fa-calendar', Table::class);
         yield MenuItem::linkToCrud($this->trans('admin.genre', ['%count%' => 2]), 'fas fa-film', Genre::class);

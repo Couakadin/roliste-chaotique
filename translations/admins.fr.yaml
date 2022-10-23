@@ -1,6 +1,8 @@
 admin:
   chaotic_role_player: rôliste chaotique
   dashboard: tableau de bord
+  badge: |
+    {1}badge|{2}badges
   editor: |
     {1}éditeur|{2}éditeurs
   event: |
@@ -13,6 +15,7 @@ admin:
     {1}table|{2}tables
   table_inscription: |
     {1}inscription de table|{2}inscriptions de table
+  new_badge: nouveau badge
   new_system: nouveau système
   new_table: nouvelle table
   new_table_inscription: nouvelle inscription de table
@@ -34,7 +37,10 @@ admin:
 
   ui:
     id: id
+    action_name: nom de l'action
+    action_count: compte d'action
     avatar: avatar
+    badge: badge
     bg_color: couleur background
     border_color: couleur bordure
     editor: éditeur
@@ -48,6 +54,7 @@ admin:
     created_at: créé le
     updated_at: modifié le
     login_at: connecté le
+    description: description
     event_month: mois d'événement
     event_year: année d'événement
     table: table

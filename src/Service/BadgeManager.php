@@ -60,4 +60,14 @@ class BadgeManager
     {
         return $this->manager->getRepository(Badge::class)->findUnlockedFor($user->getId());
     }
+
+    /**
+     * Get all Badges
+     *
+     * @return array
+     */
+    public function getAllBadges(): array
+    {
+        return $this->manager->getRepository(Badge::class)->findAll();
+    }
 }

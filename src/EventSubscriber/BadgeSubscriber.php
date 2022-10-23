@@ -21,7 +21,7 @@ class BadgeSubscriber implements EventSubscriberInterface
     /**
      * When a badge is unlocked we send an email
      *
-     * @param \App\EventDispatcher\BadgeUnlockedEvent $event
+     * @param BadgeUnlockedEvent $event
      * @return void
      */
     public function onBadgeUnlock(BadgeUnlockedEvent $event): void
@@ -29,6 +29,6 @@ class BadgeSubscriber implements EventSubscriberInterface
         $this->requestStack
             ->getCurrentRequest()
             ->getSession()
-            ->getFlashBag()->add('badge', 'felicitation');
+            ->getFlashBag()->add('badge', $event->getBadge()->getName());
     }
 }

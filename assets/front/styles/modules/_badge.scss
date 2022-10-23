@@ -1,0 +1,106 @@
+.badge {
+  position   : fixed;
+  z-index    : z-index('flash');
+  left       : 0;
+  right      : 0;
+  width      : 43.75rem;
+  height     : 15.62rem;
+  margin     : 5% auto;
+  overflow   : hidden;
+  transform  : translateY(-200%);
+  transition : transform .3s ease-in-out;
+
+  &.show {transform : translateY(0);}
+}
+
+.badge-box {
+  width           : 35%;
+  height          : 100%;
+  margin          : auto;
+  background      : linear-gradient(to bottom right, hsl(var(--clr-success)), hsl(var(--clr-warning)));
+  background-size : 400% 400%;
+  border-radius   : 1.25rem;
+  box-shadow      : .3rem .3rem 1.25rem hsla(var(--clr-dark), 10%);
+  perspective     : 2.5rem;
+}
+
+.badge-dot {
+  width         : .5rem;
+  height        : .5rem;
+  background    : hsl(var(--clr-light));
+  border-radius : 50%;
+  position      : absolute;
+  top           : 4%;
+  right         : 6%;
+  cursor        : pointer;
+}
+
+.badge-trophy {
+  position   : absolute;
+  top        : 21%;
+  left       : 37.5%;
+  width      : 22%;
+  height     : 22%;
+  background : url('/public/build/front/icons/trophy.svg') center / contain;
+  z-index    : 2;
+  animation  : bounce-trophy 1s ease-in infinite;
+}
+
+.badge-shadow {
+  position      : absolute;
+  z-index       : 1;
+  top           : 42%;
+  left          : 38%;
+  width         : 21%;
+  height        : 3%;
+  background    : hsl(var(--clr-dark));
+  border-radius : 50%;
+  opacity       : .5;
+  animation     : scale-trophy-shadow 1s ease-in infinite;
+}
+
+.badge-message {
+  position   : absolute;
+  top        : 47%;
+  width      : 100%;
+  height     : 40%;
+  text-align : center;
+}
+
+.badge-title {
+  font-weight    : 100;
+  letter-spacing : .2rem;
+  padding-top    : .3rem;
+  color          : hsl(var(--clr-light));
+  padding-bottom : .3rem;
+  text-transform : uppercase;
+  text-shadow    : 0 0 2rem hsl(var(--clr-dark));
+}
+
+.badge-subtitle {
+  margin-top     : -.3rem;
+  font-size      : .8em;
+  font-weight    : 100;
+  color          : hsl(var(--clr-dark));
+  letter-spacing : .063rem;
+}
+
+.badge-button {
+  position        : absolute;
+  background      : hsl(var(--clr-light));
+  width           : 50%;
+  height          : 15%;
+  border-radius   : 1.25rem;
+  top             : 73%;
+  left            : 25%;
+  outline         : 0;
+  border          : none;
+  box-shadow      : .3rem .3rem 0.62rem hsla(var(--clr-dark), .5);
+  text-align      : center;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+}
+
+
+

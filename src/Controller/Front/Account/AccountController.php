@@ -38,6 +38,10 @@ class AccountController extends AbstractController
             $user = $userRepo->findOneBy(['slug' => $slug]);
         }
 
+        if (!$user) {
+            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
+        }
+
         return $this->render('@front/account/index.html.twig', [
             'user' => $user,
         ]);
@@ -89,7 +93,11 @@ class AccountController extends AbstractController
         $userRepo = $this->entityManager->getRepository(User::class);
         $user = $userRepo->findOneBy(['slug' => $slug]);
 
-        $badges = $this->badgeManager->getBadgeFor($user);
+        if (!$user) {
+            return $this->redirectToRoute('account.badge', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        $badges = $this->badgeManager->getAllBadges();
 
         return $this->render('@front/account/badge.html.twig', [
             'user'   => $user,
