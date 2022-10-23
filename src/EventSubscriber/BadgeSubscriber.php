@@ -29,6 +29,6 @@ class BadgeSubscriber implements EventSubscriberInterface
         $this->requestStack
             ->getCurrentRequest()
             ->getSession()
-            ->getFlashBag()->add('badge', $event->getBadge()->getName());
+            ->getFlashBag()->add('badge', $event->getBadge()->getDescription());
     }
 }
