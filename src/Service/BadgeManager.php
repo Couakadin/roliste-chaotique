@@ -1,11 +1,11 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Manager;
+namespace App\Service;
 
+use App\Entity\Badge\Badge;
+use App\Entity\Badge\BadgeUnlock;
 use App\Entity\User\User;
-use App\RC\BadgeBundle\src\Entity\Badge;
-use App\RC\BadgeBundle\src\Entity\BadgeUnlock;
-use App\RC\BadgeBundle\src\Event\BadgeUnlockedEvent;
+use App\EventDispatcher\BadgeUnlockedEvent;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

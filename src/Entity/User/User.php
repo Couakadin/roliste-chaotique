@@ -3,10 +3,10 @@
 namespace App\Entity\User;
 
 use App\Entity\Avatar\Avatar;
+use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
-use App\RC\BadgeBundle\src\Entity\BadgeUnlock;
 use App\Repository\User\UserRepository;
 use DateTime;
 use DateTimeInterface;
@@ -354,7 +354,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, BadgeUnlock>
+     * @return Collection<int, \App\Entity\Badge\BadgeUnlock>
      */
     public function getBadgeUnlocks(): Collection
     {

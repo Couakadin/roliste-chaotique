@@ -7,7 +7,7 @@ use App\Email\EmailAdmin;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
 use App\Form\Security\RegistrationFormType;
-use App\RC\BadgeBundle\src\Manager\BadgeManager;
+use App\Service\BadgeManager;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;

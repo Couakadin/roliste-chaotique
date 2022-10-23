@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\RC\BadgeBundle\src\Event\BadgeUnlockedEvent;
+use App\EventDispatcher\BadgeUnlockedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -21,7 +21,7 @@ class BadgeSubscriber implements EventSubscriberInterface
     /**
      * When a badge is unlocked we send an email
      *
-     * @param BadgeUnlockedEvent $event
+     * @param \App\EventDispatcher\BadgeUnlockedEvent $event
      * @return void
      */
     public function onBadgeUnlock(BadgeUnlockedEvent $event): void

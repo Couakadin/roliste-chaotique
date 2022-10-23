@@ -1,7 +1,5 @@
 <?php
 
-use App\RC\BadgeBundle\src\RCBadgeBundle;
-
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
@@ -23,6 +21,4 @@ return [
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Knp\Bundle\TimeBundle\KnpTimeBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
-    // Homebrew bundle in src
-    RCBadgeBundle::class => ['all' => true],
 ];

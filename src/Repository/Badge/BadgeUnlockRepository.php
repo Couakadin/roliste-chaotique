@@ -1,13 +1,13 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Repository;
+namespace App\Repository\Badge;
 
-use App\RC\BadgeBundle\src\Entity\BadgeUnlock;
+use App\Entity\Badge\BadgeUnlock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<\App\RC\BadgeBundle\src\Entity\BadgeUnlock>
+ * @extends ServiceEntityRepository<BadgeUnlock>
  *
  * @method BadgeUnlock|null find($id, $lockMode = null, $lockVersion = null)
  * @method BadgeUnlock|null findOneBy(array $criteria, array $orderBy = null)

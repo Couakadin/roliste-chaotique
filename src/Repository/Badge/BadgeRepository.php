@@ -1,8 +1,8 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Repository;
+namespace App\Repository\Badge;
 
-use App\RC\BadgeBundle\src\Entity\Badge;
+use App\Entity\Badge\Badge;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;

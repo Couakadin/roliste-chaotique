@@ -26,8 +26,8 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\RC\BadgeBundle\src\Manager\BadgeManager:
-        class: App\RC\BadgeBundle\src\Manager\BadgeManager
+    App\Service\BadgeManager:
+        class: App\Service\BadgeManager
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
     App\Service\FileUploader:

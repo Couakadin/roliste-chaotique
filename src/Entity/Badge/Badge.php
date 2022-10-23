@@ -1,8 +1,8 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Entity;
+namespace App\Entity\Badge;
 
-use App\RC\BadgeBundle\src\Repository\BadgeRepository;
+use App\Repository\Badge\BadgeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

@@ -6,7 +6,7 @@ use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
-use App\RC\BadgeBundle\src\Manager\BadgeManager;
+use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Entity;
+namespace App\Entity\Badge;
 
 use App\Entity\User\User;
-use App\RC\BadgeBundle\src\Repository\BadgeUnlockRepository;
+use App\Repository\Badge\BadgeUnlockRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BadgeUnlockRepository::class)]

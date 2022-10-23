@@ -3,7 +3,7 @@
 namespace App\Controller\Front\Home;
 
 use App\Entity\Table\Table;
-use App\RC\BadgeBundle\src\Manager\BadgeManager;
+use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

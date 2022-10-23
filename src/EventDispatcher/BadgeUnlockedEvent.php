@@ -1,11 +1,11 @@
 <?php
 
-namespace App\RC\BadgeBundle\src\Event;
+namespace App\EventDispatcher;
 
 
+use App\Entity\Badge\Badge;
+use App\Entity\Badge\BadgeUnlock;
 use App\Entity\User\User;
-use App\RC\BadgeBundle\src\Entity\Badge;
-use App\RC\BadgeBundle\src\Entity\BadgeUnlock;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class BadgeUnlockedEvent extends Event
