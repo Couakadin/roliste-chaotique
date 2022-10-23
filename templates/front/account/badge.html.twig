@@ -8,7 +8,11 @@
 
     <section class="container mt2">
         <div class="card flash-info">
-            Bientôt disponible !
+            {% for badge in badges %}
+                {{ badge.name }}
+            {% else %}
+                Pas de badge
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

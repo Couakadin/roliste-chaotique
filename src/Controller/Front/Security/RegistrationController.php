@@ -7,6 +7,7 @@ use App\Email\EmailAdmin;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
 use App\Form\Security\RegistrationFormType;
+use App\RC\BadgeBundle\src\Manager\BadgeManager;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -26,10 +27,11 @@ class RegistrationController extends AbstractController
     public function __construct(
         private readonly TranslatorInterface        $translator,
         private readonly UserAuthenticatorInterface $userAuthenticator,
-        private readonly FormLoginAuthenticator $formLoginAuthenticator,
+        private readonly FormLoginAuthenticator     $formLoginAuthenticator,
         private readonly Email                      $email,
         private readonly EmailAdmin                 $emailAdmin,
-        private readonly EntityManagerInterface     $entityManager
+        private readonly EntityManagerInterface     $entityManager,
+        private readonly BadgeManager               $badgeManager
     )
     {
     }
@@ -65,6 +67,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->persist($newToken);
             $entityManager->flush();
+
+            // Unlock badge
+            $this->badgeManager->checkAndUnlock($user, 'register', 1);
 
             // do anything else you need here, like send an email
             $this->email->emailVerify($user, $newToken, $this->translator->trans('email.new_inscription.subject'));

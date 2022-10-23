@@ -6,6 +6,7 @@ use App\Entity\Avatar\Avatar;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
+use App\RC\BadgeBundle\src\Entity\BadgeUnlock;
 use App\Repository\User\UserRepository;
 use DateTime;
 use DateTimeInterface;
@@ -78,10 +79,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participate')]
     private Collection $eventParticipate;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
+    private Collection $badgeUnlocks;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
         $this->eventParticipate = new ArrayCollection();
+        $this->badgeUnlocks = new ArrayCollection();
     }
 
     public function __toString()
@@ -343,6 +348,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->eventParticipate->removeElement($eventParticipate)) {
             $eventParticipate->removeParticipate($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BadgeUnlock>
+     */
+    public function getBadgeUnlocks(): Collection
+    {
+        return $this->badgeUnlocks;
+    }
+
+    public function addBadgeUnlock(BadgeUnlock $badgeUnlock): self
+    {
+        if (!$this->badgeUnlocks->contains($badgeUnlock)) {
+            $this->badgeUnlocks->add($badgeUnlock);
+            $badgeUnlock->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBadgeUnlock(BadgeUnlock $badgeUnlock): self
+    {
+        if ($this->badgeUnlocks->removeElement($badgeUnlock)) {
+            // set the owning side to null (unless already changed)
+            if ($badgeUnlock->getUser() === $this) {
+                $badgeUnlock->setUser(null);
+            }
         }
 
         return $this;

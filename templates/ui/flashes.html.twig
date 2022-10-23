@@ -8,3 +8,10 @@
         </div>
     {% endfor %}
 {% endfor %}
+
+{% for label, messages in app.flashes(['badge']) %}
+    {% for message in messages %}
+        {{ label }}
+        {{ message }}
+    {% endfor %}
+{% endfor %}

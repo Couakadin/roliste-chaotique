@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
+use App\RC\BadgeBundle\src\Manager\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -20,8 +21,9 @@ class AccountController extends AbstractController
     public function __construct
     (
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly TranslatorInterface         $translator,
+        private readonly BadgeManager                $badgeManager
     )
     {
     }
@@ -87,8 +89,11 @@ class AccountController extends AbstractController
         $userRepo = $this->entityManager->getRepository(User::class);
         $user = $userRepo->findOneBy(['slug' => $slug]);
 
+        $badges = $this->badgeManager->getBadgeFor($user);
+
         return $this->render('@front/account/badge.html.twig', [
-            'user' => $user
+            'user'   => $user,
+            'badges' => $badges
         ]);
     }
 
