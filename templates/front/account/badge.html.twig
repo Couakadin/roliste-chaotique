@@ -12,13 +12,14 @@
                 {% for unlock in user.badgeUnlocks|filter(unlock => badge is same as unlock.badge) %}
                     <div class="account-badge_trophy unlocked">
                         <img src="{{ asset('build/front/tools/badge.png') }}" alt="" width="96">
-                        <h6 class="account-badge_title">Jeunot</h6>
-                        <p>{{ badge.name }}</p>
+                        <h6 class="account-badge_title">{{ badge.name }}</h6>
+                        <p>{{ badge.description }}</p>
                     </div>
                 {% else %}
                     <div class="account-badge_trophy">
                         <img src="{{ asset('build/front/tools/badge.png') }}" alt="" width="96">
-                        <div>{{ badge.name }}</div>
+                        <h6 class="account-badge_title">{{ badge.name }}</h6>
+                        <p>{{ badge.description }}</p>
                     </div>
                 {% endfor %}
             {% endfor %}
