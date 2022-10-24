@@ -10,6 +10,7 @@
   display   : block;
   font-size : 0;
   cursor    : pointer;
+  width     : max-content;
 }
 
 .radio:checked + .radio-border {

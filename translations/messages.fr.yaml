@@ -87,6 +87,7 @@ ui:
   delete: supprimer
   delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
   description: description
+  last_event: dernier événement
   last_events: derniers événements
   last_register: derniers inscrits
   discover_calendar: découvrez nos événements
@@ -180,6 +181,9 @@ ui:
   participant: participants
   no_participant: aucun participant
   trophy: haut-fait
+  events_created: événements créés
+  events_participated: événements participés
+  no_one: aucun
 
 tooltip:
   tooltip: info-bulle

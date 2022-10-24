@@ -4,6 +4,7 @@ namespace App\Repository\User;
 
 use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -41,10 +42,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->createQueryBuilder('u')
             ->where('u.roles NOT LIKE :roles')
-            ->setParameter('roles', '%"'.'ROLE_ADMIN'.'"%')
+            ->setParameter('roles', '%"' . 'ROLE_ADMIN' . '"%')
             ->orderBy('u.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findLastEventByUser(User $user)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('p.name, p.slug')
+            ->leftJoin('u.eventParticipate', 'p')
+            ->where('u.id = :user')
+            ->setParameter(':user', $user->getId())
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

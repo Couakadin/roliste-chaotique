@@ -8,6 +8,7 @@ use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +32,11 @@ class AccountController extends AbstractController
     #[Route('/account/{slug}', name: 'account.index')]
     public function index(string $slug = null): Response
     {
+        $userRepo = $this->entityManager->getRepository(User::class);
+
         if (is_null($slug)) {
             $user = $this->getUser();
         } else {
-            $userRepo = $this->entityManager->getRepository(User::class);
             $user = $userRepo->findOneBy(['slug' => $slug]);
         }
 
@@ -42,8 +44,11 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
         }
 
+        $lastEvent = $userRepo->findLastEventByUser($user) ?: null;
+
         return $this->render('@front/account/index.html.twig', [
-            'user' => $user,
+            'user'      => $user,
+            'lastEvent' => $lastEvent
         ]);
     }
 

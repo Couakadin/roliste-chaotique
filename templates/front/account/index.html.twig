@@ -7,8 +7,35 @@
     {% include '@front/account/_menu.html.twig' %}
 
     <section class="container mt2">
-        <div class="card flash-info">
-            Bientôt disponible !
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 3rem;">
+            <div class="card">
+                <h2 class="card-title h2 mb1">
+                    {{ 'ui.events'|trans|capitalize }}
+                </h2>
+                <ul class="card-body">
+                    <li>{{ 'ui.events_created'|trans|capitalize}} : {{ user.eventMaster|length }}</li>
+                    <li>{{ 'ui.events_participated'|trans|capitalize}} : {{ user.eventParticipates|length }}</li>
+                    <li>
+                        <hr class="my1">
+                    </li>
+                    <li>
+                        {{ 'ui.last_event'|trans|capitalize}} :
+                        {% if lastEvent.slug %}
+                            <a href="{{ path('event.show', {'slug': lastEvent.slug}) }}">
+                                {{ lastEvent.name }}
+                            </a>
+                        {% else %}
+                            {{ 'ui.no_one'|trans}}
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <h2 class="card-title h2">{{ 'ui.tables'|trans|capitalize }}</h2>
+                <div class="card-body my2 flex gap-1 flex-wrap">
+                    <p class="card flash-info">Bientôt disponible !</p>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}
