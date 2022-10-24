@@ -69,8 +69,10 @@
 }
 
 .table-info {
-  position : sticky;
-  top      : 2rem;
+  @include medium-device {
+    position : sticky;
+    top      : 2rem;
+  }
   height   : max-content;
 }
 
