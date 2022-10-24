@@ -17,13 +17,21 @@ class BadgeController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        (string) $badge = $request->query->get('badge');
+        (string)$badge = $request->query->get('badge');
+        (string)$submittedToken = $request->request->get('token');
 
         // Unlock badge
-        if ($badge) {
+        if (
+            $badge &&
+            $this->isCsrfTokenValid('badge-dragon', $submittedToken) ||
+            $this->isCsrfTokenValid('badge-konami', $submittedToken) ||
+            $this->isCsrfTokenValid('badge-riddle', $submittedToken)
+        ) {
             $this->badgeManager->checkAndUnlock($this->getUser(), $badge, 1);
+
+            return $this->redirectToRoute('account.badge', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        return $this->redirectToRoute('account.badge', ['slug' => $this->getUser()->getSlug()]);
+        return $this->redirectToRoute('home.index');
     }
 }

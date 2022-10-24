@@ -35,6 +35,8 @@
                  style="position: absolute; right: 0; cursor: pointer;" id="badgeDragon">
         </div>
         <form class="form-badge" name="badgeDragon" method="post"
-              action="{{ path('badge.unlock') }}?badge=dragon"></form>
+              action="{{ path('badge.unlock') }}?badge=dragon">
+            <input type="hidden" name="token" value="{{ csrf_token('badge-dragon') }}"/>
+        </form>
     </div>
 {% endblock %}
