@@ -5,7 +5,7 @@
 
 {% block body %}
     <section class="table-banner"
-             style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture) }}') center / cover;">
+             style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_show') }}') center / cover;">
         <h1 class="table-mask h1">{{ table.name }}</h1>
     </section>
 
