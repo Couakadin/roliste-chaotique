@@ -96,9 +96,9 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build')
 
-    .copyFiles({
-        from: './assets/admin/media',
-    })
+    // .copyFiles({
+    //     from: './assets/admin/media',
+    // })
 
     /*
      * ENTRY CONFIG
