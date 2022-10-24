@@ -60,6 +60,8 @@ security:
     role_hierarchy:
         ROLE_ADMIN: ['ROLE_ALLOWED_TO_SWITCH']
 
+    access_denied_url: security.index
+
 when@test:
     security:
         password_hashers:

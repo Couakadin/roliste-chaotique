@@ -38,6 +38,8 @@ class DashboardController extends AbstractDashboardController
     #[Route('/oversight')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $userRepo = $this->entityManager->getRepository(User::class);
         $eventRepo = $this->entityManager->getRepository(Event::class);
 
@@ -80,7 +82,7 @@ class DashboardController extends AbstractDashboardController
             ->setName($user->getUsername())
             ->displayUserAvatar(false)
             ->addMenuItems([
-                MenuItem::linkToRoute($this->trans('admin.profile'), 'fa fa-id-card', 'front.account.index'),
+                MenuItem::linkToRoute($this->trans('admin.profile'), 'fa fa-id-card', 'account.index'),
                 MenuItem::linkToExitImpersonation('Stop impersonation', 'fa fa-door-open')
             ]);
     }
