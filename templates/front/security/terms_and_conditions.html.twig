@@ -36,7 +36,7 @@
         </div>
         <form class="form-badge" name="badgeDragon" method="post"
               action="{{ path('badge.unlock') }}?badge=dragon">
-            <input type="hidden" name="token" value="{{ csrf_token('badge-dragon') }}"/>
+            <input type="hidden" name="token" value="{{ csrf_token('badge-dragon') }}">
         </form>
     </div>
 {% endblock %}

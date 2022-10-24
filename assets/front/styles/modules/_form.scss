@@ -40,7 +40,7 @@
 .form-search input {
   display          : block;
   min-height       : calc(var(--gap) * 4);
-  padding-right    : 2rem;
+  padding-right    : 5rem;
   outline          : none;
   border           : none;
   border-bottom    : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
