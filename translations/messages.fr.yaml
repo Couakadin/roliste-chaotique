@@ -76,6 +76,7 @@ ui:
   content: contenu
   create: créer
   create_account: créer un compte
+  created_at: crée le
   creation_date: date de création
   date_start: date de départ
   date_end: date de fin
@@ -84,6 +85,8 @@ ui:
   delete: supprimer
   delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
   description: description
+  last_events: derniers événements
+  last_register: derniers inscrits
   discover_calendar: découvrez nos événements
   dm: mj
   edit: éditer
@@ -164,10 +167,13 @@ ui:
   understood: compris
   slug: slug
   subject: sujet
+  signed_in: inscrit
+  logged: connecté
   username: nom d'utilisateur
   verify_email: vérifier l'e-mail
   verify_email_warning: |
     Afin de pouvoir éditer votre compte, merci de vérifier votre e-mail.
+  verified: vérifié
   zone: lieu d'événement
   participant: participants
   no_participant: aucun participant

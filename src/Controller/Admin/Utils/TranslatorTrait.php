@@ -6,11 +6,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait TranslatorTrait
 {
-    private TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(public readonly TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     protected function trans(string $trans, array $options = []): string

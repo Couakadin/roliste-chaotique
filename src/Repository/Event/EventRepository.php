@@ -56,4 +56,15 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findLastEvents()
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.master', 'm')
+            ->leftJoin('e.zone', 'z')
+            ->orderBy('e.createdAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 }
