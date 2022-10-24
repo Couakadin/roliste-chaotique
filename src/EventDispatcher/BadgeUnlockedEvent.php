@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class BadgeUnlockedEvent extends Event
 {
-    const NAME = 'badge.unlock';
+    public const NAME = 'badge.unlock';
 
     public function __construct(private readonly BadgeUnlock $badgeUnlock) {}
 

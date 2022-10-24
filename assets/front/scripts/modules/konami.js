@@ -22,9 +22,6 @@ document.addEventListener('keyup', function (e) {
     konamiString = konamiCode.join('');
 
     if (keySequence.join('').includes(konamiString)) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.open('POST', '/badge/unlock/konami', false);
-        xhttp.send();
-        location.reload();
+        location.href = '/badge/unlock?badge=konami';
     }
 });
