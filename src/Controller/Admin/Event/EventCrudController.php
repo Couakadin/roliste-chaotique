@@ -65,6 +65,10 @@ class EventCrudController extends AbstractCrudController
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
                 ->onlyOnDetail(),
 
+            FormField::addTab('Date'),
+            DateTimeField::new('start', $this->trans('admin.ui.start_at')),
+            DateTimeField::new('end', $this->trans('admin.ui.end_at')),
+
             FormField::addTab('Couleur'),
             ColorField::new('bgColor', $this->trans('admin.ui.bg_color'))->hideOnIndex(),
             ColorField::new('borderColor', $this->trans('admin.ui.border_color'))->hideOnIndex(),

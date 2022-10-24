@@ -71,6 +71,8 @@ admin:
     roles: rôles
     verified: vérifié
     status: status
+    start_at: date de départ
+    end_at: date de fin
     send_email_to_user: envoyer un e-mail à l'utilisateur
     system: système
     type: type

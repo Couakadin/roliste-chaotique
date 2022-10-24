@@ -49,31 +49,14 @@ class EventType extends AbstractType
                     ])
                 ],
             ])
-            /*
-            ->add('slug', TextType::class, [
-                'label'       => 'ui.slug',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.slug.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.slug.length'
-                    ])
-                ],
-            ])
-            */
             ->add('bgColor', ColorType::class, [
-                'label'        => 'ui.bg_color',
+                'label' => 'ui.bg_color',
             ])
             ->add('borderColor', ColorType::class, [
-                'label'        => 'ui.border_color',
+                'label' => 'ui.border_color',
             ])
             ->add('start', DateTimeType::class, [
-                'label'       => 'ui.date_start',
+                'label'       => 'ui.date_hour_start',
                 'widget'      => 'single_text',
                 'constraints' => [
                     new GreaterThanOrEqual([
@@ -82,10 +65,10 @@ class EventType extends AbstractType
                 ]
             ])
             ->add('end', DateTimeType::class, [
-                'label'       => 'ui.date_end',
+                'label'       => 'ui.date_hour_end',
                 'widget'      => 'single_text',
                 'constraints' => [
-                    new Callback(function($object, ExecutionContextInterface $context) {
+                    new Callback(function ($object, ExecutionContextInterface $context) {
                         $start = $context->getRoot()->getData()->getStart();
                         $end = $object;
 
@@ -99,11 +82,6 @@ class EventType extends AbstractType
                     }),
                 ]
             ])
-            /*
-            ->add('createdAt', DateTimeType::class)
-            ->add('updatedAt', DateTimeType::class)
-            */
-
             ->add('type', ChoiceType::class, [
                 'label'        => 'ui.type',
                 'choices'      => Event::TYPE,

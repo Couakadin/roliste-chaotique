@@ -36,8 +36,8 @@ class CalendarSubscriber implements EventSubscriberInterface
         foreach ($eventRepo->findAll() as $event) {
             $calendar->addEvent(new Event(
                 $event->getName(),
-                new DateTime($event->getStart()->format('d-m-Y h:i:s')),
-                new DateTime($event->getEnd()->format('d-m-Y h:i:s')),
+                new DateTime($event->getStart()->format('d-m-Y H:i')),
+                new DateTime($event->getEnd()->format('d-m-Y H:i')),
                 $event->getId(), [
                     'backgroundColor' => $event->getBgColor(),
                     'borderColor'     => $event->getBorderColor(),

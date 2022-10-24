@@ -80,6 +80,8 @@ ui:
   creation_date: date de création
   date_start: date de départ
   date_end: date de fin
+  date_hour_start: date et heure de départ
+  date_hour_end: date et heure de fin
   date: date
   days: jours
   delete: supprimer
