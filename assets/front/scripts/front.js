@@ -59,3 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
 if (typeof(CKEDITOR) !== 'undefined') {
     CKEDITOR.config.uiColor = '#eeebe2';
 }
+
+setInterval(lastTimeSeen, 300000);
+
+function lastTimeSeen() {
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('POST', '/online');
+    xhttp.send();
+}

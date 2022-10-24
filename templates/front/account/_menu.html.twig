@@ -12,8 +12,14 @@
         <img src="{{ avatar }}" alt="Avatar" width="106" height="106" class="rounded mr1">
         <div class="flex column justify-center">
             <h1 class="h1">{{ user.username|UCFirst }}</h1>
-            <small class="main-mark">
-                {{ 'ui.last_login'|trans|UCFirst ~ ' ' ~ user.loggedAt|ago }}
+            <small class="main-mark menu-online">
+                {% if user.loggedAt|date_modify('+5 minutes')|date < 'now'|date %}
+                    <div class="menu-online-dot"></div>
+                    {{ 'ui.last_login'|trans|UCFirst ~ ' ' ~ user.loggedAt|ago }}
+                {% else %}
+                    <div class="menu-online-dot online"></div>
+                    {{ 'ui.logged'|trans|capitalize }}
+                {% endif %}
             </small>
         </div>
     </div>

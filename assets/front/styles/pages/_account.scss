@@ -67,3 +67,19 @@
   font-weight : bold;
   font-size   : var(--fs-400);
 }
+
+.menu-online {
+  display     : flex;
+  align-items : center;
+  gap         : 0 .5rem;
+}
+
+.menu-online-dot {
+  display       : inline-block;
+  width         : .5rem;
+  height        : .5rem;
+  background    : hsl(var(--clr-danger));
+  border-radius : 50%;
+
+  &.online {background : hsl(var(--clr-success));}
+}
