@@ -2,13 +2,10 @@
 
 namespace App\Controller\Front\Security;
 
-use App\Entity\User\User;
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,17 +64,5 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('@front/security/cookie_policy.html.twig');
-    }
-
-    #[Route('/online', name: 'security.privacy-policy', methods: 'post')]
-    public function isOnline(EntityManagerInterface $entityManager): JsonResponse
-    {
-        ($entityManager->getRepository(User::class))
-            ->find($this->getUser())
-            ->setLoggedAt(new DateTime());
-
-        $entityManager->flush();
-
-        return new JsonResponse('OK');
     }
 }

@@ -13,7 +13,7 @@
         <div class="flex column justify-center">
             <h1 class="h1">{{ user.username|UCFirst }}</h1>
             <small class="main-mark menu-online">
-                {% if user.loggedAt|date_modify('+5 minutes')|date < 'now'|date %}
+                {% if user.loggedAt|date('H:i:s') < 'now'|date('H:i:s') %}
                     <div class="menu-online-dot"></div>
                     {{ 'ui.last_login'|trans|UCFirst ~ ' ' ~ user.loggedAt|ago }}
                 {% else %}
