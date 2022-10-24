@@ -8,11 +8,11 @@
         <h1 class="card_title h1">{{ 'error.404.title'|trans|capitalize }}</h1>
         <p>{{ ('error.404.body'|trans)|raw }}</p>
 
-        <span id="rolie-trigger">{{ 'error.404.or_chance'|trans }}</span>
+        <span id="rolie-trigger">{{ 'error.404.or_chance'|trans|raw }}</span>
         <div id="rolie-block" style="display: none;">
             <blockquote class="mt3">{{ ('error.404.welcome'|trans)|raw }}</blockquote>
 
-            <div class="form-group">
+            <div id="formRiddle" class="form-group" method="post" action="{{ path('badge.unlock') }}?=riddle">
                 <label for="rolie-input" hidden></label>
                 <input type="number" id="rolie-input" placeholder="{{ 'error.404.guess'|trans|capitalize }}" min="0"
                        max="100" class="input" style="cursor: help; appearance: textfield;" required>
@@ -20,6 +20,8 @@
                 <p id="rolie-answer"></p>
                 <p id="rolie-clue"></p>
             </div>
+            <form name="badgeRiddle" class="form-badge" method="post"
+                  action="{{ path('badge.unlock') }}?badge=riddle"></form>
         </div>
 
     </section>
@@ -54,7 +56,7 @@
                 } else if (userGuess === randomNumber) {
                     rolieAnswer.textContent = `Hmpf. Tu as gagné... C'était bien ${userGuess}. Pars vite avant que je ne change d'avis !`;
                     rolieClue.textContent = '';
-                    setGameOver();
+                    setGameOver(true);
                 } else if (guessCount === total) {
                     rolieAnswer.textContent = 'Tu as perdu ! Et ta vie avec !';
                     rolieClue.textContent = '';
@@ -77,11 +79,16 @@
                 rolieInput.focus();
             }
 
-            rolieInput.addEventListener('keyup', (evt) => {if (evt.key === 'Enter') checkGuess();});
+            rolieInput.addEventListener('keyup', (evt) => {
+                if (evt.key === 'Enter') checkGuess();
+            });
 
-            function setGameOver() {
+            function setGameOver(victory = false) {
                 rolieInput.disabled = true;
-                setTimeout(function() {window.location.href = '/'}, 5000);
+                if (true === victory)
+                    setTimeout(function () {
+                        document.badgeRiddle.submit();
+                    }, 2000);
             }
         });
     </script>

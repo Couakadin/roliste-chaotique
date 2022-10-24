@@ -9,11 +9,12 @@ error:
     body: |
       La page que vous cherchez est introuvable. Nos gobelins sont déjà en route pour la débusquer.
       En attendant, vous pouvez revenir <a href="%link%" class="link-line">ici</a>.
-    or_chance: Ou tentez votre chance contre Rolie...
+    or_chance: Ou tentez votre chance contre <span style="cursor:pointer;">Rolie...</span>
     guess: deviner
     welcome: |
       <p>Bienvenue, aventurier !</p>
       <p>Devine combien de voyageurs j'ai massacré aujourd'hui et je te laisserai partir !
+      <br>Un indice : la réponse se trouve entre 1 à 100.
       <br>Tu as droit à <span id="rolie-chance"></span>.</p>
 
 footer: |

@@ -30,9 +30,11 @@
             <p>{{ 'terms_and_conditions.updated_at'|trans({'%updatedAt%': '2022-01-29'|format_datetime('long', 'none')}) }}</p>
         </div>
         <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
-        <div style="position:relative;">
+        <div style="position:relative;" >
             <img src="{{ asset('build/front/icons/dragon.png') }}" alt="Dragon" width="200rem"
                  style="position: absolute; right: 0; cursor: pointer;" id="badgeDragon">
         </div>
+        <form class="form-badge" name="badgeDragon" method="post"
+              action="{{ path('badge.unlock') }}?badge=dragon"></form>
     </div>
 {% endblock %}

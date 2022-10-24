@@ -12,21 +12,18 @@ class BadgeController extends AbstractController
 {
     public function __construct(private readonly BadgeManager $badgeManager){}
 
-    #[Route(['/badge/unlock'], name: 'badge.unlock')]
+    #[Route(['/badge/unlock'], name: 'badge.unlock', methods: 'post')]
     public function unlock(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
 
-        $referer = $request->headers->get('referer');
-        if (!$referer) {
-            return $this->redirectToRoute('home.index');
-        }
-
         (string) $badge = $request->query->get('badge');
 
         // Unlock badge
-        $this->badgeManager->checkAndUnlock($this->getUser(), $badge, 1);
+        if ($badge) {
+            $this->badgeManager->checkAndUnlock($this->getUser(), $badge, 1);
+        }
 
-        return $this->redirect($referer);
+        return $this->redirectToRoute('account.badge', ['slug' => $this->getUser()->getSlug()]);
     }
 }
