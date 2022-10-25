@@ -171,7 +171,7 @@ ui:
   slug: slug
   subject: sujet
   signed_in: inscrit
-  logged: connecté
+  logged: en ligne
   username: nom d'utilisateur
   verify_email: vérifier l'e-mail
   verify_email_warning: |
