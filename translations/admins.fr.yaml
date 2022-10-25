@@ -15,6 +15,8 @@ admin:
     {1}table|{2}tables
   table_inscription: |
     {1}inscription de table|{2}inscriptions de table
+  task: |
+    {1}tâche|{2}tâches
   new_badge: nouveau badge
   new_system: nouveau système
   new_table: nouvelle table
@@ -40,6 +42,7 @@ admin:
     action_name: nom de l'action
     action_count: compte d'action
     avatar: avatar
+    add_task: ajouter une tâche
     badge: badge
     bg_color: couleur background
     border_color: couleur bordure

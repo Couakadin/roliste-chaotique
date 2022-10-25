@@ -1,0 +1,17 @@
+// Variables
+// ==================
+:root {
+  // Var--Colors
+  --clr-light   : 45, 27%, 91%;
+  --clr-accent  : 210, 8%, 19%;
+  --clr-dark    : 210, 11%, 15%;
+  --clr-success : 160, 57%, 55%;
+}
+
+// Modules
+// ==================
+@import 'tools/mixins';
+
+// Modules
+// ==================
+@import 'modules/_todo';

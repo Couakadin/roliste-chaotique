@@ -10,8 +10,11 @@ use App\Entity\Event\Event;
 use App\Entity\Genre\Genre;
 use App\Entity\System\System;
 use App\Entity\Table\Table;
+use App\Entity\Task\Task;
 use App\Entity\User\User;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -42,13 +45,15 @@ class DashboardController extends AbstractDashboardController
 
         $userRepo = $this->entityManager->getRepository(User::class);
         $eventRepo = $this->entityManager->getRepository(Event::class);
+        $taskRepo = $this->entityManager->getRepository(Task::class);
 
 
         // you can also render some template to display a proper Dashboard
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         return $this->render('@bundles/EasyAdmin/page/content.html.twig', [
-            'users' => $userRepo->findLastRegister(),
-            'events' => $eventRepo->findLastEvents()
+            'users'  => $userRepo->findLastRegister(),
+            'events' => $eventRepo->findLastEvents(),
+            'tasks'  => $taskRepo->findAll()
         ]);
     }
 
@@ -78,12 +83,24 @@ class DashboardController extends AbstractDashboardController
 
     public function configureUserMenu(UserInterface $user): UserMenu
     {
+        $avatar = 'uploads/images/avatars/' . $user->getAvatar()->getPath();
+
+        if (!file_exists($avatar)) {
+            $avatar = '/build/front/mascot/default_avatar.svg';
+        }
+
         return parent::configureUserMenu($user)
             ->setName($user->getUsername())
-            ->displayUserAvatar(false)
+            ->setAvatarUrl($avatar)
             ->addMenuItems([
                 MenuItem::linkToRoute($this->trans('admin.profile'), 'fa fa-id-card', 'account.index'),
                 MenuItem::linkToExitImpersonation('Stop impersonation', 'fa fa-door-open')
             ]);
+    }
+
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+            ->addWebpackEncoreEntry(Asset::new('admin')->webpackEntrypointName('admin'));
     }
 }

@@ -14,7 +14,7 @@ final class Version20221023220039 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Migration for Entity Badge';
     }
 
     public function up(Schema $schema): void

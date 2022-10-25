@@ -1,0 +1,85 @@
+.task {
+  background-color : hsl(var(--clr-dark));
+  border-radius    : 1rem;
+  overflow         : hidden;
+  color            : hsl(var(--clr-light));
+}
+
+.task-header_title {
+  margin      : 0;
+  font-size   : 1.25rem;
+  font-weight : 600;
+  padding     : 1.25rem 1.25rem .4rem 1.25rem;
+}
+
+.task-tools {
+  display         : flex;
+  justify-content : space-between;
+  padding         : 0 1.25rem;
+}
+
+.task-count {
+  color     : hsl(var(--clr-light));
+  font-size : .87rem;
+}
+
+.task-form {
+  display    : flex;
+  margin-top : .6rem;
+}
+
+.task-input {
+  flex       : 1;
+  font-size  : var(--fs-400);
+  padding    : .6rem 1.25rem;
+  border     : 0;
+  outline    : none;
+  background : hsl(var(--clr-accent));
+}
+
+.task-list {
+  max-height : 50vh;
+  overflow   : auto;
+}
+
+.task-item {
+  display     : flex;
+  flex-wrap   : wrap;
+  align-items : center;
+  padding     : .75rem 1.25rem;
+
+  &:hover {background-color : hsl(var(--clr-accent));}
+
+  &:hover > .task-delete {display : block;}
+
+  &.is-completed {background-color : rgba(74, 206, 163, 0.1);}
+
+  & + & {border-top : .063rem solid hsl(var(--clr-accent));}
+}
+
+.task-status {
+  appearance       : none;
+  width            : 1.125rem;
+  height           : 1.125rem;
+  cursor           : pointer;
+  border-radius    : 50%;
+  background-color : hsl(var(--clr-light));
+  margin-right     : .6rem;
+
+  &:checked {
+    background-color    : hsl(var(--clr-success));
+    border-color        : hsl(var(--clr-success));
+    background-repeat   : no-repeat;
+    background-position : center;
+  }
+
+  &:checked + .task-name {text-decoration : line-through wavy hsla(var(--clr-light), .5);}
+}
+
+.task-name {
+  margin-right  : auto;
+  flex          : 1;
+  white-space   : nowrap;
+  overflow      : hidden;
+  text-overflow : ellipsis;
+}

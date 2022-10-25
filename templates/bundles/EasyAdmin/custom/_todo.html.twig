@@ -1,0 +1,23 @@
+<div id="task" class="task mb-lg-5">
+    <div class="task-header">
+        <h2 class="task-header_title">{{ 'now'|format_date }}</h2>
+        <div class="task-tools">
+            <div class="task-count">
+                <span id="taskCount">{{ tasks|length }}</span> {{ 'admin.task'|trans({'%count%': tasks|length > 1 ? 2 : 1}, 'admins') }}
+            </div>
+        </div>
+        <div class="task-form">
+            <label for="addTask" hidden></label>
+            <input id="addTask" class="task-input"
+                   placeholder="{{ 'admin.ui.add_task'|trans({}, 'admins')|capitalize }}..." autofocus>
+        </div>
+    </div>
+    <div id="taskList" class="task-list">
+        {% for task in tasks %}
+            <div id="taskItem-{{ task.id }}" class="task-item">
+                <input id="task-{{ task.id }}" class="task-status" type="checkbox" value="{{ task.id }}">
+                <label class="task-name" for="task-{{ task.id }}">{{ task.todo|striptags }}</label>
+            </div>
+        {% endfor %}
+    </div>
+</div>
