@@ -33,3 +33,10 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    App\EventListener\CacheImageListener:
+        class: App\EventListener\CacheImageListener
+        arguments: [ "@liip_imagine.cache.manager" ]
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove }

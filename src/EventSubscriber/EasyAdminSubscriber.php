@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -27,6 +28,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
     #[ArrayShape([
         BeforeEntityPersistedEvent::class => "string[]",
+        BeforeEntityUpdatedEvent::class   => "string[]",
         AfterEntityDeletedEvent::class    => "string[]",
         BeforeEntityDeletedEvent::class   => "string[]",
         AfterEntityUpdatedEvent::class    => "string[]"
