@@ -49,7 +49,8 @@ class AvatarCrudController extends AbstractCrudController
             TextField::new('name', $this->trans('admin.ui.name')),
             ImageField::new('path', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/avatars')
-                ->setBasePath('/uploads/images/avatars'),
+                ->setBasePath('/uploads/images/avatars')
+                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
         ];
     }
 }

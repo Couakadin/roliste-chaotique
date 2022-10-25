@@ -58,7 +58,8 @@ class TableCrudController extends AbstractCrudController
             BooleanField::new('showcase', $this->trans('admin.ui.showcase')),
             ImageField::new('picture', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/tables')
-                ->setBasePath('/uploads/images/tables'),
+                ->setBasePath('/uploads/images/tables')
+                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]'),
             TextField::new('name', $this->trans('admin.ui.name')),
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('name')
