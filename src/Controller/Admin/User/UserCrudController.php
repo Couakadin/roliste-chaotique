@@ -76,8 +76,10 @@ class UserCrudController extends AbstractCrudController
             FormField::addPanel(''),
             ChoiceField::new('roles', $this->trans('admin.ui.roles'))
                 ->setChoices(User::ROLES)
-                ->allowMultipleChoices(),
-            BooleanField::new('isVerified', $this->trans('admin.ui.verified')),
+                ->allowMultipleChoices()
+                ->hideOnIndex(),
+            BooleanField::new('isVerified', $this->trans('admin.ui.verified'))
+                ->hideOnIndex(),
 
             FormField::addPanel(''),
             DateTimeField::new('createdAt', $this->trans('admin.ui.created_at'))
