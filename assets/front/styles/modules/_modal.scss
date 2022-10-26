@@ -8,14 +8,20 @@
   height           : 100%;
   overflow         : auto;
   background-color : hsla(var(--clr-dark), .4);
+
+  &.show {display : block;}
 }
 
 .modal-content {
-  background-color : hsl(var(--clr-light));
-  margin           : 15% auto; /* 15% from the top and centered */
-  padding          : calc(var(--gap) * 3);
-  border           : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
-  width            : 80%;
+  margin        : 15% auto; /* 15% from the top and centered */
+  padding       : 0;
+  border        : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
+  width         : 80%;
+  position      : relative;
+  background    : hsl(var(--clr-light));
+  border-radius : var(--border-radius-small);
+  box-shadow    : 0 calc(var(--gap) / 2) var(--gap) 0 hsla(var(--clr-dark), .2), 0 var(--gap) calc(var(--gap) * 3) 0 hsla(var(--clr-dark), .19);
+  animation     : animate-top .3s ease-out;
 }
 
 .modal-header {
@@ -35,14 +41,3 @@
 }
 
 .modal-body {padding : calc(var(--gap) * 2);}
-
-.modal-content {
-  position      : relative;
-  background    : hsl(var(--clr-light));
-  padding       : 0;
-  border        : calc(var(--gap) / 10) solid hsl(var(--clr-widget));
-  border-radius : var(--border-radius-small);
-  width         : 80%;
-  box-shadow    : 0 calc(var(--gap) / 2) var(--gap) 0 hsla(var(--clr-dark), .2), 0 var(--gap) calc(var(--gap) * 3) 0 hsla(var(--clr-dark), .19);
-  animation     : animate-top .3s ease-out;
-}

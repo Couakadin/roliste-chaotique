@@ -25,8 +25,7 @@ class AjaxController extends AbstractController
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         $task = (new Task())
-            ->setTodo($data['todo'])
-            ->setDone(false);
+            ->setTodo($data['todo']);
 
         $this->em->persist($task);
         $this->em->flush();
@@ -53,9 +52,9 @@ class AjaxController extends AbstractController
         if (!$task) {
             return new JsonResponse('ERROR', '500');
         }
-        $task->setDone(true);
+        $this->em->remove($task);
         $this->em->flush();
 
-        return new JsonResponse('DONE');
+        return new JsonResponse('DELETE');
     }
 }

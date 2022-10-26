@@ -96,12 +96,40 @@
                 {{ form_end(formPassword) }}
             </div>
         </section>
+
+        <section class="container mt2">
+            <div class="card flash-warning">
+                <h2 class="card-title">{{ 'ui.danger_zone'|trans|capitalize }}</h2>
+                <div class="card-body">
+                    <div class="form-group">
+                        <button id="triggerDeleteAccount" type="button" class="btn-danger">
+                            {{ 'ui.delete_account'|trans|capitalize }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modalDeleteAccount" class="modal">
+                <div id="contentDeleteAccount" class="modal-content">
+                    <div class="modal-header">
+                        <h2>{{ ('ui.warning_delete_account'|trans({'%link%': path('contact.index')})|UCFirst)|raw }}</h2>
+                        <span id="crossDeleteAccount" class="modal-close">✗</span>
+                    </div>
+                    <form action="{{ path('account.delete', {'id': app.user.id}) }}" method="post" class="modal-body">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-account') }}">
+                        <button id="actionDeleteAccount" type="submit" class="btn-danger" disabled>
+                            {{ 'ui.understood_delete_account'|trans|capitalize }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
     {% else %}
         <section class="container mt2">
             <div class="card flash-warning">{{ 'ui.verify_email_warning'|trans|UCFirst }}
-            <a href="{{ path('security.registration.verify_resend_email') }}" class="btn-primary mt2 flex-center">
-                {{ 'ui.verify_email'|trans|capitalize }}
-            </a>
+                <a href="{{ path('security.registration.verify_resend_email') }}" class="btn-primary mt2 flex-center">
+                    {{ 'ui.verify_email'|trans|capitalize }}
+                </a>
             </div>
         </section>
     {% endif %}

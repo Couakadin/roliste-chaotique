@@ -129,7 +129,7 @@ class ForgottenPasswordController extends AbstractController
                 $encoded = $encoder->hashPassword($tokenPassword->getUser(), $submittedPassword);
 
                 $tokenPassword->getUser()->setPassword($encoded);
-                $tokenPassword->eraseToken();
+                $tokenPassword->getUser()->removeToken($tokenPassword);
                 $this->entityManager->flush();
 
                 $this->addFlash('success', $translator->trans('flash.forgotten_password.new.success'));

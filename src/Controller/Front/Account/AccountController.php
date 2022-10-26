@@ -8,7 +8,8 @@ use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NoResultException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,6 +109,34 @@ class AccountController extends AbstractController
             'user'   => $user,
             'badges' => $badges
         ]);
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    #[Route('/account/{id}/delete', name: 'account.delete', methods: 'post')]
+    public function deleteAccount(Request $request, int $id): Response
+    {
+        if (!$this->getUser() || $id !== $this->getUser()->getId()) {
+            return $this->redirectToRoute('security.index');
+        }
+
+        $submittedToken = $request->request->get('token');
+        if ($this->isCsrfTokenValid('delete-account', $submittedToken)) {
+            $user = $this->entityManager->getRepository(User::class)
+                ->find($this->getUser());
+
+            $this->container->get('security.token_storage')->setToken();
+
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('security.logout');
+
+        }
+
+        return $this->redirectToRoute('home.index');
     }
 
     private function getForm(string $typeClass, User $entity, Request $request): FormInterface

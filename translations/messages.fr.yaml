@@ -84,6 +84,7 @@ ui:
   date_hour_end: date et heure de fin
   date: date
   days: jours
+  danger_zone: zone danger
   delete: supprimer
   delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
   description: description
@@ -184,6 +185,10 @@ ui:
   events_created: événements créés
   events_participated: événements participés
   no_one: aucun
+  delete_account: supprimer le compte
+  warning_delete_account: |
+    Attention ! Cette action est irréversible. En cas d'incertitude, vous pouvez toujours <a href="%link%" class="link-line">nous contacter par e-mail</a>.
+  understood_delete_account: j'ai compris et souhaite supprimer mon compte
 
 tooltip:
   tooltip: info-bulle

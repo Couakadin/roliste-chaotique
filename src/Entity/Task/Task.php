@@ -17,9 +17,6 @@ class Task
     #[ORM\Column(length: 255)]
     private ?string $todo = null;
 
-    #[ORM\Column(options: ['default' => 0])]
-    private ?bool $done = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -33,18 +30,6 @@ class Task
     public function setTodo(string $todo): self
     {
         $this->todo = $todo;
-
-        return $this;
-    }
-
-    public function isDone(): ?bool
-    {
-        return $this->done;
-    }
-
-    public function setDone(bool $done): self
-    {
-        $this->done = $done;
 
         return $this;
     }

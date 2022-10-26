@@ -30,7 +30,7 @@ class Token
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $expiredAt;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tokens')]
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'tokens')]
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
@@ -84,14 +84,6 @@ class Token
     public function getUser(): ?User
     {
         return $this->user;
-    }
-
-    public function eraseToken(): self
-    {
-        $this->token = null;
-        $this->expiredAt = null;
-
-        return $this;
     }
 }
 

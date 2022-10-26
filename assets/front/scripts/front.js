@@ -3,6 +3,7 @@ import '../styles/front.scss';
 
 // JS
 import './modules/accordion';
+import './modules/account';
 import './modules/carousel';
 import './modules/choices';
 import './modules/cookie';

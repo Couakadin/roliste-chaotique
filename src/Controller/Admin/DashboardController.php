@@ -53,7 +53,7 @@ class DashboardController extends AbstractDashboardController
         return $this->render('@bundles/EasyAdmin/page/content.html.twig', [
             'users'  => $userRepo->findLastRegister(),
             'events' => $eventRepo->findLastEvents(),
-            'tasks'  => $taskRepo->findBy(['done' => false])
+            'tasks'  => $taskRepo->findAll()
         ]);
     }
 

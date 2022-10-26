@@ -6,7 +6,6 @@ use App\Email\Email;
 use App\Email\EmailAdmin;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
-use App\EventDispatcher\TokenEvent;
 use App\Form\Security\RegistrationFormType;
 use App\Service\BadgeManager;
 use App\Service\TokenManager;
@@ -14,8 +13,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,7 +73,7 @@ class RegistrationController extends AbstractController
             $this->badgeManager->checkAndUnlock($user, 'register', 1);
 
             // do anything else you need here, like send an email
-            $this->email->emailVerify($this->getUser(), $tokenManager, $this->translator->trans('email.verify_email.subject'));
+            $this->email->emailVerify($user, $tokenManager, $this->translator->trans('email.verify_email.subject'));
             $this->emailAdmin->emailNewInscriptionAdmin($user);
 
             $this->addFlash('success', $this->translator->trans('flash.register.success', ['%user%' => $user->getUsername()]));
@@ -126,7 +123,7 @@ class RegistrationController extends AbstractController
         $verified = $this->getUser();
         $verified->setIsVerified(true);
 
-        $token->eraseToken();
+        $token->getUser()->removeToken($token);
         $this->entityManager->flush();
 
         $this->addFlash('success', ucfirst($this->translator->trans('flash.token.success_email')));

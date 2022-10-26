@@ -73,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: Avatar::class, inversedBy: 'user')]
     private ?Avatar $avatar = null;
 
-    #[ORM\OneToMany(mappedBy: 'master', targetEntity: Event::class)]
+    #[ORM\OneToMany(mappedBy: 'master', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $eventMaster;
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participate')]
@@ -354,7 +354,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, \App\Entity\Badge\BadgeUnlock>
+     * @return Collection<int, BadgeUnlock>
      */
     public function getBadgeUnlocks(): Collection
     {
