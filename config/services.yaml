@@ -27,6 +27,10 @@ services:
         class: App\Service\BadgeManager
         arguments: ['@doctrine.orm.entity_manager', '@event_dispatcher']
 
+    App\Service\TokenManager:
+        class: App\Service\TokenManager
+        arguments: [ '@doctrine.orm.entity_manager' ]
+
     App\Service\FileUploader:
         class: App\Service\FileUploader
 

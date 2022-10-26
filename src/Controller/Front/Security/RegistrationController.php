@@ -6,12 +6,16 @@ use App\Email\Email;
 use App\Email\EmailAdmin;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
+use App\EventDispatcher\TokenEvent;
 use App\Form\Security\RegistrationFormType;
 use App\Service\BadgeManager;
+use App\Service\TokenManager;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +35,8 @@ class RegistrationController extends AbstractController
         private readonly Email                      $email,
         private readonly EmailAdmin                 $emailAdmin,
         private readonly EntityManagerInterface     $entityManager,
-        private readonly BadgeManager               $badgeManager
+        private readonly BadgeManager               $badgeManager,
+        private readonly TokenManager               $tokenManager
     )
     {
     }
@@ -62,17 +67,16 @@ class RegistrationController extends AbstractController
 
             $user->setLoggedAt(new DateTime());
 
-            $newToken = new Token($user, Token::EMAIL_VERIFY);
+            $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $user);
 
             $entityManager->persist($user);
-            $entityManager->persist($newToken);
             $entityManager->flush();
 
             // Unlock badge
             $this->badgeManager->checkAndUnlock($user, 'register', 1);
 
             // do anything else you need here, like send an email
-            $this->email->emailVerify($user, $newToken, $this->translator->trans('email.new_inscription.subject'));
+            $this->email->emailVerify($this->getUser(), $tokenManager, $this->translator->trans('email.verify_email.subject'));
             $this->emailAdmin->emailNewInscriptionAdmin($user);
 
             $this->addFlash('success', $this->translator->trans('flash.register.success', ['%user%' => $user->getUsername()]));
@@ -91,7 +95,7 @@ class RegistrationController extends AbstractController
         if (!$this->getUser()) {
             $this->addFlash('warning', $this->translator->trans('flash.verify_email.not_login'));
 
-            return $this->redirectToRoute('home.index');
+            return $this->redirectToRoute('security.index');
         }
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -99,24 +103,30 @@ class RegistrationController extends AbstractController
         $now = new DateTime('now');
 
         $tokenRepository = $this->entityManager->getRepository(Token::class);
-        $token = $tokenRepository->findOneBy(['token' => $request->query->get('token')]);
+        $token = $tokenRepository->findOneBy(
+            [
+                'user' => $this->getUser(),
+                'token' => $request->query->get('token'),
+                'type' => TOKEN::EMAIL_VERIFY
+            ]
+        );
 
         if (!$token || $this->getUser()->isVerified()) {
             $this->addFlash('error', $this->translator->trans('flash.token.invalid'));
 
-            return $this->redirectToRoute('home.index');
-        } elseif ($now > $token->getExpiredAt() || !$token->getExpiredAt()) {
+            return $this->redirectToRoute('security.index');
+        }
+
+        if ($now > $token->getExpiredAt() || !$token->getExpiredAt()) {
             $this->addFlash('error', $this->translator->trans('flash.token.expired'));
 
-            return $this->redirectToRoute('home.index');
+            return $this->redirectToRoute('security.index');
         }
 
         $verified = $this->getUser();
         $verified->setIsVerified(true);
-        $verified->removeToken($token);
 
-        $this->entityManager->persist($verified);
-        $this->entityManager->remove($token);
+        $token->eraseToken();
         $this->entityManager->flush();
 
         $this->addFlash('success', ucfirst($this->translator->trans('flash.token.success_email')));
@@ -137,14 +147,15 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('home.index');
         }
 
-        $newToken = new Token($this->getUser(), Token::EMAIL_VERIFY);
-        $this->entityManager->persist($newToken);
-        $this->entityManager->flush();
+        if ($this->getUser()->isVerified()) {
+            return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
+        }
 
-        $this->email->emailVerify($this->getUser(), $newToken, $this->translator->trans('email.verify_email.subject'));
+        $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $this->getUser());
 
+        $this->email->emailVerify($this->getUser(), $tokenManager, $this->translator->trans('email.verify_email.subject'));
         $this->addFlash('success', ucfirst($this->translator->trans('flash.email.verify_sent')));
 
-        return $this->render('@front/account/edit.html.twig');
+        return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
     }
 }

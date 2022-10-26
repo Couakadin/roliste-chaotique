@@ -26,6 +26,6 @@
             {# Don't forget to update any changes #}
             <p>{{ 'cookie_policy.updated_at'|trans({'%updatedAt%': '2022-02-05'|format_datetime('long', 'none')}) }}</p>
         </div>
-        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans }}</a>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans|capitalize }}</a>
     </div>
 {% endblock %}

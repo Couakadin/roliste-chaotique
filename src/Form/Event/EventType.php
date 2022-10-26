@@ -72,12 +72,10 @@ class EventType extends AbstractType
                         $start = $context->getRoot()->getData()->getStart();
                         $end = $object;
 
-                        if (is_a($start, DateTime::class) && is_a($end, DateTime::class)) {
-                            if ($end->format('U') - $start->format('U') < 0) {
-                                $context
-                                    ->buildViolation('form.date.greater')
-                                    ->addViolation();
-                            }
+                        if (is_a($start, DateTime::class) && is_a($end, DateTime::class) && $end->format('U') - $start->format('U') < 0) {
+                            $context
+                                ->buildViolation('form.date.greater')
+                                ->addViolation();
                         }
                     }),
                 ]

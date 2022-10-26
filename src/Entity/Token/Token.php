@@ -13,37 +13,38 @@ use Exception;
 #[ORM\Table(name: 'rc_token')]
 class Token
 {
-    const EMAIL_VERIFY = 'email_verify';
+    public const EMAIL_VERIFY = 'email_verify';
+    public const FORGOTTEN_PASSWORD = 'forgotten_password';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 52, unique: true)]
-    private string $token;
+    #[ORM\Column(length: 52, unique: true, nullable: true)]
+    private ?string $token;
 
     #[ORM\Column(length: 25)]
     private string $type;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private DateTime $expiredAt;
+    private ?DateTime $expiredAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tokens')]
     #[ORM\JoinColumn(nullable: false)]
     private User $user;
 
     /**
-     * @param User   $user
+     * @param User $user
      * @param string $type
      *
      * @throws Exception
      */
     public function __construct(User $user, string $type)
     {
-        $this->token     = bin2hex(random_bytes(21));
-        $this->user      = $user;
-        $this->type      = $type;
+        $this->token = bin2hex(random_bytes(21));
+        $this->user = $user;
+        $this->type = $type;
         $this->expiredAt = new DateTime('+1 hour');
     }
 
@@ -67,14 +68,30 @@ class Token
         return $this->expiredAt;
     }
 
-    public function renewExpiredAt()
+    public function renewExpiredAt(): void
     {
         $this->expiredAt = new DateTime('+1 hour');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function renewToken(): string
+    {
+        return $this->token = bin2hex(random_bytes(21));
     }
 
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function eraseToken(): self
+    {
+        $this->token = null;
+        $this->expiredAt = null;
+
+        return $this;
     }
 }
 

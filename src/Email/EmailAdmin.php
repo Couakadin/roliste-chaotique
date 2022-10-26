@@ -26,7 +26,7 @@ class EmailAdmin extends AbstractController
      *
      * @throws TransportExceptionInterface
      */
-    public function emailNewInscriptionAdmin(User $user)
+    public function emailNewInscriptionAdmin(User $user): void
     {
         $subject = $this->translator->trans('admin.new_inscription.subject');
 
@@ -51,7 +51,7 @@ class EmailAdmin extends AbstractController
      *
      * @throws TransportExceptionInterface
      */
-    public function newContactAdmin(string $emailContact, string $subject, string $content)
+    public function newContactAdmin(string $emailContact, string $subject, string $content): void
     {
         $email = (new TemplatedEmail())
             ->from($emailContact)

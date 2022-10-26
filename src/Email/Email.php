@@ -31,7 +31,7 @@ class Email extends AbstractController
      *
      * @throws TransportExceptionInterface
      */
-    public function emailVerify(User $user, Token $newToken, string $subject)
+    public function emailVerify(User $user, Token $newToken, string $subject): void
     {
         $email = (new TemplatedEmail())
             ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
@@ -53,7 +53,7 @@ class Email extends AbstractController
      *
      * @throws TransportExceptionInterface
      */
-    public function forgottenPassword(User $user, Token $newToken, string $subject)
+    public function forgottenPassword(User $user, Token $newToken, string $subject): void
     {
         $email = (new TemplatedEmail())
             ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))

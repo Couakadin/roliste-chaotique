@@ -2,6 +2,7 @@
 
 namespace App\Form\Security;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -50,7 +51,7 @@ class ContactFormType extends AbstractType
                     ),
                 ]
             ])
-            ->add('message', TextareaType::class, [
+            ->add('message', CKEditorType::class, [
                 'label'      => 'ui.message',
                 'constraints' => [
                     new NotBlank(
