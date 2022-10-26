@@ -58,4 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 if (typeof(CKEDITOR) !== 'undefined') {
     CKEDITOR.config.uiColor = '#eeebe2';
+    CKEDITOR.addCss('.cke_editable { background-color: #eeebe2; color: #241F1E }');
 }

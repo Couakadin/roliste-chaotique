@@ -3,17 +3,19 @@ const countTask = document.querySelector('#taskCount');
 const listTask = document.querySelector('#taskList');
 const errorTask = document.querySelector('#taskError');
 
-addTask.addEventListener('keyup', (evt) => {
-    evt.preventDefault();
-    if (evt.key === 'Enter') {
-        if (addTask.value.length > 255) {
-            errorTask.textContent = '';
-            errorTask.textContent = `Limite de caractère à 255. Actuelle : ${addTask.value.length}`;
-            return;
+if (addTask) {
+    addTask.addEventListener('keyup', (evt) => {
+        evt.preventDefault();
+        if (evt.key === 'Enter') {
+            if (addTask.value.length > 255) {
+                errorTask.textContent = '';
+                errorTask.textContent = `Limite de caractère à 255. Actuelle : ${addTask.value.length}`;
+                return;
+            }
+            addTaskAction();
         }
-        addTaskAction();
-    }
-});
+    });
+}
 
 document.addEventListener('click', function (e) {
     if (e.target.matches('.task-status')) {
