@@ -24,8 +24,9 @@
 }
 
 .task-form {
-  display    : flex;
-  margin-top : .6rem;
+  display        : flex;
+  flex-direction : column;
+  margin-top     : .6rem;
 }
 
 .task-input {
@@ -35,6 +36,11 @@
   border     : 0;
   outline    : none;
   background : hsl(var(--clr-accent));
+}
+
+.task-error {
+  color       : hsl(var(--clr-danger));
+  font-weight : bold;
 }
 
 .task-list {
