@@ -24,7 +24,7 @@ class OnlineSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest()
+    public function onKernelRequest(): void
     {
         $user = $this->security->getUser();
 

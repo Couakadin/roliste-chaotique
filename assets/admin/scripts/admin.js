@@ -2,4 +2,4 @@
 import '../styles/admin.scss';
 
 // JS
-import './modules/todo'
+import './modules/task'

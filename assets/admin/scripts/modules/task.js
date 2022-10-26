@@ -1,19 +1,17 @@
 const addTask = document.querySelector('#addTask');
 const countTask = document.querySelector('#taskCount');
 const listTask = document.querySelector('#taskList');
-const statusTask = document.querySelectorAll('.task-status');
 
 addTask.addEventListener('keyup', (evt) => {
     evt.preventDefault();
     if (evt.key === 'Enter') addTaskAction();
 });
 
-statusTask.forEach(function (item) {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        removeTaskAction(e.currentTarget.value);
-    });
-})
+document.addEventListener('click', function (e) {
+    if (e.target.matches('.task-status')) {
+        removeTaskAction(e.target.value);
+    }
+});
 
 function removeTaskAction(target) {
     let fetch_status;
@@ -21,7 +19,7 @@ function removeTaskAction(target) {
         method: 'POST',
         // Set the headers
         headers: {
-            'Accept'      : 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         // Set the post data
@@ -55,7 +53,7 @@ function addTaskAction() {
         method: 'POST',
         // Set the headers
         headers: {
-            'Accept'      : 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         // Set the post data
@@ -79,6 +77,7 @@ function addTaskAction() {
                 newTaskInput.id = `task-${json.id}`;
                 newTaskInput.classList.add('task-status');
                 newTaskInput.type = 'checkbox'
+                newTaskInput.value = `${json.id}`;
 
                 const newTaskLabel = document.createElement('label');
                 newTaskLabel.classList.add('task-name');

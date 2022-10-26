@@ -53,7 +53,7 @@ class DashboardController extends AbstractDashboardController
         return $this->render('@bundles/EasyAdmin/page/content.html.twig', [
             'users'  => $userRepo->findLastRegister(),
             'events' => $eventRepo->findLastEvents(),
-            'tasks'  => $taskRepo->findAll()
+            'tasks'  => $taskRepo->findBy(['done' => false])
         ]);
     }
 
@@ -83,7 +83,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureUserMenu(UserInterface $user): UserMenu
     {
-        $avatar = 'uploads/images/avatars/' . $user->getAvatar()->getPath();
+        $avatar = $user->getAvatar();
+        $avatar = $avatar ? 'uploads/images/avatars/' . $user->getAvatar()->getPath() : null;
 
         if (!file_exists($avatar)) {
             $avatar = '/build/front/mascot/default_avatar.svg';
