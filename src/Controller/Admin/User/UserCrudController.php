@@ -84,7 +84,7 @@ class UserCrudController extends AbstractCrudController
                 ->onlyOnDetail(),
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
                 ->onlyOnDetail(),
-            DateTimeField::new('loginAt', $this->trans('admin.ui.login_at'))
+            DateTimeField::new('loggedAt', $this->trans('admin.ui.login_at'))
                 ->onlyOnDetail(),
         ];
     }
