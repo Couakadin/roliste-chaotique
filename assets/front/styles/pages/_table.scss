@@ -73,11 +73,22 @@
     position : sticky;
     top      : 2rem;
   }
-  height   : max-content;
+  height : max-content;
 }
 
 .table-description {
   .h1, h2, h3, h4, h5, h6, p {
     margin : 1rem 0;
   }
+}
+
+.table-favorite {
+  display         : flex;
+  justify-content : space-between;
+  flex-wrap       : wrap;
+  gap             : 1rem;
+}
+
+.table-favorite_img {
+  border-radius : var(--border-radius-small);
 }

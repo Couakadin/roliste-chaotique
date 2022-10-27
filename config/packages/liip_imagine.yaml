@@ -23,6 +23,10 @@ liip_imagine:
             quality: 100
             filters:
                 thumbnail: { size: [ 1920, 200 ], mode: outbound }
+        table_account:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 80, 80 ], mode: outbound }
         avatar:
             quality: 100
             filters:

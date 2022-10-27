@@ -19,12 +19,11 @@
 .grid {
   display               : grid;
   grid-template-columns : repeat(auto-fit, minmax(15em, 1fr));
-  justify-items         : center;
   grid-gap              : calc(var(--gap) * 3);
 
-  &.justify-left {
-    justify-items : left;
-  }
+  &.justify-center {justify-items : center;}
+
+  &.justify-left {justify-items : left;}
 }
 
 // Spacing

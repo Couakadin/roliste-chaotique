@@ -60,6 +60,8 @@ ui:
   account: compte
   admin: administration
   agree_terms: conditions d'utilisation
+  add_favorite: ajouter en favori
+  remove_favorite: retirer des favoris
   badges: badges
   bg_color: couleur de fond
   border_color: couleur des bordures
@@ -199,6 +201,8 @@ tooltip:
     <strong>&lsquo;%key%&rsquo;</strong>.
   forgotten_password: |
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
+  table_favorite: |
+    Ajouter une table en favori vous permet de recevoir des e-mails lorsque des événements sont créés/modifiés concernant cette table.
 
 terms_and_conditions:
   agree_terms:

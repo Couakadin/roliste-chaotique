@@ -7,7 +7,7 @@
     {% include '@front/account/_menu.html.twig' %}
 
     <section class="container mt2">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 3rem;">
+        <div class="grid">
             <div class="card">
                 <h2 class="card-title h2 mb1">
                     {{ 'ui.events'|trans|capitalize }}
@@ -25,15 +25,25 @@
                                 {{ lastEvent.name }}
                             </a>
                         {% else %}
-                            {{ 'ui.no_one'|trans}}
+                            {{ 'ui.no_one'|trans }}
                         {% endif %}
                     </li>
                 </ul>
             </div>
             <div class="card">
-                <h2 class="card-title h2">{{ 'ui.tables'|trans|capitalize }}</h2>
-                <div class="card-body my2 flex gap-1 flex-wrap">
-                    <p class="card flash-info">Bientôt disponible !</p>
+                <h2 class="card-title h2 mb1">{{ 'ui.tables'|trans|capitalize }}</h2>
+                <div class="card-body">
+                    <p>Tables favorites</p>
+                    <ul class="table-favorite">
+                        {% for table in user.tables %}
+                            <li>
+                                <a href="{{ path('table.show', {'slug': table.slug}) }}">
+                                    <img src="{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_account') }}"
+                                         alt="{{ table.name }}" class="table-favorite_img">
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>

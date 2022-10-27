@@ -82,11 +82,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
     private Collection $badgeUnlocks;
 
+    #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'favorite')]
+    private Collection $tables;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
         $this->eventParticipate = new ArrayCollection();
         $this->badgeUnlocks = new ArrayCollection();
+        $this->tables = new ArrayCollection();
     }
 
     public function __toString()
@@ -378,6 +382,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($badgeUnlock->getUser() === $this) {
                 $badgeUnlock->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getTables(): Collection
+    {
+        return $this->tables;
+    }
+
+    public function addTable(Table $table): self
+    {
+        if (!$this->tables->contains($table)) {
+            $this->tables->add($table);
+            $table->addFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTable(Table $table): self
+    {
+        if ($this->tables->removeElement($table)) {
+            $table->removeFavorite($this);
         }
 
         return $this;

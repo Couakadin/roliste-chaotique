@@ -32,11 +32,11 @@ flash:
       Bienvenue %user%,
       un email de confirmation a été envoyé.
   table:
-    join:
-      in: |
-        votre demande d'adhésion a été envoyée.
-      out: |
-        vous avez quitté cette table.
+    favorite:
+      add: |
+        Table %table% ajoutée aux favoris.
+      remove: |
+        Table %table% retirée des favoris.
   token:
     invalid: requête invalide.
     expired: token expiré. Veuillez renouveler la demande via les paramètres du compte.

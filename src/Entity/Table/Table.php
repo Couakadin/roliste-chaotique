@@ -6,6 +6,7 @@ use App\Entity\Editor\Editor;
 use App\Entity\Event\Event;
 use App\Entity\Genre\Genre;
 use App\Entity\System\System;
+use App\Entity\User\User;
 use App\Repository\Table\TableRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -60,10 +61,15 @@ class Table
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?System $system = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tables')]
+    #[ORM\JoinTable(name: 'rc_table_favorite')]
+    private Collection $favorite;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->genre = new ArrayCollection();
+        $this->favorite = new ArrayCollection();
     }
 
     public function __toString()
@@ -232,6 +238,27 @@ class Table
     public function setSystem(?System $system): self
     {
         $this->system = $system;
+
+        return $this;
+    }
+
+    public function getFavorite(): Collection
+    {
+        return $this->favorite;
+    }
+
+    public function addFavorite(User $favorite): self
+    {
+        if (!$this->favorite->contains($favorite)) {
+            $this->favorite->add($favorite);
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(User $favorite): self
+    {
+        $this->favorite->removeElement($favorite);
 
         return $this;
     }
