@@ -19,7 +19,7 @@
   width         : 100%;
   height        : calc(var(--gap) * 12);
   padding       : calc(var(--gap) * 2);
-  background    : hsla(var(--clr-dark), .2);
+  background    : hsla(var(--clr-dark), .4);
   color         : hsl(var(--clr-light));
   border-radius : 0 0 var(--border-radius) var(--border-radius);
   box-shadow    : inset 0 calc(var(--gap) / 2) calc(var(--gap) * 4) hsla(var(--clr-dark), .2);

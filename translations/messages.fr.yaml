@@ -195,6 +195,7 @@ ui:
   understood_delete_account: j'ai compris et souhaite supprimer mon compte
   not_for_now: rien pour le moment...
   next_events: prochains événements
+  hour_event: heure d'événement
 
 tooltip:
   tooltip: info-bulle
@@ -208,6 +209,8 @@ tooltip:
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
   table_favorite: |
     Ajouter une table en favori vous permet de recevoir des e-mails lorsque des événements sont créés/modifiés concernant cette table.
+  zone_empty_for_online: |
+    En ne sélectionnant aucun lieu, vous indiquez que votre événement se déroule en ligne.
 
 terms_and_conditions:
   agree_terms:

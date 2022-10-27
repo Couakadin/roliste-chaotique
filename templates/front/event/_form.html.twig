@@ -88,7 +88,13 @@
 
     <div class="card-body">
         <div class="form-group">
-            {{ form_label(form.zone) }}
+            <div class="form-container">
+                {{ form_label(form.zone) }}
+                <i data-tooltip="{{ ('tooltip.zone_empty_for_online'|trans|UCFirst) }}">
+                    <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                         width="20">
+                </i>
+            </div>
             {{ form_widget(form.zone) }}
             <div class="color-danger">
                 {{ form_errors(form.zone) }}
