@@ -43,7 +43,7 @@
                     <ul class="table-favorite">
                         {% for table in user.tables %}
                             <li>
-                                <a href="{{ path('table.show', {'slug': table.slug}) }}">
+                                <a href="{{ path('table.show', {'slug': table.slug}) }}" title="{{ table.name }}">
                                     <img src="{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_account') }}"
                                          alt="{{ table.name }}" class="table-favorite_img">
                                 </a>
