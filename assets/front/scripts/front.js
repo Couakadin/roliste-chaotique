@@ -3,10 +3,10 @@ import '../styles/front.scss';
 
 // JS
 import './modules/accordion';
-import './modules/account';
 import './modules/carousel';
 import './modules/choices';
 import './modules/cookie';
+import './modules/display';
 import './modules/dragon';
 import './modules/flash';
 import './modules/konami';

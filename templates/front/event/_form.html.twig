@@ -27,6 +27,14 @@
         </div>
     </div>
 
+    <div class="checkbox-container">
+        <input id="dateEndEventCheckbox" class="checkbox" type="checkbox">
+        <label for="dateEndEventCheckbox" class="checkbox-label" data-display="dateEndEventForm">
+            {{ 'ui.end_date_event_different'|trans|capitalize }}
+        </label>
+        <span class="checkbox-title">{{ 'ui.end_date_event_different'|trans|capitalize }}</span>
+    </div>
+
     <div class="card-body flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.start) }}
@@ -35,11 +43,28 @@
                 {{ form_errors(form.start) }}
             </div>
         </div>
-        <div class="form-group flex-grow">
+        <div class="form-group flex-grow" id="dateEndEventForm" style="display: none;">
             {{ form_label(form.end) }}
             {{ form_widget(form.end) }}
             <div class="color-danger">
                 {{ form_errors(form.end) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body flex-no-mobile gap-2">
+        <div class="form-group flex-grow">
+            {{ form_label(form.startHour) }}
+            {{ form_widget(form.startHour) }}
+            <div class="color-danger">
+                {{ form_errors(form.startHour) }}
+            </div>
+        </div>
+        <div class="form-group flex-grow">
+            {{ form_label(form.endHour) }}
+            {{ form_widget(form.endHour) }}
+            <div class="color-danger">
+                {{ form_errors(form.endHour) }}
             </div>
         </div>
     </div>
