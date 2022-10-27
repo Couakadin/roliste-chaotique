@@ -2,7 +2,9 @@
 
 namespace App\Controller\Front\Event;
 
+use App\Email\Email;
 use App\Entity\Event\Event;
+use App\Entity\User\User;
 use App\Form\Event\EventType;
 use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,13 +13,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/events')]
 class EventController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly TranslatorInterface $translator){ }
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TranslatorInterface    $translator,
+        private readonly Email                  $email
+    )
+    {
+    }
 
     #[Route('/', name: 'event.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator, Request $request): Response
@@ -78,6 +87,9 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/new', name: 'event.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventRepository $eventRepository): Response
     {
@@ -89,6 +101,15 @@ class EventController extends AbstractController
             $event->setMaster($this->getUser());
             $eventRepository->add($event, true);
 
+            $users = $this->entityManager->getRepository(User::class)
+                ->findAll();
+
+            foreach ($users as $user) {
+                if ($user !== $event->getMaster() && $event->getTable()->getFavorite()->contains($user)) {
+                    $this->email->newTableFavorite($user, $event->getTable(), $event, $this->translator->trans('email.new_table_favorite.subject'));
+                }
+            }
+
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.create.success', ['%event%' => $event->getName()])));
 
             return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
@@ -96,7 +117,7 @@ class EventController extends AbstractController
 
         return $this->renderForm('@front/event/new.html.twig', [
             'event' => $event,
-            'form' => $form,
+            'form'  => $form,
         ]);
     }
 
@@ -116,7 +137,7 @@ class EventController extends AbstractController
 
         return $this->renderForm('@front/event/edit.html.twig', [
             'event' => $event,
-            'form' => $form
+            'form'  => $form
         ]);
     }
 

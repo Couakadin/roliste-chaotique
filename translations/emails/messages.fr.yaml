@@ -6,23 +6,8 @@ email:
       Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
       <br>
       <a href="%signedUrl%" title="Réinitialiser">Réinitialiser le mot de passe</a> (la validation expirera le %expiredAt%).
-
   new_inscription:
     subject: bienvenue sur Rôliste chaotique
-  new_table_inscription:
-    accepted:
-      subject: demande de table acceptée sur Rôliste chaotique
-      body: |
-        Salutations %username%, <br>
-        Bonne nouvelle : votre demande d'inscription pour la table %table% a été acceptée ! Venez y faire un tour 
-        <a href="%signedUrl%" title="la table %table%">ici</a> afin de voir ce qui vous attend.
-    declined:
-      subject: demande de table déclinée sur Rôliste chaotique
-      body: |
-        Salutations %username%, <br>
-        Nous sommes navrés de vous apprendre que votre demande d'inscription pour la table         
-        <a href="%signedUrl%" title="la table %table%">%table%</a> a été déclinée ! Si vous avez besoin d'aide, nous
-        restons à votre disposition via notre formulaire de contact.
   verify_email:
     subject: vérifier votre email
     body: |
@@ -30,6 +15,15 @@ email:
       Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
       <br>
       <a href="%signedUrl%" title="Valider">Vérifier votre email</a> (la validation expirera le %expiredAt%).
+  new_table_favorite:
+    subject: Nouvel événement pour %table% !
+    body: |
+      Bonjour %user%,
+      <br>
+      Un nouvel événement intitulé <a href="%signedUrl%">%event%</a> a été créé sur Rôliste Chaotique concernant 
+      « %table% ». Allez vite voir ce qu'il en retourne !
+      <br>
+      (Vous recevez cet e-mail car cette table est dans vos favoris).
 
 admin:
   new_inscription:
@@ -37,13 +31,7 @@ admin:
     body: |
       Une nouvelle inscription a été faite sur Rôliste chaotique : <br>
       <a href="%signedUrl%" title="Nouvel utilisateur">%userEmail%</a> (%createdAt%).
-  new_table_inscription:
-    subject: une nouvelle demande d'inscription de table
-    body: |
-      Une nouvelle demande d'inscription pour la table %table% a été faite sur Rôliste chaotique par %username% | %userEmail% (%createdAt%).
   new_contact: |
     %content%
     <br>
     (Cet e-mail (%email%) provient d'un nouveau contact sur Rôliste chaotique).
-  guild_join_request: |
-    Une demande d'adhésion de groupe faite par %username% pour les groupes : %content%.
