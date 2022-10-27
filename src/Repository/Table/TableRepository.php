@@ -3,6 +3,7 @@
 namespace App\Repository\Table;
 
 use App\Entity\Table\Table;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -46,6 +47,21 @@ class TableRepository extends ServiceEntityRepository
             ->setParameter('showcase', 1)
             ->orderBy('g.createdAt')
             ->setMaxResults(15)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function nextEvents(int $table)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('e.name, e.slug')
+            ->leftJoin('t.events', 'e')
+            ->where('e.start > :date AND :date < e.end')
+            ->andWhere('t.id = :table')
+            ->setParameter('date', new DateTime('now'))
+            ->setParameter('table', $table)
+            ->orderBy('e.createdAt')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }

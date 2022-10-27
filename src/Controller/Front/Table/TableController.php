@@ -53,7 +53,8 @@ class TableController extends AbstractController
         }
 
         return $this->render('@front/table/show.html.twig', [
-            'table' => $table
+            'table' => $table,
+            'nextEvents' => $tableRepo->nextEvents($table->getId())
         ]);
     }
 

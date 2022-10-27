@@ -56,6 +56,8 @@
                                     {{ event.name }}
                                 </a>
                             </li>
+                        {% else %}
+                            {{ 'ui.not_for_now'|trans|capitalize }}
                         {% endfor %}
                     </ul>
                 </div>
