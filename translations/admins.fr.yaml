@@ -48,6 +48,7 @@ admin:
     border_color: couleur bordure
     editor: éditeur
     events: événements
+    favorites: favori
     genre: genre
     image: image
     name: nom

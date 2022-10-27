@@ -80,6 +80,8 @@ class TableCrudController extends AbstractCrudController
                 ->hideOnIndex(),
             AssociationField::new('system', $this->trans('admin.ui.system'))
                 ->hideOnIndex(),
+            AssociationField::new('favorite', $this->trans('admin.ui.favorite'))
+                ->hideOnIndex(),
         ];
     }
 }
