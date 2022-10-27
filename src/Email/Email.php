@@ -88,5 +88,25 @@ class Email extends AbstractController
             ]);
         $this->mailer->send($email);
     }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    public function editTableParticipate(User $user, Table $table, Event $event, string $subject): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->to($user->getEmail())
+            ->subject(ucfirst($subject))
+            ->htmlTemplate('@email/website/edit_table_participate.html.twig')
+            ->context([
+                'subject'   => $subject,
+                'table'     => $table,
+                'user'      => $user,
+                'event'     => $event,
+                'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
+            ]);
+        $this->mailer->send($email);
+    }
 }
 

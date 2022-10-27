@@ -20,10 +20,19 @@ email:
     body: |
       Bonjour %user%,
       <br>
-      Un nouvel événement intitulé <a href="%signedUrl%">%event%</a> a été créé sur Rôliste Chaotique concernant 
+      Un nouvel événement intitulé <a href="%signedUrl%">%event%</a> a été créé concernant 
       « %table% ». Allez vite voir ce qu'il en retourne !
       <br>
-      (Vous recevez cet e-mail car cette table est dans vos favoris).
+      (Vous recevez cet e-mail car vous avez marqué cette table dans vos favoris sur Rôliste Chaotique).
+  edit_table_participate:
+    subject: Événement modifié !
+    body: |
+      Bonjour %user%,
+      <br>
+      L'événement intitulé <a href="%signedUrl%">%event%</a> a reçu des modifications concernant 
+      « %table% ». Allez vite voir ce qu'il en retourne !
+      <br>
+      (Vous recevez cet e-mail car vous avez indiqué participer à cet événement sur Rôliste Chaotique).
 
 admin:
   new_inscription:

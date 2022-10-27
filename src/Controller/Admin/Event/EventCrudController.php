@@ -75,6 +75,8 @@ class EventCrudController extends AbstractCrudController
 
             FormField::addTab('relation'),
             AssociationField::new('master', $this->trans('admin.ui.master')),
+            AssociationField::new('participate', $this->trans('admin.ui.participate'))
+                ->hideOnIndex(),
             AssociationField::new('table', $this->trans('admin.ui.table'))
                 ->hideOnIndex(),
             AssociationField::new('zone', $this->trans('admin.ui.zone')),

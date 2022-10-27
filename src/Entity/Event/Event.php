@@ -70,7 +70,7 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Zone $zone = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'eventParticipate')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'eventParticipate', cascade: ['persist'])]
     #[ORM\JoinTable(name: 'rc_event_participate')]
     private Collection $participate;
 

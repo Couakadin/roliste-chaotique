@@ -63,6 +63,7 @@ admin:
     event_year: année d'événement
     table: table
     url: url
+    participate: participant
     public: public
     players: joueurs
     zone: zone

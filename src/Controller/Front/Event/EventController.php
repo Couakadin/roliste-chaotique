@@ -121,6 +121,9 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
@@ -129,6 +132,15 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->add($event, true);
+
+            $users = $this->entityManager->getRepository(User::class)
+                ->findAll();
+
+            foreach ($users as $user) {
+                if ($user !== $event->getMaster() && $event->getParticipate()->contains($user)) {
+                    $this->email->editTableParticipate($user, $event->getTable(), $event, $this->translator->trans('email.edit_table_participate.subject'));
+                }
+            }
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event->getName()])));
 
