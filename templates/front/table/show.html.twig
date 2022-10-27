@@ -65,7 +65,7 @@
                 <div class="mt2 flex space-between">
                     {% if app.user %}
                         <form action="{{ path('table.favorite', { 'slug': table.slug }) }}" method="post">
-                            {% if app.user not in app.user not in table.favorite %}
+                            {% if app.user not in table.favorite %}
                                 <input type="hidden" name="table_favorite" value="true">
                                 <input type="hidden" name="token"
                                        value="{{ csrf_token('table-favorite') }}"/>
@@ -74,7 +74,7 @@
                                 </button>
                                 <i data-tooltip="{{ ('tooltip.table_favorite'|trans|UCFirst) }}">
                                     <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
-                                         width="20" height="20">
+                                         width="30">
                                 </i>
                             {% else %}
                                 <input type="hidden" name="table_favorite" value="false">

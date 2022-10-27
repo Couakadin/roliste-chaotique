@@ -1,5 +1,19 @@
-<form method="post" action="{{ path('event.delete', {'id': event.id}) }}"
-      onsubmit="return confirm('{{ 'ui.delete_event_ask'|trans|capitalize }}');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
-    <button class="btn-danger">{{ 'ui.delete'|trans|capitalize }}</button>
-</form>
+<button data-modal-open="formEventDelete" type="button" class="btn-danger">
+    {{ 'ui.delete'|trans|capitalize }}
+</button>
+
+<div id="formEventDelete" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>{{ 'ui.delete_event_ask'|trans|UCFirst }}</h2>
+            <span data-modal-close="formEventDelete" class="modal-close">✗</span>
+        </div>
+        <form class="modal-body" id="formEventDelete" method="post" action="{{ path('event.delete', {'id': event.id}) }}">
+            <p>{{ 'ui.delete_event_more_info'|trans|UCFirst }}</p>
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+            <button data-modal-open="formEventDelete" type="submit" class="btn-danger mt2">
+                {{ 'ui.delete_event_confirm'|trans|capitalize }}
+            </button>
+        </form>
+    </div>
+</div>

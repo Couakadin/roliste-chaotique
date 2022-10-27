@@ -89,6 +89,8 @@ ui:
   danger_zone: zone danger
   delete: supprimer
   delete_event_ask: êtes-vous sûr de vouloir supprimer cet événement ?
+  delete_event_more_info: Cette action est irréversible. Ni vous ni les autres participants n'y auront plus accès.
+  delete_event_confirm: j'ai compris et souhaite supprimer cet événement
   description: description
   last_event: dernier événement
   last_events: derniers événements

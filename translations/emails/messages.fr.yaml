@@ -25,7 +25,7 @@ email:
       <br>
       (Vous recevez cet e-mail car vous avez marqué cette table dans vos favoris sur Rôliste Chaotique).
   edit_table_participate:
-    subject: Événement modifié !
+    subject: événement modifié !
     body: |
       Bonjour %user%,
       <br>

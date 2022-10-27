@@ -14,9 +14,12 @@ class UCFirstExtension extends AbstractExtension
         ];
     }
 
-    public function UCFirst(string $string): ?string
+    public function UCFirst(string $string, string $encode = 'UTF-8'): ?string
     {
-        return ucfirst($string);
+        $start = mb_strtoupper(mb_substr($string, 0, 1, $encode), $encode);
+        $end = mb_substr($string, 1, mb_strlen($string, $encode), $encode);
+
+        return $start.$end;
     }
 
     public function getName(): string
