@@ -13,13 +13,19 @@
                     {{ 'ui.events'|trans|capitalize }}
                 </h2>
                 <ul class="card-body">
-                    <li>{{ 'ui.events_created'|trans|capitalize}} : {{ user.eventMaster|length }}</li>
-                    <li>{{ 'ui.events_participated'|trans|capitalize}} : {{ user.eventParticipates|length }}</li>
+                    <li><span class="text-strong">
+                            {{ 'ui.events_created'|trans|capitalize}} :</span>
+                        {{ user.eventMaster|length }}
+                    </li>
+                    <li><span class="text-strong">
+                            {{ 'ui.events_participated'|trans|capitalize}} :</span>
+                        {{ user.eventParticipates|length }}
+                    </li>
                     <li>
                         <hr class="my1">
                     </li>
                     <li>
-                        {{ 'ui.last_event'|trans|capitalize}} :
+                        <span class="text-strong">{{ 'ui.last_event'|trans|capitalize}} :</span>
                         {% if lastEvent.slug %}
                             <a href="{{ path('event.show', {'slug': lastEvent.slug}) }}">
                                 {{ lastEvent.name }}
@@ -33,7 +39,7 @@
             <div class="card">
                 <h2 class="card-title h2 mb1">{{ 'ui.tables'|trans|capitalize }}</h2>
                 <div class="card-body">
-                    <p>Tables favorites</p>
+                    <p class="text-strong">Tables favorites</p>
                     <ul class="table-favorite">
                         {% for table in user.tables %}
                             <li>
@@ -42,6 +48,8 @@
                                          alt="{{ table.name }}" class="table-favorite_img">
                                 </a>
                             </li>
+                            {% else %}
+                            {{ 'ui.not_for_now'|trans|capitalize }}
                         {% endfor %}
                     </ul>
                 </div>
