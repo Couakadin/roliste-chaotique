@@ -16,7 +16,7 @@
                 <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
                 <div class="card_body">
                     <p>
-                        {{ 'ui.genre'|trans|capitalize }} :
+                        <span class="text-strong">{{ 'ui.genre'|trans|capitalize }} :</span>
                         {% for genre in table.genre %}
                             {{ genre.name }}{% if not loop.last %}, {% endif %}
                         {% else %}
@@ -24,7 +24,7 @@
                         {% endfor %}
                     </p>
                     <p>
-                        {{ 'ui.editor'|trans|capitalize }} :
+                        <span class="text-strong">{{ 'ui.editor'|trans|capitalize }} :</span>
                         {% if table.editor is not null %}
                             {% set editor = table.editor %}
 
@@ -38,13 +38,26 @@
                         {% endif %}
                     </p>
                     <p>
-                        {{ 'ui.system'|trans|capitalize }} :
+                        <span class="text-strong">{{ 'ui.system'|trans|capitalize }} :</span>
                         {% if table.system is not null %}
                             {{ table.system.name }}
                         {% else %}
                             {{ 'ui.no_specified'|trans }}
                         {% endif %}
                     </p>
+                </div>
+
+                <div class="card_body">
+                    <span class="text-strong">{{ 'ui.next_events'|trans|capitalize }} :</span>
+                    <ul class="flex flex-wrap">
+                        {% for event in nextEvents %}
+                            <li class="list-circle-inside mr1">
+                                <a href="{{ path('event.show', {'slug': event.slug}) }}">
+                                    {{ event.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
 
                 <div class="mt2 flex space-between">

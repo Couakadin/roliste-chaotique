@@ -191,6 +191,7 @@ ui:
     Attention ! Cette action est irréversible. En cas d'incertitude, vous pouvez toujours <a href="%link%" class="link-line">nous contacter par e-mail</a>.
   understood_delete_account: j'ai compris et souhaite supprimer mon compte
   not_for_now: rien pour le moment...
+  next_events: prochains événements
 
 tooltip:
   tooltip: info-bulle
