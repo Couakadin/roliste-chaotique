@@ -9,10 +9,10 @@
     {% if app.user.isVerified %}
         <section class="container mt2">
             <div class="card">
-                <h2 class="card-title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
+                <h2 class="card_title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
                 {{ form_start(formAvatar) }}
 
-                <div class="card-body my2 flex gap-1 flex-wrap">
+                <div class="flex gap-1 flex-wrap">
                     {% for choice in formAvatar.avatar.vars.choices %}
                         <label for="avatar-{{ choice.data.id }}" class="radio-label">
                             <input value="{{ choice.value }}" type="radio" class="radio"
@@ -35,9 +35,9 @@
 
         <section class="container mt2">
             <div class="card">
-                <h2 class="card-title">{{ 'ui.edit_profile'|trans|capitalize }}</h2>
+                <h2 class="card_title">{{ 'ui.edit_profile'|trans|capitalize }}</h2>
                 {{ form_start(formProfile) }}
-                <div class="card-body flex-no-mobile gap-2">
+                <div class="flex-no-mobile gap-2">
                     <div class="form-group flex-grow">
                         {{ form_label(formProfile.email) }}
                         {{ form_widget(formProfile.email) }}
@@ -60,9 +60,9 @@
 
         <section class="container mt2">
             <div class="card">
-                <h2 class="card-title">{{ 'ui.edit_password'|trans|capitalize }}</h2>
+                <h2 class="card_title">{{ 'ui.edit_password'|trans|capitalize }}</h2>
                 {{ form_start(formPassword) }}
-                <div class="card-body flex-no-mobile gap-2">
+                <div class="flex-no-mobile gap-2">
                     <div class="form-group flex-grow">
                         {{ form_label(formPassword.password.first) }}
                         <div class="form-container">
@@ -99,13 +99,11 @@
 
         <section class="container mt2">
             <div class="card flash-warning">
-                <h2 class="card-title">{{ 'ui.danger_zone'|trans|capitalize }}</h2>
-                <div class="card-body">
-                    <div class="form-group">
-                        <button data-modal-open="modalDeleteAccount" type="button" class="btn-danger">
-                            {{ 'ui.delete_account'|trans|capitalize }}
-                        </button>
-                    </div>
+                <h2 class="card_title">{{ 'ui.danger_zone'|trans|capitalize }}</h2>
+                <div>
+                    <button data-modal-open="modalDeleteAccount" type="button" class="btn-danger">
+                        {{ 'ui.delete_account'|trans|capitalize }}
+                    </button>
                 </div>
             </div>
 

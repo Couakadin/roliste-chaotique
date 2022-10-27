@@ -1,6 +1,6 @@
 {{ form_start(form) }}
 <div class="card">
-    <div class="card-body">
+    <div>
         <div class="form-group">
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="card-body flex-no-mobile gap-2" style="display: none;">
+    <div class="flex-no-mobile gap-2" style="display: none;">
         <div class="form-group flex-grow">
             {{ form_label(form.bgColor) }}
             {{ form_widget(form.bgColor) }}
@@ -35,7 +35,7 @@
         <span class="checkbox-title">{{ 'ui.end_date_event_different'|trans|capitalize }}</span>
     </div>
 
-    <div class="card-body flex-no-mobile gap-2">
+    <div class="flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.start) }}
             {{ form_widget(form.start) }}
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="card-body flex-no-mobile gap-2">
+    <div class="flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.startHour) }}
             {{ form_widget(form.startHour, {'attr': {'value': event.start|date('H:i')}}) }}
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="card-body flex-no-mobile gap-2">
+    <div class="flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.type) }}
             {{ form_widget(form.type) }}
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="card-body">
+    <div>
         <div class="form-group">
             <div class="form-container">
                 {{ form_label(form.zone) }}
@@ -102,17 +102,13 @@
         </div>
     </div>
 
-    <div class="card-body">
-        <div class="card-group">
-            {{ form_label(form.content) }}
-            {{ form_widget(form.content) }}
-            <div class="color-danger">
-                {{ form_errors(form.content) }}
-            </div>
-        </div>
+    {{ form_label(form.content) }}
+    {{ form_widget(form.content) }}
+    <div class="color-danger">
+        {{ form_errors(form.content) }}
     </div>
 
-    <div class="card-footer">
+    <div class="card_btn">
         <button type="submit" class="btn-primary mt1">{{ 'ui.send'|trans|capitalize }}</button>
     </div>
 </div>

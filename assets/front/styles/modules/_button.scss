@@ -12,7 +12,7 @@
   transition      : filter .3s, background .3s, color .3s;
   font-size       : calc(var(--gap) * 2);
   filter          : brightness(1);
-  white-space     : nowrap;
+  white-space     : normal;
 
   &[disabled] {
     cursor  : default;

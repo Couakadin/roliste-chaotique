@@ -9,10 +9,10 @@
     <section class="container mt2">
         <div class="grid">
             <div class="card">
-                <h2 class="card-title h2 mb1 link-line">
+                <h2 class="card_title h2 link-line">
                     {{ 'ui.events'|trans|capitalize }}
                 </h2>
-                <ul class="card-body">
+                <ul class="card_body">
                     <li><span class="text-strong">
                             {{ 'ui.events_created'|trans|capitalize}} :</span>
                         {{ user.eventMaster|length }}
@@ -37,8 +37,8 @@
                 </ul>
             </div>
             <div class="card">
-                <h2 class="card-title h2 mb1 link-line">{{ 'ui.tables'|trans|capitalize }}</h2>
-                <div class="card-body">
+                <h2 class="card_title h2 link-line">{{ 'ui.tables'|trans|capitalize }}</h2>
+                <div class="card_body">
                     <p class="text-strong">Tables favorites</p>
                     <ul class="table-favorite">
                         {% for table in user.tables %}
