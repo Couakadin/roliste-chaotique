@@ -8,11 +8,11 @@
 
     {% if app.user.isVerified %}
         <section class="container mt2">
-            <div class="card">
+            <div class="card dark">
                 <h2 class="card_title">{{ 'ui.edit_avatar'|trans|capitalize }}</h2>
                 {{ form_start(formAvatar) }}
 
-                <div class="flex gap-1 flex-wrap">
+                <div class="flex gap-1 flex-wrap my1">
                     {% for choice in formAvatar.avatar.vars.choices %}
                         <label for="avatar-{{ choice.data.id }}" class="radio-label">
                             <input value="{{ choice.value }}" type="radio" class="radio"
@@ -34,7 +34,7 @@
         </section>
 
         <section class="container mt2">
-            <div class="card">
+            <div class="card dark">
                 <h2 class="card_title">{{ 'ui.edit_profile'|trans|capitalize }}</h2>
                 {{ form_start(formProfile) }}
                 <div class="flex-no-mobile gap-2">
@@ -59,7 +59,7 @@
         </section>
 
         <section class="container mt2">
-            <div class="card">
+            <div class="card dark">
                 <h2 class="card_title">{{ 'ui.edit_password'|trans|capitalize }}</h2>
                 {{ form_start(formPassword) }}
                 <div class="flex-no-mobile gap-2">

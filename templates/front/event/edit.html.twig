@@ -5,7 +5,7 @@
 
 {% block body %}
     <section class="container mt2">
-        <h1 class="card-title h1">{{ 'ui.edit_event'|trans({'%event%': event.name})|UCFirst }}</h1>
+        <h1 class="h1 mb2">{{ 'ui.edit_event'|trans({'%event%': event.name})|UCFirst }}</h1>
 
         {{ include('@front/event/_form.html.twig', {'button_label': 'Update'}) }}
 
