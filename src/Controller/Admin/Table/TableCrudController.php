@@ -64,7 +64,6 @@ class TableCrudController extends AbstractCrudController
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('name')
                 ->onlyOnForms(),
-            IntegerField::new('maturity', $this->trans('admin.ui.maturity')),
             TextEditorField::new('content', $this->trans('admin.ui.content'))
                 ->setFormType(CKEditorType::class)
                 ->onlyOnForms(),

@@ -36,9 +36,6 @@ class Table
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $maturity = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
@@ -123,18 +120,6 @@ class Table
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getMaturity(): ?int
-    {
-        return $this->maturity;
-    }
-
-    public function setMaturity(?int $maturity): self
-    {
-        $this->maturity = $maturity;
 
         return $this;
     }
