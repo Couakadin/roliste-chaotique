@@ -20,14 +20,12 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Valid;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @property Security $security
@@ -53,7 +51,7 @@ class EventType extends AbstractType
                         ->format('Y-m-d') . ' ' . $form['endHour']->getData()->format('H:i'));
             $data->setEnd($newDateEnd);
 
-            if ($newDateEnd < $newDateStart) {
+            if ($newDateEnd->format('Y-m-d H:i') < $newDateStart->format('Y-m-d H:i')) {
                 $form->get('start')->addError(new FormError('la date de fin doit être supérieure ou égale à la date de départ.'));
             }
         });
@@ -93,18 +91,6 @@ class EventType extends AbstractType
                 'required'    => false,
                 'label'       => 'ui.date_end',
                 'widget'      => 'single_text',
-                'constraints' => [
-                    new Callback(function ($object, ExecutionContextInterface $context) {
-                        $start = $context->getRoot()->getData()->getStart();
-                        $end = $object;
-
-                        if (is_a($start, DateTime::class) && is_a($end, DateTime::class) && $end->format('U') - $start->format('U') < 0) {
-                            $context
-                                ->buildViolation('form.date.greater')
-                                ->addViolation();
-                        }
-                    }),
-                ]
             ])
             ->add('startHour', TimeType::class, [
                 'mapped'      => false,
