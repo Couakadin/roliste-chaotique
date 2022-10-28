@@ -10,7 +10,7 @@
 {% endfor %}
 
 {% for label, messages in app.flashes(['badge']) %}
-    {% for message in messages %}
+    {% if messages is not empty %}
         <div class="badge">
             <div class="badge-box">
                 <div class="badge-dot"></div>
@@ -18,9 +18,11 @@
                 <div class="badge-shadow"></div>
                 <div class="badge-message">
                     <h6 class="badge-title">{{ 'ui.trophy'|trans }} !</h6>
-                    <p class="badge-subtitle">{{ message|UCFirst }}</p>
+                    {% for message in messages %}
+                        <p class="badge-subtitle">{{ message|UCFirst }}</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    {% endfor %}
+    {% endif %}
 {% endfor %}
