@@ -80,7 +80,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud($this->trans('admin.editor', ['%count%' => 2]), 'fas fa-newspaper', Editor::class);
         yield MenuItem::linkToCrud($this->trans('admin.system', ['%count%' => 2]), 'fas fa-dice', System::class);
         yield MenuItem::linkToCrud($this->trans('admin.event', ['%count%' => 2]), 'fas fa-calendar-days', Event::class);
-        yield MenuItem::linkToCrud($this->trans('admin.event_color', ['%count%' => 2]), 'fas fa-calendar-days', EventColor::class);
+        yield MenuItem::linkToCrud($this->trans('admin.event_color', ['%count%' => 2]), 'fas fa-palette', EventColor::class);
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu

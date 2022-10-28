@@ -85,22 +85,4 @@
   letter-spacing : .063rem;
 }
 
-.badge-button {
-  position        : absolute;
-  background      : hsl(var(--clr-light));
-  width           : 50%;
-  height          : 15%;
-  border-radius   : 1.25rem;
-  top             : 73%;
-  left            : 25%;
-  outline         : 0;
-  border          : none;
-  box-shadow      : .3rem .3rem 0.62rem hsla(var(--clr-dark), .5);
-  text-align      : center;
-  display         : flex;
-  justify-content : center;
-  align-items     : center;
-}
-
-
 

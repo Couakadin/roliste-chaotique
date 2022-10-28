@@ -5,6 +5,17 @@
         {% include '@ui/flashes.html.twig' %}
         {% include '@front/menubar/index.html.twig' %}
         <div class="wrapper">
+            {% if 'now'|date('m-d') >= '10-17' and 'now'|date('m-d') <= '10-31' %}
+                {# Halloween period #}
+                {% set holidayBanner = 'build/front/holiday/halloween.png' %}
+            {% elseif 'now'|date('m-d') >= '12-17' and 'now'|date('m-d') <= '12-31' %}
+                {# Christmas period #}
+                {% set holidayBanner = 'build/front/holiday/christmas.png' %}
+            {% endif %}
+            {% if holidayBanner %}
+                <div style="background: url({{ asset(holidayBanner) }}) repeat-x top;
+                        height:80px;">{# Holiday Banner #}</div>
+            {% endif %}
             {% block body %}{% endblock %}
         </div>
         {% if app.request.cookies.get('cookie') is empty %}
