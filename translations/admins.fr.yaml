@@ -7,6 +7,8 @@ admin:
     {1}éditeur|{2}éditeurs
   event: |
     {1}événement|{2}événements
+  event_color: |
+    {1}couleur événement|{2}couleurs événement
   genre: |
     {1}genre|{2}genres
   system: |
@@ -23,6 +25,7 @@ admin:
   new_table_inscription: nouvelle inscription de table
   new_editor: nouvel éditeur
   new_event: nouvel événement
+  new_event_color: nouvelle couleur événement
   new_user: nouvel utilisateur
   new_avatar: nouvel avatar
   new_genre: nouveau genre
@@ -48,6 +51,8 @@ admin:
     border_color: couleur bordure
     editor: éditeur
     events: événements
+    event: événement
+    event_color: couleur événements
     favorites: favori
     genre: genre
     image: image

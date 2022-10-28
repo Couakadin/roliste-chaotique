@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Event\Event as EventEntity;
+use App\Entity\Event\EventColor;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
@@ -28,19 +29,30 @@ class CalendarSubscriber implements EventSubscriberInterface
     /**
      * @throws Exception
      */
-    public function onCalendarSetData(CalendarEvent $calendar)
+    public function onCalendarSetData(CalendarEvent $calendar): void
     {
         // You may want to make a custom query from your database to fill the calendar
         $eventRepo = $this->entityManager->getRepository(EventEntity::class);
+        $eventColorRepo = $this->entityManager->getRepository(EventColor::class);
 
         foreach ($eventRepo->findAll() as $event) {
+            $eventColor = $eventColorRepo->findOneBy(['table' => $event->getTable()]);
+
+            if ($eventColor) {
+                $bgColor = $eventColor->getBgColor();
+                $borderColor = $eventColor->getBorderColor();
+            } else {
+                $bgColor = '#000000';
+                $borderColor = '#000000';
+            }
+
             $calendar->addEvent(new Event(
                 $event->getName(),
                 new DateTime($event->getStart()->format('d-m-Y H:i')),
                 new DateTime($event->getEnd()->format('d-m-Y H:i')),
                 $event->getId(), [
-                    'backgroundColor' => $event->getBgColor(),
-                    'borderColor'     => $event->getBorderColor(),
+                    'backgroundColor' => $bgColor,
+                    'borderColor'     => $borderColor,
                     'url'             => $this->router->generate('event.show', ['slug' => $event->getSlug()])
                 ]
             ));

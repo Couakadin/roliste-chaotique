@@ -3,6 +3,7 @@
 namespace App\Form\Event;
 
 use App\Entity\Event\Event;
+use App\Entity\Event\EventColor;
 use App\Entity\Table\Table;
 use App\Entity\Zone\Zone;
 use DateTime;
@@ -10,7 +11,6 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -71,12 +71,6 @@ class EventType extends AbstractType
                         'maxMessage' => 'user.name.length'
                     ])
                 ],
-            ])
-            ->add('bgColor', ColorType::class, [
-                'label' => 'ui.bg_color',
-            ])
-            ->add('borderColor', ColorType::class, [
-                'label' => 'ui.border_color',
             ])
             ->add('start', DateType::class, [
                 'label'       => 'ui.date_start',

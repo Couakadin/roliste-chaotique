@@ -10,23 +10,6 @@
         </div>
     </div>
 
-    <div class="flex-no-mobile gap-2" style="display: none;">
-        <div class="form-group flex-grow">
-            {{ form_label(form.bgColor) }}
-            {{ form_widget(form.bgColor) }}
-            <div class="color-danger">
-                {{ form_errors(form.bgColor) }}
-            </div>
-        </div>
-        <div class="form-group flex-grow">
-            {{ form_label(form.borderColor) }}
-            {{ form_widget(form.borderColor) }}
-            <div class="color-danger">
-                {{ form_errors(form.borderColor) }}
-            </div>
-        </div>
-    </div>
-
     <div class="checkbox-container">
         <input id="dateEndEventCheckbox" class="checkbox" type="checkbox">
         <label for="dateEndEventCheckbox" class="checkbox-label" data-display="dateEndEventForm">

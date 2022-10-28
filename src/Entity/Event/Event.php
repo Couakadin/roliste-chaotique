@@ -40,12 +40,6 @@ class Event
     #[ORM\Column(length: 15)]
     private ?string $type = null;
 
-    #[ORM\Column(length: 7, nullable: true)]
-    private ?string $bgColor = null;
-
-    #[ORM\Column(length: 7, nullable: true)]
-    private ?string $borderColor = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $start = null;
 
@@ -136,30 +130,6 @@ class Event
         return $this;
     }
 
-    public function getBgColor(): ?string
-    {
-        return $this->bgColor;
-    }
-
-    public function setBgColor(?string $bgColor): self
-    {
-        $this->bgColor = $bgColor;
-
-        return $this;
-    }
-
-    public function getBorderColor(): ?string
-    {
-        return $this->borderColor;
-    }
-
-    public function setBorderColor(?string $borderColor): self
-    {
-        $this->borderColor = $borderColor;
-
-        return $this;
-    }
-
     public function getStart(): ?DateTimeInterface
     {
         return $this->start;
@@ -244,9 +214,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
     public function getParticipate(): Collection
     {
         return $this->participate;

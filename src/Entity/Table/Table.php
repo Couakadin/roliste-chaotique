@@ -4,6 +4,7 @@ namespace App\Entity\Table;
 
 use App\Entity\Editor\Editor;
 use App\Entity\Event\Event;
+use App\Entity\Event\EventColor;
 use App\Entity\Genre\Genre;
 use App\Entity\System\System;
 use App\Entity\User\User;
@@ -65,11 +66,15 @@ class Table
     #[ORM\JoinTable(name: 'rc_table_favorite')]
     private Collection $favorite;
 
+    #[ORM\OneToMany(mappedBy: 'table', targetEntity: EventColor::class)]
+    private Collection $eventColors;
+
     public function __construct()
     {
         $this->events = new ArrayCollection();
         $this->genre = new ArrayCollection();
         $this->favorite = new ArrayCollection();
+        $this->eventColors = new ArrayCollection();
     }
 
     public function __toString()
@@ -259,6 +264,31 @@ class Table
     public function removeFavorite(User $favorite): self
     {
         $this->favorite->removeElement($favorite);
+
+        return $this;
+    }
+
+    public function getEventColors(): Collection
+    {
+        return $this->eventColors;
+    }
+
+    public function addEventColor(EventColor $eventColor): self
+    {
+        if (!$this->eventColors->contains($eventColor)) {
+            $this->eventColors->add($eventColor);
+            $eventColor->setTable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventColor(EventColor $eventColor): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->eventColors->removeElement($eventColor) && $eventColor->getTable() === $this) {
+            $eventColor->setTable(null);
+        }
 
         return $this;
     }
