@@ -3,7 +3,8 @@
         <h2 class="task-header_title">{{ 'now'|format_date }}</h2>
         <div class="task-tools">
             <div class="task-count">
-                <span id="taskCount">{{ tasks|length }}</span> {{ 'admin.task'|trans({'%count%': tasks|length > 1 ? 2 : 1}, 'admins') }}
+                <span id="taskCount">{{ tasks|length }}</span>
+                <span id="taskCountString">{{ 'admin.task'|trans({'%count%': tasks|length > 1 ? 2 : 1}, 'admins') }}</span>
             </div>
         </div>
         <div class="task-form">

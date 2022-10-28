@@ -1,5 +1,6 @@
 const addTask = document.querySelector('#addTask');
 const countTask = document.querySelector('#taskCount');
+const countTaskString = document.querySelector('#taskCountString');
 const listTask = document.querySelector('#taskList');
 const errorTask = document.querySelector('#taskError');
 
@@ -49,6 +50,12 @@ function removeTaskAction(target) {
                 oldTask.parentNode.removeChild(oldTask);
 
                 countTask.innerHTML = +parseInt(countTask.innerHTML) - 1;
+
+                if (parseInt(countTask.innerHTML) > 1) {
+                    countTaskString.innerHTML = 'tâches';
+                } else {
+                    countTaskString.innerHTML = 'tâche';
+                }
             }
         })
         .catch(function (error) {
@@ -101,6 +108,12 @@ function addTaskAction() {
 
                 addTask.value = '';
                 countTask.innerHTML = +parseInt(countTask.innerHTML) + 1;
+
+                if (parseInt(countTask.innerHTML) > 1) {
+                    countTaskString.innerHTML = 'tâches';
+                } else {
+                    countTaskString.innerHTML = 'tâche';
+                }
             }
         })
         .catch(function (error) {
