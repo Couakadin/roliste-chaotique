@@ -1,0 +1,11 @@
+.notification-dot {
+  position      : absolute;
+  display       : inline-block;
+  width         : .5rem;
+  height        : .5rem;
+  background    : hsl(var(--clr-danger));
+  border-radius : 50%;
+  top           : 0.2rem;
+  right         : 1.3rem;
+  box-shadow    : 0 0 .1rem black;
+}

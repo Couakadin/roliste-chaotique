@@ -103,8 +103,7 @@
 .flex {
   @include small-device {flex-direction : row;}
 
-  display        : flex;
-  flex-direction : column;
+  display : flex;
 }
 
 .flex-no-mobile {

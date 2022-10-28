@@ -4,8 +4,14 @@
         <img width="96" height="64" src="{{ asset('build/front/mascot/rc.png') }}"
              alt="{{ 'ui.chaotic_roleplayer'|trans }}">
     </a>
-    <div id="burger" class="burger">
-        <div id="burger-menu" class="burger-menu"></div>
+    <div class="flex">
+        <div class="relative">
+            <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" class="mr1" width="32">
+            <span class="notification-dot"></span>
+        </div>
+        <div id="burger" class="burger">
+            <div id="burger-menu" class="burger-menu"></div>
+        </div>
     </div>
 </div>
 
