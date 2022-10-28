@@ -28,36 +28,49 @@ document.addEventListener('DOMContentLoaded', () => {
     calendarEl.innerHTML = '';
 
     const calendar = new Calendar(calendarEl, {
-        plugins      : [dayGridPlugin],
-        initialView  : 'dayGridMonth',
-        timeZone     : 'Europe/paris',
-        locale       : 'fr',
-        headerToolbar: {
-            left  : 'prev next today',
-            center: 'title',
-            right : 'dayGridDay dayGridWeek dayGridMonth'
+        plugins: [dayGridPlugin],
+        initialView: 'dayGridMonth',
+        timeZone: 'Europe/paris',
+        locale: 'fr',
+        dayMaxEventRows: true,
+        height: '100vh',
+        views: {
+            timeGrid: {
+                dayMaxEventRows: 6 // adjust to 6 only for timeGridWeek/timeGridDay
+            }
         },
-        eventSources : [{
-            url        : '/fc-load-events',
-            method     : 'POST',
+        headerToolbar: {
+            left: 'prev next today',
+            center: 'title',
+            right: 'dayGridDay dayGridWeek dayGridMonth'
+        },
+        eventSources: [{
+            url: '/fc-load-events',
+            method: 'POST',
             extraParams: {
                 filters: JSON.stringify({})
             },
-            failure    : () => {
+            failure: () => {
                 console.error('There was an error while fetching FullCalendar!');
             }
         }],
+        eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false
+        },
         buttonText: {
             today: 'aujourd\'hui',
             month: 'mois',
             week: 'semaine',
-            day: 'jour'
-        }
+            day: 'jour',
+        },
+        moreLinkText: 'autre'
     });
     calendar.render();
 });
 
-if (typeof(CKEDITOR) !== 'undefined') {
+if (typeof (CKEDITOR) !== 'undefined') {
     CKEDITOR.config.uiColor = '#eeebe2';
     CKEDITOR.addCss('.cke_editable { background-color: #eeebe2; color: #241F1E }');
 }
