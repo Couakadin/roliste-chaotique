@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         locale: 'fr',
         dayMaxEventRows: true,
         height: '100vh',
+        eventDisplay: 'block',
         views: {
             timeGrid: {
                 dayMaxEventRows: 6 // adjust to 6 only for timeGridWeek/timeGridDay

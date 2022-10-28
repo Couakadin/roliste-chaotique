@@ -3,12 +3,3 @@
   border-color : hsl(var(--clr-dark)) !important;
   color        : hsl(var(--clr-light));
 }
-
-.fc-daygrid-event-dot {
-  border-color : hsl(var(--clr-dark)) !important;
-}
-
-.fc-day-today {
-  background : hsla(var(--clr-widget), .1) !important;
-  border     : none !important;
-}
