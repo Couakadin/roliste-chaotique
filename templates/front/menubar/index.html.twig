@@ -6,8 +6,25 @@
     </a>
     <div class="flex">
         <div class="relative">
-            <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" class="mr1" width="32">
             <span class="notification-dot"></span>
+            <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" width="32"
+                 class="notification-icon" data-display="notification">
+            <div id="notification" class="notification" style="display: none;">
+                <div class="notification-header">
+                    <h3>{{ 'ui.notifications'|trans|capitalize }}</h3>
+                    <a href="#" class="text-small">{{ 'ui.mark_as_read_all'|trans|capitalize }}</a>
+                </div>
+                <ul class="notification-list">
+                    <li class="notification-item">
+                        <a href="#" class="d-flex">
+                            <div class="text">
+                                <strong>Alex Stafford</strong> marked the task done a day ago
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <p class="text-center text-small"><a href="#" class="small">{{ 'ui.view_all'|trans|capitalize }}</a></p>
+            </div>
         </div>
         <div id="burger" class="burger">
             <div id="burger-menu" class="burger-menu"></div>

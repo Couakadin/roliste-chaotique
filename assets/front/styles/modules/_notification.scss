@@ -1,3 +1,29 @@
+.notification {
+  @include medium-device {
+    width : 24rem;
+  }
+
+  display        : flex;
+  flex-direction : column;
+  will-change    : transform;
+  position       : absolute;
+  top            : 2rem;
+  right          : 2rem;
+  background     : hsl(var(--clr-widget));
+  border-radius  : var(--border-radius-small);
+  width          : 16rem;
+  max-height     : 32rem;
+  aspect-ratio   : 1/1;
+  z-index        : z-index('modal');
+  padding        : var(--gap) calc(var(--gap) * 1);
+  color          : hsl(var(--clr-light));
+}
+
+.notification-icon {
+  margin-right : 1rem;
+  cursor       : pointer;
+}
+
 .notification-dot {
   position      : absolute;
   display       : inline-block;
@@ -8,4 +34,33 @@
   top           : 0.2rem;
   right         : 1.3rem;
   box-shadow    : 0 0 .1rem black;
+}
+
+.notification-header {
+  @include medium-device {
+    flex-direction : row;
+  }
+
+  display         : flex;
+  justify-content : space-between;
+  flex-direction  : column;
+}
+
+.notification-list {
+  display        : flex;
+  flex-direction : column;
+  flex-grow      : 1;
+  overflow       : auto;
+}
+
+.notification-item {
+  background    : hsla(var(--clr-light), .5);
+  border-radius : var(--border-radius-small);
+  padding       : 1rem .5rem;
+  margin        : .5rem 0;
+  color         : hsl(var(--clr-dark));
+
+  &.unread {
+    background : hsl(var(--clr-light));
+  }
 }

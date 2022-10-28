@@ -11,7 +11,7 @@ class Display {
                 const display = document.querySelector(`#${event.target.getAttribute(`${this.open}`)}`);
 
                 if ('none' === display.style.display)
-                    display.style.display = 'block';
+                    display.removeAttribute('style');
                 else
                     display.style.display = 'none';
             })

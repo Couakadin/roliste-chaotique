@@ -196,6 +196,9 @@ ui:
   not_for_now: rien pour le moment...
   next_events: prochains événements
   hour_event: heure d'événement
+  notifications: notifications
+  mark_as_read_all: tout marquer comme lu
+  view_all: voir tout
 
 tooltip:
   tooltip: info-bulle
