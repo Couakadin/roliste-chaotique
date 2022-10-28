@@ -15,24 +15,6 @@ email:
       Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
       <br>
       <a href="%signedUrl%" title="Valider">Vérifier votre email</a> (la validation expirera le %expiredAt%).
-  new_table_favorite:
-    subject: Nouvel événement pour %table% !
-    body: |
-      Bonjour %user%,
-      <br>
-      Un nouvel événement intitulé <a href="%signedUrl%">%event%</a> a été créé concernant 
-      « %table% ». Allez vite voir ce qu'il en retourne !
-      <br>
-      (Vous recevez cet e-mail car vous avez marqué cette table dans vos favoris sur Rôliste Chaotique).
-  edit_table_participate:
-    subject: événement modifié !
-    body: |
-      Bonjour %user%,
-      <br>
-      L'événement intitulé <a href="%signedUrl%">%event%</a> a reçu des modifications concernant 
-      « %table% ». Allez vite voir ce qu'il en retourne !
-      <br>
-      (Vous recevez cet e-mail car vous avez indiqué participer à cet événement sur Rôliste Chaotique).
 
 admin:
   new_inscription:

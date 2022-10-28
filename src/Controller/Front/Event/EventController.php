@@ -106,7 +106,7 @@ class EventController extends AbstractController
 
             foreach ($users as $user) {
                 if ($user !== $event->getMaster() && $event->getTable()->getFavorite()->contains($user)) {
-                    $this->email->newTableFavorite($user, $event->getTable(), $event, $this->translator->trans('email.new_table_favorite.subject'));
+
                 }
             }
 
@@ -138,7 +138,7 @@ class EventController extends AbstractController
 
             foreach ($users as $user) {
                 if ($user !== $event->getMaster() && $event->getParticipate()->contains($user)) {
-                    $this->email->editTableParticipate($user, $event->getTable(), $event, $this->translator->trans('email.edit_table_participate.subject'));
+
                 }
             }
 

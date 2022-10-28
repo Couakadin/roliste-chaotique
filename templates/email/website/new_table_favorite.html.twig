@@ -1,9 +1,0 @@
-{% extends '@email/email.html.twig' %}
-
-{% block subject %}
-    {{ (subject|trans({'%table%': user, '%table%': table})|UCFirst)|raw }}
-{% endblock %}
-
-{% block email %}
-    {{ ('email.new_table_favorite.body'|trans({'%user%': user, '%table%': table, '%event%': event, '%signedUrl%': signedUrl})|UCFirst)|raw }}
-{% endblock %}

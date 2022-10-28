@@ -2,8 +2,6 @@
 
 namespace App\Email;
 
-use App\Entity\Event\Event;
-use App\Entity\Table\Table;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -11,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Email extends AbstractController
 {
@@ -20,7 +17,6 @@ class Email extends AbstractController
 
     public function __construct(
         private readonly MailerInterface     $mailer,
-        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -65,46 +61,6 @@ class Email extends AbstractController
                 'subject'   => $subject,
                 'signedUrl' => $this->generateUrl('forgotten-password.new', ['token' => $newToken->getToken()], 0),
                 'expiredAt' => $newToken->getExpiredAt()
-            ]);
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function newTableFavorite(User $user, Table $table, Event $event, string $subject): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
-            ->to($user->getEmail())
-            ->subject(ucfirst($this->translator->trans($subject, ['%table%' => $table])))
-            ->htmlTemplate('@email/website/new_table_favorite.html.twig')
-            ->context([
-                'subject'   => $subject,
-                'table'     => $table,
-                'user'      => $user,
-                'event'     => $event,
-                'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
-            ]);
-        $this->mailer->send($email);
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function editTableParticipate(User $user, Table $table, Event $event, string $subject): void
-    {
-        $email = (new TemplatedEmail())
-            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
-            ->to($user->getEmail())
-            ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/website/edit_table_participate.html.twig')
-            ->context([
-                'subject'   => $subject,
-                'table'     => $table,
-                'user'      => $user,
-                'event'     => $event,
-                'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
             ]);
         $this->mailer->send($email);
     }

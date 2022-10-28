@@ -1,9 +1,0 @@
-{% extends '@email/email.html.twig' %}
-
-{% block subject %}
-    {{ subject|capitalize }}
-{% endblock %}
-
-{% block email %}
-    {{ ('email.edit_table_participate.body'|trans({'%user%': user, '%table%': table, '%event%': event, '%signedUrl%': signedUrl})|UCFirst)|raw }}
-{% endblock %}
