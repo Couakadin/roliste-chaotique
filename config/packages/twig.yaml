@@ -6,3 +6,5 @@ twig:
         '%kernel.project_dir%/templates/email': email
         '%kernel.project_dir%/public': public
         '%kernel.project_dir%/templates/bundles': bundles
+    globals:
+        notification: '@App\Service\NotificationManager'

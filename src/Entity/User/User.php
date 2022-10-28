@@ -5,6 +5,7 @@ namespace App\Entity\User;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
+use App\Entity\Notification\Notification;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
@@ -85,12 +86,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'favorite')]
     private Collection $tables;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
         $this->eventParticipate = new ArrayCollection();
         $this->badgeUnlocks = new ArrayCollection();
         $this->tables = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function __toString()
@@ -406,6 +411,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->tables->removeElement($table)) {
             $table->removeFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
         }
 
         return $this;

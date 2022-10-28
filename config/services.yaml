@@ -31,6 +31,10 @@ services:
         class: App\Service\TokenManager
         arguments: [ '@doctrine.orm.entity_manager' ]
 
+    App\Service\NotificationManager:
+        class: App\Service\NotificationManager
+        arguments: [ '@doctrine.orm.entity_manager' ]
+
     App\Service\FileUploader:
         class: App\Service\FileUploader
 

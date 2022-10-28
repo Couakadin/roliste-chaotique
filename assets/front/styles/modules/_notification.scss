@@ -5,7 +5,6 @@
 
   display        : flex;
   flex-direction : column;
-  will-change    : transform;
   position       : absolute;
   top            : 2rem;
   right          : 2rem;
@@ -59,8 +58,20 @@
   padding       : 1rem .5rem;
   margin        : .5rem 0;
   color         : hsl(var(--clr-dark));
+  position      : relative;
 
   &.unread {
     background : hsl(var(--clr-light));
+  }
+}
+
+.notification-link {
+  &:before {
+    content  : '';
+    position : absolute;
+    left     : 0;
+    right    : 0;
+    top      : 0;
+    bottom   : 0;
   }
 }

@@ -1,0 +1,30 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.notification'|trans({'%user%': app.user.username})|capitalize %}
+{% block title 'ui.notifications'|trans|capitalize %}
+
+{% block body %}
+    {% include '@front/account/_menu.html.twig' %}
+
+    <section class="container mt2">
+        <ul class="notification-list">
+            {% for notif in notifications %}
+                <li class="notification-item card dark">
+                    {% if 'event-update' is same as notif.type %}
+                        <a href="{{ path('event.show', {'slug': notif.event.slug}) }}"
+                           class="notification-link">
+                            {{ ('ui.notification_event_updated'|trans({'%event%': notif.event.name})|UCFirst)|raw }}
+                        </a>
+                        <span class="text-small text-right">{{ notif.createdAt|ago }}</span>
+                    {% elseif 'event-create' is same as notif.type %}
+                        <a href="{{ path('event.show', {'slug': notif.event.slug}) }}"
+                           class="notification-link">
+                            {{ ('ui.notification_event_created'|trans({'%table%': notif.event.table.name})|UCFirst)|raw }}
+                        </a>
+                        <span class="text-small text-right">{{ notif.createdAt|ago }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

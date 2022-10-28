@@ -2,6 +2,8 @@
 
 namespace App\Controller\Front\Account;
 
+use App\Entity\Event\Event;
+use App\Entity\Notification\Notification;
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
@@ -137,6 +139,33 @@ class AccountController extends AbstractController
         }
 
         return $this->redirectToRoute('home.index');
+    }
+
+    #[Route('/account/{slug}/notifications', name: 'account.notifications')]
+    public function notifications(string $slug): Response
+    {
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $user = $userRepo->findOneBy(['slug' => $slug]);
+
+        if ($user !== $this->getUser()) {
+            return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        $notifications = $this->entityManager->getRepository(Notification::class)
+            ->findBy(['user' => $user], ['createdAt' => 'desc']);
+
+        foreach ($notifications as $notification) {
+            if (in_array($notification->getType(), ['event-create', 'event-update']) ) {
+                $event = $this->entityManager->getRepository(Event::class)
+                    ->find($notification->getEntityId());
+
+                $notification->event = $event;
+            }
+        }
+
+        return $this->render('@front/account/notification.html.twig', [
+            'notifications' => $notifications
+        ]);
     }
 
     private function getForm(string $typeClass, User $entity, Request $request): FormInterface

@@ -4,6 +4,7 @@ namespace App\Controller\Front\Event;
 
 use App\Email\Email;
 use App\Entity\Event\Event;
+use App\Entity\Notification\Notification;
 use App\Entity\User\User;
 use App\Form\Event\EventType;
 use App\Repository\Event\EventRepository;
@@ -87,9 +88,6 @@ class EventController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     #[Route('/new', name: 'event.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventRepository $eventRepository): Response
     {
@@ -106,7 +104,12 @@ class EventController extends AbstractController
 
             foreach ($users as $user) {
                 if ($user !== $event->getMaster() && $event->getTable()->getFavorite()->contains($user)) {
-
+                    $notification = (new Notification())
+                        ->setUser($user)
+                        ->setType('event-create')
+                        ->setEntityId($event->getId())
+                        ->setIsRead(false);
+                    $this->entityManager->persist($notification);
                 }
             }
 
@@ -121,9 +124,6 @@ class EventController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
@@ -138,9 +138,15 @@ class EventController extends AbstractController
 
             foreach ($users as $user) {
                 if ($user !== $event->getMaster() && $event->getParticipate()->contains($user)) {
-
+                    $notification = (new Notification())
+                        ->setUser($user)
+                        ->setType('event-update')
+                        ->setEntityId($event->getId())
+                        ->setIsRead(false);
+                    $this->entityManager->persist($notification);
                 }
             }
+            $this->entityManager->flush();
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event->getName()])));
 

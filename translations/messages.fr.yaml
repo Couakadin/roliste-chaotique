@@ -54,6 +54,7 @@ meta:
       show: |
         Tous les évènement et infos sur la table %table% de Rôliste chaotique.
     account: Voir le profil de %user% sur Rôliste chaotique.
+    notification: Voir les notifications de %user% sur Rôliste Chaotique.
 
 ui:
   about: à propos
@@ -199,6 +200,8 @@ ui:
   notifications: notifications
   mark_as_read_all: tout marquer comme lu
   view_all: voir tout
+  notification_event_updated: l'événement <strong>%event%</strong> a été modifié.
+  notification_event_created: un nouvel événement pour <strong>%table%</strong> a été créé.
 
 tooltip:
   tooltip: info-bulle
