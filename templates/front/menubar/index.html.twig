@@ -7,25 +7,31 @@
     <div class="flex">
         {% if app.user %}
             <div class="relative">
-                <span class="notification-dot"></span>
+                {% if notification.findReadByUser(app.user)|length > 0 %}
+                    <span id="notificationDot" class="notification-dot"></span>
+                {% endif %}
                 <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" width="32"
                      class="notification-icon" data-display="notification">
                 <div id="notification" class="notification" style="display: none;">
                     <div class="notification-header">
                         <h3>{{ 'ui.notifications'|trans|capitalize }}</h3>
-                        <a href="#" class="text-small">{{ 'ui.mark_as_read_all'|trans|capitalize }}</a>
+                        <span id="notificationReadAll" class="text-pointer text-small">
+                            {{ 'ui.mark_as_read_all'|trans|capitalize }}
+                        </span>
                     </div>
                     <ul class="notification-list">
                         {% for notif in notification.notificationsByUser(app.user) %}
                             <li class="flex column notification-item {{ notif.isRead ? '' : 'unread' }}">
                                 {% if 'event-update' is same as notif.type %}
-                                    <a href="{{ path('event.show', {'slug': notif.event.slug}) }}"
+                                    <a data-notification="{{ notif.id }}"
+                                       href="{{ path('event.show', {'slug': notif.event.slug}) }}"
                                        class="notification-link">
                                         {{ ('ui.notification_event_updated'|trans({'%event%': notif.event.name})|UCFirst)|raw }}
                                     </a>
                                     <span class="text-small text-right">{{ notif.createdAt|ago }}</span>
                                 {% elseif 'event-create' is same as notif.type %}
-                                    <a href="{{ path('event.show', {'slug': notif.event.slug}) }}"
+                                    <a data-notification="{{ notif.id }}"
+                                       href="{{ path('event.show', {'slug': notif.event.slug}) }}"
                                        class="notification-link">
                                         {{ ('ui.notification_event_created'|trans({'%table%': notif.event.table.name})|UCFirst)|raw }}
                                     </a>

@@ -40,4 +40,14 @@ class NotificationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findReadByUser(array|User|UserInterface $user)
+    {
+        return $this->createQueryBuilder('n')
+            ->where('n.isRead = false')
+            ->andWhere('n.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

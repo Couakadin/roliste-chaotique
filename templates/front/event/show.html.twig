@@ -85,6 +85,8 @@
                                         </button>
                                     {% endif %}
                                 </form>
+                                {% else %}
+                                <p class="btn-secondary">{{ 'ui.event_past'|trans|capitalize }}</p>
                             {% endif %}
                         {% endif %}
                     </div>

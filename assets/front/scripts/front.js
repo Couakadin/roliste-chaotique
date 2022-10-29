@@ -11,6 +11,7 @@ import './modules/dragon';
 import './modules/flash';
 import './modules/konami';
 import './modules/navbar';
+import './modules/notification';
 import './modules/modal';
 import './modules/password';
 import './modules/tooltip';

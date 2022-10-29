@@ -112,6 +112,7 @@ class EventController extends AbstractController
                     $this->entityManager->persist($notification);
                 }
             }
+            $this->entityManager->flush();
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.create.success', ['%event%' => $event->getName()])));
 

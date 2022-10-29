@@ -202,6 +202,7 @@ ui:
   view_all: voir tout
   notification_event_updated: l'événement <strong>%event%</strong> a été modifié.
   notification_event_created: un nouvel événement pour <strong>%table%</strong> a été créé.
+  event_past: cette événement est passé
 
 tooltip:
   tooltip: info-bulle

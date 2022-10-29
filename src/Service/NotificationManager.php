@@ -16,7 +16,7 @@ class NotificationManager
     {
     }
 
-    public function notificationsByUser(User|UserInterface $user)
+    public function notificationsByUser(User|UserInterface $user): array
     {
         $notifications = $this->manager->getRepository(Notification::class)
             ->findBy(['user' => $user], ['createdAt' => 'DESC'], 15);
@@ -31,5 +31,11 @@ class NotificationManager
         }
 
         return $notifications;
+    }
+
+    public function findReadByUser(User $user)
+    {
+        return $this->manager->getRepository(Notification::class)
+            ->findReadByUser(['user' => $user]);
     }
 }
