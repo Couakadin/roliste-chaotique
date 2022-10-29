@@ -51,14 +51,14 @@
     <div class="flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.startHour) }}
-            {{ form_widget(form.startHour, {'attr': {'value': event.start|date('H:i')}}) }}
+            {{ form_widget(form.startHour, {'attr': {'value': event.start ? event.start|date('H:i') : null}}) }}
             <div class="color-danger">
                 {{ form_errors(form.startHour) }}
             </div>
         </div>
         <div class="form-group flex-grow">
             {{ form_label(form.endHour) }}
-            {{ form_widget(form.endHour, {'attr': {'value': event.end|date('H:i')}}) }}
+            {{ form_widget(form.endHour, {'attr': {'value': event.end ? event.end|date('H:i') : null}}) }}
             <div class="color-danger">
                 {{ form_errors(form.endHour) }}
             </div>
