@@ -3,7 +3,7 @@ const notifItem = document.querySelectorAll('.notification-item');
 const notifAll = document.getElementById('notificationReadAll');
 const notifDot = document.getElementById('notificationDot');
 
-notifAll.addEventListener('click', function (e) {
+notifAll?.addEventListener('click', function (e) {
     e.preventDefault();
 
     let fetch_status;
@@ -36,7 +36,7 @@ notifAll.addEventListener('click', function (e) {
         });
 });
 
-notifLink.forEach(function (item) {
+notifLink?.forEach(function (item) {
     item.addEventListener('click', function (e) {
         e.preventDefault();
 

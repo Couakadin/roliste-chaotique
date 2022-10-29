@@ -4,19 +4,17 @@ const countTaskString = document.querySelector('#taskCountString');
 const listTask = document.querySelector('#taskList');
 const errorTask = document.querySelector('#taskError');
 
-if (addTask) {
-    addTask.addEventListener('keyup', (evt) => {
-        evt.preventDefault();
-        if (evt.key === 'Enter') {
-            if (addTask.value.length > 255) {
-                errorTask.textContent = '';
-                errorTask.textContent = `Limite de caractère à 255. Actuelle : ${addTask.value.length}`;
-                return;
-            }
-            addTaskAction();
+addTask?.addEventListener('keyup', (evt) => {
+    evt.preventDefault();
+    if (evt.key === 'Enter') {
+        if (addTask.value.length > 255) {
+            errorTask.textContent = '';
+            errorTask.textContent = `Limite de caractère à 255. Actuelle : ${addTask.value.length}`;
+            return;
         }
-    });
-}
+        addTaskAction();
+    }
+});
 
 document.addEventListener('click', function (e) {
     if (e.target.matches('.task-status')) {
