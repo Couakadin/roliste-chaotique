@@ -13,7 +13,7 @@ use Symfony\Component\Mime\Address;
 class Email extends AbstractController
 {
     private const ADMIN_NAME = 'Rôliste chaotique';
-    private const ADMIN_EMAIL = 'contact@roliste-chaotique.be';
+    private const ADMIN_EMAIL = 'noreply@roliste-chaotique.be';
 
     public function __construct(
         private readonly MailerInterface     $mailer,

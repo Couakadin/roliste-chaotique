@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class EmailAdmin extends AbstractController
 {
     private const ADMIN_NAME = 'Rôliste chaotique';
-    private const ADMIN_EMAIL = 'valentin@roliste-chaotique.be';
+    private const ADMIN_EMAIL = 'webdev.valentin@gmail.com';
 
     /**
      * @param MailerInterface $mailer
