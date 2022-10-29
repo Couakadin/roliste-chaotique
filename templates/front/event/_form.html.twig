@@ -1,11 +1,24 @@
 {{ form_start(form) }}
 <div class="card dark">
-    <div>
-        <div class="form-group">
+    <div class="flex-no-mobile gap-2">
+        <div class="form-group flex-grow">
             {{ form_label(form.name) }}
             {{ form_widget(form.name) }}
             <div class="color-danger">
                 {{ form_errors(form.name) }}
+            </div>
+        </div>
+        <div class="form-group flex-grow">
+            {{ form_label(form.totalParticipate) }}
+            <div class="form-container">
+                {{ form_widget(form.totalParticipate) }}
+                <i data-tooltip="{{ ('tooltip.total_participate'|trans|UCFirst) }}">
+                    <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
+                         width="20" height="20">
+                </i>
+            </div>
+            <div class="color-danger">
+                {{ form_errors(form.totalParticipate) }}
             </div>
         </div>
     </div>
@@ -71,14 +84,14 @@
 
     <div>
         <div class="form-group">
+            {{ form_label(form.zone) }}
             <div class="form-container">
-                {{ form_label(form.zone) }}
+                {{ form_widget(form.zone) }}
                 <i data-tooltip="{{ ('tooltip.zone_empty_for_online'|trans|UCFirst) }}">
                     <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
-                         width="20">
+                         width="20" height="20">
                 </i>
             </div>
-            {{ form_widget(form.zone) }}
             <div class="color-danger">
                 {{ form_errors(form.zone) }}
             </div>

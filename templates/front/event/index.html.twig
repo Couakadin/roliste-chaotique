@@ -35,10 +35,13 @@
                 </p>
                 <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
                 <p class="event-header">
-                    {% if 1 >= event.participate|length %}
-                        {{ event.participate|length }} {{ 'ui.player'|trans }}
-                    {% else %}
-                        {{ event.participate|length }} {{ 'ui.players'|trans }}
+                    {% if
+                        event.totalParticipate is not null and event.totalParticipate > 1 or
+                        event.totalParticipate is null and event.participate|length > 1
+                    %}
+                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : ''}} {{ 'ui.players'|trans }}
+                    {% else  %}
+                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : ''}} {{ 'ui.player'|trans }}
                     {% endif %}
                 </p>
                 <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>

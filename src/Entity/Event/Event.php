@@ -40,6 +40,9 @@ class Event
     #[ORM\Column(length: 15)]
     private ?string $type = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $totalParticipate = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $start = null;
 
@@ -126,6 +129,18 @@ class Event
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getTotalParticipate(): ?int
+    {
+        return $this->totalParticipate;
+    }
+
+    public function setTotalParticipate(?int $totalParticipate): self
+    {
+        $this->totalParticipate = $totalParticipate;
 
         return $this;
     }

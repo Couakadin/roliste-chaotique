@@ -203,6 +203,8 @@ ui:
   notification_event_updated: l'événement <strong>%event%</strong> a été modifié.
   notification_event_created: un nouvel événement pour <strong>%table%</strong> a été créé.
   event_past: cette événement est passé
+  event_max: max. participants atteint
+  total_participate: nombre de participants
 
 tooltip:
   tooltip: info-bulle
@@ -217,7 +219,9 @@ tooltip:
   table_favorite: |
     Ajouter une table en favori vous permet de recevoir des e-mails lorsque des événements sont créés/modifiés concernant cette table.
   zone_empty_for_online: |
-    En ne sélectionnant aucun lieu, vous indiquez que votre événement se déroule en ligne.
+    Déterminez ici où se passe votre événement. Vous pouvez laissez vide si vous désirez le créer en ligne.
+  total_participate: |
+    Déterminez ici le nombre de participant que vous désirez à votre événement. Vous pouvez laissez vide si vous désirez ne pas mettre de limite.
 
 terms_and_conditions:
   agree_terms:

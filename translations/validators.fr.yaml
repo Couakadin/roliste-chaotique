@@ -12,6 +12,8 @@ form:
     not_blank: veuillez insérer un message.
   event:
     type: veuillez choisir un type valide.
+    positive: veuillez insérer une valeur positive.
+    max_participate: les événements sont limités à 15 participants.
 
 user:
   email:

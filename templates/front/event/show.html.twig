@@ -69,23 +69,31 @@
                         {% if app.user and app.user is not same as event.master %}
                             {% if event.end|date > 'now'|date %}
                                 <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
-                                    {% if app.user not in event.participate %}
-                                        <input type="hidden" name="participate" value="true">
-                                        <input type="hidden" name="token"
-                                               value="{{ csrf_token('participate-event') }}"/>
-                                        <button type="submit" class="btn-primary">
-                                            {{ 'ui.i_participate'|trans|capitalize }}
-                                        </button>
+                                    {% if event.totalParticipate and event.participate|length < event.totalParticipate or event.totalParticipate is null %}
+                                        {% if app.user not in event.participate %}
+                                            <input type="hidden" name="participate" value="true">
+                                            <button type="submit" class="btn-primary">
+                                                {{ 'ui.i_participate'|trans|capitalize }}
+                                            </button>
+                                        {% else %}
+                                            <input type="hidden" name="participate" value="false">
+                                            <button type="submit" class="btn-secondary">
+                                                {{ 'ui.i_not_participate'|trans|capitalize }}
+                                            </button>
+                                        {% endif %}
                                     {% else %}
-                                        <input type="hidden" name="participate" value="false">
-                                        <input type="hidden" name="token"
-                                               value="{{ csrf_token('participate-event') }}"/>
-                                        <button type="submit" class="btn-secondary">
-                                            {{ 'ui.i_not_participate'|trans|capitalize }}
-                                        </button>
+                                        {% if app.user not in event.participate %}
+                                            <p class="btn-secondary">{{ 'ui.event_max'|trans|capitalize }}</p>
+                                        {% else %}
+                                            <input type="hidden" name="participate" value="false">
+                                            <button type="submit" class="btn-secondary">
+                                                {{ 'ui.i_not_participate'|trans|capitalize }}
+                                            </button>
+                                        {% endif %}
                                     {% endif %}
+                                    <input type="hidden" name="token" value="{{ csrf_token('participate-event') }}">
                                 </form>
-                                {% else %}
+                            {% else %}
                                 <p class="btn-secondary">{{ 'ui.event_past'|trans|capitalize }}</p>
                             {% endif %}
                         {% endif %}
