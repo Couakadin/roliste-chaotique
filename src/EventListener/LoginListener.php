@@ -3,9 +3,12 @@
 namespace App\EventListener;
 
 use App\Entity\Notification\Notification;
+use App\Entity\User\User;
 use App\Service\BadgeManager;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
@@ -13,11 +16,14 @@ class LoginListener
     public function __construct
     (
         private readonly EntityManagerInterface $entityManager,
-        private readonly BadgeManager $badgeManager
+        private readonly BadgeManager           $badgeManager
     )
     {
     }
 
+    /**
+     * @throws Exception
+     */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         // Get the User entity.
@@ -34,6 +40,17 @@ class LoginListener
             $this->badgeManager->checkAndUnlock($user, 'christmas', 1);
         }
 
+        if ($this->accountBirthday($user, '+1 year')->format('Y-m-d') <= $now->format('Y-m-d')) {
+            $this->badgeManager->checkAndUnlock($user, 'account-birthday', 1);
+        }
+        if ($this->accountBirthday($user, '+2 years')->format('Y-m-d') <= $now->format('Y-m-d')) {
+            $this->badgeManager->checkAndUnlock($user, 'account-birthday', 2);
+        }
+        if ($this->accountBirthday($user, '+3 years')->format('Y-m-d') <= $now->format('Y-m-d')) {
+            $this->badgeManager->checkAndUnlock($user, 'account-birthday', 3);
+        }
+
+
         $notifications = $this->entityManager->getRepository(Notification::class)
             ->findBy(['user' => $user]);
 
@@ -49,5 +66,13 @@ class LoginListener
         // Persist the data to database.
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function accountBirthday(User|UserInterface $user, string $year): DateTimeImmutable
+    {
+        return new DateTimeImmutable($user->getCreatedAt()->modify($year)->format('Y-m-d'));
     }
 }
