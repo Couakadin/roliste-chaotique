@@ -24,7 +24,9 @@
                         {% for user in users %}
                             <tr>
                                 <th scope="row">{{ user.id }}</th>
-                                <td>{{ user.username }}</td>
+                                <td>
+                                    <a href="{{ path('account.index', {'slug': user.slug}) }}">{{ user.username }}</a>
+                                </td>
                                 <td>{{ user.email }}</td>
                                 <td>{% if user.isVerified %}Oui{% else %}Non{% endif %}</td>
                                 <td>{{ user.createdAt|format_date }}</td>
