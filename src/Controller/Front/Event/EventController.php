@@ -67,8 +67,8 @@ class EventController extends AbstractController
                 $event->addParticipate($data);
                 $this->entityManager->flush();
 
-                $totalParticipate = $eventRepo->findTotalEventsByUser($this->getUser());
-                $this->badgeManager->checkAndUnlock($this->getUser(), 'participate', $totalParticipate);
+                $totalParticipate = $eventRepo->findTotalEventsByParticipate($this->getUser());
+                $this->badgeManager->checkAndUnlock($this->getUser(), 'event-participate', $totalParticipate);
 
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.event.participate.add')));
             }
@@ -115,6 +115,10 @@ class EventController extends AbstractController
                 }
             }
             $this->entityManager->flush();
+
+            $totalParticipate = $this->entityManager->getRepository(Event::class)
+                ->findTotalEventsByMaster($this->getUser());
+            $this->badgeManager->checkAndUnlock($this->getUser(), 'event-create', $totalParticipate);
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.create.success', ['%event%' => $event->getName()])));
 

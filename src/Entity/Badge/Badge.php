@@ -2,12 +2,13 @@
 
 namespace App\Entity\Badge;
 
-use App\Repository\Badge\BadgeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-#[ORM\Entity(repositoryClass: BadgeRepository::class)]
+#[ORM\Entity(repositoryClass: SortableRepository::class)]
 #[ORM\Table(name: 'rc_badge')]
 class Badge
 {
@@ -15,6 +16,10 @@ class Badge
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[Gedmo\SortablePosition]
+    #[ORM\Column(name: 'position', type: 'integer')]
+    private int $position;
 
     #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
@@ -39,6 +44,16 @@ class Badge
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setPosition(int $position): void
+    {
+        $this->position = $position;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
     }
 
     public function getName(): ?string

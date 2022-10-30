@@ -66,6 +66,7 @@ admin:
     description: description
     event_month: mois d'événement
     event_year: année d'événement
+    position: position
     table: table
     url: url
     participate: participant

@@ -76,11 +76,26 @@ class EventRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findTotalEventsByUser(User|UserInterface $user)
+    public function findTotalEventsByParticipate(User|UserInterface $user)
     {
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id)')
             ->leftJoin('e.participate', 'p')
+            ->where('p.id = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findTotalEventsByMaster(User|UserInterface $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->leftJoin('e.master', 'p')
             ->where('p.id = :user')
             ->setParameter('user', $user)
             ->getQuery()

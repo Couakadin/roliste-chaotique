@@ -55,7 +55,8 @@ class TableCrudController extends AbstractCrudController
             FormField::addTab('Général'),
             IdField::new('id', $this->trans('admin.ui.id'))
                 ->hideOnForm(),
-            BooleanField::new('showcase', $this->trans('admin.ui.showcase')),
+            BooleanField::new('showcase', $this->trans('admin.ui.showcase'))
+                ->hideOnIndex(),
             ImageField::new('picture', $this->trans('admin.ui.image'))
                 ->setUploadDir('/public/uploads/images/tables')
                 ->setBasePath('/uploads/images/tables')

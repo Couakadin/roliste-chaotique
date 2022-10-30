@@ -46,6 +46,7 @@ class BadgeCrudController extends AbstractCrudController
             FormField::addTab('Général'),
             IdField::new('id', $this->trans('admin.ui.id'))
                 ->hideOnForm(),
+            IntegerField::new('position', $this->trans('admin.ui.position'))->hideOnForm(),
 
             FormField::addPanel(''),
             TextField::new('name', $this->trans('admin.ui.name')),

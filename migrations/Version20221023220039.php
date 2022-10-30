@@ -24,6 +24,7 @@ final class Version20221023220039 extends AbstractMigration
         $this->addSql('CREATE TABLE rc_badge_unlock (id INT AUTO_INCREMENT NOT NULL, badge_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_84C2F5A9F7A2C2FC (badge_id), INDEX IDX_84C2F5A9A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE rc_badge_unlock ADD CONSTRAINT FK_84C2F5A9F7A2C2FC FOREIGN KEY (badge_id) REFERENCES rc_badge (id)');
         $this->addSql('ALTER TABLE rc_badge_unlock ADD CONSTRAINT FK_84C2F5A9A76ED395 FOREIGN KEY (user_id) REFERENCES rc_user (id)');
+        $this->addSql('ALTER TABLE rc_badge ADD position INT NOT NULL');
     }
 
     public function down(Schema $schema): void

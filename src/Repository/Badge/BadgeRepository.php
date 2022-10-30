@@ -56,7 +56,7 @@ class BadgeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->where('b.actionName = :action_name')
-            ->andWhere('b.actionCount <= :action_count')
+            ->andWhere('b.actionCount = :action_count')
             ->andWhere('u.user = :user_id OR u.user IS NULL')
             ->leftJoin('b.unlocks', 'u', Expr\Join::WITH, 'u.user = :user_id')
             ->select('b, u')

@@ -69,6 +69,6 @@ class BadgeManager
      */
     public function getAllBadges(): array
     {
-        return $this->manager->getRepository(Badge::class)->findAll();
+        return $this->manager->getRepository(Badge::class)->findBy([], ['position' => 'ASC']);
     }
 }
