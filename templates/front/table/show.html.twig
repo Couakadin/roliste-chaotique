@@ -64,27 +64,38 @@
 
                 <div class="mt2 flex space-between">
                     {% if app.user %}
-                        <form action="{{ path('table.favorite', { 'slug': table.slug }) }}" method="post">
-                            {% if app.user not in table.favorite %}
-                                <input type="hidden" name="table_favorite" value="true">
-                                <input type="hidden" name="token"
-                                       value="{{ csrf_token('table-favorite') }}"/>
-                                <button type="submit" class="btn-primary">
-                                    {{ 'ui.add_favorite'|trans|capitalize }}
-                                </button>
-                                <i data-tooltip="{{ ('tooltip.table_favorite'|trans|UCFirst) }}" style="cursor : help;">
-                                    <img src="{{ asset('/build/front/tools/info_potion.svg') }}" alt="{{ 'tooltip.tooltip'|trans }}"
-                                         width="30">
-                                </i>
-                            {% else %}
-                                <input type="hidden" name="table_favorite" value="false">
-                                <input type="hidden" name="token"
-                                       value="{{ csrf_token('table-favorite') }}"/>
-                                <button type="submit" class="btn-secondary">
-                                    {{ 'ui.remove_favorite'|trans|capitalize }}
-                                </button>
-                            {% endif %}
-                        </form>
+                        {% if app.user.isVerified %}
+                            <form action="{{ path('table.favorite', { 'slug': table.slug }) }}" method="post">
+                                {% if app.user not in table.favorite %}
+                                    <input type="hidden" name="table_favorite" value="true">
+                                    <input type="hidden" name="token"
+                                           value="{{ csrf_token('table-favorite') }}"/>
+                                    <button type="submit" class="btn-primary">
+                                        {{ 'ui.add_favorite'|trans|capitalize }}
+                                    </button>
+                                    <i data-tooltip="{{ ('tooltip.table_favorite'|trans|UCFirst) }}"
+                                       style="cursor : help;">
+                                        <img src="{{ asset('/build/front/tools/info_potion.svg') }}"
+                                             alt="{{ 'tooltip.tooltip'|trans }}"
+                                             width="30">
+                                    </i>
+                                {% else %}
+                                    <input type="hidden" name="table_favorite" value="false">
+                                    <input type="hidden" name="token"
+                                           value="{{ csrf_token('table-favorite') }}"/>
+                                    <button type="submit" class="btn-secondary">
+                                        {{ 'ui.remove_favorite'|trans|capitalize }}
+                                    </button>
+                                {% endif %}
+                            </form>
+                        {% else %}
+                            <div class="card flash-warning">{{ 'ui.verify_email_warning'|trans|UCFirst }}
+                                <a href="{{ path('security.registration.verify_resend_email') }}"
+                                   class="btn-primary mt2 flex-center">
+                                    {{ 'ui.verify_email'|trans|capitalize }}
+                                </a>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>

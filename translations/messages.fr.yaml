@@ -181,7 +181,7 @@ ui:
   username: nom d'utilisateur
   verify_email: vérifier l'e-mail
   verify_email_warning: |
-    Afin de pouvoir éditer votre compte, merci de vérifier votre e-mail.
+    Afin de pouvoir utiliser cette fonctionnalité, merci de vérifier votre e-mail.
   verified: vérifié
   zone: lieu d'événement
   participant: participants
@@ -217,7 +217,7 @@ tooltip:
   forgotten_password: |
     Veuillez entrer votre adresse e-mail. Nous vous y enverrons un lien pour réinitialiser votre mot de passe.
   table_favorite: |
-    Ajouter une table en favori vous permet de recevoir des e-mails lorsque des événements sont créés/modifiés concernant cette table.
+    Ajouter une table en favori vous permet de recevoir des notifications lorsque des événements sont créés/modifiés concernant cette table.
   zone_empty_for_online: |
     Déterminez ici où se passe votre événement. Vous pouvez laissez vide si vous désirez le créer en ligne.
   total_participate: |

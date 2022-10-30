@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Repository\Token\TokenRepository;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
@@ -27,7 +28,7 @@ class Token
     #[ORM\Column(length: 25)]
     private string $type;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $expiredAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'tokens')]
