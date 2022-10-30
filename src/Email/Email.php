@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class Email extends AbstractController
 {
@@ -22,13 +23,13 @@ class Email extends AbstractController
     }
 
     /**
-     * @param User $user
+     * @param User|UserInterface $user
      * @param Token $newToken
      * @param string $subject
      *
      * @throws TransportExceptionInterface
      */
-    public function emailVerify(User $user, Token $newToken, string $subject): void
+    public function emailVerify(User|UserInterface $user, Token $newToken, string $subject): void
     {
         $email = (new TemplatedEmail())
             ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))

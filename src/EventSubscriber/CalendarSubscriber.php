@@ -8,6 +8,7 @@ use CalendarBundle\CalendarEvents;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use JetBrains\PhpStorm\ArrayShape;
@@ -48,8 +49,8 @@ class CalendarSubscriber implements EventSubscriberInterface
 
             $calendar->addEvent(new Event(
                 $event->getName(),
-                new DateTime($event->getStart()->format('d-m-Y H:i')),
-                new DateTime($event->getEnd()->format('d-m-Y H:i')),
+                new DateTimeImmutable($event->getStart()->format('d-m-Y H:i')),
+                new DateTimeImmutable($event->getEnd()->format('d-m-Y H:i')),
                 $event->getId(), [
                     'backgroundColor' => $bgColor,
                     'borderColor'     => $borderColor,

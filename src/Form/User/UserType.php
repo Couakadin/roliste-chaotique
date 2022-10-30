@@ -3,7 +3,6 @@
 namespace App\Form\User;
 
 use App\Entity\Avatar\Avatar;
-use App\Entity\Table\Table;
 use App\Entity\User\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

@@ -6,6 +6,7 @@ use App\Entity\Token\Token;
 use App\Entity\User\User;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenManager
 {
@@ -18,7 +19,7 @@ class TokenManager
     /**
      * @throws Exception
      */
-    public function checkAndSend(string $type, User $user): Token
+    public function checkAndSend(string $type, User|UserInterface $user): Token
     {
         $token = $this->manager->getRepository(Token::class)
             ->findOneBy(['type' => $type, 'user' => $user]) ?: null;

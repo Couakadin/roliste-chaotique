@@ -9,7 +9,7 @@ use App\Entity\User\User;
 use App\Form\Security\RegistrationFormType;
 use App\Service\BadgeManager;
 use App\Service\TokenManager;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setLoggedAt(new DateTime());
+            $user->setLoggedAt(new DateTimeImmutable());
 
             $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $user);
 
@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $now = new DateTime('now');
+        $now = new DateTimeImmutable('now');
 
         $tokenRepository = $this->entityManager->getRepository(Token::class);
         $token = $tokenRepository->findOneBy(

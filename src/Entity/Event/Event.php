@@ -6,7 +6,7 @@ use App\Entity\Table\Table;
 use App\Entity\User\User;
 use App\Entity\Zone\Zone;
 use App\Repository\Event\EventRepository;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -44,19 +44,19 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?int $totalParticipate = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?DateTimeInterface $start = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?DateTimeImmutable $start = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $end = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $end = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?DateTimeInterface $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?DateTimeInterface $updatedAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'eventMaster')]
     private ?User $master = null;
@@ -146,48 +146,48 @@ class Event
         return $this;
     }
 
-    public function getStart(): ?DateTimeInterface
+    public function getStart(): ?DateTimeImmutable
     {
         return $this->start;
     }
 
-    public function setStart(DateTimeInterface $start): self
+    public function setStart(DateTimeImmutable $start): self
     {
         $this->start = $start;
 
         return $this;
     }
 
-    public function getEnd(): ?DateTimeInterface
+    public function getEnd(): ?DateTimeImmutable
     {
         return $this->end;
     }
 
-    public function setEnd(?DateTimeInterface $end): self
+    public function setEnd(?DateTimeImmutable $end): self
     {
         $this->end = $end;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

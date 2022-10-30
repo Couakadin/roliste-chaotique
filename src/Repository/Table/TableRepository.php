@@ -3,7 +3,7 @@
 namespace App\Repository\Table;
 
 use App\Entity\Table\Table;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -58,7 +58,7 @@ class TableRepository extends ServiceEntityRepository
             ->leftJoin('t.events', 'e')
             ->where('e.start > :date AND :date < e.end')
             ->andWhere('t.id = :table')
-            ->setParameter('date', new DateTime('now'))
+            ->setParameter('date', new DateTimeImmutable('now'))
             ->setParameter('table', $table)
             ->orderBy('e.createdAt')
             ->setMaxResults(5)

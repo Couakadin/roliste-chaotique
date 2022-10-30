@@ -9,10 +9,10 @@ use App\Entity\Notification\Notification;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
-use DateTime;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -57,16 +57,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private DateTime $updatedAt;
+    private DateTimeImmutable $updatedAt;
 
-    #[ORM\Column(type: 'datetime', nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?DateTimeInterface $loggedAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?DateTimeImmutable $loggedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class, orphanRemoval: true)]
     private Collection $tokens;
@@ -225,12 +225,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLoggedAt(): ?DateTimeInterface
+    public function getLoggedAt(): ?DateTimeImmutable
     {
         return $this->loggedAt;
     }
 
-    public function setLoggedAt(?DateTimeInterface $loggedAt): self
+    public function setLoggedAt(?DateTimeImmutable $loggedAt): self
     {
         $this->loggedAt = $loggedAt;
 
@@ -244,7 +244,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function isLoggedAt(): bool
     {
-        $now = new DateTime('now -20min');
+        $now = new DateTimeImmutable('now -20min');
 
         if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
             return false;
@@ -275,22 +275,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): void
+    public function setCreatedAt(DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdatedAt(): ?DateTime
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): void
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

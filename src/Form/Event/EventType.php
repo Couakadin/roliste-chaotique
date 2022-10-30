@@ -5,7 +5,7 @@ namespace App\Form\Event;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
 use App\Entity\Zone\Zone;
-use DateTime;
+use DateTimeImmutable;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -43,12 +43,12 @@ class EventType extends AbstractType
             $data = $event->getData();
             $data->getEnd() ?: $data->setEnd($data->getStart());
 
-            $newDateStart = (new DateTime())
+            $newDateStart = (new DateTimeImmutable())
                 ->createFromFormat('Y-m-d H:i', $data->getStart()
                         ->format('Y-m-d') . ' ' . $form['startHour']->getData()->format('H:i'));
             $data->setStart($newDateStart);
 
-            $newDateEnd = (new DateTime())
+            $newDateEnd = (new DateTimeImmutable())
                 ->createFromFormat('Y-m-d H:i', $data->getEnd()
                         ->format('Y-m-d') . ' ' . $form['endHour']->getData()->format('H:i'));
             $data->setEnd($newDateEnd);
@@ -89,6 +89,7 @@ class EventType extends AbstractType
                 ]
             ])
             ->add('start', DateType::class, [
+                'input'       => 'datetime_immutable',
                 'label'       => 'ui.date_start',
                 'widget'      => 'single_text',
                 'constraints' => [
@@ -98,9 +99,10 @@ class EventType extends AbstractType
                 ]
             ])
             ->add('end', DateType::class, [
-                'required'    => false,
-                'label'       => 'ui.date_end',
-                'widget'      => 'single_text',
+                'input'    => 'datetime_immutable',
+                'required' => false,
+                'label'    => 'ui.date_end',
+                'widget'   => 'single_text',
             ])
             ->add('startHour', TimeType::class, [
                 'mapped'      => false,

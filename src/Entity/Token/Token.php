@@ -4,7 +4,7 @@ namespace App\Entity\Token;
 
 use App\Entity\User\User;
 use App\Repository\Token\TokenRepository;
-use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -28,7 +28,7 @@ class Token
     private string $type;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?DateTime $expiredAt;
+    private ?DateTimeImmutable $expiredAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'tokens')]
     #[ORM\JoinColumn(nullable: false)]
@@ -45,7 +45,7 @@ class Token
         $this->token = bin2hex(random_bytes(21));
         $this->user = $user;
         $this->type = $type;
-        $this->expiredAt = new DateTime('+1 hour');
+        $this->expiredAt = new DateTimeImmutable('+1 hour');
     }
 
     public function getId(): ?int
@@ -70,7 +70,7 @@ class Token
 
     public function renewExpiredAt(): void
     {
-        $this->expiredAt = new DateTime('+1 hour');
+        $this->expiredAt = new DateTimeImmutable('+1 hour');
     }
 
     /**

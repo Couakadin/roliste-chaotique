@@ -6,7 +6,7 @@ use App\DataFixtures\Table\TableFixtures;
 use App\Entity\Event\Event;
 use App\Entity\Table\Table;
 use App\Entity\Zone\Zone;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,8 +23,8 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
             $entity->setName('Symbaroum-' . $i);
             $entity->setType(Event::TYPE['campaign']);
             $entity->setTable($this->findTable());
-            $entity->setStart(new DateTime());
-            $entity->setEnd(new DateTime());
+            $entity->setStart(new DateTimeImmutable());
+            $entity->setEnd(new DateTimeImmutable());
             $entity->setZone($this->findZone());
             // No members. I prefer to set them manually in order to make tests.
 

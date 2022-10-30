@@ -9,7 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -55,6 +55,8 @@ class EventCrudController extends AbstractCrudController
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('name')
                 ->onlyOnForms(),
+            ChoiceField::new('type', 'type')
+                ->setChoices(array_flip($this->getTypes())),
             TextField::new('content')->hideOnIndex()->setFormType(CKEditorType::class),
             DateTimeField::new('start', $this->trans('admin.ui.created_at'))
                 ->onlyOnDetail(),
@@ -69,10 +71,6 @@ class EventCrudController extends AbstractCrudController
             DateTimeField::new('start', $this->trans('admin.ui.start_at')),
             DateTimeField::new('end', $this->trans('admin.ui.end_at')),
 
-            FormField::addTab('Couleur'),
-            ColorField::new('bgColor', $this->trans('admin.ui.bg_color'))->hideOnIndex(),
-            ColorField::new('borderColor', $this->trans('admin.ui.border_color'))->hideOnIndex(),
-
             FormField::addTab('relation'),
             AssociationField::new('master', $this->trans('admin.ui.master')),
             AssociationField::new('participate', $this->trans('admin.ui.participate'))
@@ -81,5 +79,14 @@ class EventCrudController extends AbstractCrudController
                 ->hideOnIndex(),
             AssociationField::new('zone', $this->trans('admin.ui.zone')),
         ];
+    }
+
+    private function getTypes(): array
+    {
+        $types = [];
+        foreach (Event::TYPE as $type) {
+            $types[$type] = $this->translator->trans('ui.' . $type);
+        }
+        return $types;
     }
 }

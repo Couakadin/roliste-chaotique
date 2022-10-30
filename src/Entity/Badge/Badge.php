@@ -2,13 +2,13 @@
 
 namespace App\Entity\Badge;
 
+use App\Repository\Badge\BadgeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-#[ORM\Entity(repositoryClass: SortableRepository::class)]
+#[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ORM\Table(name: 'rc_badge')]
 class Badge
 {

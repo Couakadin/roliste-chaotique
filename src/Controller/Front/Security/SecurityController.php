@@ -3,6 +3,7 @@
 namespace App\Controller\Front\Security;
 
 use DateTime;
+use DateTimeImmutable;
 use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -55,7 +56,7 @@ class SecurityController extends AbstractController
         if ($data && !$cookie) {
             $cookie = Cookie::create('cookie')
                 ->withValue('true')
-                ->withExpires(new DateTime('+ 1 year'));
+                ->withExpires(new DateTimeImmutable('+ 1 year'));
 
             $response = new Response('cookie settings', 200);
             $response->headers->setCookie($cookie);

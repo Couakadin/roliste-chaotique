@@ -53,7 +53,8 @@ admin:
     events: événements
     event: événement
     event_color: couleur événements
-    favorites: favori
+    favorites: favoris
+    favorite: favori
     genre: genre
     image: image
     name: nom

@@ -17,17 +17,9 @@ use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationFormType extends AbstractType
 {
-    private TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {

@@ -9,7 +9,7 @@ use App\Entity\Genre\Genre;
 use App\Entity\System\System;
 use App\Entity\User\User;
 use App\Repository\Table\TableRepository;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -41,13 +41,13 @@ class Table
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?DateTimeInterface $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?DateTimeInterface $updatedAt = null;
+    private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
@@ -147,24 +147,24 @@ class Table
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

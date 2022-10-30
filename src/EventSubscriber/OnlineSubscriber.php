@@ -3,7 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Entity\User\User;
-use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -35,8 +35,8 @@ class OnlineSubscriber implements EventSubscriberInterface
         $user = ($this->entityManager->getRepository(User::class))
             ->find($user);
 
-        if ($user->getLoggedAt() < new DateTime('now')) {
-            $user->setLoggedAt(new DateTime('+5 minutes'));
+        if ($user->getLoggedAt() < new DateTimeImmutable('now')) {
+            $user->setLoggedAt(new DateTimeImmutable('+5 minutes'));
             $this->entityManager->flush();
         }
     }
