@@ -28,7 +28,7 @@
                                 <td>{{ user.email }}</td>
                                 <td>{% if user.isVerified %}Oui{% else %}Non{% endif %}</td>
                                 <td>{{ user.createdAt|format_date }}</td>
-                                <td>{{ (user.loggedAt is not null) ? user.loggedAt|ago : 'Jamais' }}</td>
+                                <td>{{ (user.loggedAt|date('Y-m-d H:i:s') < 'now'|date('Y-m-d H:i:s')) ? user.loggedAt|ago : 'en ligne' }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
