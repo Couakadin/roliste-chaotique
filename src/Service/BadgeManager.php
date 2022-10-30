@@ -9,6 +9,7 @@ use App\EventDispatcher\BadgeUnlockedEvent;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class BadgeManager
 {
@@ -23,13 +24,13 @@ class BadgeManager
      * Check if a badge exists for this action and action occurrence +
      * unlock it for the current User
      *
-     * @param User $user
+     * @param User|UserInterface $user
      * @param string $action
      * @param int $action_count
      *
      * @return void
      */
-    public function checkAndUnlock(User $user, string $action, int $action_count): void
+    public function checkAndUnlock(User|UserInterface $user, string $action, int $action_count): void
     {
         try {
             $badge = $this->manager->getRepository(Badge::class)

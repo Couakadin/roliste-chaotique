@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: 'rc_event')]
@@ -234,7 +235,7 @@ class Event
         return $this->participate;
     }
 
-    public function addParticipate(User $participate): self
+    public function addParticipate(User|UserInterface $participate): self
     {
         if (!$this->participate->contains($participate)) {
             $this->participate->add($participate);
@@ -243,7 +244,7 @@ class Event
         return $this;
     }
 
-    public function removeParticipate(User $participate): self
+    public function removeParticipate(User|UserInterface $participate): self
     {
         $this->participate->removeElement($participate);
 

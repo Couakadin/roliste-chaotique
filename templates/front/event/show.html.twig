@@ -67,7 +67,7 @@
 
                     <div class="mt2 flex space-between">
                         {% if app.user and app.user is not same as event.master %}
-                            {% if event.end|date > 'now'|date %}
+                            {% if event.end|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') %}
                                 <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
                                     {% if event.totalParticipate and event.participate|length < event.totalParticipate or event.totalParticipate is null %}
                                         {% if app.user not in event.participate %}

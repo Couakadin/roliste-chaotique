@@ -3,8 +3,12 @@
 namespace App\Repository\Event;
 
 use App\Entity\Event\Event;
+use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Event>
@@ -66,5 +70,20 @@ class EventRepository extends ServiceEntityRepository
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function findTotalEventsByUser(User|UserInterface $user)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->leftJoin('e.participate', 'p')
+            ->where('p.id = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

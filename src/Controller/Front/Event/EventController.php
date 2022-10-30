@@ -2,19 +2,18 @@
 
 namespace App\Controller\Front\Event;
 
-use App\Email\Email;
 use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
 use App\Entity\User\User;
 use App\Form\Event\EventType;
 use App\Repository\Event\EventRepository;
+use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,7 +23,7 @@ class EventController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface    $translator,
-        private readonly Email                  $email
+        private readonly BadgeManager           $badgeManager,
     )
     {
     }
@@ -67,6 +66,9 @@ class EventController extends AbstractController
 
                 $event->addParticipate($data);
                 $this->entityManager->flush();
+
+                $totalParticipate = $eventRepo->findTotalEventsByUser($this->getUser());
+                $this->badgeManager->checkAndUnlock($this->getUser(), 'participate', $totalParticipate);
 
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.event.participate.add')));
             }
