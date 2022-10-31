@@ -12,37 +12,61 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Table(name: 'rc_notification')]
 class Notification
 {
+    /**
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    /**
+     * @var int|null
+     */
     #[ORM\Column]
     private ?int $entityId = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(length: 255)]
     private ?string $type = null;
-
+    /**
+     * @var bool|null
+     */
     #[ORM\Column(options: ['default' => false])]
     private ?bool $isRead = null;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-
+    /**
+     * @var User|null
+     */
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     private ?User $user = null;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return int|null
+     */
     public function getEntityId(): ?int
     {
         return $this->entityId;
     }
 
+    /**
+     * @param int $entityId
+     *
+     * @return $this
+     */
     public function setEntityId(int $entityId): self
     {
         $this->entityId = $entityId;
@@ -50,11 +74,19 @@ class Notification
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -62,11 +94,19 @@ class Notification
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function isRead(): ?bool
     {
         return $this->isRead;
     }
 
+    /**
+     * @param bool $isRead
+     *
+     * @return $this
+     */
     public function setIsRead(bool $isRead): self
     {
         $this->isRead = $isRead;
@@ -74,11 +114,19 @@ class Notification
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param DateTimeImmutable $createdAt
+     *
+     * @return $this
+     */
     public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -86,11 +134,19 @@ class Notification
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;

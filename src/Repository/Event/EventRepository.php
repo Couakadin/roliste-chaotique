@@ -7,6 +7,7 @@ use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -20,11 +21,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class EventRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @param Event $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function add(Event $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -34,6 +44,12 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Event $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Event $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -43,25 +59,39 @@ class EventRepository extends ServiceEntityRepository
         }
     }
 
-    public function search(?string $search)
+    /**
+     * @param string|null $search
+     *
+     * @return QueryBuilder
+     */
+    public function paginateEvents(?string $search): QueryBuilder
     {
-        return $this->createQueryBuilder('e')
-            ->leftJoin('e.table', 't')
-            ->leftJoin('e.zone', 'z')
-            ->leftJoin('e.master', 'm')
-            ->where(
-                'e.name LIKE :search OR 
+        $query = $this->createQueryBuilder('e');
+        if ($search) {
+            $query
+                ->leftJoin('e.table', 't')
+                ->leftJoin('e.zone', 'z')
+                ->leftJoin('e.master', 'm')
+                ->where(
+                    'e.name LIKE :search OR 
                 t.name LIKE :search OR
                 z.locality LIKE :search OR
                 m.username LIKE :search
                 ')
+                ->setParameter(':search', '%' . $search . '%');
+        }
+        $query
             ->orderBy('e.createdAt', 'DESC')
-            ->setParameter(':search', '%'.$search.'%')
             ->getQuery()
             ->getResult();
+
+        return $query;
     }
 
-    public function findLastEvents()
+    /**
+     * @return float|int|mixed|string
+     */
+    public function findLastEvents(): mixed
     {
         return $this->createQueryBuilder('e')
             ->leftJoin('e.master', 'm')
@@ -73,10 +103,14 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws NonUniqueResultException
+     * @param User|UserInterface $user
+     *
+     * @return float|int|mixed|string
+     *
      * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function findTotalEventsByParticipate(User|UserInterface $user)
+    public function findTotalEventsByParticipate(User|UserInterface $user): mixed
     {
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id)')
@@ -88,10 +122,14 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws NonUniqueResultException
+     * @param User|UserInterface $user
+     *
+     * @return float|int|mixed|string
+     *
      * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function findTotalEventsByMaster(User|UserInterface $user)
+    public function findTotalEventsByMaster(User|UserInterface $user): mixed
     {
         return $this->createQueryBuilder('e')
             ->select('COUNT(e.id)')

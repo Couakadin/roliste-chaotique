@@ -19,6 +19,9 @@ use function get_class;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -26,6 +29,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param PasswordAuthenticatedUserInterface $user
+     * @param string $newHashedPassword
+     *
+     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -38,7 +46,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function findLastRegister()
+    /**
+     * @return float|int|mixed|string
+     */
+    public function findLastRegister(): mixed
     {
         return $this->createQueryBuilder('u')
             ->where('u.roles NOT LIKE :roles')
@@ -50,9 +61,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+     * @param User $user
+     *
+     * @return float|int|mixed|string|null
+     *
      * @throws NonUniqueResultException
      */
-    public function findLastEventByUser(User $user)
+    public function findLastEventByUser(User $user): mixed
     {
         return $this->createQueryBuilder('u')
             ->select('p.name, p.slug')

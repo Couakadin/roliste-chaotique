@@ -154,6 +154,7 @@ ui:
   or_register: ou créer un compte ?
   quick_links: liens rapides
   password: mot de passe
+  repeat_password: répéter le mot de passe
   picture: image
   player: joueur
   players: joueurs

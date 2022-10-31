@@ -16,6 +16,10 @@ use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class ZoneCommand extends Command
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param ContainerBagInterface $containerBag
+     */
     public function __construct(private readonly EntityManagerInterface $entityManager, private readonly ContainerBagInterface $containerBag)
     {
         parent::__construct();
@@ -34,7 +38,9 @@ class ZoneCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws JsonException

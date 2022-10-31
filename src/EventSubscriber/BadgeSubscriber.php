@@ -8,9 +8,15 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class BadgeSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @param RequestStack $requestStack
+     */
     public function __construct(private readonly RequestStack $requestStack)
     {}
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -22,6 +28,7 @@ class BadgeSubscriber implements EventSubscriberInterface
      * When a badge is unlocked we send an email
      *
      * @param BadgeUnlockedEvent $event
+     *
      * @return void
      */
     public function onBadgeUnlock(BadgeUnlockedEvent $event): void

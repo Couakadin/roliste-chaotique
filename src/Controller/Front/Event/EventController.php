@@ -20,6 +20,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/events')]
 class EventController extends AbstractController
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @param BadgeManager $badgeManager
+     */
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface    $translator,
@@ -28,18 +33,20 @@ class EventController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'event.index', methods: ['GET'])]
+    /**
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     *
+     * @return Response
+     */
+    #[Route(name: 'event.index', methods: ['GET'])]
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
         $form = $this->createForm(SearchType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
 
         $eventRepo = $this->entityManager->getRepository(Event::class);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $events = $paginator->paginate($eventRepo->search($form->getData()), $request->query->getInt('page', 1), 5);
-        } else {
-            $events = $paginator->paginate($eventRepo->findBy([], ['createdAt' => 'DESC']), $request->query->getInt('page', 1), 5);
-        }
+        $events = $paginator->paginate($eventRepo->paginateEvents($form->getData()), $request->query->getInt('page', 1), 5);
 
         return $this->render('@front/event/index.html.twig', [
             'events'     => $events,
@@ -47,6 +54,12 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $slug
+     * @param Request $request
+     *
+     * @return Response
+     */
     #[Route('/event/{slug}', name: 'event.show', methods: ['GET', 'POST'])]
     public function show(string $slug, Request $request): Response
     {
@@ -54,7 +67,7 @@ class EventController extends AbstractController
         $event = $eventRepo->findOneBy(['slug' => $slug]);
 
         if (!$event) {
-            return $this->redirectToRoute('event.index');
+            return $this->redirectToRoute('event.index', [], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         $submittedToken = $request->request->get('token');
@@ -69,7 +82,7 @@ class EventController extends AbstractController
 
                 $totalParticipate = $eventRepo->findTotalEventsByParticipate($this->getUser());
                 $this->badgeManager->checkAndUnlock($this->getUser(), 'event-participate', $totalParticipate);
-
+                // Flash user event participated
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.event.participate.add')));
             }
 
@@ -78,7 +91,7 @@ class EventController extends AbstractController
 
                 $event->removeParticipate($data);
                 $this->entityManager->flush();
-
+                // Flash user event not participated
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.event.participate.remove')));
             }
 
@@ -90,6 +103,12 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param EventRepository $eventRepository
+     *
+     * @return Response
+     */
     #[Route('/new', name: 'event.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventRepository $eventRepository): Response
     {
@@ -119,7 +138,7 @@ class EventController extends AbstractController
             $totalParticipate = $this->entityManager->getRepository(Event::class)
                 ->findTotalEventsByMaster($this->getUser());
             $this->badgeManager->checkAndUnlock($this->getUser(), 'event-create', $totalParticipate);
-
+            // Flash user event created
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.create.success', ['%event%' => $event->getName()])));
 
             return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
@@ -131,6 +150,13 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Event $event
+     * @param EventRepository $eventRepository
+     *
+     * @return Response
+     */
     #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
@@ -154,7 +180,7 @@ class EventController extends AbstractController
                 }
             }
             $this->entityManager->flush();
-
+            // Flash user event edited
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event->getName()])));
 
             return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
@@ -166,10 +192,17 @@ class EventController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Event $event
+     * @param EventRepository $eventRepository
+     *
+     * @return Response
+     */
     #[Route('/{id}', name: 'event.delete', methods: ['POST'])]
     public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
             $this->addFlash('success', ucfirst($this->translator->trans('flash.event.delete.success', ['%event%' => $event->getName()])));
             $eventRepository->remove($event, true);
         }

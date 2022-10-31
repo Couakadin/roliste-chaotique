@@ -1,9 +1,0 @@
-{% extends '@email/email.html.twig' %}
-
-{% block subject %}
-    {{ subject|capitalize }}
-{% endblock %}
-
-{% block email %}
-    {{ 'admin.guild_join_request'|trans({'%username%': username, '%content%': content})|html_to_markdown|html_purifier }}
-{% endblock %}

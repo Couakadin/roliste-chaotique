@@ -3,7 +3,7 @@ flash:
     edit: profil modifié avec succès !
     guild: demande d'adhésion envoyée !
   email:
-    not_found: e-mail inconnu en base de donnée.
+    not_found: aucun compte avec cet e-mail.
     verify_sent: demande de vérification e-mail envoyée.
   event:
     create:
@@ -26,7 +26,8 @@ flash:
     edit: groupe modifié avec succès !
     new: le groupe %guild% a été créé avec succès !
   csrf:
-    invalid: csrf_token invalide. Veuillez réessayer votre requête.
+    invalid: |
+      Requête invalide : veuillez réessayer.
   register:
     success: |
       Bienvenue %user%,
@@ -38,8 +39,8 @@ flash:
       remove: |
         Table %table% retirée des favoris.
   token:
-    invalid: requête invalide.
-    expired: token expiré. Veuillez renouveler la demande via les paramètres du compte.
+    expired: |
+      Lien expiré : veuillez renouveler la demande via les paramètres du compte.
     success_email: email correctement vérifié.
   forgotten_password:
     send:

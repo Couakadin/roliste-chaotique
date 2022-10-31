@@ -34,8 +34,12 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class EventType extends AbstractType
 {
-    public function __construct(){}
-
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
@@ -151,6 +155,11 @@ class EventType extends AbstractType
             ]);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     *
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

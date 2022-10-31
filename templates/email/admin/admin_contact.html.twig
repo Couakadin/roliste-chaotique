@@ -5,5 +5,5 @@
 {% endblock %}
 
 {% block email %}
-    {{ 'admin.new_contact'|trans({'%email%': emailContact, '%content%': content})|html_to_markdown|html_purifier }}
+    {{ 'admin.contact'|trans({'%email%': emailContact, '%content%': content})|sanitize_html }}
 {% endblock %}

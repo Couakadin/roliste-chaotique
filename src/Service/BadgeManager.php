@@ -13,6 +13,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class BadgeManager
 {
+    /**
+     * @param ObjectManager $manager
+     * @param EventDispatcherInterface $dispatcher
+     */
     public function __construct(
         public readonly ObjectManager            $manager,
         public readonly EventDispatcherInterface $dispatcher

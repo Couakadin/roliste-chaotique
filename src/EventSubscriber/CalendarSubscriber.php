@@ -18,8 +18,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param RouterInterface $router
+     */
     public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router) { }
 
+    /**
+     * @return string[]
+     */
     #[ArrayShape([CalendarEvents::SET_DATA => "string"])] public static function getSubscribedEvents(): array
     {
         return [
@@ -28,6 +35,10 @@ class CalendarSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param CalendarEvent $calendar
+     *
+     * @return void
+     *
      * @throws Exception
      */
     public function onCalendarSetData(CalendarEvent $calendar): void

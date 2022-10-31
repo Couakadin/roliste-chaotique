@@ -16,11 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EditorRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Editor::class);
     }
 
+    /**
+     * @param Editor $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function save(Editor $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +39,12 @@ class EditorRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Editor $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Editor $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

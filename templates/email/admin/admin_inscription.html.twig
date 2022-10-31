@@ -5,8 +5,9 @@
 {% endblock %}
 
 {% block email %}
-    {{ ('email.verify_email.body'|trans({
+    {{ 'admin.inscription.body'|trans({
         '%signedUrl%': signedUrl,
-        '%expiredAt%': expiredAt|format_datetime('medium', 'short')})|UCFirst)|sanitize_html
+        '%userEmail%': userEmail,
+        '%createdAt%': createdAt|format_datetime('medium', 'short')})|sanitize_html
     }}
 {% endblock %}

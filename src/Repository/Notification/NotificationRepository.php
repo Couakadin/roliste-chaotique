@@ -18,11 +18,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class NotificationRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Notification::class);
     }
 
+    /**
+     * @param Notification $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function save(Notification $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -32,6 +41,12 @@ class NotificationRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Notification $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Notification $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -41,7 +56,12 @@ class NotificationRepository extends ServiceEntityRepository
         }
     }
 
-    public function findReadByUser(array|User|UserInterface $user)
+    /**
+     * @param array|User|UserInterface $user
+     *
+     * @return float|int|mixed|string
+     */
+    public function findReadByUser(array|User|UserInterface $user): mixed
     {
         return $this->createQueryBuilder('n')
             ->where('n.isRead = false')

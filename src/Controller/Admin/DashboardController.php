@@ -32,6 +32,10 @@ class DashboardController extends AbstractDashboardController
         TranslatorTrait::__construct as private translator;
     }
 
+    /**
+     * @param TranslatorInterface $translator
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         public readonly TranslatorInterface $translator,
         public EntityManagerInterface       $entityManager
@@ -39,6 +43,9 @@ class DashboardController extends AbstractDashboardController
     {
     }
 
+    /**
+     * @return Response
+     */
     #[Route('/oversight')]
     public function index(): Response
     {
@@ -49,8 +56,7 @@ class DashboardController extends AbstractDashboardController
         $taskRepo = $this->entityManager->getRepository(Task::class);
 
 
-        // you can also render some template to display a proper Dashboard
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
+        // (Tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         return $this->render('@bundles/EasyAdmin/page/content.html.twig', [
             'users'  => $userRepo->findLastRegister(),
             'events' => $eventRepo->findLastEvents(),
@@ -58,6 +64,9 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+    /**
+     * @return Dashboard
+     */
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -66,6 +75,9 @@ class DashboardController extends AbstractDashboardController
             ->setFaviconPath('/build/front/favicon/favicon.ico');
     }
 
+    /**
+     * @return iterable
+     */
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToRoute($this->trans('admin.home'), 'fa fa-home', 'home.index');
@@ -83,6 +95,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud($this->trans('admin.event_color', ['%count%' => 2]), 'fas fa-palette', EventColor::class);
     }
 
+    /**
+     * @param UserInterface $user
+     *
+     * @return UserMenu
+     */
     public function configureUserMenu(UserInterface $user): UserMenu
     {
         $avatar = $user->getAvatar();
@@ -101,6 +118,9 @@ class DashboardController extends AbstractDashboardController
             ]);
     }
 
+    /**
+     * @return Assets
+     */
     public function configureAssets(): Assets
     {
         return parent::configureAssets()

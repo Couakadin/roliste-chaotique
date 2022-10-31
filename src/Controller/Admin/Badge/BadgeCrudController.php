@@ -18,11 +18,19 @@ class BadgeCrudController extends AbstractCrudController
     // $this->trans('');
     use TranslatorTrait;
 
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Badge::class;
     }
 
+    /**
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -34,12 +42,22 @@ class BadgeCrudController extends AbstractCrudController
             ->setEntityLabelInSingular($this->trans('admin.badge', ['%count%' => 1]));
     }
 
+    /**
+     * @param Actions $actions
+     *
+     * @return Actions
+     */
     public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
+    /**
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

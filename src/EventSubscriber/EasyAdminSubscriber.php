@@ -18,6 +18,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param UserPasswordHasherInterface $hash
+     * @param ParameterBagInterface $parameterBag
+     */
     public function __construct(
         private readonly EntityManagerInterface      $entityManager,
         private readonly UserPasswordHasherInterface $hash,
@@ -26,6 +31,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     {
     }
 
+    /**
+     * @return string[][]
+     */
     #[ArrayShape([
         BeforeEntityPersistedEvent::class => "string[]",
         BeforeEntityUpdatedEvent::class   => "string[]",
@@ -42,7 +50,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function addUser(BeforeEntityPersistedEvent $event)
+    /**
+     * @param BeforeEntityPersistedEvent $event
+     *
+     * @return void
+     */
+    public function addUser(BeforeEntityPersistedEvent $event): void
     {
         $entity = $event->getEntityInstance();
 
@@ -54,6 +67,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
     /**
      * @param User $entity
+     *
+     * @return void
      */
     public function setPassword(User $entity): void
     {
@@ -69,7 +84,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    public function deleteImage(AfterEntityDeletedEvent $event)
+    /**
+     * @param AfterEntityDeletedEvent $event
+     *
+     * @return void
+     */
+    public function deleteImage(AfterEntityDeletedEvent $event): void
     {
         $entity = $event->getEntityInstance();
         $imgPath = '';
@@ -85,7 +105,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if (file_exists($imgPath)) unlink($imgPath);
     }
 
-    public function removeRelation(BeforeEntityDeletedEvent $event)
+    /**
+     * @param BeforeEntityDeletedEvent $event
+     *
+     * @return void
+     */
+    public function removeRelation(BeforeEntityDeletedEvent $event): void
     {
         $entity = $event->getEntityInstance();
         $user = $this->entityManager->getRepository(User::class);

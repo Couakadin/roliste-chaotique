@@ -10,16 +10,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/oversight')]
 class AjaxController extends AbstractController
 {
+    /**
+     * @param EntityManagerInterface $em
+     */
     public function __construct(private readonly EntityManagerInterface $em)
     {
     }
 
     /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
      * @throws JsonException
      */
-    #[Route('/oversight/ajax/add-task', name: 'ajax.add-task', methods: 'post')]
+    #[Route('/ajax/add-task', name: 'ajax.add-task', methods: 'post')]
     public function addTask(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
@@ -39,9 +47,13 @@ class AjaxController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
      * @throws JsonException
      */
-    #[Route('/oversight/ajax/remove-task', name: 'ajax.remove-task', methods: 'post')]
+    #[Route('/ajax/remove-task', name: 'ajax.remove-task', methods: 'post')]
     public function removeTask(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);

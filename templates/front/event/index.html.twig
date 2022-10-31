@@ -14,7 +14,7 @@
         {% if events.items is not empty %}
             {{ form_start(searchForm, {'attr': {'class': 'flex'}}) }}
                 <div class="form-search">
-                    {{ form_widget(searchForm, {'attr': {'placeholder': 'ui.search_event'|trans|capitalize}}) }}
+                    {{ form_widget(searchForm, {'attr': {'placeholder': 'ui.search_event'}}) }}
                     <button type="submit">
                         <img src="{{ asset('build/front/tools/search.svg') }}" alt="{{ 'ui.search'|trans }}">
                     </button>
@@ -37,11 +37,10 @@
                 <p class="event-header">
                     {% if
                         event.totalParticipate is not null and event.totalParticipate > 1 or
-                        event.totalParticipate is null and event.participate|length > 1
-                    %}
-                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : ''}} {{ 'ui.players'|trans }}
-                    {% else  %}
-                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : ''}} {{ 'ui.player'|trans }}
+                        event.totalParticipate is null and event.participate|length > 1 %}
+                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.players'|trans }}
+                    {% else %}
+                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.player'|trans }}
                     {% endif %}
                 </p>
                 <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>

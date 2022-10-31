@@ -23,8 +23,19 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/register')]
 class RegistrationController extends AbstractController
 {
+    /**
+     * @param TranslatorInterface $translator
+     * @param UserAuthenticatorInterface $userAuthenticator
+     * @param FormLoginAuthenticator $formLoginAuthenticator
+     * @param Email $email
+     * @param EmailAdmin $emailAdmin
+     * @param EntityManagerInterface $entityManager
+     * @param BadgeManager $badgeManager
+     * @param TokenManager $tokenManager
+     */
     public function __construct(
         private readonly TranslatorInterface        $translator,
         private readonly UserAuthenticatorInterface $userAuthenticator,
@@ -39,22 +50,28 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return RedirectResponse|Response|null
+     *
      * @throws TransportExceptionInterface
-     * @throws Exception
      */
-    #[Route('/register', name: 'registration.register')]
+    #[Route(name: 'registration.register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): RedirectResponse|Response|null
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('account.index');
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('account.index', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+        // Register the new user
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -62,21 +79,22 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // User is now logged in
             $user->setLoggedAt(new DateTimeImmutable());
-
-            $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $user);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
             // Unlock badge
             $this->badgeManager->checkAndUnlock($user, 'register', 1);
-
-            // do anything else you need here, like send an email
+            // Generate token to verify email
+            $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $user);
+            // Send email to verify email
             $this->email->emailVerify($user, $tokenManager, $this->translator->trans('email.verify_email.subject'));
-            $this->emailAdmin->emailNewInscriptionAdmin($user);
-
-            $this->addFlash('success', $this->translator->trans('flash.register.success', ['%user%' => $user->getUsername()]));
+            // Inform admin of a new inscription
+            $this->emailAdmin->inscriptionAdmin($user);
+            // Flash user register confirmation
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.register.success', ['%user%' => $user->getUsername()])));
 
             return $this->userAuthenticator->authenticateUser($user, $this->formLoginAuthenticator, $request);
         }
@@ -86,46 +104,43 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'registration.verify-email')]
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    #[Route('/verify-email', name: 'registration.verify-email')]
     public function verifyEmail(Request $request): Response
     {
-        if (!$this->getUser()) {
-            $this->addFlash('warning', $this->translator->trans('flash.verify_email.not_login'));
-
-            return $this->redirectToRoute('security.index');
-        }
-
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $now = new DateTimeImmutable('now');
 
-        $tokenRepository = $this->entityManager->getRepository(Token::class);
-        $token = $tokenRepository->findOneBy(
-            [
-                'user' => $this->getUser(),
-                'token' => $request->query->get('token'),
-                'type' => TOKEN::EMAIL_VERIFY
-            ]
-        );
+        $token = $this->entityManager->getRepository(Token::class)
+            ->findOneBy(
+                [
+                    'user'  => $this->getUser(),
+                    'token' => $request->query->get('token'),
+                    'type'  => TOKEN::EMAIL_VERIFY
+                ]
+            );
 
         if (!$token || $this->getUser()->isVerified()) {
-            $this->addFlash('error', $this->translator->trans('flash.token.invalid'));
-
-            return $this->redirectToRoute('security.index');
+            return $this->redirectToRoute('security.index', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         if ($now > $token->getExpiredAt() || !$token->getExpiredAt()) {
-            $this->addFlash('error', $this->translator->trans('flash.token.expired'));
+            $this->addFlash('error', ucfirst($this->translator->trans('flash.token.expired')));
 
-            return $this->redirectToRoute('security.index');
+            return $this->redirectToRoute('security.index', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
-        $verified = $this->getUser();
-        $verified->setIsVerified(true);
-
+        $this->getUser()->setIsVerified(true);
         $token->getUser()->removeToken($token);
+
         $this->entityManager->flush();
 
+        // Flash user email successful verified
         $this->addFlash('success', ucfirst($this->translator->trans('flash.token.success_email')));
 
         return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
@@ -133,24 +148,27 @@ class RegistrationController extends AbstractController
 
 
     /**
-     * @Route("/verify/resend", name="security.registration.verify_resend_email")
+     * @return Response
+     *
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    #[Route('/verify/resend', name: 'registration.resend-verify-email')]
+    #[Route('/verify-resend', name: 'registration.resend-verify-email')]
     public function resendVerifyEmail(): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('home.index');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         if ($this->getUser()->isVerified()) {
-            return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.edit', [
+                'slug' => $this->getUser()->getSlug()
+            ], Response::HTTP_MOVED_PERMANENTLY);
         }
 
+        // Generate token to verify email
         $tokenManager = $this->tokenManager->checkAndSend(TOKEN::EMAIL_VERIFY, $this->getUser());
-
+        // Send email to verify email
         $this->email->emailVerify($this->getUser(), $tokenManager, $this->translator->trans('email.verify_email.subject'));
+        // Flash user email verification sent
         $this->addFlash('success', ucfirst($this->translator->trans('flash.email.verify_sent')));
 
         return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);

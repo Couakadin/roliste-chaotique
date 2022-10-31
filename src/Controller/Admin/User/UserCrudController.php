@@ -22,11 +22,19 @@ class UserCrudController extends AbstractCrudController
 {
     use TranslatorTrait;
 
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return User::class;
     }
 
+    /**
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -38,6 +46,11 @@ class UserCrudController extends AbstractCrudController
             ->setEntityLabelInSingular($this->trans('admin.user', ['%count%' => 1]));
     }
 
+    /**
+     * @param Actions $actions
+     *
+     * @return Actions
+     */
     public function configureActions(Actions $actions): Actions
     {
         $impersonate = Action::new('impersonate', 'impersonate')
@@ -53,6 +66,11 @@ class UserCrudController extends AbstractCrudController
             ->remove(Crud::PAGE_INDEX, Action::DELETE);
     }
 
+    /**
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

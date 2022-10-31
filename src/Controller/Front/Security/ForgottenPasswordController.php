@@ -17,12 +17,19 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/forgotten-password')]
 class ForgottenPasswordController extends AbstractController
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param TokenManager $tokenManager
+     */
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly TokenManager $tokenManager
-    ) { }
+        private readonly TokenManager           $tokenManager
+    )
+    {
+    }
 
     /**
      * @param Request $request
@@ -34,11 +41,13 @@ class ForgottenPasswordController extends AbstractController
      * @throws TransportExceptionInterface
      * @throws Exception
      */
-    #[Route('/forgotten-password', name: 'forgotten-password.index')]
+    #[Route(name: 'forgotten-password.index')]
     public function index(Request $request, Email $email, TranslatorInterface $translator): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('account.index', [
+                'slug' => $this->getUser()->getSlug()
+            ], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         $submittedToken = $request->request->get('_csrf_token');
@@ -57,11 +66,12 @@ class ForgottenPasswordController extends AbstractController
             if (!$user) {$errors[] = ucfirst($translator->trans('flash.email.not_found'));}
 
             if (!$errors) {
-                // Set an event to inform the app a token is sent
+                // Generate token for forgotten password
                 $tokenManager = $this->tokenManager->checkAndSend(TOKEN::FORGOTTEN_PASSWORD, $user);
-
+                // Send email for forgotten password
                 $email->forgottenPassword($user, $tokenManager, $translator->trans('email.forgotten_password.subject'));
-                $this->addFlash('success', $translator->trans('flash.forgotten_password.send.success'));
+                // Flash user forgotten password link sent
+                $this->addFlash('success', ucfirst($translator->trans('flash.forgotten_password.send.success')));
 
                 return $this->redirectToRoute('security.index');
             }
@@ -80,37 +90,37 @@ class ForgottenPasswordController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/forgotten-password/{token}', name: 'forgotten-password.new')]
+    #[Route('/{token}', name: 'forgotten-password.new')]
     public function new(
-        Request $request,
-        TranslatorInterface $translator,
-        string $token,
+        Request                     $request,
+        TranslatorInterface         $translator,
+        string                      $token,
         UserPasswordHasherInterface $encoder): Response
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('account.index', [
+                'slug' => $this->getUser()->getSlug()
+            ], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         $now = new DateTime();
 
-        $tokenRepository = $this->entityManager->getRepository(Token::class);
-        $tokenPassword = $tokenRepository->findOneBy(
-            [
-                'token' => $token,
-                'type' => TOKEN::FORGOTTEN_PASSWORD
-            ]
-        );
+        $tokenPassword = $this->entityManager->getRepository(Token::class)
+            ->findOneBy(
+                [
+                    'token' => $token,
+                    'type'  => TOKEN::FORGOTTEN_PASSWORD
+                ]
+            );
 
         if (!$tokenPassword) {
-            $this->addFlash('error', $translator->trans('flash.token.invalid'));
-
-            return $this->redirectToRoute('security.index');
+            return $this->redirectToRoute('security.index', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         if ($now > $tokenPassword->getExpiredAt() || !$tokenPassword->getExpiredAt()) {
-            $this->addFlash('error', $translator->trans('flash.token.expired'));
+            $this->addFlash('error', ucfirst($translator->trans('flash.token.expired')));
 
-            return $this->redirectToRoute('security.index');
+            return $this->redirectToRoute('security.index', [], Response::HTTP_MOVED_PERMANENTLY);
         }
 
         $submittedToken = $request->request->get('_csrf_token');
@@ -122,17 +132,18 @@ class ForgottenPasswordController extends AbstractController
             if (!$this->isCsrfTokenValid('forgotten_password_new', $submittedToken)) {
                 $errors[] = $translator->trans('flash.csrf.invalid');
             } elseif (6 > strlen($submittedPassword)) {
-                $errors[] = 'Le mot de passe doit faire au minimum 6 caractères';
+                $errors[] = $translator->trans('user.password.length', [], 'validators');
             }
 
             if (!$errors) {
                 $encoded = $encoder->hashPassword($tokenPassword->getUser(), $submittedPassword);
 
-                $tokenPassword->getUser()->setPassword($encoded);
-                $tokenPassword->getUser()->removeToken($tokenPassword);
+                $tokenPassword->getUser()
+                    ->setPassword($encoded)
+                    ->removeToken($tokenPassword);
                 $this->entityManager->flush();
-
-                $this->addFlash('success', $translator->trans('flash.forgotten_password.new.success'));
+                // Flash user password changed
+                $this->addFlash('success', ucfirst($translator->trans('flash.forgotten_password.new.success')));
 
                 return $this->redirectToRoute('security.index');
             }
@@ -140,7 +151,7 @@ class ForgottenPasswordController extends AbstractController
 
         return $this->render('@front/security/forgotten_password.html.twig', [
             'errors' => $errors,
-            'token' => $token
+            'token'  => $token
         ]);
     }
 }

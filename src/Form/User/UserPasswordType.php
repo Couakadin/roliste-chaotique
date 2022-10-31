@@ -13,6 +13,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserPasswordType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -24,8 +30,8 @@ class UserPasswordType extends AbstractType
                 'label' => 'ui.password',
                 'invalid_message' => 'user.password.not_same',
                 'required' => true,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter le mot de passe'],
+                'first_options' => ['label' => 'ui.password'],
+                'second_options' => ['label' => 'ui.repeat_password'],
                 'constraints' => [
                     new NotBlank(['message' => 'user.password.not_blank',]),
                     new Length([
@@ -38,6 +44,11 @@ class UserPasswordType extends AbstractType
             ]);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     *
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

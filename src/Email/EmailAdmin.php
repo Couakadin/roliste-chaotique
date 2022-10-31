@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailAdmin extends AbstractController
@@ -22,19 +23,21 @@ class EmailAdmin extends AbstractController
     public function __construct(private readonly MailerInterface $mailer, private readonly TranslatorInterface $translator) { }
 
     /**
-     * @param User $user
+     * @param User|UserInterface $user
+     *
+     * @return void
      *
      * @throws TransportExceptionInterface
      */
-    public function emailNewInscriptionAdmin(User $user): void
+    public function inscriptionAdmin(User|UserInterface $user): void
     {
-        $subject = $this->translator->trans('admin.new_inscription.subject');
+        $subject = $this->translator->trans('admin.inscription.subject');
 
         $email = (new TemplatedEmail())
             ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
             ->to(self::ADMIN_EMAIL)
             ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/admin/admin_new_inscription.html.twig')
+            ->htmlTemplate('@email/admin/admin_inscription.html.twig')
             ->context([
                 'subject'   => $subject,
                 'userEmail' => $user->getEmail(),
@@ -49,16 +52,18 @@ class EmailAdmin extends AbstractController
      * @param string $subject
      * @param string $content
      *
+     * @return void
+     *
      * @throws TransportExceptionInterface
      */
-    public function newContactAdmin(string $emailContact, string $subject, string $content): void
+    public function contactAdmin(string $emailContact, string $subject, string $content): void
     {
         $email = (new TemplatedEmail())
             ->from($emailContact)
             ->to(self::ADMIN_EMAIL)
             ->replyTo($emailContact)
             ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/admin/admin_new_contact.html.twig')
+            ->htmlTemplate('@email/admin/admin_contact.html.twig')
             ->context([
                 'subject'      => $subject,
                 'emailContact' => $emailContact,

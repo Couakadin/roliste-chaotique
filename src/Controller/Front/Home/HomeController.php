@@ -16,8 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * This controller returns the homepage.
-     *
      * @param EntityManagerInterface $entityManager
      * @return Response
      * @throws Exception
@@ -51,7 +49,7 @@ class HomeController extends AbstractController
         return new JsonResponse('OK');
     }
 
-    #[Route('/notifications/all', name: 'home.notifications_all', methods: 'post')]
+    #[Route('/notifications/all', name: 'home.notifications-all', methods: 'post')]
     public function notificationsAll(EntityManagerInterface $entityManager): JsonResponse
     {
         $notifications = $entityManager->getRepository(Notification::class)

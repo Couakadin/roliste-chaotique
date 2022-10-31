@@ -6,17 +6,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait TranslatorTrait
 {
+    /**
+     * @param TranslatorInterface $translator
+     */
     public function __construct(public readonly TranslatorInterface $translator)
     {
     }
 
+    /**
+     * @param string $trans
+     * @param array $options
+     *
+     * @return string
+     */
     protected function trans(string $trans, array $options = []): string
     {
         return $this->mbUcfirst($this->translator->trans($trans, $options, 'admins'));
     }
 
     /**
-     * ucfirst-like to allow utf-8 characters
+     * UCFirst-like to allow utf-8 characters
      *
      * @param $str
      * @param string $encode

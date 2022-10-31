@@ -8,11 +8,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route(['/badge'])]
 class BadgeController extends AbstractController
 {
-    public function __construct(private readonly BadgeManager $badgeManager){}
+    /**
+     * @param BadgeManager $badgeManager
+     */
+    public function __construct(private readonly BadgeManager $badgeManager) { }
 
-    #[Route(['/badge/unlock'], name: 'badge.unlock', methods: 'post')]
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    #[Route(['/unlock'], name: 'badge.unlock', methods: 'post')]
     public function unlock(Request $request): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');

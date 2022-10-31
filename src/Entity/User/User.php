@@ -30,64 +30,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'ROLE_EDITOR' => 'ROLE_EDITOR'
     ];
 
+    /**
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 180, unique: true)]
     private string $email;
-
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 180, unique: true)]
     private string $username;
-
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['username'])]
     private string $slug;
-
+    /**
+     * @var array
+     */
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column(length: 4096)]
     private string $password;
-
+    /**
+     * @var bool
+     */
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
-
+    /**
+     * @var DateTimeImmutable
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private DateTimeImmutable $createdAt;
-
+    /**
+     * @var DateTimeImmutable
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private DateTimeImmutable $updatedAt;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?DateTimeImmutable $loggedAt = null;
-
+    /**
+     * @var Collection
+     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class, orphanRemoval: true)]
     private Collection $tokens;
-
+    /**
+     * @var Avatar|null
+     */
     #[ORM\ManyToOne(targetEntity: Avatar::class, inversedBy: 'user')]
     private ?Avatar $avatar = null;
-
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\OneToMany(mappedBy: 'master', targetEntity: Event::class, orphanRemoval: true)]
-    private Collection $eventMaster;
-
+    private Collection|ArrayCollection $eventMaster;
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participate')]
-    private Collection $eventParticipate;
-
+    private Collection|ArrayCollection $eventParticipate;
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
-    private Collection $badgeUnlocks;
-
+    private Collection|ArrayCollection $badgeUnlocks;
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'favorite')]
-    private Collection $tables;
-
+    private Collection|ArrayCollection $tables;
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
-    private Collection $notifications;
+    private Collection|ArrayCollection $notifications;
 
     public function __construct()
     {
@@ -98,21 +130,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->notifications = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->username;
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     *
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -130,11 +176,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return $this
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -152,6 +206,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     *
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
@@ -171,6 +230,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     *
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -186,6 +250,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     *
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -213,11 +282,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return bool
+     */
     public function isVerified(): bool
     {
         return $this->isVerified;
     }
 
+    /**
+     * @param bool $isVerified
+     *
+     * @return $this
+     */
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
@@ -225,11 +302,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getLoggedAt(): ?DateTimeImmutable
     {
         return $this->loggedAt;
     }
 
+    /**
+     * @param DateTimeImmutable|null $loggedAt
+     *
+     * @return $this
+     */
     public function setLoggedAt(?DateTimeImmutable $loggedAt): self
     {
         $this->loggedAt = $loggedAt;
@@ -252,11 +337,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return true;
     }
 
+    /**
+     * @return Collection
+     */
     public function getTokens(): Collection
     {
         return $this->tokens;
     }
 
+    /**
+     * @param Token $token
+     *
+     * @return $this
+     */
     public function addToken(Token $token): self
     {
         if (!$this->tokens->contains($token)) {
@@ -266,6 +359,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param Token $token
+     *
+     * @return $this
+     */
     public function removeToken(Token $token): self
     {
         if ($this->tokens->contains($token)) {
@@ -275,31 +373,55 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param DateTimeImmutable $createdAt
+     *
+     * @return void
+     */
     public function setCreatedAt(DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param DateTimeImmutable $updatedAt
+     *
+     * @return void
+     */
     public function setUpdatedAt(DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @return Avatar|null
+     */
     public function getAvatar(): ?Avatar
     {
         return $this->avatar;
     }
 
+    /**
+     * @param Avatar|null $avatar
+     *
+     * @return $this
+     */
     public function setAvatar(?Avatar $avatar): self
     {
         $this->avatar = $avatar;
@@ -308,13 +430,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection
      */
     public function getEventMaster(): Collection
     {
         return $this->eventMaster;
     }
 
+    /**
+     * @param Event $eventMaster
+     *
+     * @return $this
+     */
     public function addEventMaster(Event $eventMaster): self
     {
         if (!$this->eventMaster->contains($eventMaster)) {
@@ -325,6 +452,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param Event $eventMaster
+     *
+     * @return $this
+     */
     public function removeEventMaster(Event $eventMaster): self
     {
         // set the owning side to null (unless already changed)
@@ -336,13 +468,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Table>
+     * @return Collection
      */
     public function getEventParticipates(): Collection
     {
         return $this->eventParticipate;
     }
 
+    /**
+     * @param Event $eventParticipate
+     *
+     * @return $this
+     */
     public function addEventParticipate(Event $eventParticipate): self
     {
         if (!$this->eventParticipate->contains($eventParticipate)) {
@@ -353,6 +490,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param Event $eventParticipate
+     *
+     * @return $this
+     */
     public function removeEventParticipate(Event $eventParticipate): self
     {
         if ($this->eventParticipate->removeElement($eventParticipate)) {
@@ -363,13 +505,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, BadgeUnlock>
+     * @return Collection
      */
     public function getBadgeUnlocks(): Collection
     {
         return $this->badgeUnlocks;
     }
 
+    /**
+     * @param BadgeUnlock $badgeUnlock
+     *
+     * @return $this
+     */
     public function addBadgeUnlock(BadgeUnlock $badgeUnlock): self
     {
         if (!$this->badgeUnlocks->contains($badgeUnlock)) {
@@ -380,6 +527,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param BadgeUnlock $badgeUnlock
+     *
+     * @return $this
+     */
     public function removeBadgeUnlock(BadgeUnlock $badgeUnlock): self
     {
         if ($this->badgeUnlocks->removeElement($badgeUnlock)) {
@@ -392,11 +544,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getTables(): Collection
     {
         return $this->tables;
     }
 
+    /**
+     * @param Table $table
+     *
+     * @return $this
+     */
     public function addTable(Table $table): self
     {
         if (!$this->tables->contains($table)) {
@@ -407,6 +567,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param Table $table
+     *
+     * @return $this
+     */
     public function removeTable(Table $table): self
     {
         if ($this->tables->removeElement($table)) {
@@ -416,11 +581,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getNotifications(): Collection
     {
         return $this->notifications;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -431,6 +604,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->removeElement($notification)) {

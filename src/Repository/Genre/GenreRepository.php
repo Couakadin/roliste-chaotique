@@ -16,11 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GenreRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Genre::class);
     }
 
+    /**
+     * @param Genre $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function save(Genre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +39,12 @@ class GenreRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Genre $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Genre $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

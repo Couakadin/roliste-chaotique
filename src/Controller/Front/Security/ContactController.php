@@ -11,27 +11,41 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/contact')]
 class ContactController extends AbstractController
 {
-    public function __construct(private readonly EmailAdmin $emailAdmin, private readonly TranslatorInterface $translator) { }
+    /**
+     * @param EmailAdmin $emailAdmin
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(
+        private readonly EmailAdmin          $emailAdmin,
+        private readonly TranslatorInterface $translator
+    )
+    {
+    }
 
     /**
+     * @param Request $request
+     *
+     * @return Response
+     *
      * @throws TransportExceptionInterface
      */
-    #[Route('/contact', name: 'contact.index')]
+    #[Route(name: 'contact.index')]
     public function index(Request $request): Response
     {
         $form = $this->createForm(ContactFormType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $email = $request->request->all('contact_form')['email'];
-            $subject = $request->request->all('contact_form')['subject'];
-            $message = $request->request->all('contact_form')['message'];
+            $email = $form->getData()['email'];
+            $subject = $form->getData()['subject'];
+            $message = $form->getData()['message'];
 
-            $this->emailAdmin->newContactAdmin($email, $subject, $message);
-
+            // Inform admin for the new contact
+            $this->emailAdmin->contactAdmin($email, $subject, $message);
+            // Flash user contact confirmation
             $this->addFlash('success', $this->translator->trans('flash.contact.success'));
 
             return $this->redirectToRoute('contact.index');

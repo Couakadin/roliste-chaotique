@@ -17,11 +17,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TableRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Table::class);
     }
 
+    /**
+     * @param Table $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function add(Table $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -31,6 +40,12 @@ class TableRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Table $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Table $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -40,7 +55,10 @@ class TableRepository extends ServiceEntityRepository
         }
     }
 
-    public function findShowcase()
+    /**
+     * @return float|int|mixed|string
+     */
+    public function findShowcase(): mixed
     {
         return $this->createQueryBuilder('g')
             ->where('g.showcase = :showcase')
@@ -51,7 +69,12 @@ class TableRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function nextEvents(int $table)
+    /**
+     * @param int $table
+     *
+     * @return float|int|mixed|string
+     */
+    public function nextEvents(int $table): mixed
     {
         return $this->createQueryBuilder('t')
             ->select('e.name, e.slug')

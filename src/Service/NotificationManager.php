@@ -10,12 +10,20 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class NotificationManager
 {
+    /**
+     * @param ObjectManager $manager
+     */
     public function __construct(
         public readonly ObjectManager $manager
     )
     {
     }
 
+    /**
+     * @param User|UserInterface $user
+     *
+     * @return array
+     */
     public function notificationsByUser(User|UserInterface $user): array
     {
         $notifications = $this->manager->getRepository(Notification::class)
@@ -33,6 +41,11 @@ class NotificationManager
         return $notifications;
     }
 
+    /**
+     * @param User $user
+     *
+     * @return float|int|mixed|string
+     */
     public function findReadByUser(User $user)
     {
         return $this->manager->getRepository(Notification::class)

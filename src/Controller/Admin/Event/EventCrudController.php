@@ -22,11 +22,19 @@ class EventCrudController extends AbstractCrudController
     // $this->trans('');
     use TranslatorTrait;
 
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Event::class;
     }
 
+    /**
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -39,12 +47,22 @@ class EventCrudController extends AbstractCrudController
             ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
     }
 
+    /**
+     * @param Actions $actions
+     *
+     * @return Actions
+     */
     public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
+    /**
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -81,6 +99,9 @@ class EventCrudController extends AbstractCrudController
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getTypes(): array
     {
         $types = [];

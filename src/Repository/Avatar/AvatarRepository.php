@@ -17,6 +17,9 @@ class AvatarRepository extends ServiceEntityRepository
 {
     const DEFAULT_AVATAR = 'female-tiefflin.png';
 
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Avatar::class);

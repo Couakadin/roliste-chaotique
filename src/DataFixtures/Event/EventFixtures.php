@@ -14,8 +14,16 @@ use Doctrine\Persistence\ObjectManager;
 
 class EventFixtures extends Fixture implements OrderedFixtureInterface
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(private readonly EntityManagerInterface $entityManager) { }
 
+    /**
+     * @param ObjectManager $manager
+     *
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i < 5; $i++) {
@@ -34,20 +42,29 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
-    private function findTable()
+    /**
+     * @return Table|mixed|object|null
+     */
+    private function findTable(): mixed
     {
         return $this->entityManager
             ->getRepository(Table::class)
             ->findOneBy(['name' => TableFixtures::TABLES[1]]);
     }
 
-    private function findZone()
+    /**
+     * @return Zone|mixed|object|null
+     */
+    private function findZone(): mixed
     {
         return $this->entityManager
             ->getRepository(Zone::class)
             ->findOneBy(['locality' => 'Boussu']);
     }
 
+    /**
+     * @return int
+     */
     public function getOrder(): int
     {
         return 3;

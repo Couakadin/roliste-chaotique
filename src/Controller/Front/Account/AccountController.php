@@ -20,8 +20,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/account')]
 class AccountController extends AbstractController
 {
+    /**
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @param BadgeManager $badgeManager
+     */
     public function __construct
     (
         private readonly UserPasswordHasherInterface $passwordHasher,
@@ -32,7 +39,12 @@ class AccountController extends AbstractController
     {
     }
 
-    #[Route('/account/{slug}', name: 'account.index')]
+    /**
+     * @param string|null $slug
+     *
+     * @return Response
+     */
+    #[Route('/{slug}', name: 'account.index')]
     public function index(string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
@@ -44,7 +56,9 @@ class AccountController extends AbstractController
         }
 
         if (!$user) {
-            return $this->redirectToRoute('account.index', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.index', [
+                'slug' => $this->getUser()->getSlug()
+            ], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         $lastEvent = $userRepo->findLastEventByUser($user) ?: null;
@@ -55,7 +69,13 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/account/{slug}/edit', name: 'account.edit')]
+    /**
+     * @param Request $request
+     * @param string|null $slug
+     *
+     * @return Response
+     */
+    #[Route('/{slug}/edit', name: 'account.edit')]
     public function edit(Request $request, string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
@@ -76,7 +96,7 @@ class AccountController extends AbstractController
         }
 
         if (($formPassword->isSubmitted() && $formPassword->isValid())) {
-            // encode the plain password
+            // Encode the plain password
             $user->setPassword(
                 $this->passwordHasher->hashPassword(
                     $user,
@@ -95,7 +115,12 @@ class AccountController extends AbstractController
         ]);
     }
 
-    #[Route('/account/{slug}/badges', name: 'account.badge')]
+    /**
+     * @param string|null $slug
+     *
+     * @return Response
+     */
+    #[Route('/{slug}/badges', name: 'account.badge')]
     public function badge(string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
@@ -114,14 +139,19 @@ class AccountController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    #[Route('/account/{id}/delete', name: 'account.delete', methods: 'post')]
+    #[Route('/{id}/delete', name: 'account.delete', methods: 'post')]
     public function deleteAccount(Request $request, int $id): Response
     {
         if (!$this->getUser() || $id !== $this->getUser()->getId()) {
-            return $this->redirectToRoute('security.index');
+            return $this->redirectToRoute('security.index', [], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         $submittedToken = $request->request->get('token');
@@ -135,20 +165,26 @@ class AccountController extends AbstractController
             $this->entityManager->flush();
 
             return $this->redirectToRoute('security.logout');
-
         }
 
         return $this->redirectToRoute('home.index');
     }
 
-    #[Route('/account/{slug}/notifications', name: 'account.notifications')]
+    /**
+     * @param string $slug
+     *
+     * @return Response
+     */
+    #[Route('/{slug}/notifications', name: 'account.notifications')]
     public function notifications(string $slug): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
         $user = $userRepo->findOneBy(['slug' => $slug]);
 
         if ($user !== $this->getUser()) {
-            return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
+            return $this->redirectToRoute('account.edit', [
+                'slug' => $this->getUser()->getSlug()
+            ], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         $notifications = $this->entityManager->getRepository(Notification::class)
@@ -168,6 +204,13 @@ class AccountController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $typeClass
+     * @param User $entity
+     * @param Request $request
+     *
+     * @return FormInterface
+     */
     private function getForm(string $typeClass, User $entity, Request $request): FormInterface
     {
         $form = $this->createForm($typeClass, $entity);

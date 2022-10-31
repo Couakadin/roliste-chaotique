@@ -10,31 +10,42 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TokenManager
 {
-    public function __construct(
+    /**
+     * @param ObjectManager $manager
+     */
+    public function __construct
+    (
         public readonly ObjectManager $manager
     )
     {
     }
 
     /**
-     * @throws Exception
+     * @param string $type
+     * @param User|UserInterface $user
+     *
+     * @return Token|Exception
      */
-    public function checkAndSend(string $type, User|UserInterface $user): Token
+    public function checkAndSend(string $type, User|UserInterface $user): Token|Exception
     {
-        $token = $this->manager->getRepository(Token::class)
-            ->findOneBy(['type' => $type, 'user' => $user]) ?: null;
+        try {
+            $token = $this->manager->getRepository(Token::class)
+                ->findOneBy(['type' => $type, 'user' => $user]) ?: null;
 
-        if ($token instanceof Token) {
-            $token->renewToken();
-            $token->renewExpiredAt();
-        } else {
-            $token = new Token($user, $type);
+            if ($token instanceof Token) {
+                $token->renewToken();
+                $token->renewExpiredAt();
+            } else {
+                $token = new Token($user, $type);
 
-            $this->manager->persist($token);
+                $this->manager->persist($token);
+            }
+
+            $this->manager->flush();
+
+            return $token;
+        } catch (Exception $exception) {
+            return $exception;
         }
-
-        $this->manager->flush();
-
-        return $token;
     }
 }

@@ -11,12 +11,19 @@ use Symfony\Component\Security\Core\Security;
 
 class OnlineSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @param Security $security
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(
         public readonly Security               $security,
         public readonly EntityManagerInterface $entityManager)
     {
     }
 
+    /**
+     * @return string[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -24,6 +31,9 @@ class OnlineSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @return void
+     */
     public function onKernelRequest(): void
     {
         $user = $this->security->getUser();

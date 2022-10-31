@@ -16,11 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EventColorRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, EventColor::class);
     }
 
+    /**
+     * @param EventColor $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function save(EventColor $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +39,12 @@ class EventColorRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param EventColor $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(EventColor $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

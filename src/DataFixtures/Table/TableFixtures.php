@@ -18,6 +18,11 @@ class TableFixtures extends Fixture implements OrderedFixtureInterface
         'Things from the Flood',
     ];
 
+    /**
+     * @param ObjectManager $manager
+     *
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         foreach (self::TABLES as $table) {
@@ -32,6 +37,9 @@ class TableFixtures extends Fixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return int
+     */
     public function getOrder(): int
     {
         return 2;

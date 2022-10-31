@@ -16,11 +16,19 @@ class GenreCrudController extends AbstractCrudController
 {
     use TranslatorTrait;
 
+    /**
+     * @return string
+     */
     public static function getEntityFqcn(): string
     {
         return Genre::class;
     }
 
+    /**
+     * @param Crud $crud
+     *
+     * @return Crud
+     */
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -32,12 +40,22 @@ class GenreCrudController extends AbstractCrudController
             ->setEntityLabelInSingular($this->trans('admin.genre', ['%count%' => 1]));
     }
 
+    /**
+     * @param Actions $actions
+     *
+     * @return Actions
+     */
     public function configureActions(Actions $actions): Actions
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL);
     }
 
+    /**
+     * @param string $pageName
+     *
+     * @return iterable
+     */
     public function configureFields(string $pageName): iterable
     {
         return [

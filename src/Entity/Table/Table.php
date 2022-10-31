@@ -15,59 +15,89 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: TableRepository::class)]
 #[ORM\Table(name: 'rc_table')]
 class Table
 {
+    /**
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(length: 128)]
     #[Gedmo\Slug(fields: ['name'])]
     private ?string $slug = null;
-
+    /**
+     * @var bool|null
+     */
     #[ORM\Column]
     private ?bool $showcase = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $picture = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-
+    /**
+     * @var Collection
+     */
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
-
+    /**
+     * @var Collection
+     */
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'tables')]
     #[ORM\JoinTable(name: 'rc_table_genre')]
     private Collection $genre;
-
+    /**
+     * @var Editor|null
+     */
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?Editor $editor = null;
-
+    /**
+     * @var System|null
+     */
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?System $system = null;
-
+    /**
+     * @var Collection
+     */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tables')]
     #[ORM\JoinTable(name: 'rc_table_favorite')]
     private Collection $favorite;
-
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: EventColor::class)]
-    private Collection $eventColors;
+    private Collection|ArrayCollection $eventColors;
 
     public function __construct()
     {
@@ -77,21 +107,35 @@ class Table
         $this->eventColors = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName() ?? 'n/a';
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -99,11 +143,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     *
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
@@ -111,11 +163,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function isShowcase(): ?bool
     {
         return $this->showcase;
     }
 
+    /**
+     * @param bool $showcase
+     *
+     * @return $this
+     */
     public function setShowcase(bool $showcase): self
     {
         $this->showcase = $showcase;
@@ -123,11 +183,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPicture(): ?string
     {
         return $this->picture;
     }
 
+    /**
+     * @param string|null $picture
+     *
+     * @return $this
+     */
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
@@ -135,11 +203,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string|null $content
+     *
+     * @return $this
+     */
     public function setContent(?string $content): self
     {
         $this->content = $content;
@@ -147,11 +223,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param DateTimeImmutable $createdAt
+     *
+     * @return $this
+     */
     public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -159,11 +243,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return DateTimeImmutable|null
+     */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param DateTimeImmutable $updatedAt
+     *
+     * @return $this
+     */
     public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -172,13 +264,18 @@ class Table
     }
 
     /**
-     * @return Collection<int, Event>
+     * @return Collection
      */
     public function getEvents(): Collection
     {
         return $this->events;
     }
 
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
     public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
@@ -189,6 +286,11 @@ class Table
         return $this;
     }
 
+    /**
+     * @param Event $event
+     *
+     * @return $this
+     */
     public function removeEvent(Event $event): self
     {
         // set the owning side to null (unless already changed)
@@ -200,13 +302,18 @@ class Table
     }
 
     /**
-     * @return Collection<int, Genre>
+     * @return Collection
      */
     public function getGenre(): Collection
     {
         return $this->genre;
     }
 
+    /**
+     * @param Genre $genre
+     *
+     * @return $this
+     */
     public function addGenre(Genre $genre): self
     {
         if (!$this->genre->contains($genre)) {
@@ -216,6 +323,11 @@ class Table
         return $this;
     }
 
+    /**
+     * @param Genre $genre
+     *
+     * @return $this
+     */
     public function removeGenre(Genre $genre): self
     {
         $this->genre->removeElement($genre);
@@ -223,11 +335,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return Editor|null
+     */
     public function getEditor(): ?Editor
     {
         return $this->editor;
     }
 
+    /**
+     * @param Editor|null $editor
+     *
+     * @return $this
+     */
     public function setEditor(?Editor $editor): self
     {
         $this->editor = $editor;
@@ -235,11 +355,19 @@ class Table
         return $this;
     }
 
+    /**
+     * @return System|null
+     */
     public function getSystem(): ?System
     {
         return $this->system;
     }
 
+    /**
+     * @param System|null $system
+     *
+     * @return $this
+     */
     public function setSystem(?System $system): self
     {
         $this->system = $system;
@@ -247,12 +375,20 @@ class Table
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getFavorite(): Collection
     {
         return $this->favorite;
     }
 
-    public function addFavorite(User $favorite): self
+    /**
+     * @param User|UserInterface $favorite
+     *
+     * @return $this
+     */
+    public function addFavorite(User|UserInterface $favorite): self
     {
         if (!$this->favorite->contains($favorite)) {
             $this->favorite->add($favorite);
@@ -261,18 +397,31 @@ class Table
         return $this;
     }
 
-    public function removeFavorite(User $favorite): self
+    /**
+     * @param User|UserInterface $favorite
+     *
+     * @return $this
+     */
+    public function removeFavorite(User|UserInterface $favorite): self
     {
         $this->favorite->removeElement($favorite);
 
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getEventColors(): Collection
     {
         return $this->eventColors;
     }
 
+    /**
+     * @param EventColor $eventColor
+     *
+     * @return $this
+     */
     public function addEventColor(EventColor $eventColor): self
     {
         if (!$this->eventColors->contains($eventColor)) {
@@ -283,6 +432,11 @@ class Table
         return $this;
     }
 
+    /**
+     * @param EventColor $eventColor
+     *
+     * @return $this
+     */
     public function removeEventColor(EventColor $eventColor): self
     {
         // set the owning side to null (unless already changed)

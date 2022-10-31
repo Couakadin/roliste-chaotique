@@ -19,11 +19,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BadgeRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Badge::class);
     }
 
+    /**
+     * @param Badge $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function save(Badge $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -33,6 +42,12 @@ class BadgeRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Badge $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Badge $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

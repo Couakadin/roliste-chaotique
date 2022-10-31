@@ -16,11 +16,20 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ZoneRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Zone::class);
     }
 
+    /**
+     * @param Zone $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function add(Zone $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +39,12 @@ class ZoneRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Zone $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
     public function remove(Zone $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

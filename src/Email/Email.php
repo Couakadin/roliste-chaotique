@@ -16,6 +16,9 @@ class Email extends AbstractController
     private const ADMIN_NAME = 'Rôliste chaotique';
     private const ADMIN_EMAIL = 'noreply@roliste-chaotique.be';
 
+    /**
+     * @param MailerInterface $mailer
+     */
     public function __construct(
         private readonly MailerInterface     $mailer,
     )

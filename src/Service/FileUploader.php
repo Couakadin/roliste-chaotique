@@ -9,11 +9,20 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
+    /**
+     * @param SluggerInterface $slugger
+     */
     public function __construct(public SluggerInterface $slugger)
     {
     }
 
     /**
+     * @param string $targetDirectory
+     * @param UploadedFile $file
+     * @param string|null $currentFile
+     *
+     * @return string
+     *
      * @throws Exception
      */
     public function upload(string $targetDirectory, UploadedFile $file, ?string $currentFile = ''): string

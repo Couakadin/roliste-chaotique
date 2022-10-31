@@ -10,10 +10,18 @@ use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 
 class CacheImageListener
 {
+    /**
+     * @param CacheManager $cacheManager
+     */
     public function __construct(private readonly CacheManager $cacheManager)
     {
     }
 
+    /**
+     * @param PreUpdateEventArgs $args
+     *
+     * @return void
+     */
     public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
@@ -34,7 +42,13 @@ class CacheImageListener
         }
     }
 
-    // when delete entity so remove all thumbnails related
+    /**
+     * When delete entity so remove all thumbnails related
+     *
+     * @param LifecycleEventArgs $args
+     *
+     * @return void
+     */
     public function preRemove(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();

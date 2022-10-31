@@ -13,6 +13,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param BadgeManager $badgeManager
+     */
     public function __construct
     (
         private readonly EntityManagerInterface $entityManager,
@@ -22,6 +26,10 @@ class LoginListener
     }
 
     /**
+     * @param InteractiveLoginEvent $event
+     *
+     * @return void
+     *
      * @throws Exception
      */
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
@@ -69,6 +77,11 @@ class LoginListener
     }
 
     /**
+     * @param User|UserInterface $user
+     * @param string $year
+     *
+     * @return DateTimeImmutable
+     *
      * @throws Exception
      */
     private function accountBirthday(User|UserInterface $user, string $year): DateTimeImmutable

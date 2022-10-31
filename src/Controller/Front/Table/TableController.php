@@ -11,11 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/tables')]
 class TableController extends AbstractController
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     */
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface    $translator
     )
     {
     }
@@ -26,15 +31,16 @@ class TableController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/tables', name: 'table.index')]
+    #[Route(name: 'table.index')]
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
-        $repo = $this->entityManager->getRepository(Table::class);
+        $table = $this->entityManager->getRepository(Table::class)
+            ->findBy([], ['createdAt' => 'DESC']);
 
-        $tables = $paginator->paginate($repo->findBy([], ['createdAt' => 'DESC']), $request->query->getInt('page', 1), 15);
+        $paginator = $paginator->paginate($table, $request->query->getInt('page', 1), 15);
 
         return $this->render('@front/table/index.html.twig', [
-            'tables' => $tables
+            'tables' => $paginator
         ]);
     }
 
@@ -42,30 +48,30 @@ class TableController extends AbstractController
      * @param string $slug
      * @return Response
      */
-    #[Route('/tables/{slug}', name: 'table.show')]
+    #[Route('/{slug}', name: 'table.show')]
     public function show(string $slug): Response
     {
         $tableRepo = $this->entityManager->getRepository(Table::class);
         $table = $tableRepo->findOneBy(['slug' => $slug]);
 
         if (!$table) {
-            return $this->redirectToRoute('table.index');
+            return $this->redirectToRoute('table.index', [], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         return $this->render('@front/table/show.html.twig', [
-            'table' => $table,
+            'table'      => $table,
             'nextEvents' => $tableRepo->nextEvents($table->getId())
         ]);
     }
 
-    #[Route('/tables/{slug}/add-favorite', name: 'table.favorite', methods: 'post')]
+    #[Route('/{slug}/add-favorite', name: 'table.favorite', methods: 'post')]
     public function addFavorite(string $slug, Request $request): Response
     {
         $tableRepo = $this->entityManager->getRepository(Table::class);
         $table = $tableRepo->findOneBy(['slug' => $slug]);
 
         if (!$table || !$this->getUser()) {
-            return $this->redirectToRoute('table.index');
+            return $this->redirectToRoute('table.index', [], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
         $submittedToken = $request->request->get('token');
@@ -77,7 +83,7 @@ class TableController extends AbstractController
 
                 $table->addFavorite($data);
                 $this->entityManager->flush();
-
+                // Flash user favorite table added
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.table.favorite.add', ['%table%' => $table->getName()])));
             }
 
@@ -86,7 +92,7 @@ class TableController extends AbstractController
 
                 $table->removeFavorite($data);
                 $this->entityManager->flush();
-
+                // Flash user favorite table removed
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.table.favorite.remove', ['%table%' => $table->getName()])));
             }
 

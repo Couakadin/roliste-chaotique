@@ -13,8 +13,16 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
     private const ADMIN_USERNAME = 'MJ Sadique';
     private const ADMIN_EMAIL = 'contact@roliste-chaotique.be';
 
+    /**
+     * @param UserPasswordHasherInterface $passwordHash
+     */
     public function __construct(private readonly UserPasswordHasherInterface $passwordHash) { }
 
+    /**
+     * @param ObjectManager $manager
+     *
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i < 20; $i++) {
@@ -40,6 +48,9 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return int
+     */
     public function getOrder(): int
     {
         return 1;

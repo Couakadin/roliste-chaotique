@@ -14,50 +14,84 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['name', 'path'], message: 'entity.unique')]
 class Avatar
 {
+    /**
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 255, unique: true)]
     private string $name;
 
+    /**
+     * @var string
+     */
     #[ORM\Column(length: 255)]
     private string $path;
 
+    /**
+     * @var ArrayCollection|Collection
+     */
     #[ORM\OneToMany(mappedBy: 'avatar', targetEntity: User::class)]
-    private Collection $user;
+    private Collection|ArrayCollection $user;
 
     public function __construct()
     {
         $this->user = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->getName();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getPath(): string
     {
         return $this->path;
     }
 
+    /**
+     * @param string $path
+     *
+     * @return $this
+     */
     public function setPath(string $path): self
     {
         $this->path = $path;
@@ -65,11 +99,19 @@ class Avatar
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
     public function getUser(): Collection
     {
         return $this->user;
     }
 
+    /**
+     * @param User $user
+     *
+     * @return $this
+     */
     public function addUser(User $user): self
     {
         if (!$this->user->contains($user)) {
@@ -80,6 +122,11 @@ class Avatar
         return $this;
     }
 
+    /**
+     * @param User $user
+     *
+     * @return $this
+     */
     public function removeUser(User $user): self
     {
         if ($this->user->removeElement($user)) {
