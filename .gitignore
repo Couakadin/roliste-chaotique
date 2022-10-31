@@ -19,7 +19,8 @@
 ###< symfony/phpunit-bridge ###
 
 ###> liip/imagine-bundle ###
-/public/media/cache/
+/public/media/
+/public/uploads/
 ###< liip/imagine-bundle ###
 
 ###> symfony/webpack-encore-bundle ###

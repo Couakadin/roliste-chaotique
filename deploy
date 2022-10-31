@@ -1,2 +1,15 @@
 #!/bin/sh
-rsync -av ./ esvf5457@roliste-chaotique.be:~/roliste-chaotique.be --include=.env --include=public/build --include=public/.htaccess --exclude=public/media --exclude=public/uploads --exclude=vendor --exclude-from=.gitignore --exclude=".*"  --exclude=tests --exclude=src/DataFixtures --exclude=config/secrets/dev --exclude=config/package/dev --exclude=config/package/test --exclude=assets --exclude=deploy
+rsync -av ./ esvf5457@roliste-chaotique.be:~/roliste-chaotique.be \
+--exclude-from=.gitignore \
+--exclude=deploy \
+--exclude=".*" \
+--include=.env \
+--exclude=vendor \
+--exclude=tests \
+--exclude=src/DataFixtures \
+--exclude=config/secrets/dev \
+--exclude=config/package/dev \
+--exclude=config/package/test \
+--exclude=assets \
+--include=public/build \
+--include=public/.htaccess
