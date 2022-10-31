@@ -10,8 +10,8 @@ rsync -av ./ esvf5457@roliste-chaotique.be:~/roliste-chaotique.be \
 --exclude=src/Assets \
 --exclude=src/Command \
 --exclude=config/secrets/dev \
---exclude=config/package/dev \
---exclude=config/package/test \
+--exclude=config/packages/dev \
+--exclude=config/packages/test \
 --exclude=assets \
 --include=public/build \
 --include=public/.htaccess
