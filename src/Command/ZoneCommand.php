@@ -6,21 +6,17 @@ use App\Entity\Zone\Zone;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class ZoneCommand extends Command
 {
     /**
      * @param EntityManagerInterface $entityManager
-     * @param ContainerBagInterface $containerBag
      */
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly ContainerBagInterface $containerBag)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
         parent::__construct();
     }
@@ -41,8 +37,6 @@ class ZoneCommand extends Command
      *
      * @return int
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws JsonException
      * @throws Exception
      */
@@ -51,7 +45,7 @@ class ZoneCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Attempting import of Zones...');
 
-        $file = (file_get_contents($this->containerBag->get('kernel.project_dir') . '/src/Assets/zoneDB.json'));
+        $file = (file_get_contents(dirname(__DIR__) . '/Assets/zoneDB.json'));
 
         $json = json_decode($file, true, 512, JSON_THROW_ON_ERROR);
 
