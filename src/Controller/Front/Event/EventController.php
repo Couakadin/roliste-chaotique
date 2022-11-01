@@ -78,6 +78,14 @@ class EventController extends AbstractController
                 $data = $this->getUser();
 
                 $event->addParticipate($data);
+
+                $notification = (new Notification())
+                    ->setUser($event->getMaster())
+                    ->setEvent($event)
+                    ->setParticipate($this->getUser())
+                    ->setType('event-participate')
+                    ->setIsRead(false);
+                $this->entityManager->persist($notification);
                 $this->entityManager->flush();
 
                 $totalParticipate = $eventRepo->findTotalEventsByParticipate($this->getUser());
@@ -90,6 +98,14 @@ class EventController extends AbstractController
                 $data = $this->getUser();
 
                 $event->removeParticipate($data);
+
+                $notification = (new Notification())
+                    ->setUser($event->getMaster())
+                    ->setEvent($event)
+                    ->setParticipate($this->getUser())
+                    ->setType('event-no-participate')
+                    ->setIsRead(false);
+                $this->entityManager->persist($notification);
                 $this->entityManager->flush();
                 // Flash user event not participated
                 $this->addFlash('success', ucfirst($this->translator->trans('flash.event.participate.remove')));
@@ -127,8 +143,8 @@ class EventController extends AbstractController
                 if ($user !== $event->getMaster() && $event->getTable()->getFavorite()->contains($user)) {
                     $notification = (new Notification())
                         ->setUser($user)
+                        ->setEvent($event)
                         ->setType('event-create')
-                        ->setEntityId($event->getId())
                         ->setIsRead(false);
                     $this->entityManager->persist($notification);
                 }
@@ -173,8 +189,8 @@ class EventController extends AbstractController
                 if ($user !== $event->getMaster() && $event->getParticipate()->contains($user)) {
                     $notification = (new Notification())
                         ->setUser($user)
+                        ->setEvent($event)
                         ->setType('event-update')
-                        ->setEntityId($event->getId())
                         ->setIsRead(false);
                     $this->entityManager->persist($notification);
                 }

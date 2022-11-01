@@ -203,6 +203,9 @@ ui:
   view_all: voir tout
   notification_event_updated: l'événement <strong>%event%</strong> a été modifié.
   notification_event_created: un nouvel événement pour <strong>%table%</strong> a été créé.
+  notification_event_participate: <strong>%participate%</strong> participe à l'événement <strong>%event%</strong>.
+  notification_event_no_participate: <strong>%participate%</strong> ne participe plus à l'événement <strong>%event%</strong>.
+  notification_badge_unlock: vous avez débloqué le badge <strong>%badge%</strong> !
   event_past: cette événement est passé
   event_max: max. participants atteint
   total_participate: nombre de participants

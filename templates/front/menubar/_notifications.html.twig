@@ -1,0 +1,76 @@
+{% if app.user %}
+    <div class="relative">
+        {% if notification.findReadByUser(app.user)|length > 0 %}
+            <span id="notificationDot" class="notification-dot"></span>
+        {% endif %}
+        <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" width="32"
+             class="notification-icon" data-display="notification">
+        <div id="notification" class="notification" style="display: none;">
+            <div class="notification-header">
+                <h3>{{ 'ui.notifications'|trans|capitalize }}</h3>
+                <span id="notificationReadAll" class="text-pointer text-small">
+                            {{ 'ui.mark_as_read_all'|trans|capitalize }}
+                        </span>
+            </div>
+            <ul class="notification-list">
+                {% for notificationUser in notification.notificationsByUser(app.user) %}
+                    {% cache 'notification' ~ notificationUser.id ~ notificationUser.updatedAt.timestamp %}
+                        <li class="flex column notification-item {{ notificationUser.isRead ? '' : 'unread' }}">
+                            {% if 'event-update' is same as notificationUser.type %}
+                                <a data-notification="{{ notificationUser.id }}"
+                                   href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+                                   class="notification-link">
+                                    {{ ('ui.notification_event_updated'|trans({'%event%': notificationUser.event.name})|UCFirst)|raw }}
+                                </a>
+                                <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+                            {% elseif 'event-create' is same as notificationUser.type %}
+                                <a data-notification="{{ notificationUser.id }}"
+                                   href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+                                   class="notification-link">
+                                    {{ ('ui.notification_event_created'|trans({'%table%': notificationUser.event.table.name})|UCFirst)|raw }}
+                                </a>
+                                <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+                            {% elseif 'event-participate' is same as notificationUser.type %}
+                                <a data-notification="{{ notificationUser.id }}"
+                                   href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+                                   class="notification-link">
+                                    {{ ('ui.notification_event_participate'|trans({
+                                        '%event%': notificationUser.event.name,
+                                        '%participate%': notificationUser.participate.username
+                                    })|UCFirst)|raw }}
+                                </a>
+                                <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+                            {% elseif 'event-no-participate' is same as notificationUser.type %}
+                                <a data-notification="{{ notificationUser.id }}"
+                                   href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+                                   class="notification-link">
+                                    {{ ('ui.notification_event_no_participate'|trans({
+                                        '%event%': notificationUser.event.name,
+                                        '%participate%': notificationUser.participate.username
+                                    })|UCFirst)|raw }}
+                                </a>
+                                <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+                            {% elseif 'badge-unlock' is same as notificationUser.type %}
+                                <a data-notification="{{ notificationUser.id }}"
+                                   href="{{ path('account.badge', {'slug': notificationUser.user.slug}) }}"
+                                   class="notification-link">
+                                    {{ ('ui.notification_badge_unlock'|trans({'%badge%': notificationUser.badge.name})|UCFirst)|raw }}
+                                </a>
+                                <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+                            {% endif %}
+                        </li>
+                    {% endcache %}
+                {% else %}
+                    <li class="notification-item">
+                        {{ 'ui.not_for_now'|trans|capitalize }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <p class="text-center text-small">
+                <a href="{{ path('account.notifications', {'slug': app.user.slug}) }}" class="small">
+                    {{ 'ui.view_all'|trans|capitalize }}
+                </a>
+            </p>
+        </div>
+    </div>
+{% endif %}

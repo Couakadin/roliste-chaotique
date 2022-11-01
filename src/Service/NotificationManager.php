@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Badge\Badge;
 use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
 use App\Entity\User\User;
@@ -26,19 +27,8 @@ class NotificationManager
      */
     public function notificationsByUser(User|UserInterface $user): array
     {
-        $notifications = $this->manager->getRepository(Notification::class)
-            ->findBy(['user' => $user], ['createdAt' => 'DESC'], 15);
-
-        foreach ($notifications as $notification) {
-            if (in_array($notification->getType(), ['event-create', 'event-update']) ) {
-                $event = $this->manager->getRepository(Event::class)
-                    ->find($notification->getEntityId());
-
-                $notification->event = $event;
-            }
-        }
-
-        return $notifications;
+        return $this->manager->getRepository(Notification::class)
+            ->findAllByUser($user);
     }
 
     /**

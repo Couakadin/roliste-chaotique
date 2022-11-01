@@ -2,6 +2,8 @@
 
 namespace App\Entity\Notification;
 
+use App\Entity\Badge\Badge;
+use App\Entity\Event\Event;
 use App\Entity\User\User;
 use App\Repository\Notification\NotificationRepository;
 use DateTimeImmutable;
@@ -20,11 +22,6 @@ class Notification
     #[ORM\Column]
     private ?int $id = null;
     /**
-     * @var int|null
-     */
-    #[ORM\Column]
-    private ?int $entityId = null;
-    /**
      * @var string|null
      */
     #[ORM\Column(length: 255)]
@@ -41,10 +38,29 @@ class Notification
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
     /**
+     * @var DateTimeImmutable|null
+     */
+    #[ORM\Column]
+    #[Gedmo\Timestampable(on: 'update')]
+    private ?DateTimeImmutable $updatedAt = null;
+    /**
      * @var User|null
      */
     #[ORM\ManyToOne(inversedBy: 'notifications')]
     private ?User $user = null;
+    /**
+     * @var Event|null
+     */
+    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    private ?Event $event = null;
+    /**
+     * @var Badge|null
+     */
+    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    private ?Badge $badge = null;
+
+    #[ORM\ManyToOne]
+    private ?User $participate = null;
 
     /**
      * @return int|null
@@ -52,26 +68,6 @@ class Notification
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getEntityId(): ?int
-    {
-        return $this->entityId;
-    }
-
-    /**
-     * @param int $entityId
-     *
-     * @return $this
-     */
-    public function setEntityId(int $entityId): self
-    {
-        $this->entityId = $entityId;
-
-        return $this;
     }
 
     /**
@@ -135,6 +131,26 @@ class Notification
     }
 
     /**
+     * @return DateTimeImmutable|null
+     */
+    public function getUpdatedAt(): ?DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTimeImmutable $updatedAt
+     *
+     * @return $this
+     */
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
      * @return User|null
      */
     public function getUser(): ?User
@@ -150,6 +166,58 @@ class Notification
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Event|null
+     */
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event|null $event
+     *
+     * @return $this
+     */
+    public function setEvent(?Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * @return Badge|null
+     */
+    public function getBadge(): ?Badge
+    {
+        return $this->badge;
+    }
+
+    /**
+     * @param Badge|null $badge
+     *
+     * @return $this
+     */
+    public function setBadge(?Badge $badge): self
+    {
+        $this->badge = $badge;
+
+        return $this;
+    }
+
+    public function getParticipate(): ?User
+    {
+        return $this->participate;
+    }
+
+    public function setParticipate(?User $participate): self
+    {
+        $this->participate = $participate;
 
         return $this;
     }

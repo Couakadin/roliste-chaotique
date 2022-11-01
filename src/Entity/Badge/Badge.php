@@ -2,6 +2,7 @@
 
 namespace App\Entity\Badge;
 
+use App\Entity\Notification\Notification;
 use App\Repository\Badge\BadgeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,47 +20,47 @@ class Badge
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     /**
      * @var int
      */
     #[Gedmo\SortablePosition]
     #[ORM\Column(name: 'position', type: 'integer')]
     private int $position;
-
     /**
      * @var string|null
      */
     #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
-
     /**
      * @var string|null
      */
     #[ORM\Column(length: 255)]
     private ?string $description = null;
-
     /**
      * @var string|null
      */
     #[ORM\Column(length: 255)]
     private ?string $actionName = null;
-
     /**
      * @var int|null
      */
     #[ORM\Column]
     private ?int $actionCount = null;
-
     /**
      * @var ArrayCollection|Collection
      */
     #[ORM\OneToMany(mappedBy: 'badge', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
     private Collection|ArrayCollection $unlocks;
+    /**
+     * @var ArrayCollection|Collection
+     */
+    #[ORM\OneToMany(mappedBy: 'badge', targetEntity: Notification::class)]
+    private Collection|ArrayCollection $notifications;
 
     public function __construct()
     {
         $this->unlocks = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     /**
@@ -202,6 +203,46 @@ class Badge
             // set the owning side to null (unless already changed)
             if ($unlock->getBadge() === $this) {
                 $unlock->setBadge(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->setBadge($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return $this
+     */
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getBadge() === $this) {
+                $notification->setBadge(null);
             }
         }
 

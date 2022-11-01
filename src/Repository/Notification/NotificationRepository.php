@@ -61,6 +61,25 @@ class NotificationRepository extends ServiceEntityRepository
      *
      * @return float|int|mixed|string
      */
+    public function findAllByUser(array|User|UserInterface $user): mixed
+    {
+        return $this->createQueryBuilder('n')
+            ->leftJoin('n.user', 'u')
+            ->leftJoin('n.event', 'e')
+            ->leftJoin('n.badge', 'b')
+            ->where('u.id = :user')
+            ->setParameter('user', $user)
+            ->setMaxResults(15)
+            ->orderBy('n.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param array|User|UserInterface $user
+     *
+     * @return float|int|mixed|string
+     */
     public function findReadByUser(array|User|UserInterface $user): mixed
     {
         return $this->createQueryBuilder('n')
