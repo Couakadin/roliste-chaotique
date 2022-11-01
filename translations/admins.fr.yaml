@@ -70,6 +70,7 @@ admin:
     position: position
     table: table
     url: url
+    online: en ligne
     participate: participant
     public: public
     players: joueurs
