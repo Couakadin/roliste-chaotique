@@ -4,121 +4,123 @@
 {% block title 'ui.events'|trans|capitalize %}
 
 {% block body %}
-    <section class="table-banner"
-             style="background: url('{{ asset('/uploads/images/tables/' ~ event.table.picture) }}') center / cover;">
-        <h1 class="table-mask column h1">
-            {{ event.name }}
-            <small class="mt1">
-                {% if event.start|date('Y-m-d') is same as event.end|date('Y-m-d') %}
-                    {{ event.start|format_date('long') }}
-                {% else %}
-                    {{ event.start|format_date('long') }} - {{ event.end|format_date('long') }}
+    {% cache 'event.show' ~ event.id ~ event.updatedAt.timestamp %}
+        <section class="table-banner"
+                 style="background: url('{{ asset('/uploads/images/tables/' ~ event.table.picture) }}') center / cover;">
+            <h1 class="table-mask column h1">
+                {{ event.name }}
+                <small class="mt1">
+                    {% if event.start|date('Y-m-d') is same as event.end|date('Y-m-d') %}
+                        {{ event.start|format_date('long') }}
+                    {% else %}
+                        {{ event.start|format_date('long') }} - {{ event.end|format_date('long') }}
+                    {% endif %}
+                </small>
+            </h1>
+        </section>
+
+        <div class="container mt2">
+            <div class="flex space-between align-center gap-1 mb2">
+                <a href="{{ path('event.index') }}" class="btn-secondary">{{ 'ui.go_back'|trans|capitalize }}</a>
+                {% if app.user and app.user is same as event.master %}
+                    <a href="{{ path('event.edit', {'slug': event.slug}) }}"
+                       class="btn-primary">{{ 'ui.edit'|trans|capitalize }}</a>
                 {% endif %}
-            </small>
-        </h1>
-    </section>
-
-    <div class="container mt2">
-        <div class="flex space-between align-center gap-1 mb2">
-            <a href="{{ path('event.index') }}" class="btn-secondary">{{ 'ui.go_back'|trans|capitalize }}</a>
-            {% if app.user and app.user is same as event.master %}
-                <a href="{{ path('event.edit', {'slug': event.slug}) }}"
-                   class="btn-primary">{{ 'ui.edit'|trans|capitalize }}</a>
-            {% endif %}
-        </div>
-        <div class="table-grid">
-            <div class="card">
-                <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
-                <div class="card_body">
-                    <p>
-                        {{ 'ui.dm'|trans|upper }} :
-                        {% if event.master %}
-                            <a href="{{ path('account.index', {'slug': event.master}) }}">
-                                {{ event.master.username }}
-                            </a>
-                        {% else %}
-                            {{ 'n/a' }}
-                        {% endif %}
-                    </p>
-                    <p>{{ 'ui.type'|trans|capitalize }} : {{ ('ui.'~event.type)|trans }}</p>
-                    <p>
-                        {{ 'ui.table'|trans|capitalize }} :
-                        <a href="{{ path('table.show', {'slug': event.table.slug}) }}">{{ event.table.name }}</a>
-                    </p>
-                    <p>{{ 'ui.zone'|trans|capitalize }} : {{ event.zone ?? 'ui.online'|trans }}</p>
-                    <p>
-                        {{ 'ui.hour_event'|trans|capitalize }} :
-                        {% if event.start|date('H:i') is same as event.end|date('H:i') %}
-                            {{ event.start|format_datetime('none', 'short') }}
-                        {% else %}
-                            {{ event.start|format_datetime('none', 'short') }} - {{ event.end|format_datetime('none', 'short') }}
-                        {% endif %}
-                    </p>
-                    <p>
-                        {{ 'ui.participant'|trans|capitalize }} :
-                        {% for participant in event.participate %}
-                        <a href="{{ path('account.index', {'slug': participant.slug}) }}">
-                            {{ participant.username }}
-                            </a>{% if not loop.last %}, {% endif %}
-                        {% else %}
-                            {{ 'ui.no_participant'|trans }}
-                        {% endfor %}
-                    </p>
-
-                    <div class="mt2 flex space-between">
-                        {% if app.user and app.user is not same as event.master %}
-                            {% if app.user.isVerified %}
-                                {% if event.end|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') %}
-                                    <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
-                                        {% if event.totalParticipate and event.participate|length < event.totalParticipate or event.totalParticipate is null %}
-                                            {% if app.user not in event.participate %}
-                                                <input type="hidden" name="participate" value="true">
-                                                <button type="submit" class="btn-primary">
-                                                    {{ 'ui.i_participate'|trans|capitalize }}
-                                                </button>
-                                            {% else %}
-                                                <input type="hidden" name="participate" value="false">
-                                                <button type="submit" class="btn-secondary">
-                                                    {{ 'ui.i_not_participate'|trans|capitalize }}
-                                                </button>
-                                            {% endif %}
-                                        {% else %}
-                                            {% if app.user not in event.participate %}
-                                                <p class="btn-secondary">{{ 'ui.event_max'|trans|capitalize }}</p>
-                                            {% else %}
-                                                <input type="hidden" name="participate" value="false">
-                                                <button type="submit" class="btn-secondary">
-                                                    {{ 'ui.i_not_participate'|trans|capitalize }}
-                                                </button>
-                                            {% endif %}
-                                        {% endif %}
-                                        <input type="hidden" name="token" value="{{ csrf_token('participate-event') }}">
-                                    </form>
-                                {% else %}
-                                    <p class="btn-secondary">{{ 'ui.event_past'|trans|capitalize }}</p>
-                                {% endif %}
+            </div>
+            <div class="table-grid">
+                <div class="card">
+                    <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                    <div class="card_body">
+                        <p>
+                            {{ 'ui.dm'|trans|upper }} :
+                            {% if event.master %}
+                                <a href="{{ path('account.index', {'slug': event.master}) }}">
+                                    {{ event.master.username }}
+                                </a>
                             {% else %}
-                                <div class="card flash-warning">{{ 'ui.verify_email_warning'|trans|UCFirst }}
-                                    <a href="{{ path('registration.resend-verify-email') }}" class="btn-primary mt2 flex-center">
-                                        {{ 'ui.verify_email'|trans|capitalize }}
-                                    </a>
-                                </div>
+                                {{ 'n/a' }}
                             {% endif %}
+                        </p>
+                        <p>{{ 'ui.type'|trans|capitalize }} : {{ ('ui.'~event.type)|trans }}</p>
+                        <p>
+                            {{ 'ui.table'|trans|capitalize }} :
+                            <a href="{{ path('table.show', {'slug': event.table.slug}) }}">{{ event.table.name }}</a>
+                        </p>
+                        <p>{{ 'ui.zone'|trans|capitalize }} : {{ event.zone ?? 'ui.online'|trans }}</p>
+                        <p>
+                            {{ 'ui.hour_event'|trans|capitalize }} :
+                            {% if event.start|date('H:i') is same as event.end|date('H:i') %}
+                                {{ event.start|format_datetime('none', 'short') }}
+                            {% else %}
+                                {{ event.start|format_datetime('none', 'short') }} - {{ event.end|format_datetime('none', 'short') }}
+                            {% endif %}
+                        </p>
+                        <p>
+                            {{ 'ui.participant'|trans|capitalize }} :
+                            {% for participant in event.participate %}
+                            <a href="{{ path('account.index', {'slug': participant.slug}) }}">
+                                {{ participant.username }}
+                                </a>{% if not loop.last %}, {% endif %}
+                            {% else %}
+                                {{ 'ui.no_participant'|trans }}
+                            {% endfor %}
+                        </p>
+
+                        <div class="mt2 flex space-between">
+                            {% if app.user and app.user is not same as event.master %}
+                                {% if app.user.isVerified %}
+                                    {% if event.end|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') %}
+                                        <form action="{{ path('event.show', { 'slug': event.slug }) }}" method="post">
+                                            {% if event.totalParticipate and event.participate|length < event.totalParticipate or event.totalParticipate is null %}
+                                                {% if app.user not in event.participate %}
+                                                    <input type="hidden" name="participate" value="true">
+                                                    <button type="submit" class="btn-primary">
+                                                        {{ 'ui.i_participate'|trans|capitalize }}
+                                                    </button>
+                                                {% else %}
+                                                    <input type="hidden" name="participate" value="false">
+                                                    <button type="submit" class="btn-secondary">
+                                                        {{ 'ui.i_not_participate'|trans|capitalize }}
+                                                    </button>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if app.user not in event.participate %}
+                                                    <p class="btn-secondary">{{ 'ui.event_max'|trans|capitalize }}</p>
+                                                {% else %}
+                                                    <input type="hidden" name="participate" value="false">
+                                                    <button type="submit" class="btn-secondary">
+                                                        {{ 'ui.i_not_participate'|trans|capitalize }}
+                                                    </button>
+                                                {% endif %}
+                                            {% endif %}
+                                            <input type="hidden" name="token" value="{{ csrf_token('participate-event') }}">
+                                        </form>
+                                    {% else %}
+                                        <p class="btn-secondary">{{ 'ui.event_past'|trans|capitalize }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="card flash-warning">{{ 'ui.verify_email_warning'|trans|UCFirst }}
+                                        <a href="{{ path('registration.resend-verify-email') }}" class="btn-primary mt2 flex-center">
+                                            {{ 'ui.verify_email'|trans|capitalize }}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
+                    <div class="card_body">
+                        {% if event.content is not null %}
+                            {{ event.content|raw }}
+                        {% else %}
+                            {{ 'ui.no_item'|trans|capitalize }}
                         {% endif %}
                     </div>
                 </div>
             </div>
-
-            <div class="card">
-                <h2 class="h2 link-line card_title">{{ 'ui.description'|trans|capitalize }}</h2>
-                <div class="card_body">
-                    {% if event.content is not null %}
-                        {{ event.content|raw }}
-                    {% else %}
-                        {{ 'ui.no_item'|trans|capitalize }}
-                    {% endif %}
-                </div>
-            </div>
         </div>
-    </div>
+    {% endcache %}
 {% endblock %}

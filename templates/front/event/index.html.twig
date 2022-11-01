@@ -22,29 +22,31 @@
             {{ form_end(searchForm) }}
         {% endif %}
         {% for event in events %}
-            <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">
-                <p class="event-header h4">{{ event.name|u.truncate(15, '...') }}</p>
-                <p class="event-header">{{ ('ui.'~event.type)|trans|capitalize }}</p>
-                <p class="event-header">{{ event.table.name }}</p>
-                <p class="event-header">
-                    {% if event.zone is not null %}
-                        {{ event.zone.locality }}
-                    {% else %}
-                        {{ 'ui.online'|trans|capitalize }}
-                    {% endif %}
-                </p>
-                <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
-                <p class="event-header">
-                    {% if
-                        event.totalParticipate is not null and event.totalParticipate > 1 or
-                        event.totalParticipate is null and event.participate|length > 1 %}
-                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.players'|trans }}
-                    {% else %}
-                        {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.player'|trans }}
-                    {% endif %}
-                </p>
-                <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>
-            </a>
+            {% cache 'event.index' ~ event.id ~ event.updatedAt.timestamp %}
+                <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">
+                    <p class="event-header h4">{{ event.name|u.truncate(15, '...') }}</p>
+                    <p class="event-header">{{ ('ui.'~event.type)|trans|capitalize }}</p>
+                    <p class="event-header">{{ event.table.name }}</p>
+                    <p class="event-header">
+                        {% if event.zone is not null %}
+                            {{ event.zone.locality }}
+                        {% else %}
+                            {{ 'ui.online'|trans|capitalize }}
+                        {% endif %}
+                    </p>
+                    <p class="event-header">{{ 'ui.dm'|trans|upper }} : {{ event.master ?? 'n/a' }}</p>
+                    <p class="event-header">
+                        {% if
+                            event.totalParticipate is not null and event.totalParticipate > 1 or
+                            event.totalParticipate is null and event.participate|length > 1 %}
+                            {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.players'|trans }}
+                        {% else %}
+                            {{ event.participate|length }}{{ event.totalParticipate ? '/' ~ event.totalParticipate : '' }} {{ 'ui.player'|trans }}
+                        {% endif %}
+                    </p>
+                    <p class="event-header">{{ 'ui.date'|trans|capitalize }} : {{ event.start|format_date('long') }}</p>
+                </a>
+            {% endcache %}
         {% else %}
             <div class="card">
                 {{ 'ui.no_item'|trans|capitalize }}
