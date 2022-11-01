@@ -188,16 +188,7 @@ class AccountController extends AbstractController
         }
 
         $notifications = $this->entityManager->getRepository(Notification::class)
-            ->findBy(['user' => $user], ['createdAt' => 'desc']);
-
-        foreach ($notifications as $notification) {
-            if (in_array($notification->getType(), ['event-create', 'event-update']) ) {
-                $event = $this->entityManager->getRepository(Event::class)
-                    ->find($notification->getEntityId());
-
-                $notification->event = $event;
-            }
-        }
+            ->findAllByUser($user);
 
         return $this->render('@front/account/notification.html.twig', [
             'notifications' => $notifications
