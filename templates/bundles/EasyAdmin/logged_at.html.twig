@@ -1,2 +1,2 @@
 {# Show the loggedAt in User index and details #}
-{{ field.value ? field.value|ago : 'jamais' }}
+{{ (field.value|date('Y-m-d H:i:s') < 'now'|date('Y-m-d H:i:s')) ? field.value|ago : 'admin.ui.online'|trans({}, 'admins') }}
