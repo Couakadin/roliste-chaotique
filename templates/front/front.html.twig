@@ -12,7 +12,7 @@
                 {# Christmas period #}
                 {% set holidayBanner = 'build/front/holiday/christmas.png' %}
             {% endif %}
-            {% if holidayBanner %}
+            {% if holidayBanner is defined %}
                 <div style="background: url({{ asset(holidayBanner) }}) repeat-x top;
                         height:80px;">{# Holiday Banner #}</div>
             {% endif %}
