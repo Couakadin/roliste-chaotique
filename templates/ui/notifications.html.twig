@@ -1,0 +1,42 @@
+{% if 'event-update' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_event_updated'|trans({'%event%': notificationUser.event.name})|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% elseif 'event-create' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_event_created'|trans({'%table%': notificationUser.event.table.name})|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% elseif 'event-participate' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_event_participate'|trans({
+            '%event%': notificationUser.event.name,
+            '%participate%': notificationUser.participate.username
+        })|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% elseif 'event-no-participate' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_event_no_participate'|trans({
+            '%event%': notificationUser.event.name,
+            '%participate%': notificationUser.participate.username
+        })|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% elseif 'badge-unlock' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('account.badge', {'slug': notificationUser.user.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_badge_unlock'|trans({'%badge%': notificationUser.badge.name})|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% endif %}

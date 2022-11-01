@@ -5,7 +5,40 @@
              alt="{{ 'ui.chaotic_roleplayer'|trans }}">
     </a>
     <div class="flex">
-        {% include 'front/menubar/_notifications.html.twig' %}
+        {% if app.user %}
+            <div class="relative">
+                {% if notification.findReadByUser(app.user)|length > 0 %}
+                    <span id="notificationDot" class="notification-dot"></span>
+                {% endif %}
+                <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" width="32"
+                     class="notification-icon" data-display="notification">
+                <div id="notification" class="notification" style="display: none;">
+                    <div class="notification-header">
+                        <h3>{{ 'ui.notifications'|trans|capitalize }}</h3>
+                        <span id="notificationReadAll" class="text-pointer text-small">
+                            {{ 'ui.mark_as_read_all'|trans|capitalize }}
+                        </span>
+                    </div>
+                    <ul class="notification-list">
+                        {% for notificationUser in notification.notificationsByUser(app.user) %}
+                            <li class="flex column notification-item {{ notificationUser.isRead ? '' : 'unread' }}">
+                                {% include '@ui/notifications.html.twig' %}
+                            </li>
+                        {% else %}
+                            <li class="notification-item">
+                                {{ 'ui.not_for_now'|trans|capitalize }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <p class="text-center text-small">
+                        <a href="{{ path('account.notifications', {'slug': app.user.slug}) }}" class="small">
+                            {{ 'ui.view_all'|trans|capitalize }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
         <div id="burger" class="burger">
             <div id="burger-menu" class="burger-menu"></div>
         </div>

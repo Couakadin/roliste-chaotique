@@ -46,20 +46,20 @@ class Notification
     /**
      * @var User|null
      */
-    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?User $user = null;
     /**
      * @var Event|null
      */
-    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?Event $event = null;
     /**
      * @var Badge|null
      */
-    #[ORM\ManyToOne(inversedBy: 'notifications')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?Badge $badge = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(fetch: 'EAGER')]
     private ?User $participate = null;
 
     /**
