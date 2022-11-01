@@ -144,6 +144,8 @@ class EventType extends AbstractType
                 'constraints'   => [new Valid()]
             ])
             ->add('zone', EntityType::class, [
+                'required'     => false,
+                'empty_data'   => null,
                 'label'        => 'ui.zone',
                 'class'        => Zone::class,
                 'choice_label' => 'locality',

@@ -4,7 +4,9 @@ const eventZone = document.getElementById('event_zone');
 
 if (eventZone) {
     new Choices(eventZone, {
-        allowHTML : true,
+        allowHTML : false,
+        noResultsText: 'Aucun résultat trouvé',
+        noChoicesText: 'Aucune zone à charger',
         classNames: {
             containerInner  : 'choices-inner',
             listDropdown    : 'choices-list_dropdown',
