@@ -13,7 +13,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailAdmin extends AbstractController
 {
-    private const ADMIN_NAME = 'Rôliste chaotique';
     private const ADMIN_EMAIL = 'webdev.valentin@gmail.com';
 
     /**
@@ -34,7 +33,7 @@ class EmailAdmin extends AbstractController
         $subject = $this->translator->trans('admin.inscription.subject');
 
         $email = (new TemplatedEmail())
-            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->from(new Address(Email::ADMIN_EMAIL, Email::ADMIN_NAME))
             ->to(self::ADMIN_EMAIL)
             ->subject(ucfirst($subject))
             ->htmlTemplate('@email/admin/admin_inscription.html.twig')

@@ -13,8 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class Email extends AbstractController
 {
-    private const ADMIN_NAME = 'Rôliste chaotique';
-    private const ADMIN_EMAIL = 'noreply@roliste-chaotique.be';
+    public const ADMIN_NAME = 'Rôliste chaotique';
+    public const ADMIN_EMAIL = 'noreply@roliste-chaotique.be';
 
     /**
      * @param MailerInterface $mailer
