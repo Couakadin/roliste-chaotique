@@ -4,8 +4,10 @@ namespace App\Command;
 
 use App\Email\Email;
 use App\Entity\Event\Event;
+use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -31,8 +33,9 @@ class EventCronCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('event:cron:email')
-            ->setDescription('Send email to users one week before an event');
+            ->setName('cron:event')
+            ->setDescription('CRON for Event')
+            ->addArgument('cron', InputArgument::REQUIRED, 'The CRON required for the command.');
     }
 
     /**
@@ -45,11 +48,25 @@ class EventCronCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->title('Attempt to send emails...');
+        if (!$input->getArgument('cron')) {
+            return Command::INVALID;
+        }
 
-        $events = $this->entityManager->getRepository(Event::class)
-            ->findEventsWeekBefore();
+        $eventRepository = $this->entityManager->getRepository(Event::class);
+
+        if ('week' === $input->getArgument('cron')) {
+            $this->oneWeekBefore($eventRepository);
+        }
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function oneWeekBefore(EventRepository $eventRepository): void
+    {
+        $events = $eventRepository->findEventsWeekBefore();
 
         if (0 < count($events)) {
             foreach ($events as $event) {
@@ -59,10 +76,6 @@ class EventCronCommand extends Command
                     $this->email->eventWeekBefore($event, $participate);
                 }
             }
-
-            $io->success('Emails sent perfectly!');
         }
-
-        return true;
     }
 }
