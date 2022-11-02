@@ -22,6 +22,15 @@
         })|UCFirst)|raw }}
     </a>
     <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
+{% elseif 'event-soon' is same as notificationUser.type %}
+    <a data-notification="{{ notificationUser.id }}"
+       href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"
+       class="notification-link">
+        {{ ('ui.notification_event_soon'|trans({
+            '%event%': notificationUser.event.name
+        })|UCFirst)|raw }}
+    </a>
+    <span class="text-small text-right">{{ notificationUser.createdAt|ago }}</span>
 {% elseif 'event-no-participate' is same as notificationUser.type %}
     <a data-notification="{{ notificationUser.id }}"
        href="{{ path('event.show', {'slug': notificationUser.event.slug}) }}"

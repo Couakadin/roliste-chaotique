@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Email\Email;
 use App\Entity\Event\Event;
+use App\Entity\Notification\Notification;
 use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -73,8 +74,18 @@ class EventCronCommand extends Command
                 $event->addParticipate($master);
                 foreach ($event->getParticipate() as $participate) {
                     $this->email->eventWeekBefore($event, $participate);
+
+                    // With the email, send a notification
+                    $notification = (new Notification())
+                        ->setUser($participate)
+                        ->setEvent($event)
+                        ->setIsRead(false)
+                        ->setType('event-soon');
+
+                    $this->entityManager->persist($notification);
                 }
             }
+            $this->entityManager->flush();
         }
     }
 }
