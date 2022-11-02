@@ -2,7 +2,6 @@
 
 namespace App\EventListener;
 
-use App\Entity\Notification\Notification;
 use App\Entity\User\User;
 use App\Service\BadgeManager;
 use DateTimeImmutable;
@@ -56,19 +55,6 @@ class LoginListener
         }
         if ($this->accountBirthday($user, '+3 years')->format('Y-m-d') <= $now->format('Y-m-d')) {
             $this->badgeManager->checkAndUnlock($user, 'account-birthday', 3);
-        }
-
-
-        $notifications = $this->entityManager->getRepository(Notification::class)
-            ->findBy(['user' => $user]);
-
-        if ($notifications) {
-            $date = new DateTimeImmutable('-3 months');
-            foreach ($notifications as $notification) {
-                if ($notification->getCreatedAt()->format('Y-m-d') < $date->format('Y-m-d')) {
-                    $this->entityManager->remove($notification);
-                }
-            }
         }
 
         // Persist the data to database.
