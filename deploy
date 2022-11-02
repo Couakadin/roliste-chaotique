@@ -9,8 +9,6 @@ rsync -av ./ esvf5457@roliste-chaotique.be:~/roliste-chaotique.be \
 --exclude=vendor \
 --exclude=tests \
 --exclude=src/DataFixtures \
---exclude=src/Assets \
---exclude=src/Command \
 --exclude=config/secrets/dev \
 --exclude=config/routes/dev \
 --exclude=config/packages/dev \
