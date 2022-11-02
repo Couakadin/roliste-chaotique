@@ -82,7 +82,7 @@ class Event
     /**
      * @var User|null
      */
-    #[ORM\ManyToOne(inversedBy: 'eventMaster')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'eventMaster')]
     private ?User $master = null;
     /**
      * @var Table|null

@@ -128,6 +128,8 @@ class EventController extends AbstractController
     #[Route('/new', name: 'event.new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventRepository $eventRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -176,6 +178,12 @@ class EventController extends AbstractController
     #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        if ($this->getUser() !== $event->getMaster()) {
+            return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()]);
+        }
+
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
