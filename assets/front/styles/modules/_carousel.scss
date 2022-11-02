@@ -1,10 +1,16 @@
 .carousel {
-  display       : flex;
+  display       : none;
   align-items   : flex-end;
   height        : calc(var(--gap) * 55);
   border-radius : var(--border-radius);
   background    : grey;
   margin        : 0 calc(var(--gap) * 2);
+}
+
+.carousel-item {
+  .carousel {
+    display : flex;
+  }
 }
 
 .carousel-container {
