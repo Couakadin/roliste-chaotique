@@ -14,7 +14,7 @@ email:
       <br>
       <a href="%signedUrl%">Vérifier votre email</a> (la validation expirera le %expiredAt%).
   event_week_before:
-    subject: un événement a bientôt lieu
+    subject: un événement aura bientôt lieu !
     body: |
       Oyez oyez %user%,
       <br>
@@ -22,7 +22,7 @@ email:
 
 admin:
   inscription:
-    subject: nouvelle inscription
+    subject: nouvelle inscription !
     body: |
       Une nouvelle inscription : <a href="%signedUrl%">%userEmail%</a> 
       <br>
