@@ -4,6 +4,7 @@ namespace App\Repository\Event;
 
 use App\Entity\Event\Event;
 use App\Entity\User\User;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -138,5 +139,20 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('user', $user)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * @return float|int|mixed|string
+     */
+    public function findEventsWeekBefore(): mixed
+    {
+        $week = new DateTimeImmutable('+1 week');
+
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.participate', 'p')
+            ->where('e.start LIKE :week')
+            ->setParameter('week', $week->format('Y-m-d') . '%')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -1,0 +1,14 @@
+{% extends '@email/email.html.twig' %}
+
+{% block subject %}
+    {{ subject|capitalize }}
+{% endblock %}
+
+{% block email %}
+    {{ ('email.event_week_before.body'|trans({
+        '%signedUrl%': signedUrl,
+        '%event%' : event,
+        '%user%' : user
+        })|UCFirst)|sanitize_html
+    }}
+{% endblock %}

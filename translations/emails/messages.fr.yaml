@@ -13,6 +13,12 @@ email:
       Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
       <br>
       <a href="%signedUrl%">Vérifier votre email</a> (la validation expirera le %expiredAt%).
+  event_week_before:
+    subject: un événement a bientôt lieu
+    body: |
+      Oyez oyez %user%,
+      <br>
+      L'événement <a href="%signedUrl%">%event%</a> auquel vous participez débutera dans une semaine, alors préparez-vous !
 
 admin:
   inscription:

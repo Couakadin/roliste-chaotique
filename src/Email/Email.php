@@ -2,6 +2,7 @@
 
 namespace App\Email;
 
+use App\Entity\Event\Event;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -10,6 +11,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Email extends AbstractController
 {
@@ -18,9 +20,11 @@ class Email extends AbstractController
 
     /**
      * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
      */
     public function __construct(
         private readonly MailerInterface     $mailer,
+        private readonly TranslatorInterface $translator
     )
     {
     }
@@ -40,7 +44,7 @@ class Email extends AbstractController
             ->subject(ucfirst($subject))
             ->htmlTemplate('@email/website/verify_email.html.twig')
             ->context([
-                'subject'   => $subject,
+                'subject' => $subject,
                 'signedUrl' => $this->generateUrl('registration.verify-email', ['token' => $newToken->getToken()], 0),
                 'expiredAt' => $newToken->getExpiredAt()
             ]);
@@ -62,9 +66,35 @@ class Email extends AbstractController
             ->subject(ucfirst($subject))
             ->htmlTemplate('@email/website/forgotten_password.html.twig')
             ->context([
-                'subject'   => $subject,
+                'subject' => $subject,
                 'signedUrl' => $this->generateUrl('forgotten-password.new', ['token' => $newToken->getToken()], 0),
                 'expiredAt' => $newToken->getExpiredAt()
+            ]);
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @param Event $event
+     * @param User $user
+     *
+     * @return void
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function eventWeekBefore(Event $event, User $user): void
+    {
+        $subject = $this->translator->trans('email.event_week_before.subject');
+
+        $email = (new TemplatedEmail())
+            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->to($user->getEmail())
+            ->subject(ucfirst($subject))
+            ->htmlTemplate('@email/website/event_week_before.html.twig')
+            ->context([
+                'subject' => $subject,
+                'event' => $event->getName(),
+                'user' => $user->getUsername(),
+                'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
             ]);
         $this->mailer->send($email);
     }
