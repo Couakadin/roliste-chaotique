@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (carouselHome) {
         new Carousel(carouselHome, {
-            slidesToScroll: 1,
+            slidesToScroll: 2,
             slidesVisible : 4,
             infinite      : true
         });
@@ -131,7 +131,7 @@ class Carousel {
     }
 
     /**
-     * Move the container the get the impression of a infinite loop
+     * Move the container the get the impression of an infinite loop
      */
     resetInfinite() {
         if (this.currentSlide <= this.options.slidesToScroll) {
