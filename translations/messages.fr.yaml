@@ -23,6 +23,8 @@ footer: |
 
 meta:
   description:
+    feeds: |
+      Découvrez toutes les flux d'actualité sur Rôliste chaotique.
     events:
       index: |
         Découvrez touts les événements sur Rôliste chaotique.
@@ -110,6 +112,7 @@ ui:
   events: événements
   event: événement
   exit_impersonification: quitter impersonification
+  feeds: flux
   find_table: trouvez une table avec votre jeu préféré !
   forgotten_password: mot de passe oublié ?
   table: table
