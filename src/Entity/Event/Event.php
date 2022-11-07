@@ -58,6 +58,11 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?int $totalParticipate = null;
     /**
+     * @var bool|null
+     */
+    #[ORM\Column(options: ['default' => 0])]
+    private ?bool $initiation = null;
+    /**
      * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
@@ -429,12 +434,22 @@ class Event
      */
     public function removeNotification(Notification $notification): self
     {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getEvent() === $this) {
-                $notification->setEvent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->notifications->removeElement($notification) && $notification->getEvent() === $this) {
+            $notification->setEvent(null);
         }
+
+        return $this;
+    }
+
+    public function isInitiation(): ?bool
+    {
+        return $this->initiation;
+    }
+
+    public function setInitiation(bool $initiation): self
+    {
+        $this->initiation = $initiation;
 
         return $this;
     }

@@ -7,4 +7,5 @@ twig:
         '%kernel.project_dir%/public': public
         '%kernel.project_dir%/templates/bundles': bundles
     globals:
+        discord: 'https://discord.gg/BTPd3jGWYd'
         notification: '@App\Service\NotificationManager'

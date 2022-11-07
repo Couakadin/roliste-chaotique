@@ -65,7 +65,8 @@ class CalendarSubscriber implements EventSubscriberInterface
                 $event->getId(), [
                     'backgroundColor' => $bgColor,
                     'borderColor'     => $borderColor,
-                    'url'             => $this->router->generate('event.show', ['slug' => $event->getSlug()])
+                    'url'             => $this->router->generate('event.show', ['slug' => $event->getSlug()]),
+                    'initiation'      => $event->isInitiation()
                 ]
             ));
         }

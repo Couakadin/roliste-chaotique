@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -91,6 +92,15 @@ class EventType extends AbstractType
                         'message' => 'form.event.max_participate'
                     ])
                 ]
+            ])
+            ->add('initiation', CheckboxType::class, [
+                'required' => false,
+                'label_attr'  => [
+                    'class' => 'checkbox-label',
+                ],
+                'attr'        => [
+                    'class' => 'checkbox',
+                ],
             ])
             ->add('start', DateType::class, [
                 'input'       => 'datetime_immutable',

@@ -30,6 +30,12 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route(['/new-player'], name: 'home.new-player')]
+    public function newPlayer(): Response
+    {
+        return $this->render('@front/home/new_player.html.twig');
+    }
+
     /**
      * @throws JsonException
      */
@@ -58,8 +64,8 @@ class HomeController extends AbstractController
         if ($notifications) {
             foreach ($notifications as $notification) {
                 $notification->setIsRead(true);
-                $entityManager->flush();
             }
+            $entityManager->flush();
         }
 
         return new JsonResponse('OK');

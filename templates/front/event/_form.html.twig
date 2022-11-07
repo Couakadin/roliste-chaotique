@@ -1,5 +1,16 @@
 {{ form_start(form) }}
 <div class="card dark">
+    <div class="checkbox-container">
+        {{ form_widget(form.initiation) }}
+        {{ form_label(form.initiation) }}
+        <span class="checkbox-title">
+            {{ 'ui.allow_new_player'|trans|capitalize }} ?
+        </span>
+        <div class="color-danger">
+            {{ form_errors(form.initiation) }}
+        </div>
+    </div>
+
     <div class="flex-no-mobile gap-2">
         <div class="form-group flex-grow">
             {{ form_label(form.name) }}

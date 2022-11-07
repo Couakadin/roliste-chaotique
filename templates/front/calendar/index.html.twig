@@ -1,0 +1,21 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.calendar'|trans|capitalize %}
+{% block title 'ui.calendar'|trans|capitalize %}
+
+{% block body %}
+    <section class="m2">
+        <h2 class="h2 text-center divider after">{{ 'ui.calendar_welcome'|trans|capitalize }}</h2>
+        <ul class="mb1">
+            <li>
+                <small>
+                    <img src="{{ asset('build/front/icons/new-player.svg') }}" alt="Feuille nouveau rôliste" width="20">
+                    {{ 'ui.allow_new_player'|trans|capitalize }}
+                </small>
+            </li>
+        </ul>
+        <div id="calendar-holder"></div>
+
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans|capitalize }}</a>
+    </section>
+{% endblock %}

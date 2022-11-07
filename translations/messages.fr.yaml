@@ -19,7 +19,7 @@ error:
 
 footer: |
   rôliste-chaotique.be est une initiative afin d'aider une communauté de jeu de rôle avec son organisation, que ce soit via un agenda, la recherche d'un compagnon ou d'une table de jeu.
-  Rôliste chaotique se concentre sur l'affichage simples de ses événements et de ses groupes afin de concentrer sur le principal : le jeu de rôle.
+  Rôliste chaotique mise sur un affichage simple afin de concentrer sur le principal : le jeu de rôle.
 
 meta:
   description:
@@ -34,6 +34,10 @@ meta:
         Modifiez votre événement sur Rôliste chaotique
     home: |
       Rôliste chaotique est un club de jeu de rôle. Découvrez notre agenda et organisez une séance chez nous.
+    new_player: |
+      Nouvel arrivant ? Découvrez le jeu de rôle avec Rôliste chaotique.
+    calendar: |
+      Découvrez le calendrier des événements de Rôliste chaotique.
     login: |
       Connectez-vous à Rôliste Chaotique et retrouvez nos tables de jeu de rôle ainsi que nos compagnons.
     register: |
@@ -58,10 +62,39 @@ meta:
 
 ui:
   about: à propos
+  about_us: qui sommes-nous ?
+  about_us_text: |
+    Rôliste Chaotique est un club francophone de jeu de rôle. Créé courant 2019, la communauté n'a eu de cesse de 
+    grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement.
+    <br><br>
+    Nos activités s'étendent principalement entre Mons et Charleroi, en Belgique, mais nous organisons égalemment des
+    tables en ligne. Les heures sont flexibles et varient d'un événement à l'autre, afin de convenir au plus grand nombre 
+    pour passer de meilleurs moments tous ensemble !
+  about_rp: le jeu de rôle ?
+  about_rp_text: |
+    le jeu de rôle est un genre de jeu de société... mais en mieux ! Ici, vous incarnez un personnage comme un acteur (même sans talent !) : 
+    vous vivez des aventures, des défis, des mystères et même des romances à travers la peau de votre avatar. Et ce,
+    dans un groupe composés généralement de 4 à 5 joueurs et d'un maître du jeu.
+    <br><br>
+    Que vous soyez un amoureux de fantaisie, un mordu de science-fiction ou encore un amateur d'horreur... le jeu de rôle
+    vous offre des heures d'amusement et n'a de limite que votre imagination.
+  about_join_us: comment participer ?
+  about_join_us_text: |
+    Vous désirez rejoindre les Rôlistes chaotiques ? La première étape est de 
+    <a href="%link_register%" class="link-line">créer un compte</a>. Ensuite, naviguez parmi les 
+    <a href="%link_tables%" class="link-line">tables</a> proposées pour trouver un jeu qui vous plaît. Finalemment,
+    vous pouvez rejoindre ou créer un 
+    <a href="%link_events%" class="link-line">événement</a> pour cette table à la date et au lieu que vous souhaitez et voilà :
+    il ne vous reste plus qu'à jouer !
+    <br><br>
+    Vous êtes perdu ? En cas de doute, vous pouvez toujours nous 
+    <a href="%link_contact%" class="link-line">contacter</a> ou bien nous
+    <a href="%link_discord%" target="_blank" class="link-line">rejoindre</a> sur Discord.
   account: compte
   admin: administration
   agree_terms: conditions d'utilisation
   add_favorite: ajouter en favori
+  calendar: calendrier
   remove_favorite: retirer des favoris
   badges: badges
   bg_color: couleur de fond
@@ -72,6 +105,7 @@ ui:
   all_tables: toutes les tables
   all_members: touts les membres
   all_rights_reserved : tous droits réservés
+  allow_new_player: joueurs débutants autorisés (initiation)
   campaign: campagne
   chaotic_roleplayer: rôliste chaotique
   connexion: connexion
@@ -96,7 +130,7 @@ ui:
   last_event: dernier événement
   last_events: derniers événements
   last_register: derniers inscrits
-  discover_calendar: découvrez nos événements
+  calendar_welcome: nos événements
   dm: mj
   end_date_event_different: date de fin différente de la date de départ
   edit: éditer
@@ -118,10 +152,12 @@ ui:
   genre: genre
   go_back: retour
   hero_text: |
-    Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Créé courant 2019, la communauté n'a eu de cesse de grandir, permettant anciens et nouveaux joueurs de vivre des aventures mensuellement !
+    Rôliste Chaotique est un club francophone de jeu de rôle sur table et en ligne. Ici, l'organisation se mêle
+    délicieusement au chaos !
   hero_title: |
     Bienvenue au domaine <span class="main-mark">rôliste chaotique</span> !
   home: accueil
+  highlight: en lumière
   i_participate: je participe
   info_general: infos générales
   info_members: infos membres
@@ -144,6 +180,7 @@ ui:
   modify: modifier
   name: nom
   new_event: créer un nouvel événement
+  new_player: nouveau rôliste
   no_item: aucun élément disponible
   no_specified: non précisé
   one-shot: one-shot
@@ -226,6 +263,55 @@ tooltip:
     Déterminez ici où se passe votre événement. Vous pouvez laissez vide si vous désirez le créer en ligne.
   total_participate: |
     Déterminez ici le nombre de participant que vous désirez à votre événement. Vous pouvez laissez vide si vous désirez ne pas mettre de limite.
+
+new_player:
+  title: nouveau parmi nous ?
+  intro: |
+    Bienvenue ! Installez-vous, prenez un chocolat chaud et savourez. Tout va bien se passer...<br>
+    Malgré notre nom, Rôliste chaotique, nous savons qu'il peut être difficile pour de jeunes pousses de débarquer en
+    terre inconnue et gérer toutes ces nouvelles informations. C'est pourquoi nous tenons à vous aider à prendre vos aises,
+    étape par étape, pour à votre tour devenir chaotiquement bon sur ce site. Si la lecture n'est pas votre fort, vous
+    pouvez toujours zyeuter notre calendrier et participer à l'un de nos événements d'initiation. Promis, on ne mords pas tous.
+    <br><br>
+    Si vous avez des questions, vous pouvez nous <a href="%link_contact%" class="link-line">contacter</a> ou bien nous
+    <a href="%link_discord%" target="_blank" class="link-line">rejoindre</a> sur Discord.
+  participate:
+    title: comment participer ?
+    body: |
+      Rien de plus simple. Avant tout, il vous faut <a href="%link_register%" class="link-line">créer un compte</a>. Cette
+      première étape effectuée, vous aurez accès au reste du site. Ensuite, nous vous conseillons de 
+      <a href="%link_tables%" class="link-line">rechercher une table</a>. Nos tables sont des licenses de jeu de rôle que nous
+      proposons : les univers dans lesquels vous pouvez jouer. Note : il est tout à fait possible de proposer votre table 
+      si elle ne figure pas parmi notre liste. Cependant, si vous êtes nouveau en jeu de rôle, nous vous conseillons de
+      commencer en tant que joueur sur des tables déjà existantes.
+      <br>
+      La dernière étape - et la plus importante - est de <a href="%link_events%" class="link-line">participer à un événement</a>.
+      Ici, vous pouvez voir tous les événements liés à nos tables : le nom de la table, le maître du jeu, le nombre de joueurs, la date, le lieu, etc.
+      En participant à un événement, vous confirmez au maître du jeu ainsi qu'aux autres joueurs votre présence à l'événement ledit jour.
+      Si vous ne voulez plus participer à un événement, il vous suffit de vous rendre sur la page de cet événement et 
+      de cliquer sur le bouton pour vous désinscrire. Note : évitez de vous retirer au dernier moment. Faire un jeu de 
+      rôle demande de la préparation et un tel acte peut frustrer vos compagnons de jeu qui comptaient sur vous !
+      <br><br>
+      Pour mieux retrouver vos événements, notre <a href="%link_calendar%" class="link-line">calendrier</a> regroupe 
+      chacun d'eux. Chaque événement comporte son heure de début, son titre et - bien sûr - le tout à la date de participation.
+      Une légende au-dessus du calendrier vous aiguillera davantage sur la compréhension de celui-ci.
+  dm:
+    title: devenir maître du jeu ?
+    body: |
+      Si vous voulez troquer votre veste de joueur contre celui de maître du jeu, c'est possible ! Les règles sont les même
+      que pour les joueurs mais eu lieu de participer à un événement, vous avez la possibilité d'en créer un ! Lors
+      de sa création, il vous faudra remplir le formulaire avec toutes les informations possibles pour organiser au
+      mieux votre événement : les dates de début et de fin, les heures de début et de fin, le nom de votre événement, une description pour aider 
+      les joueurs à comprendre dans quoi ils s'aventurent, ainsi que le lieu où vous voulez que votre événement se déroule. Note : vous pouvez
+      laisser le lieu vide lors de la création d'un événement. Celui-ci sera alors considéré comme un événement en ligne. Pratique !
+  initiation:
+    title: des séances d'initiation ?
+    body: |
+      Si vous voulez faire des parties de découverte sans obligation aucune, que ce soit pour tester un jeu que vous ne 
+      connaissez pas ou bien pour prendre la température chez nous, nous organisons régulièrement des séances d'initiation.
+      Celles-ci sont trouvables sur notre <a href="%link_calendar%" class="link-line">calendrier</a> précédées d'une icône de
+      pousse d'herbe. Pour venir à ces séances d'initiation, vous n'aurez besoin de rien ! Croisez vos pieds sous la table et
+      laissez-vous emporter par notre génialissime chaos !
 
 terms_and_conditions:
   agree_terms:

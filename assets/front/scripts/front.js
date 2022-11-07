@@ -46,6 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
             center: 'title',
             right: 'dayGridDay dayGridWeek dayGridMonth'
         },
+        eventDidMount: function(info) {
+            if (info.event.extendedProps.initiation) {
+                const img = document.createElement('img');
+                img.setAttribute('src', '/build/front/icons/new-player.svg');
+                img.setAttribute('width', '20');
+                info.el.querySelector('.fc-event-title').prepend(img);
+            }
+        },
         eventSources: [{
             url: '/fc-load-events',
             method: 'POST',

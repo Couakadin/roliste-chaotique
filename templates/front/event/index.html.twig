@@ -24,7 +24,13 @@
         {% for event in events %}
             {% cache 'event.index' ~ event.id ~ event.updatedAt.timestamp %}
                 <a href="{{ path('event.show', {'slug': event.slug}) }}" class="event">
-                    <p class="event-header h4">{{ event.name|u.truncate(15, '...') }}</p>
+                    <p class="event-header h4">
+                        {% if event.initiation %}
+                            <img src="{{ asset('build/front/icons/new-player.svg') }}" width="20"
+                                 alt="{{ 'ui.allow_new_player'|trans }}" title="{{ 'ui.allow_new_player'|trans }}">
+                        {% endif %}
+                        {{ event.name|u.truncate(15, '...') }}
+                    </p>
                     <p class="event-header">{{ ('ui.'~event.type)|trans|capitalize }}</p>
                     <p class="event-header">{{ event.table.name }}</p>
                     <p class="event-header">

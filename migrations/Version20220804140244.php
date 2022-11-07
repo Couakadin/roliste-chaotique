@@ -27,6 +27,7 @@ final class Version20220804140244 extends AbstractMigration
         $this->addSql('ALTER TABLE rc_event ADD CONSTRAINT FK_315D586413B3DB11 FOREIGN KEY (master_id) REFERENCES rc_user (id)');
         $this->addSql('CREATE INDEX IDX_315D586413B3DB11 ON rc_event (master_id)');
         $this->addSql('ALTER TABLE rc_event ADD total_participate INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE rc_event ADD initiation TINYINT(1) DEFAULT 0 NOT NULL');
 
         $this->addSql('CREATE TABLE rc_event_participate (event_id INT NOT NULL, user_id INT NOT NULL, INDEX IDX_CF36B1B971F7E88B (event_id), INDEX IDX_CF36B1B9A76ED395 (user_id), PRIMARY KEY(event_id, user_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE rc_event_participate ADD CONSTRAINT FK_CF36B1B971F7E88B FOREIGN KEY (event_id) REFERENCES rc_event (id) ON DELETE CASCADE');

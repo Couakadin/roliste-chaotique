@@ -8,6 +8,7 @@
         <div>
             <h6 class="h4 my1 text-upper">Categories</h6>
             <ul>
+                <li><a href="{{ path('calendar.index') }}">{{ 'ui.calendar'|trans }}</a></li>
                 <li><a href="{{ path('table.index') }}">{{ 'ui.tables'|trans }}</a></li>
                 <li><a href="{{ path('event.index') }}">{{ 'ui.events'|trans }}</a></li>
             </ul>
@@ -17,9 +18,10 @@
             <h6 class="h4 my1 text-upper">{{ 'ui.quick_links'|trans }}</h6>
             <ul>
                 <li><a href="{{ path('contact.index') }}">{{ 'ui.contact'|trans }}</a></li>
+                <li><a href="{{ path('home.new-player') }}">{{ 'ui.new_player'|trans }}</a></li>
+                <li><a href="{{ path('security.cookie-policy') }}">{{ 'ui.cookies_policy'|trans }}</a></li>
                 <li><a href="{{ path('security.terms-and-conditions') }}">{{ 'ui.agree_terms'|trans }}</a></li>
                 <li><a href="{{ path('security.privacy-policy') }}">{{ 'ui.privacy_policy'|trans }}</a></li>
-                <li><a href="{{ path('security.cookie-policy') }}">{{ 'ui.cookies_policy'|trans }}</a></li>
             </ul>
         </div>
     </div>

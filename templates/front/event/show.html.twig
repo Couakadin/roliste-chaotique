@@ -1,6 +1,6 @@
 {% extends '@front/front.html.twig' %}
 
-{% block description 'meta.description.events.show'|trans({'%event': event.name})|capitalize %}
+{% block description 'meta.description.events.show'|trans({'%event%': event.name})|capitalize %}
 {% block title 'ui.events'|trans|capitalize %}
 
 {% block body %}
@@ -28,7 +28,13 @@
         </div>
         <div class="table-grid">
             <div class="card">
-                <h2 class="h2 link-line card_title">{{ 'ui.info_general'|trans|capitalize }}</h2>
+                <h2 class="h2 card_title">
+                    <span class="link-line">{{ 'ui.info_general'|trans|capitalize }}</span>
+                    {% if event.initiation %}
+                        <img src="{{ asset('build/front/icons/new-player.svg') }}" width="20"
+                             alt="{{ 'ui.allow_new_player'|trans }}" title="{{ 'ui.allow_new_player'|trans }}">
+                    {% endif %}
+                </h2>
                 <div class="card_body">
                     <p>
                         {{ 'ui.dm'|trans|upper }} :

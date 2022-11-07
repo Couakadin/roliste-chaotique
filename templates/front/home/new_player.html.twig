@@ -1,0 +1,30 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.new_player'|trans|capitalize %}
+{% block title 'ui.new_player'|trans|capitalize %}
+
+{% block body %}
+    <div class="container my2">
+        <div class="card text-justify">
+            <h1 class="card_title h1">{{ 'new_player.title'|trans|capitalize }}</h1>
+            <p class="card_body">{{ ('new_player.intro'|trans({
+                    '%link_contact%': path('contact.index'),
+                    '%link_discord%': discord
+                }))|raw }}</p>
+            <h2 class="card_title h2">{{ 'new_player.participate.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('new_player.participate.body'|trans({
+                    '%link_register%': path('registration.register'),
+                    '%link_tables%': path('table.index'),
+                    '%link_events%': path('event.index'),
+                    '%link_calendar%': path('calendar.index'),
+                }))|raw }}</p>
+            <h2 class="card_title h2">{{ 'new_player.dm.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('new_player.dm.body'|trans)|raw }}</p>
+            <h2 class="card_title h2">{{ 'new_player.initiation.title'|trans|capitalize }}</h2>
+            <p class="card_body">{{ ('new_player.initiation.body'|trans({
+                    '%link_calendar%': path('calendar.index')
+                }))|raw }}</p>
+        </div>
+        <a href="{{ path('home.index') }}" class="btn-primary mt2">{{ 'ui.go_back'|trans|capitalize }}</a>
+    </div>
+{% endblock %}

@@ -8,6 +8,17 @@
         <section>
             <h1 class="hero-title mb1 divider before">{{ ('ui.hero_title'|trans|capitalize)|raw }}</h1>
             <p class="hero-text text-justify">{{ 'ui.hero_text'|trans }}</p>
+            <ul class="flex-no-mobile gap-1 mt1">
+                <li class="list-circle-inside">
+                    <a href="{{ path('home.new-player') }}">nouveau rôliste ?</a>
+                </li>
+                <li class="list-circle-inside">
+                    <a href="{{ discord }}" target="_blank">rejoindre le Discord</a>
+                </li>
+                <li class="list-circle-inside">
+                    <a href="{{ path('calendar.index') }}">voir le calendrier</a>
+                </li>
+            </ul>
         </section>
         <img srcset="{{ asset('build/front/mascot/rolie.svg') }} 180w, {{ asset('build/front/mascot/rolie.svg') }} 280w"
              sizes="(max-width : 62em) 180px, 280px"
@@ -38,14 +49,37 @@
         <section class="container text-center">
             <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
             <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
-            <a href="https://discord.gg/BTPd3jGWYd" target="_blank" class="btn-ternary flex center">
+            <a href="{{ discord }}" target="_blank" class="btn-ternary flex center">
                 {{ 'ui.join_us_discord'|trans|UCFirst }}
             </a>
         </section>
     </div>
 
-    <section class="container mt5">
-        <h2 class="h2 text-center divider after">{{ 'ui.discover_calendar'|trans|capitalize }}</h2>
-        <div id="calendar-holder"></div>
-    </section>
+    <div class="container mt5">
+        <h2 class="h2 text-center divider after">{{ 'ui.highlight'|trans|capitalize }}</h2>
+
+        <div class="grid gap-3">
+            <section>
+                <h3 class="h3 text-center mb1">{{ 'ui.about_us'|trans|capitalize }}</h3>
+                <p class="text-justify">{{ 'ui.about_us_text'|trans|UCFirst|raw }}</p>
+            </section>
+
+            <section>
+                <h3 class="h3 text-center mb1">{{ 'ui.about_rp'|trans|capitalize }}</h3>
+                <p class="text-justify">{{ 'ui.about_rp_text'|trans|UCFirst|raw }}</p>
+            </section>
+
+            <section>
+                <h3 class="h3 text-center mb1">{{ 'ui.about_join_us'|trans|capitalize }}</h3>
+                <p class="text-justify">{{ 'ui.about_join_us_text'|trans({
+                        '%link_register%': path('registration.register'),
+                        '%link_tables%': path('table.index'),
+                        '%link_events%': path('event.index'),
+                        '%link_contact%': path('contact.index'),
+                        '%link_discord%': discord
+                    })|UCFirst|raw }}
+                </p>
+            </section>
+        </div>
+    </div>
 {% endblock %}
