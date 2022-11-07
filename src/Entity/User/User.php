@@ -5,7 +5,6 @@ namespace App\Entity\User;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
-use App\Entity\Feeds\Feeds;
 use App\Entity\Notification\Notification;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
@@ -121,11 +120,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
     private Collection|ArrayCollection $notifications;
-    /**
-     * @var ArrayCollection|Collection
-     */
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Feeds::class, orphanRemoval: true)]
-    private Collection|ArrayCollection $feeds;
 
     public function __construct()
     {
@@ -134,7 +128,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->badgeUnlocks = new ArrayCollection();
         $this->tables = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->feeds = new ArrayCollection();
     }
 
     /**
@@ -283,7 +276,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials(): void
+    public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -338,7 +331,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $now = new DateTimeImmutable('now -20min');
 
-        return $this->loggedAt->format('Y-m-d H:i:s') >= $now->format('Y-m-d H:i:s');
+        if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -538,9 +534,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function removeBadgeUnlock(BadgeUnlock $badgeUnlock): self
     {
-        // set the owning side to null (unless already changed)
-        if ($this->badgeUnlocks->removeElement($badgeUnlock) && $badgeUnlock->getUser() === $this) {
-            $badgeUnlock->setUser(null);
+        if ($this->badgeUnlocks->removeElement($badgeUnlock)) {
+            // set the owning side to null (unless already changed)
+            if ($badgeUnlock->getUser() === $this) {
+                $badgeUnlock->setUser(null);
+            }
         }
 
         return $this;
@@ -613,47 +611,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function removeNotification(Notification $notification): self
     {
-        // set the owning side to null (unless already changed)
-        if ($this->notifications->removeElement($notification) && $notification->getUser() === $this) {
-            $notification->setUser(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getFeeds(): Collection
-    {
-        return $this->feeds;
-    }
-
-    /**
-     * @param Feeds $feed
-     *
-     * @return $this
-     */
-    public function addFeed(Feeds $feed): self
-    {
-        if (!$this->feeds->contains($feed)) {
-            $this->feeds->add($feed);
-            $feed->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Feeds $feed
-     *
-     * @return $this
-     */
-    public function removeFeed(Feeds $feed): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->feeds->removeElement($feed) && $feed->getAuthor() === $this) {
-            $feed->setAuthor(null);
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
         }
 
         return $this;
