@@ -29,7 +29,6 @@ class UserStorageType extends AbstractType
                 'required'     => false,
                 'label'        => false,
                 'by_reference' => false,
-                'disabled'     => false,
                 'constraints'  => [new Valid()]
             ]);
     }

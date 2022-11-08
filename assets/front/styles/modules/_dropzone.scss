@@ -1,0 +1,38 @@
+.dropzone-preview {
+  flex-direction  : column;
+  align-items     : center;
+  justify-content : center;
+
+  &-image {
+    width           : 6rem;
+    aspect-ratio    : 1;
+    background-size : cover;
+  }
+
+  &-button {
+    &:before {
+      content      : 'x';
+      display      : block;
+      width        : 1rem;
+      aspect-ratio : 1;
+    }
+  }
+}
+
+.dropzone-container {
+  position : relative;
+  width    : fit-content;
+}
+
+.dropzone-input {
+  position : absolute;
+
+  &::file-selector-button {
+    background : transparent;
+    font-size  : 0;
+    border     : none;
+    outline    : transparent;
+  }
+}
+
+.dropzone-placeholder {display : none;}

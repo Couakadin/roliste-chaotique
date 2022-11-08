@@ -6,28 +6,25 @@
 {% block body %}
     {% include '@front/account/_menu.html.twig' %}
 
-    {{ form_start(form) }}
+    <section class="container mt2">
+        {{ form_start(form) }}
 
-    <ul class="tags"
-        data-index="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
-        data-prototype="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}"></ul>
-    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
-    <button type="submit">go</button>
-    {{ form_end(form) }}
+        <div {{ stimulus_controller('form-collection') }}
+                data-form-collection-index-value="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
+                data-form-collection-prototype-value="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}">
+            <ul class="my2" {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
+            <button type="button" class="btn-primary" {{ stimulus_action('form-collection', 'addCollectionElement') }}>
+                Ajouter un élément
+            </button>
+        </div>
 
-    {% for storage in storages %}
-        <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}">
-    {% endfor %}
-{% endblock %}
+        <button type="submit">go</button>
 
-{% block javascripts %}
-    {{ parent() }}
+        {{ form_end(form) }}
 
-    <script>
-        document
-            .querySelectorAll('.add_item_link')
-            .forEach(btn => {
-                btn.addEventListener("click", addFormToCollection)
-            });
-    </script>
+    </section>
+
+
+    {# <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}"> #}
+
 {% endblock %}

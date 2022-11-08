@@ -141,9 +141,6 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        $storageRepo = $this->entityManager->getRepository(Storage::class);
-        $storages = $storageRepo->findBy(['user' => $user]);
-
         $formStorage = $this->getForm(UserStorageType::class, $user, $request, 'flash.account.upload');
 
         if ($formStorage->isSubmitted() && $formStorage->isValid()) {
@@ -151,8 +148,7 @@ class AccountController extends AbstractController
         }
 
         return $this->render('@front/account/storage.html.twig', [
-            'form' => $formStorage->createView(),
-            'storages'    => $storages
+            'form' => $formStorage->createView()
         ]);
     }
 

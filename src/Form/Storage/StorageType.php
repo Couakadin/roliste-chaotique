@@ -31,6 +31,7 @@ class StorageType extends AbstractType
 
         $builder
             ->add('imageFile', DropzoneType::class, [
+                'label'       => false,
                 'constraints' => [
                     new File([
                         'maxSize'          => '1024k',
