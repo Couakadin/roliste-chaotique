@@ -10,6 +10,7 @@ use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use App\Form\User\UserStorageType;
 use App\Service\BadgeManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -94,9 +95,9 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        $formProfile = $this->getForm(UserProfileType::class, $user, $request, 'flash.account.edit');
-        $formAvatar = $this->getForm(UserAvatarType::class, $user, $request, 'flash.account.edit');
-        $formPassword = $this->getForm(UserPasswordType::class, $user, $request, 'flash.account.edit');
+        $formProfile = $this->getForm(UserProfileType::class, $user, $request);
+        $formAvatar = $this->getForm(UserAvatarType::class, $user, $request);
+        $formPassword = $this->getForm(UserPasswordType::class, $user, $request);
 
         if (($formProfile->isSubmitted() && $formProfile->isValid())
             ||
@@ -140,9 +141,27 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        $formStorage = $this->getForm(UserStorageType::class, $user, $request, 'flash.account.upload');
+        $originalStorages = new ArrayCollection();
+        foreach ($user->getStorages() as $storage) {
+            $originalStorages->add($storage);
+        }
+
+        $formStorage = $this->createForm(UserStorageType::class, $user);
+        $formStorage->handleRequest($request);
 
         if ($formStorage->isSubmitted() && $formStorage->isValid()) {
+            foreach ($originalStorages as $storage) {
+                if (false === $user->getStorages()->contains($storage)) {
+                    $user->addStorage($storage);
+
+                    $this->entityManager->persist($storage);
+                }
+            }
+
+            $this->entityManager->flush();
+
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.upload')));
+
             return $this->redirectToRoute('account.storage', ['slug' => $user->getSlug()]);
         }
 
@@ -259,11 +278,9 @@ class AccountController extends AbstractController
      * @param string $typeClass
      * @param User|Storage $entity
      * @param Request $request
-     * @param string $trans
-     *
      * @return FormInterface
      */
-    private function getForm(string $typeClass, User|Storage $entity, Request $request, string $trans): FormInterface
+    private function getForm(string $typeClass, User|Storage $entity, Request $request): FormInterface
     {
         $form = $this->createForm($typeClass, $entity);
 
@@ -273,8 +290,7 @@ class AccountController extends AbstractController
             $this->entityManager->persist($data);
             $this->entityManager->flush();
 
-            $this->addFlash('success', ucfirst($this->translator->trans($trans)));
-            //return $this->redirectToRoute('front.account.edit', ['slug' => $entity->getSlug()]);
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.edit')));
         }
 
         return $form;

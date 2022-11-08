@@ -124,7 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var ArrayCollection|Collection
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection|ArrayCollection $storages;
 
     public function __construct()

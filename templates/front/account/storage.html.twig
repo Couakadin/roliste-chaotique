@@ -9,7 +9,11 @@
     <section class="container mt2">
         <div class="account-storage">
             <div class="account-storage_info card flash-info"></div>
-            <div class="account-storage_content card dark"></div>
+            <div class="account-storage_content card dark">
+                {% for storage in app.user.storages %}
+                    <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}">
+                {% endfor %}
+            </div>
             <div class="account-storage_form card">
                 {{ form_start(form) }}
                 <button type="submit" class="btn-primary">{{ 'ui.download_items'|trans|capitalize }}</button>
@@ -26,8 +30,5 @@
             </div>
         </div>
     </section>
-
-
-    {# <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}"> #}
 
 {% endblock %}
