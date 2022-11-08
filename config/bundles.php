@@ -21,4 +21,6 @@ return [
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Knp\Bundle\TimeBundle\KnpTimeBundle::class => ['all' => true],
     CalendarBundle\CalendarBundle::class => ['all' => true],
+    Symfony\UX\Dropzone\DropzoneBundle::class => ['all' => true],
+    Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
 ];

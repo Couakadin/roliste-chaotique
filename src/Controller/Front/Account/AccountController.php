@@ -2,23 +2,29 @@
 
 namespace App\Controller\Front\Account;
 
-use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
+use App\Entity\Storage\Storage;
 use App\Entity\User\User;
+use App\Form\Storage\StorageType;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
+use App\Form\User\UserStorageType;
 use App\Service\BadgeManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route('/account')]
 class AccountController extends AbstractController
@@ -28,13 +34,17 @@ class AccountController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TranslatorInterface $translator
      * @param BadgeManager $badgeManager
+     * @param KernelInterface $kernel
+     * @param UploaderHelper $helper
      */
     public function __construct
     (
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface      $entityManager,
         private readonly TranslatorInterface         $translator,
-        private readonly BadgeManager                $badgeManager
+        private readonly BadgeManager                $badgeManager,
+        private readonly KernelInterface             $kernel,
+        private readonly UploaderHelper              $helper
     )
     {
     }
@@ -85,9 +95,9 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.edit', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        $formProfile = $this->getForm(UserProfileType::class, $user, $request);
-        $formAvatar = $this->getForm(UserAvatarType::class, $user, $request);
-        $formPassword = $this->getForm(UserPasswordType::class, $user, $request);
+        $formProfile = $this->getForm(UserProfileType::class, $user, $request, 'flash.account.edit');
+        $formAvatar = $this->getForm(UserAvatarType::class, $user, $request, 'flash.account.edit');
+        $formPassword = $this->getForm(UserPasswordType::class, $user, $request, 'flash.account.edit');
 
         if (($formProfile->isSubmitted() && $formProfile->isValid())
             ||
@@ -109,9 +119,40 @@ class AccountController extends AbstractController
         }
 
         return $this->render('@front/account/edit.html.twig', [
-            'formProfile' => $formProfile->createView(),
-            'formAvatar' => $formAvatar->createView(),
+            'formProfile'  => $formProfile->createView(),
+            'formAvatar'   => $formAvatar->createView(),
             'formPassword' => $formPassword->createView(),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param string|null $slug
+     *
+     * @return Response
+     */
+    #[Route('/{slug}/storage', name: 'account.storage')]
+    public function storage(Request $request, string $slug = null): Response
+    {
+        $userRepo = $this->entityManager->getRepository(User::class);
+        $user = $userRepo->findOneBy(['slug' => $slug]);
+
+        if ($user !== $this->getUser()) {
+            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        $storageRepo = $this->entityManager->getRepository(Storage::class);
+        $storages = $storageRepo->findBy(['user' => $user]);
+
+        $formStorage = $this->getForm(UserStorageType::class, $user, $request, 'flash.account.upload');
+
+        if ($formStorage->isSubmitted() && $formStorage->isValid()) {
+            return $this->redirectToRoute('account.storage', ['slug' => $user->getSlug()]);
+        }
+
+        return $this->render('@front/account/storage.html.twig', [
+            'form' => $formStorage->createView(),
+            'storages'    => $storages
         ]);
     }
 
@@ -196,13 +237,38 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Returns a storage file for display.
+     *
+     * @param int $id
+     *
+     * @return BinaryFileResponse|RedirectResponse
+     */
+    #[Route('/private-file/{id}', name: 'private.file')]
+    public function privateFile(int $id): BinaryFileResponse|RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        $storage = $this->entityManager->getRepository(Storage::class)
+            ->findOneBy(['id' => $id, 'user' => $this->getUser()]);
+
+        if (!$storage) {
+            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        $asset = $this->helper->asset($storage);
+
+        return new BinaryFileResponse($this->kernel->getProjectDir() . '/templates' . $asset);
+    }
+
+    /**
      * @param string $typeClass
-     * @param User $entity
+     * @param User|Storage $entity
      * @param Request $request
+     * @param string $trans
      *
      * @return FormInterface
      */
-    private function getForm(string $typeClass, User $entity, Request $request): FormInterface
+    private function getForm(string $typeClass, User|Storage $entity, Request $request, string $trans): FormInterface
     {
         $form = $this->createForm($typeClass, $entity);
 
@@ -212,7 +278,7 @@ class AccountController extends AbstractController
             $this->entityManager->persist($data);
             $this->entityManager->flush();
 
-            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.edit')));
+            $this->addFlash('success', ucfirst($this->translator->trans($trans)));
             //return $this->redirectToRoute('front.account.edit', ['slug' => $entity->getSlug()]);
         }
 

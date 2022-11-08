@@ -6,6 +6,7 @@ use App\Entity\Avatar\Avatar;
 use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
+use App\Entity\Storage\Storage;
 use App\Entity\Table\Table;
 use App\Entity\Token\Token;
 use App\Repository\User\UserRepository;
@@ -120,6 +121,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
     private Collection|ArrayCollection $notifications;
+    /**
+     * @var ArrayCollection|Collection
+     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class, orphanRemoval: true)]
+    private Collection|ArrayCollection $storages;
 
     public function __construct()
     {
@@ -128,6 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->badgeUnlocks = new ArrayCollection();
         $this->tables = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->storages = new ArrayCollection();
     }
 
     /**
@@ -615,6 +622,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($notification->getUser() === $this) {
                 $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getStorages(): Collection
+    {
+        return $this->storages;
+    }
+
+    /**
+     * @param Storage $storage
+     *
+     * @return $this
+     */
+    public function addStorage(Storage $storage): self
+    {
+        if (!$this->storages->contains($storage)) {
+            $this->storages->add($storage);
+            $storage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Storage $storage
+     *
+     * @return $this
+     */
+    public function removeStorage(Storage $storage): self
+    {
+        if ($this->storages->removeElement($storage)) {
+            // set the owning side to null (unless already changed)
+            if ($storage->getUser() === $this) {
+                $storage->setUser(null);
             }
         }
 

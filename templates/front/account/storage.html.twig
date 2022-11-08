@@ -1,0 +1,33 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.account'|trans({'%user%': app.user.username})|capitalize %}
+{% block title 'ui.account'|trans|capitalize %}
+
+{% block body %}
+    {% include '@front/account/_menu.html.twig' %}
+
+    {{ form_start(form) }}
+
+    <ul class="tags"
+        data-index="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}"></ul>
+    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
+    <button type="submit">go</button>
+    {{ form_end(form) }}
+
+    {% for storage in storages %}
+        <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}">
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        document
+            .querySelectorAll('.add_item_link')
+            .forEach(btn => {
+                btn.addEventListener("click", addFormToCollection)
+            });
+    </script>
+{% endblock %}

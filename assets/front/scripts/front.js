@@ -19,6 +19,9 @@ import './modules/tooltip';
 import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
+// Stimulus
+import '../bootstrap';
+
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('calendar-holder');
 

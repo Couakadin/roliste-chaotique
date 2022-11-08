@@ -246,6 +246,7 @@ ui:
   event_past: cette événement est passé
   event_max: max. participants atteint
   total_participate: nombre de participants
+  storage: archives
 
 tooltip:
   tooltip: info-bulle

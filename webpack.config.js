@@ -12,7 +12,7 @@ Encore
     .setOutputPath('public/build/front/')
     // public path used by the web server to access the output path
     .setPublicPath('/build/front')
-    // only needed for CDN's or sub-directory deploy
+    // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build')
 
     .copyFiles({
@@ -28,7 +28,7 @@ Encore
     .addEntry('front', './assets/front/scripts/front.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    //.enableStimulusBridge('./assets/front/controllers.json')
+    .enableStimulusBridge('./assets/front/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
