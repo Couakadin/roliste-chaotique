@@ -16,7 +16,7 @@ export default class extends Controller {
 
         const removeFormButton = document.createElement('button');
         removeFormButton.classList.add('btn-danger');
-        removeFormButton.innerText = 'Supprimer cet élément';
+        removeFormButton.innerText = 'Supprimer cet élément ⤴';
 
         item.append(removeFormButton);
 

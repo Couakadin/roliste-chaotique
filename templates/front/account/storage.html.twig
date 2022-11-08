@@ -7,21 +7,24 @@
     {% include '@front/account/_menu.html.twig' %}
 
     <section class="container mt2">
-        {{ form_start(form) }}
-
-        <div {{ stimulus_controller('form-collection') }}
-                data-form-collection-index-value="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
-                data-form-collection-prototype-value="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}">
-            <ul class="my2" {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
-            <button type="button" class="btn-primary" {{ stimulus_action('form-collection', 'addCollectionElement') }}>
-                Ajouter un élément
-            </button>
+        <div class="account-storage">
+            <div class="account-storage_info card flash-info"></div>
+            <div class="account-storage_content card dark"></div>
+            <div class="account-storage_form card">
+                {{ form_start(form) }}
+                <button type="submit" class="btn-primary">{{ 'ui.download_items'|trans|capitalize }}</button>
+                <div {{ stimulus_controller('form-collection') }}
+                        data-form-collection-index-value="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
+                        data-form-collection-prototype-value="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}">
+                    <ul class="my2" {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
+                    <button type="button"
+                            class="btn-secondary" {{ stimulus_action('form-collection', 'addCollectionElement') }}>
+                        {{ 'ui.add_item'|trans|capitalize }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+            </div>
         </div>
-
-        <button type="submit">go</button>
-
-        {{ form_end(form) }}
-
     </section>
 
 

@@ -1,38 +1,74 @@
-.dropzone-preview {
-  flex-direction  : column;
-  align-items     : center;
-  justify-content : center;
-
-  &-image {
-    width           : 6rem;
-    aspect-ratio    : 1;
-    background-size : cover;
-  }
-
-  &-button {
-    &:before {
-      content      : 'x';
-      display      : block;
-      width        : 1rem;
-      aspect-ratio : 1;
-    }
-  }
-}
-
 .dropzone-container {
-  position : relative;
-  width    : fit-content;
+  position    : relative;
+  display     : flex;
+  align-items : center;
+  min-height  : 6.25rem;
+  padding     : 1.25rem .625rem;
+  margin      : 1.25rem auto;
+  border      : .125rem dashed hsl(var(--clr-accent));
 }
 
 .dropzone-input {
+  cursor   : pointer;
+  display  : block;
+  height   : 100%;
+  left     : 0;
+  opacity  : 0;
   position : absolute;
+  top      : 0;
+  width    : 100%;
+  z-index  : 1;
+}
 
-  &::file-selector-button {
-    background : transparent;
-    font-size  : 0;
-    border     : none;
-    outline    : transparent;
+.dropzone-preview {
+  align-items : center;
+  display     : flex;
+  max-width   : 100%;
+}
+
+.dropzone-preview-image {
+  background-position : 50% 50%;
+  background-repeat   : no-repeat;
+  background-size     : contain;
+  flex-basis          : 0;
+  height              : 50px;
+  margin-right        : .625rem;
+  max-width           : 50px;
+  min-width           : 50px;
+}
+
+.dropzone-preview-filename {word-wrap : anywhere;}
+
+.dropzone-preview-button {
+  background  : transparent;
+  border      : none;
+  color       : inherit;
+  font        : inherit;
+  line-height : normal;
+  margin      : 0;
+  overflow    : visible;
+  padding     : 0;
+  position    : absolute;
+  right       : 0;
+  top         : 0;
+  width       : auto;
+  z-index     : 1;
+
+  &:before {
+    content : '✗';
+    cursor  : pointer;
+    padding : .188rem .438rem;
   }
 }
 
-.dropzone-placeholder {display : none;}
+.dropzone-placeholder {
+  color      : hsla(var(--clr-dark, .5));
+  flex-grow  : 1;
+  text-align : center;
+
+  &:first-letter {text-transform : capitalize;}
+}
+
+[data-loading=''],
+[data-loading='delay|show'],
+[data-loading=show] {display : none;}

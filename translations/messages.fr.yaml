@@ -132,6 +132,7 @@ ui:
   last_register: derniers inscrits
   calendar_welcome: nos événements
   dm: mj
+  drag_drop: déposez un fichier ou cliquez pour parcourir
   end_date_event_different: date de fin différente de la date de départ
   edit: éditer
   edit_avatar: changer d'avatar
@@ -160,13 +161,8 @@ ui:
   highlight: en lumière
   i_participate: je participe
   info_general: infos générales
-  info_members: infos membres
   i_not_participate: je ne participe plus
   i_validate: je valide
-  i_ask_join: faire une demande pour rejoindre cette table
-  i_no_join: quitter cette table
-  i_join_waiting: votre demande d'inscription est en attente
-  i_join_declined: votre demande d'inscription a été refusée
   join_us: nous rejoindre
   join_us_text: |
     Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !
@@ -247,6 +243,8 @@ ui:
   event_max: max. participants atteint
   total_participate: nombre de participants
   storage: archives
+  add_item: ajouter un élément
+  download_items: téléverser tous les éléments
 
 tooltip:
   tooltip: info-bulle

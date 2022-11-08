@@ -88,3 +88,26 @@
 
   &.online {background : hsl(var(--clr-success));}
 }
+
+.account-storage {
+  @include big-device {
+    grid-template-columns : 37.5rem 12.5rem;
+    grid-template-areas   :
+          'info info info'
+          'content content form';
+  }
+
+  display             : grid;
+  gap                 : 1rem 2rem;
+  grid-template-areas :
+          'info'
+          'form'
+          'content';
+
+  &_info {grid-area : info;}
+
+  &_content {grid-area : content;}
+
+  &_form {grid-area : form;}
+}
+
