@@ -5,7 +5,6 @@ namespace App\Controller\Front\Account;
 use App\Entity\Notification\Notification;
 use App\Entity\Storage\Storage;
 use App\Entity\User\User;
-use App\Form\Storage\StorageType;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
