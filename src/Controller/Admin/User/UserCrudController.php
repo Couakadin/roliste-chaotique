@@ -105,7 +105,7 @@ class UserCrudController extends AbstractCrudController
             DateTimeField::new('updatedAt', $this->trans('admin.ui.updated_at'))
                 ->onlyOnDetail(),
             DateTimeField::new('loggedAt', $this->trans('admin.ui.online'))
-                ->setTemplatePath('@bundles/EasyAdmin/logged_at.html.twig')
+                ->setTemplatePath('@bundles/EasyAdmin/override/logged_at.html.twig')
                 ->hideOnForm(),
         ];
     }

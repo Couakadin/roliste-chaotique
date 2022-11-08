@@ -1,0 +1,2 @@
+{# Show zone or online if null #}
+{{ field.value is not null ? field.value : 'admin.ui.online'|trans({}, 'admins') }}

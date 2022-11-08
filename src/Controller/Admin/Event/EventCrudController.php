@@ -95,7 +95,8 @@ class EventCrudController extends AbstractCrudController
                 ->hideOnIndex(),
             AssociationField::new('table', $this->trans('admin.ui.table'))
                 ->hideOnIndex(),
-            AssociationField::new('zone', $this->trans('admin.ui.zone')),
+            AssociationField::new('zone', $this->trans('admin.ui.zone'))
+                ->setTemplatePath('@bundles/EasyAdmin/override/zone.html.twig'),
         ];
     }
 
