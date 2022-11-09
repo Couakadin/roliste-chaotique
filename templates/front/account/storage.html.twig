@@ -45,6 +45,11 @@
                             'attr': {
                                 'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': p.title})|capitalize
                             }}) }}
+                    {% else %}
+                        {{ form_widget(formNewFolder.title, {
+                            'attr': {
+                                'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': 'archives'})|capitalize
+                            }}) }}
                     {% endfor %}
                     <div class="color-danger">
                         {{ form_errors(formNewFolder.title) }}
