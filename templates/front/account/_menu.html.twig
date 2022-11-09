@@ -38,7 +38,7 @@
                     {{ 'ui.edit'|trans|capitalize }}
                 </a>
             </li>
-            <li class="px1 account-menu_storage py1 {% if currentPath is same as 'account.storage' %}active{% endif %}">
+            <li class="px1 account-menu_storage py1 {% if currentPath in ['account.storage', 'account.folder-edit'] %}active{% endif %}">
                 <a href="{{ path('account.storage', {'slug': app.user.slug}) }}">
                     {{ 'ui.storage'|trans|capitalize }}
                 </a>
