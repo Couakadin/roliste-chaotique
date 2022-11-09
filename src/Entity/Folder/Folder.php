@@ -2,9 +2,11 @@
 
 namespace App\Entity\Folder;
 
+use App\Entity\Storage\Storage;
 use App\Entity\User\User;
 use App\Repository\Folder\FolderRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,22 +67,40 @@ class Folder
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     #[ORM\OrderBy(['lft' => 'ASC'])]
     private ?Collection $children = null;
-
+    /**
+     * @var string|null
+     */
     #[ORM\Column(length: 128)]
     #[Gedmo\Slug(fields: ['title'])]
     private ?string $slug = null;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-
+    /**
+     * @var DateTimeImmutable|null
+     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-
+    /**
+     * @var User|null
+     */
     #[ORM\ManyToOne(inversedBy: 'folders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
+    /**
+     * @var ArrayCollection|Collection
+     */
+    #[ORM\OneToMany(mappedBy: 'folder', targetEntity: Storage::class, orphanRemoval: true)]
+    private Collection|ArrayCollection $storages;
+
+    public function __construct()
+    {
+        $this->storages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -180,6 +200,36 @@ class Folder
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getStorages(): Collection
+    {
+        return $this->storages;
+    }
+
+    public function addStorage(Storage $storage): self
+    {
+        if (!$this->storages->contains($storage)) {
+            $this->storages->add($storage);
+            $storage->setFolder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStorage(Storage $storage): self
+    {
+        if ($this->storages->removeElement($storage)) {
+            // set the owning side to null (unless already changed)
+            if ($storage->getFolder() === $this) {
+                $storage->setFolder(null);
+            }
+        }
 
         return $this;
     }

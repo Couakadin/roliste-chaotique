@@ -54,10 +54,25 @@ class StorageController extends AbstractController
             return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
         }
 
+        $folderRepo = $this->entityManager->getRepository(Folder::class);
+        $folderFind = $folderRepo->findOneBy(['owner' => $user, 'slug' => $folder]);
+        $folderPath = $folderFind ? $folderRepo->getPath($folderFind) : null;
+
+        $storageRepo = $this->entityManager->getRepository(Storage::class)
+            ->findBy(['user' => $user, 'folder' => $folderFind]);
+
+        $array = [];
+
+        foreach ($this->getUser()->getStorages() as $storage) {
+            $array[] += $storage->getSize();
+        }
+
         $formStorage = $this->createForm(StorageType::class, $storage = new Storage());
         $formStorage->handleRequest($request);
 
         if ($formStorage->isSubmitted() && $formStorage->isValid()) {
+            $storage->setFolder($folderFind);
+
             $this->entityManager->persist($storage);
             $this->entityManager->flush();
 
@@ -65,10 +80,6 @@ class StorageController extends AbstractController
 
             return $this->redirectToRoute('account.storage', ['slug' => $user->getSlug()]);
         }
-
-        $folderRepo = $this->entityManager->getRepository(Folder::class);
-        $folderFind = $folderRepo->findOneBy(['owner' => $user, 'slug' => $folder]);
-        $folderPath = $folderFind ? $folderRepo->getPath($folderFind) : null;
 
         $newFolder = new Folder();
         $formNewFolder = $this->createForm(FolderType::class, $newFolder, [
@@ -136,11 +147,13 @@ class StorageController extends AbstractController
         ];
 
         return $this->render('@front/account/storage.html.twig', [
-            'formStorage'     => $formStorage->createView(),
-            'formNewFolder'   => $formNewFolder->createView(),
-            'folders'         => $folderFind?->getSlug(),
-            'path'            => $folderPath,
-            'folderHierarchy' => $folderRepo->buildTree($query, $options)
+            'formStorage'      => $formStorage->createView(),
+            'formNewFolder'    => $formNewFolder->createView(),
+            'folders'          => $folderFind?->getSlug(),
+            'path'             => $folderPath,
+            'folderHierarchy'  => $folderRepo->buildTree($query, $options),
+            'storages'         => $storageRepo,
+            'totalSizeStorage' => array_sum($array)
         ]);
     }
 

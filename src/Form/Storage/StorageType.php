@@ -37,14 +37,18 @@ class StorageType extends AbstractType
                 ],
                 'constraints' => [
                     new File([
-                        'maxSize'          => '1024k',
+                        'maxSize'          => '100M',
                         'mimeTypes'        => [
                             'application/pdf',
                             'application/x-pdf',
+                            'image/gif',
                             'image/jpeg',
                             'image/png',
+                            'text/plain',
+                            'application/msword',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                        'mimeTypesMessage' => 'form.file.type',
                     ])
                 ],
             ]);

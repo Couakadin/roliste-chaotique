@@ -112,10 +112,13 @@
   }
 
   &_form {
+    @include big-device {
+      position : sticky;
+      top      : 1rem;
+    }
+
     grid-area : form;
     height    : fit-content;
-    position  : sticky;
-    top       : 1rem;
   }
 }
 

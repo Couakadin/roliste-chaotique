@@ -2,6 +2,7 @@
 
 namespace App\Entity\Storage;
 
+use App\Entity\Folder\Folder;
 use App\Entity\User\User;
 use App\Repository\Storage\StorageRepository;
 use DateTimeImmutable;
@@ -78,6 +79,11 @@ class Storage
      */
     #[ORM\ManyToOne(inversedBy: 'storages')]
     private ?User $user = null;
+    /**
+     * @var Folder|null
+     */
+    #[ORM\ManyToOne(inversedBy: 'storages')]
+    private ?Folder $folder = null;
 
     /**
      * @return int|null
@@ -285,6 +291,18 @@ class Storage
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFolder(): ?Folder
+    {
+        return $this->folder;
+    }
+
+    public function setFolder(?Folder $folder): self
+    {
+        $this->folder = $folder;
 
         return $this;
     }

@@ -9,8 +9,14 @@
     <section class="container mt2">
         <div class="account-storage">
             <div class="account-storage_info card flash-info"></div>
-            <div class="account-storage_content card dark">
-                <ol class="flex">
+            <div class="account-storage_content card">
+                <div class="text-right">
+                    {{ '~' ~ totalSizeStorage|ea_filesize }} utilisés sur {{ 5368709120|ea_filesize }}
+                </div>
+
+                <progress max="5368709120" value="{{ totalSizeStorage }}"></progress>
+
+                <ol class="flex mt2">
                     <li>
                         <a href="{{ path('account.storage', {'slug': app.user}) }}">/{{ 'ui.storage'|trans }}</a>
                     </li>
@@ -27,14 +33,32 @@
                     {% endfor %}
                 </ol>
 
-                {% for storage in app.user.storages %}
-                    <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}">
-                {% endfor %}
+                <table class="d-table">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Taille</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    {% for storage in storages %}
+                        <tr>
+                            <td>
+                                <a download href="{{ asset(vich_uploader_asset(storage)) }}" class="link-line">
+                                    {{ storage.originalName }}
+                                </a>
+                            </td>
+                            <td>{{ storage.size|ea_filesize }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </table>
             </div>
             <div class="account-storage_form card">
                 {{ form_start(formStorage) }}
                 <button type="submit" class="btn-primary">{{ 'ui.download_item'|trans|capitalize }}</button>
                 {{ form_widget(formStorage.imageFile) }}
+                <span class="color-danger">{{ form_errors(formStorage.imageFile) }}</span>
                 {{ form_end(formStorage) }}
                 <hr class="mb1">
                 {{ form_start(formNewFolder) }}
