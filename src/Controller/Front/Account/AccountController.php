@@ -8,23 +8,17 @@ use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
-use App\Form\User\UserStorageType;
 use App\Service\BadgeManager;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route('/account')]
 class AccountController extends AbstractController
@@ -34,8 +28,6 @@ class AccountController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @param TranslatorInterface $translator
      * @param BadgeManager $badgeManager
-     * @param KernelInterface $kernel
-     * @param UploaderHelper $helper
      */
     public function __construct
     (
@@ -43,8 +35,6 @@ class AccountController extends AbstractController
         private readonly EntityManagerInterface      $entityManager,
         private readonly TranslatorInterface         $translator,
         private readonly BadgeManager                $badgeManager,
-        private readonly KernelInterface             $kernel,
-        private readonly UploaderHelper              $helper
     )
     {
     }
@@ -126,51 +116,6 @@ class AccountController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param string|null $slug
-     *
-     * @return Response
-     */
-    #[Route('/{slug}/storage', name: 'account.storage')]
-    public function storage(Request $request, string $slug = null): Response
-    {
-        $userRepo = $this->entityManager->getRepository(User::class);
-        $user = $userRepo->findOneBy(['slug' => $slug]);
-
-        if ($user !== $this->getUser()) {
-            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
-        }
-
-        $originalStorages = new ArrayCollection();
-        foreach ($user->getStorages() as $storage) {
-            $originalStorages->add($storage);
-        }
-
-        $formStorage = $this->createForm(UserStorageType::class, $user);
-        $formStorage->handleRequest($request);
-
-        if ($formStorage->isSubmitted() && $formStorage->isValid()) {
-            foreach ($originalStorages as $storage) {
-                if (false === $user->getStorages()->contains($storage)) {
-                    $user->addStorage($storage);
-
-                    $this->entityManager->persist($storage);
-                }
-            }
-
-            $this->entityManager->flush();
-
-            $this->addFlash('success', ucfirst($this->translator->trans('flash.account.upload')));
-
-            return $this->redirectToRoute('account.storage', ['slug' => $user->getSlug()]);
-        }
-
-        return $this->render('@front/account/storage.html.twig', [
-            'form' => $formStorage->createView()
-        ]);
-    }
-
-    /**
      * @param string|null $slug
      *
      * @return Response
@@ -248,30 +193,6 @@ class AccountController extends AbstractController
         return $this->render('@front/account/notification.html.twig', [
             'notifications' => $notifications
         ]);
-    }
-
-    /**
-     * Returns a storage file for display.
-     *
-     * @param int $id
-     *
-     * @return BinaryFileResponse|RedirectResponse
-     */
-    #[Route('/private-file/{id}', name: 'private.file')]
-    public function privateFile(int $id): BinaryFileResponse|RedirectResponse
-    {
-        $this->denyAccessUnlessGranted('ROLE_USER');
-
-        $storage = $this->entityManager->getRepository(Storage::class)
-            ->findOneBy(['id' => $id, 'user' => $this->getUser()]);
-
-        if (!$storage) {
-            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
-        }
-
-        $asset = $this->helper->asset($storage);
-
-        return new BinaryFileResponse($this->kernel->getProjectDir() . '/templates' . $asset);
     }
 
     /**

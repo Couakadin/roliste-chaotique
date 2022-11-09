@@ -243,8 +243,12 @@ ui:
   event_max: max. participants atteint
   total_participate: nombre de participants
   storage: archives
-  add_item: ajouter un élément
-  download_items: téléverser tous les éléments
+  add_item: ajouter un fichier
+  download_items: téléverser tous les fichiers
+  download_item: téléverser le fichier
+  title: titre
+  create-folder: créer un dossier
+  create-folder-placeholder: créer un dossier dans le répertoire "%path%"
 
 tooltip:
   tooltip: info-bulle

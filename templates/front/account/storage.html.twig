@@ -10,23 +10,48 @@
         <div class="account-storage">
             <div class="account-storage_info card flash-info"></div>
             <div class="account-storage_content card dark">
+                <ol class="flex">
+                    <li>
+                        <a href="{{ path('account.storage', {'slug': app.user}) }}">/{{ 'ui.storage'|trans }}</a>
+                    </li>
+                    {% for p in path %}
+                        <li>
+                            {% if not loop.last %}
+                                <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': p.slug}) }}">
+                                    /{{ p.title }}
+                                </a>
+                            {% else %}
+                                <span>/{{ p.title }}</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+
                 {% for storage in app.user.storages %}
                     <img src="{{ path('private.file', {id: storage.id}) }}" alt="{{ storage.originalName }}">
                 {% endfor %}
             </div>
             <div class="account-storage_form card">
-                {{ form_start(form) }}
-                <button type="submit" class="btn-primary">{{ 'ui.download_items'|trans|capitalize }}</button>
-                <div {{ stimulus_controller('form-collection') }}
-                        data-form-collection-index-value="{{ form.storages|length > 0 ? form.storages|last.vars.name + 1 : 0 }}"
-                        data-form-collection-prototype-value="{{ form_widget(form.storages.vars.prototype)|e('html_attr') }}">
-                    <ul class="my2" {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
-                    <button type="button"
-                            class="btn-secondary" {{ stimulus_action('form-collection', 'addCollectionElement') }}>
-                        {{ 'ui.add_item'|trans|capitalize }}
-                    </button>
+                {{ form_start(formStorage) }}
+                <button type="submit" class="btn-primary">{{ 'ui.download_item'|trans|capitalize }}</button>
+                {{ form_widget(formStorage.imageFile) }}
+                {{ form_end(formStorage) }}
+                <hr class="mb1">
+                {{ form_start(formNewFolder) }}
+                <div class="form-group">
+                    <label>{{ 'ui.create-folder'|trans|capitalize }}</label>
+                    {% for p in path %}
+                        {{ form_widget(formNewFolder.title, {
+                            'attr': {
+                                'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': p.title})|capitalize
+                            }}) }}
+                    {% endfor %}
+                    <div class="color-danger">
+                        {{ form_errors(formNewFolder.title) }}
+                    </div>
                 </div>
-                {{ form_end(form) }}
+                {{ form_end(formNewFolder) }}
+                {{ folderHierarchy|raw }}
             </div>
         </div>
     </section>

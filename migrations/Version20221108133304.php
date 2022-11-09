@@ -14,7 +14,7 @@ final class Version20221108133304 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Migration for Entity Storage';
     }
 
     public function up(Schema $schema): void

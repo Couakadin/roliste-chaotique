@@ -4,6 +4,9 @@ form:
   file:
     type: veuillez télécharger une image avec les formats suivants - JPG/PNG/SVG.
     size: taille des images maximum limitée à 1024k.
+  folder:
+    not_blank: veuillez insérer un nom de dossier
+    length: "le nom du dossier ne doit pas dépassé les {{ limit }} caractères. Longueur actuelle : {{ value }}"
   terms:
     is_true: veuillez accepter les conditions d'utilisation.
   subject:

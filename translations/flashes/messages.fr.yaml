@@ -2,6 +2,10 @@ flash:
   account:
     edit: profil modifié avec succès !
     upload: fichier téléchargé.
+    folder:
+      create: dossier ajouté.
+      edit: dossier modifié.
+      delete: dossier supprimé.
   email:
     not_found: aucun compte avec cet e-mail.
     verify_sent: demande de vérification e-mail envoyée.

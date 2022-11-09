@@ -5,6 +5,7 @@ namespace App\Entity\User;
 use App\Entity\Avatar\Avatar;
 use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
+use App\Entity\Folder\Folder;
 use App\Entity\Notification\Notification;
 use App\Entity\Storage\Storage;
 use App\Entity\Table\Table;
@@ -127,6 +128,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection|ArrayCollection $storages;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Folder::class, orphanRemoval: true)]
+    private Collection $folders;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
@@ -135,6 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tables = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->storages = new ArrayCollection();
+        $this->folders = new ArrayCollection();
     }
 
     /**
@@ -662,6 +667,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($storage->getUser() === $this) {
                 $storage->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Folder>
+     */
+    public function getFolders(): Collection
+    {
+        return $this->folders;
+    }
+
+    public function addFolder(Folder $folder): self
+    {
+        if (!$this->folders->contains($folder)) {
+            $this->folders->add($folder);
+            $folder->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFolder(Folder $folder): self
+    {
+        if ($this->folders->removeElement($folder)) {
+            // set the owning side to null (unless already changed)
+            if ($folder->getOwner() === $this) {
+                $folder->setOwner(null);
             }
         }
 

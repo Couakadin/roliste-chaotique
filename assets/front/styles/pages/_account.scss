@@ -106,8 +106,16 @@
 
   &_info {grid-area : info;}
 
-  &_content {grid-area : content;}
+  &_content {
+    grid-area : content;
+    height    : fit-content;
+  }
 
-  &_form {grid-area : form;}
+  &_form {
+    grid-area : form;
+    height    : fit-content;
+    position  : sticky;
+    top       : 1rem;
+  }
 }
 
