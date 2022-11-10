@@ -182,7 +182,7 @@ class StorageController extends AbstractController
                     return '<ul>';
                 }
 
-                return '<ul class="ml1">';
+                return '<ul class="ml1"><span style="float: left;">&#8735;</span>';
             },
             'nodeDecorator' => function ($node) use ($user) {
                 $route = $this->generateUrl('account.storage', [

@@ -15,7 +15,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FolderType extends AbstractType
 {
-    public function __construct(private readonly Security $security) {}
+    public function __construct(private readonly Security $security)
+    {
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -31,11 +33,14 @@ class FolderType extends AbstractType
         });
 
         $builder->add('title', TextType::class, [
-            'label'       => 'ui.title',
+            'error_bubbling' => true,
+            'label' => 'ui.title',
             'constraints' => [
                 new Length([
-                    'max'        => 64,
-                    'maxMessage' => 'form.folder.length'
+                    'min' => 3,
+                    'max' => 64,
+                    'maxMessage' => 'form.folder.length_max',
+                    'minMessage' => 'form.folder.length_min'
                 ]),
                 new NotBlank(['message' => 'form.folder.not_blank',]),
             ]

@@ -6,7 +6,8 @@ form:
     size: taille des images maximum limitée à 1024k.
   folder:
     not_blank: veuillez insérer un nom de dossier
-    length: "le nom du dossier ne doit pas dépassé les {{ limit }} caractères. Longueur actuelle : {{ value }}"
+    length_max: "le nom du dossier ne doit pas dépassé les {{ limit }} caractères. Longueur actuelle : {{ value|length }}."
+    length_min: "le nom du dossier doit faire minimum {{ limit }} caractères. Longueur actuelle : {{ value|length }}."
   terms:
     is_true: veuillez accepter les conditions d'utilisation.
   subject:
