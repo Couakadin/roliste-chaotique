@@ -34,10 +34,10 @@ class FolderController extends AbstractController
      * @param Request $request
      * @param string|null $parentSlug
      *
-     * @return RedirectResponse
+     * @return Response
      */
     #[Route('/folder/new/{parentSlug}', name: 'account.folder-new', methods: ['POST'])]
-    public function new(Request $request, ?string $parentSlug = null): RedirectResponse
+    public function new(Request $request, ?string $parentSlug = null): Response
     {
         // Find User
         $user = $this->userRepository->find($this->getUser());
@@ -52,6 +52,11 @@ class FolderController extends AbstractController
 
             $this->entityManager->persist($newFolder);
             $this->entityManager->flush();
+        }
+        elseif ($formNewFolder->isSubmitted() && !$formNewFolder->isValid()) {
+            foreach ($formNewFolder->getErrors() as $error) {
+                $this->addFlash('error', $error->getMessage());
+            }
         }
 
         return $this->redirectToRoute('account.storage', [

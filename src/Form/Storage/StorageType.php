@@ -2,7 +2,9 @@
 
 namespace App\Form\Storage;
 
+use App\Entity\Folder\Folder;
 use App\Entity\Storage\Storage;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -34,9 +36,15 @@ class StorageType extends AbstractType
             ->add('originalName', TextType::class, [
                 'label' => 'ui.original_name'
             ])
+            ->add('folder', EntityType::class, [
+                'class'        => Folder::class,
+                'choice_label' => 'title',
+                'required'     => false,
+                'label'        => 'ui.storage'
+            ])
             ->add('imageFile', DropzoneType::class, [
                 'label'       => false,
-                'attr' => [
+                'attr'        => [
                     'placeholder' => 'ui.drag_drop',
                 ],
                 'constraints' => [

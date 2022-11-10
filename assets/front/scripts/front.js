@@ -16,11 +16,11 @@ import './modules/modal';
 import './modules/password';
 import './modules/tooltip';
 
-import {Calendar} from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-
 // Stimulus
 import '../bootstrap';
+
+import {Calendar} from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('calendar-holder');

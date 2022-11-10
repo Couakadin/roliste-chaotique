@@ -32,7 +32,8 @@ class FolderType extends AbstractType
             $data->setOwner($this->security->getUser());
         });
 
-        $builder->add('title', TextType::class, [
+        $builder
+            ->add('title', TextType::class, [
             'error_bubbling' => true,
             'label' => 'ui.title',
             'constraints' => [
@@ -55,7 +56,7 @@ class FolderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Folder::class,
+            'data_class' => Folder::class
         ]);
     }
 }

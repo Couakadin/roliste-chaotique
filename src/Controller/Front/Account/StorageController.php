@@ -94,7 +94,7 @@ class StorageController extends AbstractController
             'storages'         => $storages,
             'path'             => $folderPath,
             'folderHierarchy'  => $this->folderRepository->buildTree($this->folderRepository->getTreeQuery($this->getUser())),
-            'totalSizeStorage' => $this->storageRepository->getTotalSizePerUser($this->getUser()) ?? 0
+            'totalSizeStorage' => $this->storageRepository->getTotalSizePerUser($this->getUser()) ?? 0,
         ]);
     }
 
@@ -122,7 +122,10 @@ class StorageController extends AbstractController
         if ($formEditStorage->isSubmitted() && $formEditStorage->isValid()) {
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('account.storage', ['slug' => $user?->getSlug()]);
+            return $this->redirectToRoute('account.storage', [
+                'slug' => $user?->getSlug(),
+                'folder' => $storageEdited->getFolder()->getSlug()
+            ]);
         }
 
         return $this->render('@front/account/storage/edit.html.twig', [

@@ -16,25 +16,34 @@
                     <div class='dropdown'>
                         <span>&#8230;</span>
                         <div class='dropdown-content'>
-                            <a href='{{ path('account.folder-edit', {'folder': folder.slug}) }}'>
-                                {{ 'ui.edit'|trans|capitalize }}
-                            </a>
                             <form action='{{ path('account.folder-delete', {'folder': folder.slug}) }}' method='post'>
+                                <button type="button">
+                                    <a href="{{ path('account.folder-edit', {'folder': folder.slug}) }}"
+                                       class="mr1 color-danger"
+                                       title="{{ 'ui.edit'|trans }}">
+                                        <img src="{{ asset('build/front/icons/edit.svg') }}"
+                                             alt="{{ 'ui.edit'|trans|capitalize }}" width="16">
+                                    </a>
+                                </button>
                                 <input type='hidden' name='_method' value='DELETE'>
                                 <input type='hidden' name='token' value='{{ csrf_token('delete-folder') }}'>
-                                <button type='submit'>{{ 'ui.delete'|trans|capitalize }}</button>
+                                <button type='submit'>
+                                    <img src="{{ asset('build/front/icons/trash.svg') }}"
+                                         title="{{ 'ui.delete'|trans }}" alt="{{ 'ui.delete'|trans|capitalize }}"
+                                         width="16">
+                                </button>
                             </form>
                         </div>
                     </div>
                 </div>
-                {% if folder.__children %}
-                    {{ macros.tree_structure(folder.__children) }}
-                {% endif %}
                 {% if folder.originalName %}
                     <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': folder.slug}) }}"
                        class="hierarchy-storage">
                         {{ folder.originalName }}
                     </a>
+                {% endif %}
+                {% if folder.__children %}
+                    {{ macros.tree_structure(folder.__children) }}
                 {% endif %}
             </li>
         {% endfor %}
@@ -46,7 +55,45 @@
 
     <section class="container mt2">
         <div class="account-storage">
-            <div class="account-storage_info card flash-info"></div>
+            <div class="account-storage_info">
+                <button type="button" data-modal-open="howStorageWork" class="btn-secondary">
+                    {{ ('ui.how_it_work'|trans|UCFirst) }}
+                </button>
+
+                <div id="howStorageWork" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>{{ ('ui.how_it_work'|trans|UCFirst) }}</h2>
+                            <span data-modal-close="howStorageWork" class="modal-close">✗</span>
+                        </div>
+                        <div class="p1">
+                            <p>
+                                Les archives sont votre gestionnaire de dossiers personnel.
+                                Ici, vous pouvez y entreposer ce que vous voulez jusqu'à <strong>5GB</strong>.
+                                <br>
+                                À gauche : une liste exhaustive de tous vos fichiers dans le répertoire indiqué.
+                                <br>
+                                À droite : le téléchargement de fichiers ainsi que la gestion de vos dossiers en
+                                arborescence.
+                            </p>
+                            <p class="mt1">Les fichiers téléchargeables sont :</p>
+                            <ul>
+                                <li class="list-circle-inside">Images <strong>(PNJ/JPG/GIF)</strong></li>
+                                <li class="list-circle-inside">
+                                    Documents <strong>(PDF, X-PDF, DOC, DOCX, TXT)</strong>
+                                </li>
+                            </ul>
+                            <p class="mt1">
+                                Les fichiers téléchargeables doivent faire moins de <strong>100MB</strong>.
+                            </p>
+                            <p>
+                                Les dossiers doivent faire au minimum <strong>3 caractères</strong> et au maximum
+                                <strong>64 caractères</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="account-storage_content card">
                 {% if (( totalSizeStorage / max_upload_size) * 100 )|number_format < 50 %}
                     {% set status = 'color-success' %}
@@ -96,19 +143,22 @@
                             </td>
                             <td>{{ storage.size|ea_filesize }}</td>
                             <td class="text-center">
-                                <div class="flex">
-                                    <a href="{{ path('account.storage-edit', {'storage': storage.slug}) }}" class="mr1"
-                                       title="{{ 'ui.edit'|trans }}">
-                                        &#9998;
-                                    </a>
-                                    <form action="{{ path('account.storage-delete', {'storage': storage.slug}) }}"
-                                          method="post">
-                                        <input type='hidden' name='_method' value='DELETE'>
-                                        <input type='hidden' name='token' value='{{ csrf_token('delete-storage') }}'>
-                                        <button type="submit" class="ml1" title="{{ 'ui.delete'|trans }}">&#9881;
-                                        </button>
-                                    </form>
-                                </div>
+                                <form action="{{ path('account.storage-delete', {'storage': storage.slug}) }}"
+                                      method="post" class="flex align-center justify-center">
+                                    <button type="button">
+                                        <a href="{{ path('account.storage-edit', {'storage': storage.slug}) }}"
+                                           title="{{ 'ui.edit'|trans }}">
+                                            <img src="{{ asset('build/front/icons/edit.svg') }}"
+                                                 alt="{{ 'ui.edit'|trans|capitalize }}" width="16">
+                                        </a>
+                                    </button>
+                                    <input type='hidden' name='_method' value='DELETE'>
+                                    <input type='hidden' name='token' value='{{ csrf_token('delete-storage') }}'>
+                                    <button type="submit" class="ml1" title="{{ 'ui.delete'|trans }}">
+                                        <img src="{{ asset('build/front/icons/trash.svg') }}"
+                                             alt="{{ 'ui.delete'|trans|capitalize }}" width="16">
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}
@@ -145,12 +195,14 @@
                         {{ form_errors(formNewFolder) }}
                     </div>
                 </div>
-                {{ form_end(formNewFolder) }}
+                {{ form_widget(formNewFolder._token) }}
+
+                {{ form_end(formNewFolder, {'render_rest': false}) }}
 
                 <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-parent">
                     {{ 'ui.storage'|trans|capitalize }}
                 </a>
-                {% for storage in storages %}
+                {% for storage in storages|filter(storage => storage.folder is null) %}
                     <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-storage">
                         {{ storage.originalName }}
                     </a>
