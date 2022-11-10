@@ -17,8 +17,9 @@
                 {% else %}
                     {% set status = 'color-danger' %}
                 {% endif %}
-                <div class="text-right {{ status }}">
-                    {{ '~' ~ totalSizeStorage|ea_filesize }} utilisés sur {{ max_upload_size|ea_filesize }}
+                <div class="text-right">
+                    <span class="{{ status }}">{{ '~' ~ totalSizeStorage|ea_filesize }}</span>
+                    utilisés sur {{ max_upload_size|ea_filesize }}
                 </div>
 
                 <progress max="{{ max_upload_size }}" value="{{ totalSizeStorage }}"></progress>
