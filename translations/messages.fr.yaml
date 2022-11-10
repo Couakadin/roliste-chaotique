@@ -249,7 +249,7 @@ ui:
   download_item: téléverser le fichier
   title: titre
   create-folder: créer un dossier
-  create-folder-placeholder: créer un dossier dans le répertoire "%path%"
+  create-folder-placeholder: créer un dossier dans "%path%"
 
 tooltip:
   tooltip: info-bulle
