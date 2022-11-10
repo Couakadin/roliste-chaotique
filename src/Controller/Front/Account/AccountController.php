@@ -2,8 +2,8 @@
 
 namespace App\Controller\Front\Account;
 
-use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
+use App\Entity\Storage\Storage;
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
 use App\Form\User\UserPasswordType;
@@ -34,7 +34,7 @@ class AccountController extends AbstractController
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly EntityManagerInterface      $entityManager,
         private readonly TranslatorInterface         $translator,
-        private readonly BadgeManager                $badgeManager
+        private readonly BadgeManager                $badgeManager,
     )
     {
     }
@@ -109,8 +109,8 @@ class AccountController extends AbstractController
         }
 
         return $this->render('@front/account/edit.html.twig', [
-            'formProfile' => $formProfile->createView(),
-            'formAvatar' => $formAvatar->createView(),
+            'formProfile'  => $formProfile->createView(),
+            'formAvatar'   => $formAvatar->createView(),
             'formPassword' => $formPassword->createView(),
         ]);
     }
@@ -197,12 +197,11 @@ class AccountController extends AbstractController
 
     /**
      * @param string $typeClass
-     * @param User $entity
+     * @param User|Storage $entity
      * @param Request $request
-     *
      * @return FormInterface
      */
-    private function getForm(string $typeClass, User $entity, Request $request): FormInterface
+    private function getForm(string $typeClass, User|Storage $entity, Request $request): FormInterface
     {
         $form = $this->createForm($typeClass, $entity);
 
@@ -213,7 +212,6 @@ class AccountController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.account.edit')));
-            //return $this->redirectToRoute('front.account.edit', ['slug' => $entity->getSlug()]);
         }
 
         return $form;

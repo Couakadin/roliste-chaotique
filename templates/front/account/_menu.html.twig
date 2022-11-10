@@ -27,19 +27,24 @@
 
 <div class="account-menu mt2">
     <ul class="container account-menu_list">
-        <li class="px1 account-menu_lines py1 {% if currentPath is same as 'front.account.index' %}active{% endif %}">
+        <li class="px1 account-menu_lines py1 {% if currentPath is same as 'account.index' %}active{% endif %}">
             <a href="{{ path('account.index', {'slug': user.slug}) }}">
                 {{ 'ui.profile'|trans|capitalize }}
             </a>
         </li>
         {% if app.user is same as user %}
-            <li class="px1 account-menu_user py1 {% if currentPath is same as 'front.account.edit' %}active{% endif %}">
+            <li class="px1 account-menu_user py1 {% if currentPath is same as 'account.edit' %}active{% endif %}">
                 <a href="{{ path('account.edit', {'slug': app.user.slug}) }}">
                     {{ 'ui.edit'|trans|capitalize }}
                 </a>
             </li>
+            <li class="px1 account-menu_storage py1 {% if currentPath in ['account.storage', 'account.folder-edit', 'account.storage-edit'] %}active{% endif %}">
+                <a href="{{ path('account.storage', {'slug': app.user.slug}) }}">
+                    {{ 'ui.storage'|trans|capitalize }}
+                </a>
+            </li>
         {% endif %}
-        <li class="px1 account-menu_badge py1 {% if currentPath is same as 'front.account.badge' %}active{% endif %}">
+        <li class="px1 account-menu_badge py1 {% if currentPath is same as 'account.badge' %}active{% endif %}">
             <a href="{{ path('account.badge', {'slug': user.slug}) }}">
                 {{ 'ui.badges' |trans|capitalize }}
             </a>

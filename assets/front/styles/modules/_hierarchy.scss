@@ -1,0 +1,17 @@
+.hierarchy {
+  list-style  : '/';
+  margin-left : .5rem;
+}
+
+.hierarchy-parent {
+  display    : list-item;
+  list-style : '/';
+}
+
+.hierarchy-storage {
+  display     : list-item;
+  list-style  : '*';
+  font-size   : .8rem;
+  font-style  : italic;
+  margin-left : .5rem;
+}

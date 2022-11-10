@@ -132,6 +132,7 @@ ui:
   last_register: derniers inscrits
   calendar_welcome: nos événements
   dm: mj
+  drag_drop: déposez un fichier ou cliquez pour parcourir
   end_date_event_different: date de fin différente de la date de départ
   edit: éditer
   edit_avatar: changer d'avatar
@@ -160,13 +161,8 @@ ui:
   highlight: en lumière
   i_participate: je participe
   info_general: infos générales
-  info_members: infos membres
   i_not_participate: je ne participe plus
   i_validate: je valide
-  i_ask_join: faire une demande pour rejoindre cette table
-  i_no_join: quitter cette table
-  i_join_waiting: votre demande d'inscription est en attente
-  i_join_declined: votre demande d'inscription a été refusée
   join_us: nous rejoindre
   join_us_text: |
     Que vous soyez novice ou vétéran, joueur ou maître du jeu, médiéval ou science-fiction : les portes du domaine vous seront toujours ouvertes !
@@ -185,6 +181,7 @@ ui:
   no_specified: non précisé
   one-shot: one-shot
   online: en ligne
+  original_name: titre
   only_members: | 
     vous devez être membre de la table %table% pour y participer.
   or_connexion: ou se connecter ?
@@ -228,6 +225,7 @@ ui:
   events_participated: événements participés
   no_one: aucun
   delete_account: supprimer le compte
+  how_it_work: comment ça marche ?
   warning_delete_account: |
     Attention ! Cette action est irréversible. En cas d'incertitude, vous pouvez toujours <a href="%link%" class="link-line">nous contacter par e-mail</a>.
   understood_delete_account: j'ai compris et souhaite supprimer mon compte
@@ -246,6 +244,13 @@ ui:
   event_past: cette événement est passé
   event_max: max. participants atteint
   total_participate: nombre de participants
+  storage: archives
+  add_item: ajouter un fichier
+  download_items: téléverser tous les fichiers
+  download_item: téléverser le fichier
+  title: titre
+  create-folder: créer un dossier
+  create-folder-placeholder: créer un dossier dans "%path%"
 
 tooltip:
   tooltip: info-bulle

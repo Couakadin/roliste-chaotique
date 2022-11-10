@@ -1,0 +1,216 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.account'|trans({'%user%': app.user.username})|capitalize %}
+{% block title 'ui.account'|trans|capitalize %}
+
+{# Macro to loop and create tree structure of folders #}
+{% macro tree_structure(folders, storages) %}
+    {% import _self as macros %}
+    <ul class="hierarchy">
+        {% for folder in folders %}
+            <li>
+                <div class='flex space-between'>
+                    <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': folder.slug}) }}">
+                        {{ folder.title }}
+                    </a>
+                    <div class='dropdown'>
+                        <span>&#8230;</span>
+                        <div class='dropdown-content'>
+                            <form action='{{ path('account.folder-delete', {'folder': folder.slug}) }}' method='post'>
+                                <button type="button">
+                                    <a href="{{ path('account.folder-edit', {'folder': folder.slug}) }}"
+                                       class="mr1 color-danger"
+                                       title="{{ 'ui.edit'|trans }}">
+                                        <img src="{{ asset('build/front/icons/edit.svg') }}"
+                                             alt="{{ 'ui.edit'|trans|capitalize }}" width="16">
+                                    </a>
+                                </button>
+                                <input type='hidden' name='_method' value='DELETE'>
+                                <input type='hidden' name='token' value='{{ csrf_token('delete-folder') }}'>
+                                <button type='submit'>
+                                    <img src="{{ asset('build/front/icons/trash.svg') }}"
+                                         title="{{ 'ui.delete'|trans }}" alt="{{ 'ui.delete'|trans|capitalize }}"
+                                         width="16">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% if folder.originalName %}
+                    <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': folder.slug}) }}"
+                       class="hierarchy-storage">
+                        {{ folder.originalName }}
+                    </a>
+                {% endif %}
+                {% if folder.__children %}
+                    {{ macros.tree_structure(folder.__children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% block body %}
+    {% include '@front/account/_menu.html.twig' %}
+
+    <section class="container mt2">
+        <div class="account-storage">
+            <div class="account-storage_info">
+                <button type="button" data-modal-open="howStorageWork" class="btn-secondary">
+                    {{ ('ui.how_it_work'|trans|UCFirst) }}
+                </button>
+
+                <div id="howStorageWork" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>{{ ('ui.how_it_work'|trans|UCFirst) }}</h2>
+                            <span data-modal-close="howStorageWork" class="modal-close">✗</span>
+                        </div>
+                        <div class="p1">
+                            <p>
+                                Les archives sont votre gestionnaire de dossiers personnel.
+                                Ici, vous pouvez y entreposer ce que vous voulez jusqu'à <strong>5GB</strong>.
+                                <br>
+                                À gauche : une liste exhaustive de tous vos fichiers dans le répertoire indiqué.
+                                <br>
+                                À droite : le téléchargement de fichiers ainsi que la gestion de vos dossiers en
+                                arborescence.
+                            </p>
+                            <p class="mt1">Les fichiers téléchargeables sont :</p>
+                            <ul>
+                                <li class="list-circle-inside">Images <strong>(PNJ/JPG/GIF)</strong></li>
+                                <li class="list-circle-inside">
+                                    Documents <strong>(PDF, X-PDF, DOC, DOCX, TXT)</strong>
+                                </li>
+                            </ul>
+                            <p class="mt1">
+                                Les fichiers téléchargeables doivent faire moins de <strong>100MB</strong>.
+                            </p>
+                            <p>
+                                Les dossiers doivent faire au minimum <strong>3 caractères</strong> et au maximum
+                                <strong>64 caractères</strong>.
+                                <br>
+                                Les dossiers seront créés dans le répertoire actuel où vous vous trouvez.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="account-storage_content card">
+                {% if (( totalSizeStorage / max_upload_size) * 100 )|number_format < 50 %}
+                    {% set status = 'color-success' %}
+                {% elseif (( totalSizeStorage / max_upload_size) * 100 )|number_format < 75 %}
+                    {% set status = 'color-warning' %}
+                {% else %}
+                    {% set status = 'color-danger' %}
+                {% endif %}
+                <div class="text-right">
+                    <span class="{{ status }}">{{ '~' ~ totalSizeStorage|ea_filesize }}</span>
+                    utilisés sur {{ max_upload_size|ea_filesize }}
+                </div>
+
+                <progress max="{{ max_upload_size }}" value="{{ totalSizeStorage }}"></progress>
+
+                <ol class="flex mt2">
+                    <li>
+                        <a href="{{ path('account.storage', {'slug': app.user}) }}">/{{ 'ui.storage'|trans }}</a>
+                    </li>
+                    {% for p in path %}
+                        <li>
+                            {% if not loop.last %}
+                                <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': p.slug}) }}">
+                                    /{{ p.title }}
+                                </a>
+                            {% else %}
+                                <span>/{{ p.title }}</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ol>
+
+                <table class="d-table">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Taille</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    {% for storage in storages %}
+                        <tr>
+                            <td>
+                                <a download href="{{ asset(vich_uploader_asset(storage)) }}" class="link-line">
+                                    {{ storage.originalName }}
+                                </a>
+                            </td>
+                            <td>{{ storage.size|ea_filesize }}</td>
+                            <td class="text-center">
+                                <form action="{{ path('account.storage-delete', {'storage': storage.slug}) }}"
+                                      method="post" class="flex align-center justify-center">
+                                    <button type="button">
+                                        <a href="{{ path('account.storage-edit', {'storage': storage.slug}) }}"
+                                           title="{{ 'ui.edit'|trans }}">
+                                            <img src="{{ asset('build/front/icons/edit.svg') }}"
+                                                 alt="{{ 'ui.edit'|trans|capitalize }}" width="16">
+                                        </a>
+                                    </button>
+                                    <input type='hidden' name='_method' value='DELETE'>
+                                    <input type='hidden' name='token' value='{{ csrf_token('delete-storage') }}'>
+                                    <button type="submit" class="ml1" title="{{ 'ui.delete'|trans }}">
+                                        <img src="{{ asset('build/front/icons/trash.svg') }}"
+                                             alt="{{ 'ui.delete'|trans|capitalize }}" width="16">
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="account-storage_form card">
+                {% if totalSizeStorage < max_upload_size %}
+                    {{ form_start(formStorage) }}
+                    <button type="submit" class="btn-primary">{{ 'ui.download_item'|trans|capitalize }}</button>
+                    {{ form_widget(formStorage.imageFile) }}
+                    {{ form_widget(formStorage._token) }}
+                    <span class="color-danger">{{ form_errors(formStorage) }}</span>
+                    {{ form_end(formStorage, {'render_rest': false}) }}
+                {% else %}
+                    <div class="card flash-warning">
+                        Vous avez dépassé le quota maximum de téléchargement !
+                    </div>
+                {% endif %}
+                <hr class="my1">
+                {{ form_start(formNewFolder) }}
+                <div class="form-group">
+                    <label>{{ 'ui.create-folder'|trans|capitalize }}</label>
+                    {% set title = '' %}
+                    {% for p in path %}
+                        {% set title = p.title %}
+                    {% else %}
+                        {% set title = 'archives' %}
+                    {% endfor %}
+                    {{ form_widget(formNewFolder.title, {
+                        'attr': {
+                            'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': title})|capitalize
+                        }}) }}
+                    <div class="color-danger">
+                        {{ form_errors(formNewFolder) }}
+                    </div>
+                </div>
+                {{ form_widget(formNewFolder._token) }}
+
+                {{ form_end(formNewFolder, {'render_rest': false}) }}
+
+                <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-parent">
+                    {{ 'ui.storage'|trans|capitalize }}
+                </a>
+                {% for storage in storages|filter(storage => storage.folder is null) %}
+                    <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-storage">
+                        {{ storage.originalName }}
+                    </a>
+                {% endfor %}
+                {{ _self.tree_structure(folderHierarchy, storages) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

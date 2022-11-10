@@ -1,0 +1,19 @@
+.dropdown {
+  position    : relative;
+  display     : inline-block;
+  cursor      : pointer;
+  user-select : none;
+
+  &:hover .dropdown-content {display : block;}
+}
+
+.dropdown-content {
+  display          : none;
+  position         : absolute;
+  background-color : hsl(var(--clr-light));
+  border           : .02rem solid hsl(var(--clr-dark));
+  width            : max-content;
+  box-shadow       : 0 .5rem 1rem 0 hsla(var(--clr-dark), .2);
+  padding          : .75rem 1rem;
+  z-index          : z-index('modal');
+}

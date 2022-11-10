@@ -2,11 +2,11 @@
   border-top : 1px solid hsla(var(--clr-dark), .2);
   box-shadow : 0 10px 10px -1px hsla(var(--clr-dark), .3);
 
-  &_lines, &_user, &_badge, &_logout {border-top : 2px solid transparent;}
+  &_lines, &_user, &_storage, &_badge, &_logout {border-top : 2px solid transparent;}
 
   &_logout {margin-left : auto;}
 
-  &_lines:before, &_user:before, &_badge:before, &_logout:before {
+  &_lines:before, &_user:before, &_storage:before, &_badge:before, &_logout:before {
     display      : inline-block;
     width        : 1rem;
     height       : 1rem;
@@ -19,6 +19,8 @@
   &_user:before {content : url('/public/build/front/icons/user.svg');}
 
   &_badge:before {content : url('/public/build/front/icons/badge.svg');}
+
+  &_storage:before {content : url('/public/build/front/icons/storage.svg');}
 
   &_logout:before {
     content : url('/public/build/front/icons/logout.svg');
@@ -86,3 +88,37 @@
 
   &.online {background : hsl(var(--clr-success));}
 }
+
+.account-storage {
+  @include big-device {
+    grid-template-columns : 37.5rem 12.5rem;
+    grid-template-areas   :
+          'info info info'
+          'content content form';
+  }
+
+  display             : grid;
+  gap                 : 1rem 2rem;
+  grid-template-areas :
+          'info'
+          'form'
+          'content';
+
+  &_info {grid-area : info;}
+
+  &_content {
+    grid-area : content;
+    height    : fit-content;
+  }
+
+  &_form {
+    @include big-device {
+      position : sticky;
+      top      : 1rem;
+    }
+
+    grid-area : form;
+    height    : fit-content;
+  }
+}
+

@@ -20,7 +20,7 @@ class HomeController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    #[Route(['/', '/home', '/homepage'], name: 'home.index')]
+    #[Route(['/'], name: 'home.index')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $table = $entityManager->getRepository(Table::class);

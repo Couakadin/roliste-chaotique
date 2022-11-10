@@ -8,4 +8,5 @@ twig:
         '%kernel.project_dir%/templates/bundles': bundles
     globals:
         discord: 'https://discord.gg/BTPd3jGWYd'
+        max_upload_size: '5368709120'
         notification: '@App\Service\NotificationManager'

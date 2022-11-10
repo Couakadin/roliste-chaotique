@@ -1,0 +1,20 @@
+.d-table {
+  border-collapse : collapse;
+  width           : 100%;
+
+  th {
+    padding-top      : .75rem;
+    padding-bottom   : .75rem;
+    text-align       : left;
+    background-color : hsl(var(--clr-widget));
+    color            : hsl(var(--clr-light));
+  }
+
+  th, td {
+    border         : .063rem solid hsl(var(--clr-dark));
+    padding        : .5rem;
+    vertical-align : middle;
+  }
+
+  tr:nth-child(even) {background-color : hsla(var(--clr-widget), .3);}
+}
