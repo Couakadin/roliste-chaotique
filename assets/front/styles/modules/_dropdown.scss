@@ -1,6 +1,8 @@
 .dropdown {
-  position : relative;
-  display  : inline-block;
+  position    : relative;
+  display     : inline-block;
+  cursor      : pointer;
+  user-select : none;
 
   &:hover .dropdown-content {
     display : flex;

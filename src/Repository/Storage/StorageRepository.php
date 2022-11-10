@@ -6,6 +6,8 @@ use App\Entity\Folder\Folder;
 use App\Entity\Storage\Storage;
 use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -40,5 +42,19 @@ class StorageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException|NoResultException
+     */
+    public function getTotalSizePerUser(UserInterface|User $user)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.user = :user')
+            ->setParameter('user', $user)
+            ->select('SUM(s.size) as totalSize')
+            ->orderBy('totalSize')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
