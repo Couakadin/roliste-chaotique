@@ -181,6 +181,7 @@ ui:
   no_specified: non précisé
   one-shot: one-shot
   online: en ligne
+  original_name: titre
   only_members: | 
     vous devez être membre de la table %table% pour y participer.
   or_connexion: ou se connecter ?

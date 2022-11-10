@@ -4,6 +4,7 @@ namespace App\Form\Storage;
 
 use App\Entity\Storage\Storage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -30,6 +31,9 @@ class StorageType extends AbstractType
         });
 
         $builder
+            ->add('originalName', TextType::class, [
+                'label' => 'ui.original_name'
+            ])
             ->add('imageFile', DropzoneType::class, [
                 'label'       => false,
                 'attr' => [

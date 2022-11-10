@@ -10,11 +10,18 @@
         <div class="account-storage">
             <div class="account-storage_info card flash-info"></div>
             <div class="account-storage_content card">
-                <div class="text-right">
-                    {{ '~' ~ totalSizeStorage|ea_filesize }} utilisés sur {{ 5368709120|ea_filesize }}
+                {% if (( totalSizeStorage / max_upload_size) * 100 )|number_format < 50 %}
+                    {% set status = 'color-success' %}
+                {% elseif (( totalSizeStorage / max_upload_size) * 100 )|number_format < 75 %}
+                    {% set status = 'color-warning' %}
+                {% else %}
+                    {% set status = 'color-danger' %}
+                {% endif %}
+                <div class="text-right {{ status }}">
+                    {{ '~' ~ totalSizeStorage|ea_filesize }} utilisés sur {{ max_upload_size|ea_filesize }}
                 </div>
 
-                <progress max="5368709120" value="{{ totalSizeStorage }}"></progress>
+                <progress max="{{ max_upload_size }}" value="{{ totalSizeStorage }}"></progress>
 
                 <ol class="flex mt2">
                     <li>
@@ -49,32 +56,52 @@
                                 </a>
                             </td>
                             <td>{{ storage.size|ea_filesize }}</td>
-                            <td></td>
+                            <td class="text-center">
+                                <div class="flex">
+                                    <a href="{{ path('account.storage-edit', {'storage': storage.slug}) }}" class="mr1"
+                                       title="{{ 'ui.edit'|trans }}">
+                                        &#9998;
+                                    </a>
+                                    <form action="{{ path('account.storage-delete', {'storage': storage.slug}) }}"
+                                          method="post">
+                                        <input type='hidden' name='_method' value='DELETE'>
+                                        <input type='hidden' name='token' value='{{ csrf_token('delete-storage') }}'>
+                                        <button type="submit" class="ml1" title="{{ 'ui.delete'|trans }}">&#9881;
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
             <div class="account-storage_form card">
-                {{ form_start(formStorage) }}
-                <button type="submit" class="btn-primary">{{ 'ui.download_item'|trans|capitalize }}</button>
-                {{ form_widget(formStorage.imageFile) }}
-                <span class="color-danger">{{ form_errors(formStorage.imageFile) }}</span>
-                {{ form_end(formStorage) }}
-                <hr class="mb1">
+                {% if totalSizeStorage < max_upload_size %}
+                    {{ form_start(formStorage) }}
+                    <button type="submit" class="btn-primary">{{ 'ui.download_item'|trans|capitalize }}</button>
+                    {{ form_widget(formStorage.imageFile) }}
+                    {{ form_widget(formStorage._token) }}
+                    <span class="color-danger">{{ form_errors(formStorage) }}</span>
+                    {{ form_end(formStorage, {'render_rest': false}) }}
+                {% else %}
+                    <div class="card flash-warning">
+                        Vous avez dépassé le quota maximum de téléchargement !
+                    </div>
+                {% endif %}
+                <hr class="my1">
                 {{ form_start(formNewFolder) }}
                 <div class="form-group">
                     <label>{{ 'ui.create-folder'|trans|capitalize }}</label>
+                    {% set title = '' %}
                     {% for p in path %}
-                        {{ form_widget(formNewFolder.title, {
-                            'attr': {
-                                'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': p.title})|capitalize
-                            }}) }}
+                        {% set title = p.title %}
                     {% else %}
-                        {{ form_widget(formNewFolder.title, {
-                            'attr': {
-                                'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': 'archives'})|capitalize
-                            }}) }}
+                        {% set title = 'archives' %}
                     {% endfor %}
+                    {{ form_widget(formNewFolder.title, {
+                        'attr': {
+                            'placeholder': 'ui.create-folder-placeholder'|trans({'%path%': title})|capitalize
+                        }}) }}
                     <div class="color-danger">
                         {{ form_errors(formNewFolder.title) }}
                     </div>
@@ -84,5 +111,4 @@
             </div>
         </div>
     </section>
-
 {% endblock %}

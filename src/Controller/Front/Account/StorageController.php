@@ -9,14 +9,12 @@ use App\Form\Folder\FolderType;
 use App\Form\Storage\StorageType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route('/account')]
 class StorageController extends AbstractController
@@ -24,14 +22,12 @@ class StorageController extends AbstractController
     /**
      * @param EntityManagerInterface $entityManager
      * @param TranslatorInterface $translator
-     * @param UploaderHelper $helper
      * @param CsrfTokenManagerInterface $csrfTokenManager
      */
     public function __construct
     (
         private readonly EntityManagerInterface  $entityManager,
         private readonly TranslatorInterface     $translator,
-        private readonly UploaderHelper          $helper,
         private readonly CsrfTokenManagerInterface $csrfTokenManager
     )
     {
@@ -62,7 +58,6 @@ class StorageController extends AbstractController
             ->findBy(['user' => $user, 'folder' => $folderFind]);
 
         $array = [];
-
         foreach ($this->getUser()->getStorages() as $storage) {
             $array[] += $storage->getSize();
         }
@@ -78,7 +73,10 @@ class StorageController extends AbstractController
 
             $this->addFlash('success', ucfirst($this->translator->trans('flash.account.upload')));
 
-            return $this->redirectToRoute('account.storage', ['slug' => $user->getSlug()]);
+            return $this->redirectToRoute('account.storage', [
+                'slug' => $user->getSlug(),
+                'folder' => $storage->getFolder()?->getSlug()
+            ]);
         }
 
         $newFolder = new Folder();
@@ -102,7 +100,7 @@ class StorageController extends AbstractController
         $options = [
             'decorate'      => true,
             'rootOpen'      => static function (array $tree): ?string {
-                if ([] !== $tree && 0 == $tree[0]['lvl']) {
+                if ([] !== $tree && 0 === $tree[0]['lvl']) {
                     return '<ul class="hierarchy">';
                 }
 
@@ -160,14 +158,8 @@ class StorageController extends AbstractController
     #[Route('/storage/create-folder/{folder}', name: 'account.folder-create', methods: ['POST'])]
     public function createFolder(Request $request, string $folder = null): RedirectResponse
     {
-        if ($folder) {
-            $folderRepo = $this->entityManager->getRepository(Folder::class)
-                ->findOneBy(['slug' => $folder, 'owner' => $this->getUser()]);
-
-            if (!$folderRepo) {
-                return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
-            }
-        }
+        $folderRepo = $this->entityManager->getRepository(Folder::class)
+            ->findOneBy(['slug' => $folder, 'owner' => $this->getUser()]);
 
         $newFolder = new Folder();
         $formNewFolder = $this->createForm(FolderType::class, $newFolder);
@@ -188,12 +180,12 @@ class StorageController extends AbstractController
 
         return $this->redirectToRoute('account.storage', [
             'slug'   => $this->getUser()->getSlug(),
-            'folder' => $folder ?: null
+            'folder' => $folderRepo?->getSlug()
         ]);
     }
 
     #[Route('/storage/edit-folder/{folder}', name: 'account.folder-edit')]
-    public function editFolder(Request $request, string $folder = null): Response
+    public function editFolder(Request $request, string $folder): Response
     {
         $folderRepo = $this->entityManager->getRepository(Folder::class)
             ->findOneBy(['slug' => $folder, 'owner' => $this->getUser()]);
@@ -216,14 +208,14 @@ class StorageController extends AbstractController
             return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        return $this->render('@front/account/storage/edit.html.twig', [
+        return $this->render('@front/account/storage/edit_folder.html.twig', [
             'form'   => $formEditFolder->createView(),
             'folder' => $folderRepo
         ]);
     }
 
     #[Route('/storage/delete-folder/{folder}', name: 'account.folder-delete', methods: ['DELETE'])]
-    public function deleteFolder(Request $request, string $folder = null): RedirectResponse
+    public function deleteFolder(Request $request, string $folder): RedirectResponse
     {
         $folderRepo = $this->entityManager->getRepository(Folder::class)
             ->findOneBy(['slug' => $folder, 'owner' => $this->getUser()]);
@@ -239,6 +231,10 @@ class StorageController extends AbstractController
                 $child->setParent(null);
             }
 
+            foreach ($folderRepo->getStorages() as $storage) {
+                $storage->setFolder(null);
+            }
+
             $this->getUser()->removeFolder($folderRepo);
             $this->entityManager->remove($folderRepo);
             $this->entityManager->flush();
@@ -248,31 +244,54 @@ class StorageController extends AbstractController
 
         return $this->redirectToRoute('account.storage', [
             'slug'   => $this->getUser()->getSlug(),
-            'folder' => $folder ?: null
+            'folder' => $folderRepo->getParent() ?: null
         ]);
     }
 
-    /**
-     * Returns a storage file for display.
-     *
-     * @param int $id
-     *
-     * @return BinaryFileResponse|RedirectResponse
-     */
-    #[Route('/private-file/{id}', name: 'private.file')]
-    public function privateFile(int $id): BinaryFileResponse|RedirectResponse
+    #[Route('/storage/edit-storage/{storage}', name: 'account.storage-edit')]
+    public function editStorage(Request $request, string $storage): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
+        $storageRepo = $this->entityManager->getRepository(Storage::class)
+            ->findOneBy(['slug' => $storage, 'user' => $this->getUser()]);
 
-        $storage = $this->entityManager->getRepository(Storage::class)
-            ->findOneBy(['id' => $id, 'user' => $this->getUser()]);
-
-        if (!$storage) {
+        if (!$storageRepo) {
             return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
         }
 
-        $asset = $this->helper->asset($storage);
+        $formEditStorage = $this->createForm(StorageType::class, $storageRepo);
+        $formEditStorage->handleRequest($request);
 
-        return new BinaryFileResponse($this->getParameter('kernel.project_dir') . '/templates' . $asset);
+        if ($formEditStorage->isSubmitted() && $formEditStorage->isValid()) {
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        return $this->render('@front/account/storage/edit_storage.html.twig', [
+            'form'   => $formEditStorage->createView(),
+            'storage' => $storageRepo
+        ]);
+    }
+
+    #[Route('/storage/delete-storage/{storage}', name: 'account.storage-delete', methods: ['DELETE'])]
+    public function deleteStorage(Request $request, string $storage): RedirectResponse
+    {
+        $storageRepo = $this->entityManager->getRepository(Storage::class)
+            ->findOneBy(['slug' => $storage, 'user' => $this->getUser()]);
+
+        if (!$storageRepo) {
+            return $this->redirectToRoute('account.storage', ['slug' => $this->getUser()->getSlug()]);
+        }
+
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-storage', $submittedToken)) {
+            $this->entityManager->remove($storageRepo);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('account.storage', [
+            'slug'   => $this->getUser()->getSlug()
+        ]);
     }
 }

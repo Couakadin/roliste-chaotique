@@ -58,10 +58,10 @@ class Storage
     #[ORM\Column(length: 255)]
     private ?string $originalName = null;
     /**
-     * @var array
+     * @var null|array
      */
     #[ORM\Column(type: Types::JSON)]
-    private array $dimensions = [];
+    private ?array $dimensions = [];
     /**
      * @var DateTimeImmutable|null
      */
@@ -132,11 +132,11 @@ class Storage
     }
 
     /**
-     * @param string $fileName
+     * @param string|null $fileName
      *
-     * @return $this
+     * @return Storage
      */
-    public function setFileName(string $fileName): self
+    public function setFileName(?string $fileName): self
     {
         $this->fileName = $fileName;
 
@@ -152,11 +152,11 @@ class Storage
     }
 
     /**
-     * @param string $slug
+     * @param string|null $slug
      *
-     * @return $this
+     * @return Storage
      */
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 
@@ -172,11 +172,11 @@ class Storage
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      *
-     * @return $this
+     * @return Storage
      */
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 
@@ -192,11 +192,11 @@ class Storage
     }
 
     /**
-     * @param string $size
+     * @param string|null $size
      *
-     * @return $this
+     * @return Storage
      */
-    public function setSize(string $size): self
+    public function setSize(?string $size): self
     {
         $this->size = $size;
 
@@ -212,23 +212,31 @@ class Storage
     }
 
     /**
-     * @param string $originalName
+     * @param string|null $originalName
      *
-     * @return $this
+     * @return Storage
      */
-    public function setOriginalName(string $originalName): self
+    public function setOriginalName(?string $originalName): self
     {
         $this->originalName = $originalName;
 
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getDimensions(): array
     {
         return $this->dimensions;
     }
 
-    public function setDimensions(array $dimensions): self
+    /**
+     * @param array|null $dimensions
+     *
+     * @return $this
+     */
+    public function setDimensions(?array $dimensions): self
     {
         $this->dimensions = $dimensions;
 
@@ -244,11 +252,11 @@ class Storage
     }
 
     /**
-     * @param DateTimeImmutable $createdAt
+     * @param DateTimeImmutable|null $createdAt
      *
-     * @return $this
+     * @return Storage
      */
-    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -264,11 +272,11 @@ class Storage
     }
 
     /**
-     * @param DateTimeImmutable $updatedAt
+     * @param DateTimeImmutable|null $updatedAt
      *
-     * @return $this
+     * @return Storage
      */
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -286,7 +294,7 @@ class Storage
     /**
      * @param User|null $user
      *
-     * @return $this
+     * @return Storage
      */
     public function setUser(?User $user): self
     {
@@ -295,11 +303,19 @@ class Storage
         return $this;
     }
 
+    /**
+     * @return Folder|null
+     */
     public function getFolder(): ?Folder
     {
         return $this->folder;
     }
 
+    /**
+     * @param Folder|null $folder
+     *
+     * @return $this
+     */
     public function setFolder(?Folder $folder): self
     {
         $this->folder = $folder;

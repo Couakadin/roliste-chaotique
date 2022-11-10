@@ -1,0 +1,31 @@
+{% extends '@front/front.html.twig' %}
+
+{% block description 'meta.description.account'|trans({'%user%': app.user.username})|capitalize %}
+{% block title 'ui.account'|trans|capitalize %}
+
+{% block body %}
+    {% include '@front/account/_menu.html.twig' %}
+
+    <section class="container mt2">
+        <div class="card dark">
+            <h2 class="h2 card_title">Modifier le fichier "{{ storage.originalName }}"</h2>
+
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.originalName) }}
+                {{ form_widget(form.originalName) }}
+                {{ form_widget(form._token) }}
+                <div class="color-danger">
+                    {{ form_errors(form.originalName) }}
+                </div>
+            </div>
+            <div class="flex-no-mobile space-between">
+                <a class="btn-secondary" href="{{ path('account.storage', {'slug': app.user.slug}) }}">
+                    {{ 'ui.go_back'|trans|capitalize }}
+                </a>
+                <button class="btn-primary">{{ 'ui.edit'|trans|capitalize }}</button>
+            </div>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </section>
+{% endblock %}
