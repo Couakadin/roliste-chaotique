@@ -150,6 +150,11 @@
                 <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-parent">
                     {{ 'ui.storage'|trans|capitalize }}
                 </a>
+                {% for storage in storages %}
+                    <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-storage">
+                        {{ storage.originalName }}
+                    </a>
+                {% endfor %}
                 {{ _self.tree_structure(folderHierarchy, storages) }}
             </div>
         </div>
