@@ -6,7 +6,6 @@ use App\Entity\Folder\Folder;
 use App\Entity\User\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,9 +42,11 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    public function getTreeQuery(UserInterface|User $owner): array|float|int|string
+    public function getTreeQuery(UserInterface|User $owner): string|array|int|float
     {
         return $this->createQueryBuilder('f')
+            ->select('s.originalName, f.lvl, f.slug, f.title, f.lft, f.rgt')
+            ->leftJoin('f.storages', 's')
             ->where('f.owner = :user')
             ->setParameter('user', $owner)
             ->orderBy('f.root, f.lft', 'ASC')

@@ -3,6 +3,44 @@
 {% block description 'meta.description.account'|trans({'%user%': app.user.username})|capitalize %}
 {% block title 'ui.account'|trans|capitalize %}
 
+{# Macro to loop and create tree structure of folders #}
+{% macro tree_structure(folders, storages) %}
+    {% import _self as macros %}
+    <ul class="hierarchy">
+        {% for folder in folders %}
+            <li>
+                <div class='flex space-between'>
+                    <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': folder.slug}) }}">
+                        {{ folder.title }}
+                    </a>
+                    <div class='dropdown'>
+                        <span>&#8230;</span>
+                        <div class='dropdown-content'>
+                            <a href='{{ path('account.folder-edit', {'folder': folder.slug}) }}'>
+                                {{ 'ui.edit'|trans|capitalize }}
+                            </a>
+                            <form action='{{ path('account.folder-delete', {'folder': folder.slug}) }}' method='post'>
+                                <input type='hidden' name='_method' value='DELETE'>
+                                <input type='hidden' name='token' value='{{ csrf_token('delete-folder') }}'>
+                                <button type='submit'>{{ 'ui.delete'|trans|capitalize }}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% if folder.__children %}
+                    {{ macros.tree_structure(folder.__children) }}
+                {% endif %}
+                {% if folder.originalName %}
+                    <a href="{{ path('account.storage', {'slug': app.user.slug, 'folder': folder.slug}) }}"
+                       class="hierarchy-storage">
+                        {{ folder.originalName }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
 {% block body %}
     {% include '@front/account/_menu.html.twig' %}
 
@@ -108,7 +146,11 @@
                     </div>
                 </div>
                 {{ form_end(formNewFolder) }}
-                {{ folderHierarchy|raw }}
+
+                <a href="{{ path('account.storage', {'slug': app.user.slug}) }}" class="hierarchy-parent">
+                    {{ 'ui.storage'|trans|capitalize }}
+                </a>
+                {{ _self.tree_structure(folderHierarchy, storages) }}
             </div>
         </div>
     </section>
