@@ -246,9 +246,11 @@ ui:
   total_participate: nombre de participants
   storage: archives
   add_item: ajouter un fichier
+  download: télécharger
   download_items: téléverser tous les fichiers
   download_item: téléverser le fichier
   title: titre
+  folder: dossier
   create-folder: créer un dossier
   create-folder-placeholder: créer un dossier dans "%path%"
 

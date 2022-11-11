@@ -1,17 +1,51 @@
 .hierarchy {
-  list-style  : '/';
-  margin-left : .5rem;
-}
+  display   : flex;
+  flex-wrap : wrap;
+  gap       : .5rem;
 
-.hierarchy-parent {
-  display    : list-item;
-  list-style : '/';
-}
+  &-folder {
+    display         : inline-flex;
+    align-items     : center;
+    justify-content : space-between;
+    width           : max-content;
+    text-align      : center;
+    border          : .02rem solid hsla(var(--clr-widget), .2);
+    border-radius   : var(--border-radius);
+    padding         : .5rem 1rem;
+    transition      : background-color .2s ease-out;
 
-.hierarchy-storage {
-  display     : list-item;
-  list-style  : '*';
-  font-size   : .8rem;
-  font-style  : italic;
-  margin-left : .5rem;
+    &:hover {
+      background-color : hsla(var(--clr-widget), .2);
+    }
+
+    & *:first-child {
+      margin-right : .5rem;
+    }
+  }
+
+  &-block {
+    position : relative;
+    width    : max-content;
+
+    &:hover .hierarchy-dropdown {
+      display : block;
+    }
+  }
+
+  &-dropdown {
+    @include big-device {
+      display : none;
+    }
+
+    position : absolute;
+    top      : -.5rem;
+    right    : -.5rem;
+
+    & > span {
+      background    : hsl(var(--clr-widget));
+      border-radius : var(--border-radius);
+      color         : hsl(var(--clr-light));
+      padding       : 0 .5rem;
+    }
+  }
 }

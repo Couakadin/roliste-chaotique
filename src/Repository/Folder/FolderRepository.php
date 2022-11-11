@@ -42,15 +42,22 @@ class FolderRepository extends NestedTreeRepository
         }
     }
 
-    public function getTreeQuery(UserInterface|User $owner): string|array|int|float
+    public function getTreeQuery(UserInterface|User $owner, ?Folder $parent = null): array|float|int|string
     {
-        return $this->createQueryBuilder('f')
-            ->select('s.originalName, f.lvl, f.slug, f.title, f.lft, f.rgt')
-            ->leftJoin('f.storages', 's')
-            ->where('f.owner = :user')
-            ->setParameter('user', $owner)
-            ->orderBy('f.root, f.lft', 'ASC')
-            ->getQuery()
+        $query = $this->createQueryBuilder('f')
+            ->where('f.owner = :owner');
+
+        if (null !== $parent) {
+            $query
+                ->andWhere('f.parent = :parent')
+                ->setParameter('parent', $parent);
+        }
+
+        $query
+            ->setParameter('owner', $owner)
+            ->orderBy('f.root, f.lft', 'ASC');
+
+        return $query->getQuery()
             ->getArrayResult();
     }
 }

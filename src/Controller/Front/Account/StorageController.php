@@ -29,10 +29,10 @@ class StorageController extends AbstractController
      */
     public function __construct
     (
-        private readonly EntityManagerInterface    $entityManager,
-        private readonly StorageRepository         $storageRepository,
-        private readonly FolderRepository          $folderRepository,
-        private readonly UserRepository $userRepository
+        private readonly EntityManagerInterface $entityManager,
+        private readonly StorageRepository      $storageRepository,
+        private readonly FolderRepository       $folderRepository,
+        private readonly UserRepository         $userRepository,
     )
     {
     }
@@ -83,8 +83,7 @@ class StorageController extends AbstractController
         $formNewFolder = $this->createForm(FolderType::class, $newFolder, [
             'action' => $this->generateUrl('account.folder-new', [
                 'parentSlug' => $folderFind?->getSlug()
-            ]),
-            'method' => 'POST'
+            ])
         ]);
 
         return $this->render('@front/account/storage.html.twig', [
@@ -93,7 +92,10 @@ class StorageController extends AbstractController
             'folders'          => $folderFind?->getSlug(),
             'storages'         => $storages,
             'path'             => $folderPath,
-            'folderHierarchy'  => $this->folderRepository->buildTree($this->folderRepository->getTreeQuery($this->getUser())),
+            'folderHierarchy'  => $this->folderRepository->buildTree($this->folderRepository->getTreeQuery(
+                $user,
+                $folderFind
+            )),
             'totalSizeStorage' => $this->storageRepository->getTotalSizePerUser($this->getUser()) ?? 0,
         ]);
     }
