@@ -99,8 +99,8 @@ class RegistrationController extends AbstractController
             return $this->userAuthenticator->authenticateUser($user, $this->formLoginAuthenticator, $request);
         }
 
-        return $this->render('@front/security/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->renderForm('@front/security/register.html.twig', [
+            'registrationForm' => $form,
         ]);
     }
 

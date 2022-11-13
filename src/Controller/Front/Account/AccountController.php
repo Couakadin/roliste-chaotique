@@ -108,10 +108,10 @@ class AccountController extends AbstractController
             return $this->redirectToRoute('account.edit', ['slug' => $user->getSlug()]);
         }
 
-        return $this->render('@front/account/edit.html.twig', [
-            'formProfile'  => $formProfile->createView(),
-            'formAvatar'   => $formAvatar->createView(),
-            'formPassword' => $formPassword->createView(),
+        return $this->renderForm('@front/account/edit.html.twig', [
+            'formProfile'  => $formProfile,
+            'formAvatar'   => $formAvatar,
+            'formPassword' => $formPassword,
         ]);
     }
 

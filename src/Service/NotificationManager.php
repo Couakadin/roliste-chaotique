@@ -2,8 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Badge\Badge;
-use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
 use App\Entity\User\User;
 use Doctrine\Persistence\ObjectManager;

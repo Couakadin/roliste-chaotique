@@ -48,9 +48,9 @@ class EventController extends AbstractController
         $eventRepo = $this->entityManager->getRepository(Event::class);
         $events = $paginator->paginate($eventRepo->paginateEvents($form->getData()), $request->query->getInt('page', 1), 5);
 
-        return $this->render('@front/event/index.html.twig', [
+        return $this->renderForm('@front/event/index.html.twig', [
             'events'     => $events,
-            'searchForm' => $form->createView()
+            'searchForm' => $form
         ]);
     }
 

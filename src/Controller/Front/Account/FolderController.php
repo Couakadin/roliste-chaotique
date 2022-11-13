@@ -91,8 +91,8 @@ class FolderController extends AbstractController
             ]);
         }
 
-        return $this->render('@front/account/folder/edit.html.twig', [
-            'form' => $formEditFolder->createView(),
+        return $this->renderForm('@front/account/folder/edit.html.twig', [
+            'form' => $formEditFolder,
             'folder' => $folderEdited
         ]);
     }

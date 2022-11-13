@@ -86,9 +86,9 @@ class StorageController extends AbstractController
             ])
         ]);
 
-        return $this->render('@front/account/storage.html.twig', [
-            'formStorage'      => $formStorage->createView(),
-            'formNewFolder'    => $formNewFolder->createView(),
+        return $this->renderForm('@front/account/storage.html.twig', [
+            'formStorage'      => $formStorage,
+            'formNewFolder'    => $formNewFolder,
             'folders'          => $folderFind?->getSlug(),
             'storages'         => $storages,
             'path'             => $folderPath,
@@ -130,8 +130,8 @@ class StorageController extends AbstractController
             ]);
         }
 
-        return $this->render('@front/account/storage/edit.html.twig', [
-            'form' => $formEditStorage->createView(),
+        return $this->renderForm('@front/account/storage/edit.html.twig', [
+            'form' => $formEditStorage,
             'storage' => $storageEdited
         ]);
     }
