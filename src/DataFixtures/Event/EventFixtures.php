@@ -34,6 +34,7 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
             $entity->setStart(new DateTimeImmutable());
             $entity->setEnd(new DateTimeImmutable());
             $entity->setZone($this->findZone());
+            $entity->setInitiation(false);
             // No members. I prefer to set them manually in order to make tests.
 
             $manager->persist($entity);
