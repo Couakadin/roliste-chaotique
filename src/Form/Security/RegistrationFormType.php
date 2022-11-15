@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
@@ -43,50 +42,21 @@ class RegistrationFormType extends AbstractType
                     new EqualTo(
                         [
                             'value'   => 'le maître du jeu a toujours raison',
-                            'message' => 'user.key_sentence.not_equal',
+                            'message' => 'entity.equal_to',
                         ]
                     ),
                     new NotBlank(
                         [
-                            'message' => 'user.key_sentence.not_blank',
+                            'message' => 'entity.not_blank',
                         ]
                     )
                 ],
             ])
             ->add('email', EmailType::class, [
                 'label'       => 'ui.email',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.email.not_blank',
-                        ]
-                    ),
-                    new Email(
-                        [
-                            'message' => 'user.email.not_email',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.email.length'
-                    ])
-                ],
             ])
             ->add('username', TextType::class, [
                 'label'       => 'ui.username',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.username.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.username.length'
-                    ])
-                ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped'      => false,
@@ -98,7 +68,7 @@ class RegistrationFormType extends AbstractType
                     'class' => 'checkbox',
                 ],
                 'constraints' => [
-                    new IsTrue(['message' => 'form.terms.is_true',]),
+                    new IsTrue(['message' => 'entity.is_true',]),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
@@ -108,12 +78,13 @@ class RegistrationFormType extends AbstractType
                 'label'       => 'ui.password',
                 'attr'        => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank(['message' => 'user.password.not_blank',]),
+                    new NotBlank(['message' => 'entity.not_blank',]),
                     new Length([
                         'min'        => 6,
-                        'minMessage' => 'user.password.length',
+                        'minMessage' => 'entity.length.min',
                         // max length allowed by Symfony for security reasons
                         'max'        => 4096,
+                        'maxMessage' => 'entity.length.max',
                     ]),
                 ],
             ]);

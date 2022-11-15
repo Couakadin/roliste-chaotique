@@ -9,41 +9,36 @@ use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TokenRepository::class)]
 #[ORM\Table(name: 'rc_token')]
+#[UniqueEntity(fields: ['token'], message: 'entity.unique')]
 class Token
 {
     public const EMAIL_VERIFY = 'email_verify';
     public const FORGOTTEN_PASSWORD = 'forgotten_password';
-    /**
-     * @var int|null
-     */
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 52, unique: true, nullable: true)]
+    #[Assert\Length(max: 52, maxMessage: 'entity.length.max')]
     private ?string $token;
-    /**
-     * @var string
-     */
+
     #[ORM\Column(length: 25)]
-    private string $type;
-    /**
-     * @var DateTimeImmutable|null
-     */
+    #[Assert\Length(max: 25, maxMessage: 'entity.length.max')]
+    private ?string $type;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $expiredAt;
-    /**
-     * @var User
-     */
+
     #[ORM\ManyToOne(targetEntity: User::class, cascade: ['persist'], inversedBy: 'tokens')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $user;
+    private ?User $user;
 
     /**
      * @param User $user

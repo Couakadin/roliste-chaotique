@@ -12,7 +12,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class StorageType extends AbstractType
@@ -46,22 +45,6 @@ class StorageType extends AbstractType
                 'label'       => false,
                 'attr'        => [
                     'placeholder' => 'ui.drag_drop',
-                ],
-                'constraints' => [
-                    new File([
-                        'maxSize'          => '100M',
-                        'mimeTypes'        => [
-                            'application/pdf',
-                            'application/x-pdf',
-                            'image/gif',
-                            'image/jpeg',
-                            'image/png',
-                            'text/plain',
-                            'application/msword',
-                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                        ],
-                        'mimeTypesMessage' => 'form.file.type',
-                    ])
                 ],
             ]);
     }

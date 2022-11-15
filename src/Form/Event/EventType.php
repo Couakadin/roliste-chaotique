@@ -21,14 +21,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\Positive;
-use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * @property Security $security
@@ -48,14 +42,12 @@ class EventType extends AbstractType
             $data = $event->getData();
             $data->getEnd() ?: $data->setEnd($data->getStart());
 
-            $newDateStart = (new DateTimeImmutable())
-                ->createFromFormat('Y-m-d H:i', $data->getStart()
-                        ->format('Y-m-d') . ' ' . $form['startHour']->getData()->format('H:i'));
+            $newDateStart = DateTimeImmutable::createFromFormat('Y-m-d H:i', $data->getStart()
+                    ->format('Y-m-d') . ' ' . $form['startHour']->getData()->format('H:i'));
             $data->setStart($newDateStart);
 
-            $newDateEnd = (new DateTimeImmutable())
-                ->createFromFormat('Y-m-d H:i', $data->getEnd()
-                        ->format('Y-m-d') . ' ' . $form['endHour']->getData()->format('H:i'));
+            $newDateEnd = DateTimeImmutable::createFromFormat('Y-m-d H:i', $data->getEnd()
+                    ->format('Y-m-d') . ' ' . $form['endHour']->getData()->format('H:i'));
             $data->setEnd($newDateEnd);
 
             if ($newDateEnd->format('Y-m-d H:i') < $newDateStart->format('Y-m-d H:i')) {
@@ -66,32 +58,10 @@ class EventType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label'       => 'ui.name',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.name.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.name.length'
-                    ])
-                ],
             ])
             ->add('totalParticipate', IntegerType::class, [
                 'label'       => 'ui.total_participate',
                 'required'    => false,
-                'constraints' => [
-                    new Positive([
-                            'message' => 'form.event.positive'
-                        ]
-                    ),
-                    new LessThanOrEqual([
-                        'value'   => 15,
-                        'message' => 'form.event.max_participate'
-                    ])
-                ]
             ])
             ->add('initiation', CheckboxType::class, [
                 'required' => false,
@@ -106,11 +76,6 @@ class EventType extends AbstractType
                 'input'       => 'datetime_immutable',
                 'label'       => 'ui.date_start',
                 'widget'      => 'single_text',
-                'constraints' => [
-                    new GreaterThanOrEqual([
-                        'value' => 'today'
-                    ])
-                ]
             ])
             ->add('end', DateType::class, [
                 'input'    => 'datetime_immutable',
@@ -123,7 +88,8 @@ class EventType extends AbstractType
                 'label'       => 'ui.date_hour_start',
                 'widget'      => 'single_text',
                 'constraints' => [
-                    new NotNull()
+                    new NotNull(['message' => 'entity.not_blank']),
+                    new NotBlank(['message' => 'entity.not_blank']),
                 ]
             ])
             ->add('endHour', TimeType::class, [
@@ -131,7 +97,8 @@ class EventType extends AbstractType
                 'label'       => 'ui.date_hour_end',
                 'widget'      => 'single_text',
                 'constraints' => [
-                    new NotNull(),
+                    new NotNull(['message' => 'entity.not_blank']),
+                    new NotBlank(['message' => 'entity.not_blank']),
                 ]
             ])
             ->add('type', ChoiceType::class, [
@@ -140,18 +107,11 @@ class EventType extends AbstractType
                 'choice_label' => function ($choice, $key) {
                     return 'ui.' . $key;
                 },
-                'constraints'  => [
-                    new Choice([
-                        'choices' => Event::TYPE,
-                        'message' => 'form.event.type'
-                    ])
-                ]
             ])
             ->add('table', EntityType::class, [
                 'label'         => 'ui.table',
                 'class'         => Table::class,
                 'choice_label'  => 'name',
-                'constraints'   => [new Valid()]
             ])
             ->add('zone', EntityType::class, [
                 'required'     => false,
@@ -159,11 +119,9 @@ class EventType extends AbstractType
                 'label'        => 'ui.zone',
                 'class'        => Zone::class,
                 'choice_label' => 'locality',
-                'constraints'  => [new Valid()]
             ])
             ->add('content', CKEditorType::class, [
                 'label'        => 'ui.content',
-                'constraints'  => [new Valid()]
             ]);
     }
 

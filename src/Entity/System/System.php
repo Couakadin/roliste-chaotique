@@ -7,26 +7,21 @@ use App\Repository\System\SystemRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SystemRepository::class)]
 #[ORM\Table(name: 'rc_system')]
 class System
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $name = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'system', targetEntity: Table::class)]
     private Collection|ArrayCollection $tables;
 
@@ -36,9 +31,9 @@ class System
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }
@@ -101,11 +96,9 @@ class System
      */
     public function removeTable(Table $table): self
     {
-        if ($this->tables->removeElement($table)) {
-            // set the owning side to null (unless already changed)
-            if ($table->getSystem() === $this) {
-                $table->setSystem(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tables->removeElement($table) && $table->getSystem() === $this) {
+            $table->setSystem(null);
         }
 
         return $this;

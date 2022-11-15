@@ -28,19 +28,19 @@ class UserPasswordType extends AbstractType
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'label' => 'ui.password',
-                'invalid_message' => 'user.password.not_same',
+                'invalid_message' => 'entity.not_same',
                 'required' => true,
                 'first_options' => ['label' => 'ui.password'],
                 'second_options' => ['label' => 'ui.repeat_password'],
                 'constraints' => [
-                    new NotBlank(['message' => 'user.password.not_blank',]),
+                    new NotBlank(['message' => 'entity.not_blank']),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'user.password.length',
-                        // max length allowed by Symfony for security reasons
+                        'min' => 3,
+                        'minMessage' => 'entity.length.min',
                         'max' => 4096,
-                    ]),
-                ],
+                        'maxMessage' => 'entity.length.max',
+                    ])
+                ]
             ]);
     }
 

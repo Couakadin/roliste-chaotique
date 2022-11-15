@@ -34,16 +34,8 @@ class ContactFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label'      => 'ui.email',
                 'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.email.not_blank',
-                        ]
-                    ),
-                    new Email(
-                        [
-                            'message' => 'user.email.not_email',
-                        ]
-                    ),
+                    new NotBlank(['message' => 'entity.not_blank']),
+                    new Email(['message' => 'entity.email'])
                 ]
             ])
             ->add('subject', TextType::class, [
@@ -51,7 +43,7 @@ class ContactFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(
                         [
-                            'message' => 'form.subject.not_blank',
+                            'message' => 'entity.not_blank',
                         ]
                     ),
                 ]
@@ -61,7 +53,7 @@ class ContactFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(
                         [
-                            'message' => 'form.message.not_blank',
+                            'message' => 'entity.not_blank',
                         ]
                     ),
                 ]
@@ -73,12 +65,12 @@ class ContactFormType extends AbstractType
                     new EqualTo(
                         [
                             'value'   => 'réussite critique',
-                            'message' => 'user.key_sentence.not_equal',
+                            'message' => 'entity.equal_to',
                         ]
                     ),
                     new NotBlank(
                         [
-                            'message' => 'user.key_sentence.not_blank',
+                            'message' => 'entity.not_blank',
                         ]
                     )
                 ],
@@ -93,7 +85,7 @@ class ContactFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            'data_class' => null
         ]);
     }
 }

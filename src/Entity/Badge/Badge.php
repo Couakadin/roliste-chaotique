@@ -8,52 +8,39 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ORM\Table(name: 'rc_badge')]
 class Badge
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var int
-     */
+
     #[Gedmo\SortablePosition]
     #[ORM\Column(name: 'position', type: 'integer')]
     private int $position;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $name = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $description = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $actionName = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column]
     private ?int $actionCount = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'badge', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
     private Collection|ArrayCollection $unlocks;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'badge', targetEntity: Notification::class)]
     private Collection|ArrayCollection $notifications;
 

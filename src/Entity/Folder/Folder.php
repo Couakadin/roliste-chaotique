@@ -11,89 +11,68 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FolderRepository::class)]
 #[Gedmo\Tree(type: 'nested')]
 #[ORM\Table(name: 'rc_folder')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class Folder
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 64)]
+    #[Assert\Length(min: 3, max: 64, minMessage: 'entity.length.min', maxMessage: 'entity.length.max')]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
     private ?string $title = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column]
     #[Gedmo\TreeLeft]
     private ?int $lft = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column]
     #[Gedmo\TreeLevel]
     private ?int $lvl = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column]
     #[Gedmo\TreeRight]
     private ?int $rgt = null;
-    /**
-     * @var self|null
-     */
+
     #[Gedmo\TreeRoot]
     #[ORM\ManyToOne(targetEntity: self::class)]
     #[ORM\JoinColumn(name: 'tree_root', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?self $root = null;
-    /**
-     * @var self|null
-     */
+
     #[Gedmo\TreeParent]
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
     #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?self $parent = null;
-    /**
-     * @var Collection|null
-     */
+
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     #[ORM\OrderBy(['lft' => 'ASC'])]
     private ?Collection $children = null;
-    /**
-     * @var string|null
-     */
-    #[ORM\Column(length: 128)]
+
+    #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['title'])]
+    #[Assert\Length(max: 128, maxMessage: 'entity.length.max')]
     private ?string $slug = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-    /**
-     * @var User|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'folders')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'folder', targetEntity: Storage::class, orphanRemoval: true)]
     private Collection|ArrayCollection $storages;
 

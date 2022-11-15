@@ -4,7 +4,6 @@ namespace App\Repository\Avatar;
 
 use App\Entity\Avatar\Avatar;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,8 +14,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AvatarRepository extends ServiceEntityRepository
 {
-    const DEFAULT_AVATAR = 'female-tiefflin.png';
-
     /**
      * @param ManagerRegistry $registry
      */
@@ -26,15 +23,32 @@ class AvatarRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return int|mixed|string|null
-     * @throws NonUniqueResultException
+     * @param Avatar $entity
+     * @param bool $flush
+     *
+     * @return void
      */
-    public function findDefaultAvatar(): mixed
+    public function save(Avatar $entity, bool $flush = false): void
     {
-        return $this->createQueryBuilder('a')
-            ->where('a.path = :avatar')
-            ->setParameter('avatar', self::DEFAULT_AVATAR)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * @param Avatar $entity
+     * @param bool $flush
+     *
+     * @return void
+     */
+    public function remove(Avatar $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 }

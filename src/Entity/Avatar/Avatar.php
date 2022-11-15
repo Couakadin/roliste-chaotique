@@ -8,35 +8,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvatarRepository::class)]
 #[ORM\Table(name: 'rc_avatar')]
-#[UniqueEntity(fields: ['name', 'path'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['name'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['path'], message: 'entity.unique')]
 class Avatar
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
     private string $name;
 
-    /**
-     * @var string
-     */
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private string $path;
 
-    /**
-     * @var ArrayCollection|Collection
-     */
     #[ORM\OneToMany(mappedBy: 'avatar', targetEntity: User::class)]
     private Collection|ArrayCollection $user;
 

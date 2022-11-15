@@ -83,20 +83,4 @@ class BadgeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleResult();
     }
-
-    /**
-     * Find all Badges unlocked by a specific User
-     *
-     * @param int $user_id
-     * @return Badge[]
-     */
-    public function findUnlockedFor(int $user_id): array
-    {
-        return $this->createQueryBuilder('b')
-            ->innerJoin('b.unlocks', 'u')
-            ->where('u.user = :user_id')
-            ->setParameter('user_id', $user_id)
-            ->getQuery()
-            ->getResult();
-    }
 }

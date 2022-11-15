@@ -63,7 +63,11 @@ class ForgottenPasswordController extends AbstractController
             $repository = $this->entityManager->getRepository(User::class);
             $user = $repository->findOneBy(['email' => $submittedEmail]);
 
-            if (!$user) {$errors[] = ucfirst($translator->trans('flash.email.not_found'));}
+            if (!$user) {
+                $this->addFlash('success', ucfirst($translator->trans('flash.forgotten_password.send.success')));
+
+                return $this->redirectToRoute('security.index');
+            }
 
             if (!$errors) {
                 // Generate token for forgotten password

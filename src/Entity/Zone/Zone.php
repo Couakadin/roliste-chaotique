@@ -13,36 +13,23 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'rc_zone')]
 class Zone
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column]
     private ?int $postalCode = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
     private ?string $locality = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 8)]
     private ?string $longitude = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(type: Types::DECIMAL, precision: 11, scale: 8)]
     private ?string $latitude = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'zone', targetEntity: Event::class)]
     private Collection|ArrayCollection $events;
 
@@ -52,9 +39,9 @@ class Zone
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->locality;
     }
@@ -177,11 +164,9 @@ class Zone
      */
     public function removeEvent(Event $event): self
     {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getZone() === $this) {
-                $event->setZone(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->events->removeElement($event) && $event->getZone() === $this) {
+            $event->setZone(null);
         }
 
         return $this;

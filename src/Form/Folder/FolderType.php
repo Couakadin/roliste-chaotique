@@ -10,8 +10,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FolderType extends AbstractType
 {
@@ -36,15 +34,6 @@ class FolderType extends AbstractType
             ->add('title', TextType::class, [
             'error_bubbling' => true,
             'label' => 'ui.title',
-            'constraints' => [
-                new Length([
-                    'min' => 3,
-                    'max' => 64,
-                    'maxMessage' => 'form.folder.length_max',
-                    'minMessage' => 'form.folder.length_min'
-                ]),
-                new NotBlank(['message' => 'form.folder.not_blank',]),
-            ]
         ]);
     }
 

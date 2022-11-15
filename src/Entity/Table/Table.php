@@ -15,87 +15,75 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TableRepository::class)]
 #[ORM\Table(name: 'rc_table')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class Table
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
     private ?string $name = null;
-    /**
-     * @var string|null
-     */
-    #[ORM\Column(length: 128)]
+
+    #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
+    #[Assert\Length(max: 128, maxMessage: 'entity.length.max')]
     private ?string $slug = null;
-    /**
-     * @var bool|null
-     */
+
     #[ORM\Column]
     private ?bool $showcase = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 180, nullable: true)]
+    #[Assert\Length(max: 180, maxMessage: 'entity.length.max')]
+    #[Assert\File(
+        maxSize: '3000k',
+        mimeTypes: [
+            'image/jpeg',
+            'image/png',
+            'image/svg+xml'
+        ],
+        maxSizeMessage: 'entity.file.size',
+        mimeTypesMessage: 'entity.file.type'
+    )]
     private ?string $picture = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-    /**
-     * @var Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: Event::class, orphanRemoval: true)]
     private Collection $events;
-    /**
-     * @var Collection
-     */
+
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'tables')]
     #[ORM\JoinTable(name: 'rc_table_genre')]
     private Collection $genre;
-    /**
-     * @var Editor|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?Editor $editor = null;
-    /**
-     * @var System|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'tables')]
     private ?System $system = null;
-    /**
-     * @var Collection
-     */
+
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tables')]
     #[ORM\JoinTable(name: 'rc_table_favorite')]
     private Collection $favorite;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'table', targetEntity: EventColor::class)]
     private Collection|ArrayCollection $eventColors;
 
@@ -110,7 +98,7 @@ class Table
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName() ?? 'n/a';
     }

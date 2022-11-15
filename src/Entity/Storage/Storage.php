@@ -9,17 +9,17 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: StorageRepository::class)]
 #[ORM\Table(name: 'rc_storage')]
 #[Vich\Uploadable]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class Storage
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -30,58 +30,58 @@ class Storage
      * @var File|null
      */
     #[Vich\UploadableField(mapping: 'storages', fileNameProperty: 'fileName', size: 'size', mimeType: 'type', originalName: 'originalName', dimensions: 'dimensions')]
+    #[Assert\File(
+        maxSize: '100M',
+        mimeTypes: [
+            'application/pdf',
+            'application/x-pdf',
+            'image/gif',
+            'image/jpeg',
+            'image/png',
+            'text/plain',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        ],
+        maxSizeMessage: 'entity.file.size',
+        mimeTypesMessage: 'entity.file.type'
+    )]
     private ?File $imageFile = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $fileName = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['fileName'])]
+    #[Assert\Length(max: 128, maxMessage: 'entity.length.max')]
     private ?string $slug = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $type = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?int $size = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $originalName = null;
-    /**
-     * @var null|array
-     */
+
     #[ORM\Column(type: Types::JSON)]
     private ?array $dimensions = [];
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-    /**
-     * @var User|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'storages')]
     private ?User $user = null;
-    /**
-     * @var Folder|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'storages')]
     private ?Folder $folder = null;
 

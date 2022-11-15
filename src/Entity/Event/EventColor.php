@@ -4,35 +4,28 @@ namespace App\Entity\Event;
 
 use App\Entity\Table\Table;
 use App\Repository\Event\EventColorRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EventColorRepository::class)]
 #[ORM\Table(name: 'rc_event_color')]
 class EventColor
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var Table|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'eventColors')]
     private ?Table $table = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 7)]
+    #[Assert\Length(max: 7, maxMessage: 'entity.length.max')]
     private ?string $bgColor = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 7)]
+    #[Assert\Length(max: 7, maxMessage: 'entity.length.max')]
     private ?string $borderColor = null;
 
     /**

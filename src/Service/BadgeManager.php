@@ -56,17 +56,6 @@ class BadgeManager
     }
 
     /**
-     * Get Badges unlocked for the current User
-     *
-     * @param User $user
-     * @return array
-     */
-    public function getBadgeFor(User $user): array
-    {
-        return $this->manager->getRepository(Badge::class)->findUnlockedFor($user->getId());
-    }
-
-    /**
      * Get all Badges
      *
      * @return array

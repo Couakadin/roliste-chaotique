@@ -12,9 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TableType extends AbstractType
 {
@@ -29,33 +26,9 @@ class TableType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label'       => 'ui.name',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.name.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.name.length'
-                    ])
-                ],
             ])
             ->add('slug', TextType::class, [
                 'label'       => 'ui.slug',
-                'constraints' => [
-                    new NotBlank(
-                        [
-                            'message' => 'user.slug.not_blank',
-                        ]
-                    ),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.slug.length'
-                    ])
-                ],
             ])
             ->add('content', TextType::class, [
                 'label' => 'ui.content',
@@ -64,18 +37,6 @@ class TableType extends AbstractType
                 'required'    => false,
                 'label'       => 'ui.picture',
                 'data_class'  => null,
-                'constraints' => [
-                    new File([
-                        'maxSize'          => '3000k',
-                        'mimeTypes'        => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/svg+xml'
-                        ],
-                        'mimeTypesMessage' => 'form.file.type',
-                        'maxSizeMessage'   => 'form.file.size'
-                    ])
-                ],
             ])
             ->add('showcase', CheckboxType::class)
             ->add('createdAt', DateTimeType::class)

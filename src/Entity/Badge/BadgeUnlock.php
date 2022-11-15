@@ -10,24 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'rc_badge_unlock')]
 class BadgeUnlock
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Badge|null
-     */
     #[ORM\ManyToOne(inversedBy: 'unlocks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Badge $badge = null;
 
-    /**
-     * @var User|null
-     */
     #[ORM\ManyToOne(inversedBy: 'badgeUnlocks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;

@@ -14,9 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
 
 class UserType extends AbstractType
@@ -31,66 +28,30 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label'       => 'ui.email',
-                'constraints' => [
-                    new NotBlank(['message' => 'user.email.not_blank',]),
-                    new Email(['message' => 'user.email.not_email',]),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.email.length'
-                    ])
-                ],
+                'label' => 'ui.email',
             ])
             ->add('username', TextType::class, [
-                'label'       => 'ui.username',
-                'constraints' => [
-                    new NotBlank(['message' => 'user.username.not_blank',]),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.username.length'
-                    ])
-                ],
+                'label' => 'ui.username',
             ])
             ->add('slug', TextType::class, [
                 'required' => false,
-                'label'       => 'ui.slug',
-                'constraints' => [
-                    new NotBlank(['message' => 'user.slug.not_blank',]),
-                    new Length([
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 180,
-                        'maxMessage' => 'user.slug.length'
-                    ])
-                ],
+                'label' => 'ui.slug',
             ])
             ->add('roles', ChoiceType::class, [
-                'choices'  => User::ROLES,
+                'choices' => User::ROLES,
                 'multiple' => true
             ])
             ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'label'       => 'ui.password',
-                'constraints' => [
-                    new NotBlank(['message' => 'user.password.not_blank',]),
-                    new Length([
-                        'min'        => 6,
-                        'minMessage' => 'user.password.length',
-                        // max length allowed by Symfony for security reasons
-                        'max'        => 4096,
-                    ]),
-                ],
+                'label' => 'ui.password',
             ])
             ->add('isVerified', CheckboxType::class)
             ->add('createdAt', DateTimeType::class)
             ->add('updatedAt', DateTimeType::class)
             ->add('loggedAt', DateTimeType::class)
             ->add('avatar', EntityType::class, [
-                'class'        => Avatar::class,
+                'class' => Avatar::class,
                 'choice_label' => 'path',
-                'constraints'  => [new Valid()]
+                'constraints' => [new Valid()]
             ]);
     }
 

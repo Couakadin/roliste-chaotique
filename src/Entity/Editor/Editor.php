@@ -7,31 +7,26 @@ use App\Repository\Editor\EditorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EditorRepository::class)]
 #[ORM\Table(name: 'rc_editor')]
 class Editor
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $name = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
+    #[Assert\Url(message: 'entity.url')]
     private ?string $url = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'editor', targetEntity: Table::class)]
     private Collection|ArrayCollection $tables;
 
@@ -41,9 +36,9 @@ class Editor
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getName();
     }

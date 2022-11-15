@@ -85,7 +85,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('username', $this->trans('admin.ui.name')),
             SlugField::new('slug', $this->trans('admin.ui.slug'))
                 ->setTargetFieldName('username')
-                ->onlyOnForms(),
+                ->onlyOnDetail(),
             EmailField::new('email', $this->trans('admin.ui.email')),
             // Password hashed with: EventSubscriber/EasyAdminSubscriber
             TextField::new('password')

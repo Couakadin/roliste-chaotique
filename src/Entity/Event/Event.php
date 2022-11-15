@@ -13,10 +13,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: 'rc_event')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class Event
 {
     public const TYPE = [
@@ -24,91 +27,66 @@ class Event
         'one-shot' => 'one-shot'
     ];
 
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-    /**
-     * @var string|null
-     */
-    #[ORM\Column(length: 128)]
+
+    #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['name'])]
+    #[Assert\Length(max: 128, maxMessage: 'entity.length.max')]
     private ?string $slug = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 15)]
+    #[Assert\Length(max: 15, maxMessage: 'entity.length.max')]
+    #[Assert\Choice(choices: self::TYPE, message: 'entity.choice')]
     private ?string $type = null;
-    /**
-     * @var int|null
-     */
+
     #[ORM\Column(nullable: true)]
+    #[Assert\Positive(message: 'entity.positive')]
+    #[Assert\LessThanOrEqual(value: 15, message: 'entity.less_or_equal')]
     private ?int $totalParticipate = null;
-    /**
-     * @var bool|null
-     */
+
     #[ORM\Column(options: ['default' => 0])]
     private ?bool $initiation = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
+    #[Assert\GreaterThanOrEqual(value: 'today')]
     private ?DateTimeImmutable $start = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $end = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-    /**
-     * @var User|null
-     */
+
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'eventMaster')]
     private ?User $master = null;
-    /**
-     * @var Table|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Table $table = null;
-    /**
-     * @var Zone|null
-     */
+
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Zone $zone = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'eventParticipate', cascade: ['persist'])]
     #[ORM\JoinTable(name: 'rc_event_participate')]
     private Collection|ArrayCollection $participate;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Notification::class)]
     private Collection|ArrayCollection $notifications;
 

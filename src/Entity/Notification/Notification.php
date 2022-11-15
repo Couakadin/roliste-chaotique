@@ -9,53 +9,38 @@ use App\Repository\Notification\NotificationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ORM\Table(name: 'rc_notification')]
 class Notification
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    /**
-     * @var string|null
-     */
+
     #[ORM\Column(length: 255)]
+    #[Assert\Length(max: 255, maxMessage: 'entity.length.max')]
     private ?string $type = null;
-    /**
-     * @var bool|null
-     */
+
     #[ORM\Column(options: ['default' => false])]
     private ?bool $isRead = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'create')]
     private ?DateTimeImmutable $createdAt = null;
-    /**
-     * @var DateTimeImmutable|null
-     */
+
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'update')]
     private ?DateTimeImmutable $updatedAt = null;
-    /**
-     * @var User|null
-     */
+
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?User $user = null;
-    /**
-     * @var Event|null
-     */
+
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?Event $event = null;
-    /**
-     * @var Badge|null
-     */
+
     #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'notifications')]
     private ?Badge $badge = null;
 

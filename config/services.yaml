@@ -35,9 +35,6 @@ services:
         class: App\Service\NotificationManager
         arguments: [ '@doctrine.orm.entity_manager' ]
 
-    App\Service\FileUploader:
-        class: App\Service\FileUploader
-
     App\EventListener\LoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }

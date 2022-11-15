@@ -20,10 +20,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'rc_user')]
-#[UniqueEntity(fields: ['email', 'username', 'slug'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['email'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['username'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLES = [
@@ -32,104 +35,82 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'ROLE_EDITOR' => 'ROLE_EDITOR'
     ];
 
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
-    /**
-     * @var string
-     */
+
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
+    #[Assert\NotNull(message: 'entity.not_blank')]
+    #[Assert\Email(message: 'entity.email')]
+    #[Assert\Length(max: 180, maxMessage: 'entity.length.max')]
     private string $email;
-    /**
-     * @var string
-     */
+
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'entity.not_blank')]
+    #[Assert\NotNull(message: 'entity.not_blank')]
+    #[Assert\Length(min: 3, max: 180, minMessage: 'entity.length.min', maxMessage: 'entity.length.max')]
     private string $username;
-    /**
-     * @var string
-     */
+
     #[ORM\Column(length: 128, unique: true)]
     #[Gedmo\Slug(fields: ['username'])]
-    private string $slug;
-    /**
-     * @var array
-     */
+    #[Assert\Length(max: 128, maxMessage: 'entity.length.max')]
+    private ?string $slug = null;
+
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    #[Assert\Unique(message: 'entity.unique')]
+    #[Assert\Type(type: 'array', message: 'entity.type')]
+    private ?array $roles = [];
     /**
-     * @var string The hashed password
+     * @var string|null The hashed password
      */
     #[ORM\Column(length: 4096)]
-    private string $password;
-    /**
-     * @var bool
-     */
+    #[Assert\Length(min: 6, minMessage: 'entity.length.min')]
+    #[Assert\Length(min: 6, max: 4096, minMessage: 'entity.length.min', maxMessage: 'entity.length.max')]
+    private ?string $password = null;
+
     #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
-    /**
-     * @var DateTimeImmutable
-     */
+    #[Assert\NotNull(message: 'entity.not_blank')]
+    private ?bool $isVerified = false;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'create')]
-    private DateTimeImmutable $createdAt;
-    /**
-     * @var DateTimeImmutable
-     */
+    private ?DateTimeImmutable $createdAt = null;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Gedmo\Timestampable(on: 'update')]
-    private DateTimeImmutable $updatedAt;
-    /**
-     * @var DateTimeImmutable|null
-     */
+    private ?DateTimeImmutable $updatedAt = null;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?DateTimeImmutable $loggedAt = null;
-    /**
-     * @var Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class, orphanRemoval: true)]
-    private Collection $tokens;
-    /**
-     * @var Avatar|null
-     */
+    private ?Collection $tokens;
+
     #[ORM\ManyToOne(targetEntity: Avatar::class, inversedBy: 'user')]
     private ?Avatar $avatar = null;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'master', targetEntity: Event::class, orphanRemoval: true)]
     private Collection|ArrayCollection $eventMaster;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'participate')]
     private Collection|ArrayCollection $eventParticipate;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: BadgeUnlock::class, orphanRemoval: true)]
     private Collection|ArrayCollection $badgeUnlocks;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\ManyToMany(targetEntity: Table::class, mappedBy: 'favorite')]
     private Collection|ArrayCollection $tables;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
     private Collection|ArrayCollection $notifications;
-    /**
-     * @var ArrayCollection|Collection
-     */
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Storage::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection|ArrayCollection $storages;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Folder::class, orphanRemoval: true)]
-    private Collection $folders;
+    private ?Collection $folders;
 
     public function __construct()
     {
@@ -145,7 +126,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->username;
     }
@@ -219,18 +200,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param string $slug
-     *
-     * @return $this
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
      * @see UserInterface
      */
     public function getRoles(): array
@@ -288,7 +257,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -343,10 +312,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $now = new DateTimeImmutable('now -20min');
 
-        if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
-            return false;
-        }
-        return true;
+        return $this->loggedAt->format('Y-m-d H:i:s') >= $now->format('Y-m-d H:i:s');
     }
 
     /**
@@ -394,31 +360,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param DateTimeImmutable $createdAt
-     *
-     * @return void
-     */
-    public function setCreatedAt(DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
      * @return DateTimeImmutable|null
      */
     public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @param DateTimeImmutable $updatedAt
-     *
-     * @return void
-     */
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -546,11 +492,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function removeBadgeUnlock(BadgeUnlock $badgeUnlock): self
     {
-        if ($this->badgeUnlocks->removeElement($badgeUnlock)) {
-            // set the owning side to null (unless already changed)
-            if ($badgeUnlock->getUser() === $this) {
-                $badgeUnlock->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->badgeUnlocks->removeElement($badgeUnlock) && $badgeUnlock->getUser() === $this) {
+            $badgeUnlock->setUser(null);
         }
 
         return $this;
@@ -623,11 +567,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function removeNotification(Notification $notification): self
     {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getUser() === $this) {
-                $notification->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->notifications->removeElement($notification) && $notification->getUser() === $this) {
+            $notification->setUser(null);
         }
 
         return $this;
@@ -663,11 +605,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function removeStorage(Storage $storage): self
     {
-        if ($this->storages->removeElement($storage)) {
-            // set the owning side to null (unless already changed)
-            if ($storage->getUser() === $this) {
-                $storage->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->storages->removeElement($storage) && $storage->getUser() === $this) {
+            $storage->setUser(null);
         }
 
         return $this;
@@ -693,11 +633,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeFolder(Folder $folder): self
     {
-        if ($this->folders->removeElement($folder)) {
-            // set the owning side to null (unless already changed)
-            if ($folder->getOwner() === $this) {
-                $folder->setOwner(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->folders->removeElement($folder) && $folder->getOwner() === $this) {
+            $folder->setOwner(null);
         }
 
         return $this;

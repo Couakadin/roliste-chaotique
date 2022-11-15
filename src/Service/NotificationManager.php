@@ -34,9 +34,13 @@ class NotificationManager
      *
      * @return float|int|mixed|string
      */
-    public function findReadByUser(User $user)
+    public function findReadByUser(User $user): mixed
     {
         return $this->manager->getRepository(Notification::class)
             ->findReadByUser(['user' => $user]);
     }
+
+    /**
+     * @todo voir si pas moyen de fixer unused element
+     */
 }
