@@ -3,7 +3,7 @@
   align-items   : flex-end;
   height        : calc(var(--gap) * 55);
   border-radius : var(--border-radius);
-  background    : grey;
+  background    : hsla(var(--clr-dark), .5);
   margin        : 0 calc(var(--gap) * 2);
 }
 
@@ -47,7 +47,6 @@
 
 .carousel-prev {
   background : hsl(var(--clr-light)) url('/public/build/front/tools/arrow-left.svg') no-repeat 50% / calc(var(--gap) * 3) calc(var(--gap) * 3);
-
 }
 
 .carousel-next {

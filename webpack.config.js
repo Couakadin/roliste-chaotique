@@ -12,7 +12,7 @@ Encore
     .setOutputPath('public/build/front/')
     // public path used by the web server to access the output path
     .setPublicPath('/build/front')
-    // only needed for CDN's or subdirectory deploy
+    // only needed for CDN or subdirectory deploy
     //.setManifestKeyPrefix('build')
 
     .copyFiles({
@@ -26,6 +26,7 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('front', './assets/front/scripts/front.js')
+    .addEntry('home', './assets/front/scripts/home.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/front/controllers.json')

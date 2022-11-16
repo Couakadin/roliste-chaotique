@@ -1,7 +1,17 @@
 {% extends '@front/front.html.twig' %}
 
-{% block description 'meta.description.home'|trans|capitalize %}
-{% block title 'ui.home'|trans|capitalize %}
+{% block description 'meta.description.home'|trans|UCFirst %}
+{% block title 'ui.home'|trans|UCFirst %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('home', null, 'front') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('home', null, 'front') }}
+{% endblock %}
 
 {% block body %}
     <div class="home-intro container">

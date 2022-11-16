@@ -9,14 +9,17 @@
     padding       : 0 calc(var(--gap) * 5) 0 calc(var(--gap) * 30);
     border-radius : var(--border-radius-small);
   }
-  display         : flex;
-  flex-direction  : column;
-  justify-content : center;
-  padding         : calc(var(--gap) * 1);
-  min-height      : calc(var(--gap) * 20);
-  border-radius   : var(--border-radius-small);
-  background      : hsl(var(--clr-widget));
-  color           : hsl(var(--clr-light));
+  display             : flex;
+  flex-direction      : column;
+  justify-content     : center;
+  padding             : calc(var(--gap) * 1);
+  min-height          : calc(var(--gap) * 20);
+  border-radius       : var(--border-radius-small);
+  color               : hsl(var(--clr-light));
+  background-image    : radial-gradient(hsla(var(--clr-accent), .2) 2px, transparent 2px), radial-gradient(hsla(var(--clr-accent), .2) 2px, transparent 2px);
+  background-size     : calc(var(--gap) * 3.5) calc(var(--gap) * 3.5);
+  background-position : 0 0, calc(var(--gap) * 2) calc(var(--gap) * 2);
+  background-color    : hsl(var(--clr-widget));
 
   &_icon {
     @include medium-device {
