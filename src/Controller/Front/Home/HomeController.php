@@ -4,6 +4,7 @@ namespace App\Controller\Front\Home;
 
 use App\Entity\Notification\Notification;
 use App\Entity\Table\Table;
+use App\Mercure\CookieGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use JsonException;
@@ -17,17 +18,23 @@ class HomeController extends AbstractController
 {
     /**
      * @param EntityManagerInterface $entityManager
+     * @param CookieGenerator $cookieGenerator
+     *
      * @return Response
+     *
      * @throws Exception
      */
     #[Route(['/'], name: 'home.index')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager, CookieGenerator $cookieGenerator): Response
     {
         $table = $entityManager->getRepository(Table::class);
 
-        return $this->render('@front/home/index.html.twig', [
+        $response = $this->render('@front/home/index.html.twig', [
             'tables' => $table->findShowcase(),
         ]);
+        $response->headers->setCookie($cookieGenerator->generate());
+
+        return $response;
     }
 
     #[Route(['/new-player'], name: 'home.new-player')]
