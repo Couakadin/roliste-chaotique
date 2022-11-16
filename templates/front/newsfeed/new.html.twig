@@ -1,0 +1,13 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}New Newsfeed{% endblock %}
+
+{% block body %}
+    <turbo-frame id="newsfeed_new">
+    <h1>Create new Newsfeed</h1>
+
+    {{ include('@front/newsfeed/_form.html.twig') }}
+
+    <a href="{{ path('newsfeed.index') }}">back to list</a>
+    </turbo-frame>
+{% endblock %}

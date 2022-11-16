@@ -6,6 +6,7 @@ use App\Entity\Avatar\Avatar;
 use App\Entity\Badge\BadgeUnlock;
 use App\Entity\Event\Event;
 use App\Entity\Folder\Folder;
+use App\Entity\Newsfeed\Newsfeed;
 use App\Entity\Notification\Notification;
 use App\Entity\Storage\Storage;
 use App\Entity\Table\Table;
@@ -131,6 +132,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Folder::class, orphanRemoval: true)]
     private Collection $folders;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Newsfeed::class, orphanRemoval: true)]
+    private Collection $newsfeeds;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
@@ -140,6 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->notifications = new ArrayCollection();
         $this->storages = new ArrayCollection();
         $this->folders = new ArrayCollection();
+        $this->newsfeeds = new ArrayCollection();
     }
 
     /**
@@ -697,6 +702,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($folder->getOwner() === $this) {
                 $folder->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Newsfeed>
+     */
+    public function getNewsfeeds(): Collection
+    {
+        return $this->newsfeeds;
+    }
+
+    public function addNewsfeed(Newsfeed $newsfeed): self
+    {
+        if (!$this->newsfeeds->contains($newsfeed)) {
+            $this->newsfeeds->add($newsfeed);
+            $newsfeed->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNewsfeed(Newsfeed $newsfeed): self
+    {
+        if ($this->newsfeeds->removeElement($newsfeed)) {
+            // set the owning side to null (unless already changed)
+            if ($newsfeed->getAuthor() === $this) {
+                $newsfeed->setAuthor(null);
             }
         }
 

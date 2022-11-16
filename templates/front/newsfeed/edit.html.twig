@@ -1,0 +1,15 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}Edit Newsfeed{% endblock %}
+
+{% block body %}
+    <turbo-frame id="newsfeed_{{ newsfeed.id }}">
+        <h1>Edit Newsfeed</h1>
+
+        {{ include('@front/newsfeed/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('newsfeed.index') }}">back to list</a>
+
+        {{ include('@front/newsfeed/_delete_form.html.twig') }}
+    </turbo-frame>
+{% endblock %}

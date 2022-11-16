@@ -1,0 +1,39 @@
+{% extends '@front/front.html.twig' %}
+
+{% block title %}Newsfeed index{% endblock %}
+
+{% block body %}
+    <h1>Newsfeed index</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for newsfeed in newsfeeds %}
+            <tr id="newsfeed_{{ newsfeed.id }}">
+                <td>{{ newsfeed.id }}</td>
+                <td>{{ newsfeed.content }}</td>
+                <td>
+                    <turbo-frame id="newsfeed_{{ newsfeed.id }}">
+                    <a href="{{ path('newsfeed.show', {'id': newsfeed.id}) }}">show</a>
+                    <a href="{{ path('newsfeed.edit', {'id': newsfeed.id}) }}">edit</a>
+                    </turbo-frame>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<turbo-frame id="newsfeed_new">
+    <a href="{{ path('newsfeed.new') }}">Create new</a>
+</turbo-frame>
+{% endblock %}
