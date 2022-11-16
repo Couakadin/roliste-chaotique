@@ -38,6 +38,8 @@
 @import 'tools/layout';
 @import 'tools/typography';
 
+@import 'modules/visual/section-banner';
+
 // Generic
 // ==================
 body {
@@ -69,42 +71,6 @@ small {font-size : var(--fs-200)}
   scrollbar-color : hsl(var(--clr-accent)) hsl(var(--clr-widget));
   scrollbar-width : thin;
 }
-
-// Modules
-// ==================
-@import 'modules/accordion';
-@import 'modules/badge';
-@import 'modules/bar';
-@import 'modules/breadcrumb';
-@import 'modules/burger';
-@import 'modules/button';
-@import 'modules/calendar';
-@import 'modules/card';
-@import 'modules/carousel';
-@import 'modules/checkbox';
-@import 'modules/cookie';
-@import 'modules/divider';
-@import 'modules/dropdown';
-@import 'modules/dropzone';
-@import 'modules/flash';
-@import 'modules/form';
-@import 'modules/hierarchy';
-@import 'modules/modal';
-@import 'modules/notification';
-@import 'modules/pagination';
-@import 'modules/radio';
-@import 'modules/table';
-@import 'modules/tooltip';
-
-// Pages
-// ==================
-@import 'pages/account';
-@import 'pages/event';
-@import 'pages/footer';
-@import 'pages/table';
-@import 'pages/guild';
-@import 'pages/home';
-@import 'pages/security';
 
 // Vendor
 // ==================

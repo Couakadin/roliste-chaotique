@@ -1,0 +1,43 @@
+// Section-banner
+//
+// Create a block with a background and a absolute img to show a section
+// =====================================================================
+.section-banner {
+  @include medium-device {
+    position      : relative;
+    min-height    : calc(var(--gap) * 20);
+    padding       : 0 calc(var(--gap) * 5) 0 calc(var(--gap) * 30);
+    border-radius : var(--border-radius-small);
+  }
+  display         : flex;
+  flex-direction  : column;
+  justify-content : center;
+  padding         : calc(var(--gap) * 1);
+  min-height      : calc(var(--gap) * 20);
+  border-radius   : var(--border-radius-small);
+  background      : hsl(var(--clr-widget));
+  color           : hsl(var(--clr-light));
+
+  &_icon {
+    @include medium-device {
+      display : block;
+    }
+    width    : 13rem;
+    display  : none;
+    position : absolute;
+    bottom   : 0;
+    left     : 0;
+  }
+
+  &_title {
+    font-family : var(--ff-accent);
+    font-size   : var(--fs-600);
+    font-weight : 700;
+    color       : hsl(var(--clr-accent));
+  }
+
+  &_text {
+    text-align  : justify;
+    font-weight : 500;
+  }
+}

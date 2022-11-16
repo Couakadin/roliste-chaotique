@@ -1,0 +1,7 @@
+{% macro sectionBanner(title, text) %}
+    <div class="section-banner">
+        <img src="{{ asset('build/front/mascot/rolie-half.svg') }}" alt="{{ title }}-icon" class="section-banner_icon">
+        <h1 class="section-banner_title">{{ title|trans|UCFirst }}</h1>
+        <p class="section-banner_text">{{ text|trans|UCFirst }}</p>
+    </div>
+{% endmacro %}

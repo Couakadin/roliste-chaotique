@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block base %}
-    <div class="page-wrapper">
+    <div class="wrapper">
         {% include '@ui/flashes.html.twig' %}
         {% include '@front/menubar/index.html.twig' %}
-        <div class="wrapper">
+        <div class="wrap">
             {% if 'now'|date('m-d') >= '10-17' and 'now'|date('m-d') <= '10-31' %}
                 {# Halloween period #}
                 {% set holidayBanner = 'build/front/holiday/halloween.png' %}

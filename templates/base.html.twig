@@ -17,6 +17,7 @@
         {# SEO #}
         <meta name="description" content="{% block description %}{% endblock %}">
         <title>{% block title %}{% endblock %} – {{ 'ui.chaotic_roleplayer'|trans|capitalize }}</title>
+        {% block metas %}{% endblock %}
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </head>
