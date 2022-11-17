@@ -1,117 +1,626 @@
-{# Top menubar #}
-<div class="menubar">
-    <a href="{{ path('home.index') }}">
-        <img width="96" height="64" src="{{ asset('build/front/mascot/rc.png') }}"
-             alt="{{ 'ui.chaotic_roleplayer'|trans }}">
-    </a>
-    <div class="flex">
-        {% if app.user %}
-            <div class="relative">
-                {% if notification.findReadByUser(app.user)|length > 0 %}
-                    <span id="notificationDot" class="notification-dot"></span>
-                {% endif %}
-                <img src="{{ asset('build/front/tools/notification.svg') }}" alt="Notification" width="32"
-                     class="notification-icon" data-display="notification">
-                <div id="notification" class="notification" style="display: none;">
-                    <div class="notification-header">
-                        <h3>{{ 'ui.notifications'|trans|capitalize }}</h3>
-                        <span id="notificationReadAll" class="text-pointer text-small">
-                            {{ 'ui.mark_as_read_all'|trans|capitalize }}
-                        </span>
-                    </div>
-                    <ul class="notification-list">
-                        {% for notificationUser in notification.notificationsByUser(app.user) %}
-                            <li class="flex column notification-item {{ notificationUser.isRead ? '' : 'unread' }}">
-                                {% include '@ui/notifications.html.twig' %}
-                            </li>
-                        {% else %}
-                            <li class="notification-item">
-                                {{ 'ui.not_for_now'|trans|capitalize }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <p class="text-center text-small">
-                        <a href="{{ path('account.notifications', {'slug': app.user.slug}) }}" class="small">
-                            {{ 'ui.view_all'|trans|capitalize }}
-                        </a>
-                    </p>
+<header class="header">
+    {# HEADER ACTIONS #}
+    <div class="header-actions">
+        {# LOGO #}
+        <a href="" class="header-logo">
+            {# ICON LOGO RC #}
+            <span class="header-logo_large">{{ source('@public/build/front/mascot/rc.svg') }}</span>
+            <span class="header-logo_mobile">{{ source('@public/build/front/mascot/avatar.svg') }}</span>
+            {# /ICON LOGO RC #}
+        </a>
+        {# /LOGO #}
+    </div>
+    {# /HEADER ACTIONS #}
+
+    {# HEADER ACTIONS #}
+    <div class="header-actions">
+        {# MOBILEMENU TRIGGER #}
+        <div class="header-mobile-menu-trigger">
+            {# BURGER ICON #}
+            <div class="burger">
+                {# BURGER ICON BAR #}
+                <div class="burger-bar"></div>
+                {# /BURGER ICON BAR #}
+
+                {# BURGER ICON BAR #}
+                <div class="burger-bar"></div>
+                {# /BURGER ICON BAR #}
+
+                {# BURGER ICON BAR #}
+                <div class="burger-bar"></div>
+                {# /BURGER ICON BAR #}
+            </div>
+            {# /BURGER ICON #}
+        </div>
+        {# /MOBILEMENU TRIGGER #}
+    </div>
+    {# /HEADER ACTIONS #}
+
+    {# HEADER ACTIONS #}
+    <div class="header-actions">
+        {# PROGRESS STAT #}
+        <div class="progress-stat">
+            {# BAR PROGRESS INFO #}
+            <p class="progress-stat_info">
+                <span>Prochain :</span>
+                <span>38 exp.</span>
+            </p>
+            {# /BAR PROGRESS INFO #}
+            {# PROGRESS STAT BAR #}
+            <div id="logged-user-level" class="progress-stat_bar">
+                <div class="progress-stat_current" style="width:40%"></div>
+            </div>
+            {# /PROGRESS STAT BAR #}
+        </div>
+        {# /PROGRESS STAT #}
+    </div>
+    {# /HEADER ACTIONS #}
+
+    {# HEADER ACTIONS #}
+    <div class="header-actions header-search-bar">
+        {# INTERACTIVE INPUT #}
+        <div class="header-search-bar_interactive-input">
+            <label>
+                <input type="text" id="search-main" name="search_main" placeholder="Search here for people or groups">
+            </label>
+            {# INTERACTIVE INPUT ICON WRAP #}
+            <div class="header-search-bar_interactive-wrap">
+                {# INTERACTIVE INPUT ICON #}
+                <svg>
+                    <use xlink:href="#svg-magnifying-glass">
+                        <symbol id="svg-magnifying-glass" viewBox="0 0 20 20" preserveAspectRatio="xMinYMin meet">
+                            <path d="M8,2c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S4.691,2,8,2 M8,0C3.582,0,0,3.582,0,8c0,4.418,3.582,8,8,8c4.418,0,8-3.582,8-8C16,3.582,12.418,0,8,0L8,0z"></path>
+                            <path d="M19.171,15.168l-3.134-3.134c-0.309,0.613-0.679,1.19-1.113,1.714l2.833,2.834c0.323,0.324,0.323,0.851,0,1.175C17.545,17.969,17.298,18,17.17,18c-0.129,0-0.376-0.031-0.588-0.243l-2.834-2.833c-0.523,0.435-1.101,0.805-1.714,1.113l3.134,3.134C15.721,19.724,16.445,20,17.169,20c0.725,0,1.449-0.276,2.002-0.829C20.276,18.065,20.276,16.273,19.171,15.168z"></path>
+                        </symbol>
+                    </use>
+                </svg>
+                {# /INTERACTIVE INPUT ICON #}
+            </div>
+            {# /INTERACTIVE INPUT ICON WRAP #}
+
+            {# INTERACTIVE INPUT ACTION #}
+            <div class="header-search-bar_interactive-action">
+                {# INTERACTIVE INPUT ACTION ICON #}
+                <svg>
+                    <symbol id="svg-cross-thin" viewBox="0 0 20 20" preserveAspectRatio="xMinYMin meet">
+                        <path d="M18,16.547L16.545,18L10,11.455L3.455,18L2,16.547L8.545,10L2,3.455L3.455,2L10,8.546L16.545,2L18,3.455L11.455,10L18,16.547z"></path>
+                    </symbol>
+                </svg>
+                {# /INTERACTIVE INPUT ACTION ICON #}
+            </div>
+            {# /INTERACTIVE INPUT ACTION #}
+        </div>
+        {# /INTERACTIVE INPUT #}
+    </div>
+    {# /HEADER ACTIONS #}
+
+    {# HEADER ACTIONS #}
+    <div class="header-actions mobile">
+        {# ACTION LIST #}
+        <div class="header-list">
+            {# ACTION LIST ITEM WRAP #}
+            <div class="header-list-item-wrap">
+                {# ACTION LIST ITEM #}
+                <div class="header-list-item">
+                    {# ACTION LIST ITEM ICON #}
+                    <svg class="header-list-item-icon icon-friend">
+                        <use xlink:href="#svg-friend">
+                            <symbol id="svg-friend" viewBox="0 0 20 20" preserveAspectRatio="xMinYMin meet">
+                                <path d="M10,0C4.477,0,0,4.478,0,10c0,5.523,4.477,10,10,10c5.522,0,10-4.477,10-10C20,4.478,15.522,0,10,0z M10,18c-4.418,0-8-3.582-8-8c0-4.418,3.582-8,8-8s8,3.582,8,8
+        C18,14.418,14.418,18,10,18z M10,13c-1.305,0-2.403-0.838-2.816-2H5.101c0.464,2.282,2.48,4,4.899,4s4.436-1.718,4.899-4h-2.083C12.403,12.162,11.305,13,10,13z M7,7H5v2h2V7z M13,9h2V7h-2V9z"></path>
+                            </symbol>
+                        </use>
+                    </svg>
+                    {# /ACTION LIST ITEM ICON #}
                 </div>
-            </div>
-        {% endif %}
+                {# /ACTION LIST ITEM #}
 
-        <div id="burger" class="burger">
-            <div id="burger-menu" class="burger-menu"></div>
+                {# DROPDOWN BOX #}
+                <div class="dropdown-box header-dropdown"
+                     style="position: absolute; z-index: 9999; top: 64px; right: 6px; opacity: 0; visibility: hidden; transform: translate(0px, -40px); transition: transform 0.4s ease-in-out 0s, opacity 0.4s ease-in-out 0s, visibility 0.4s ease-in-out 0s;">
+                    {# DROPDOWN BOX HEADER #}
+                    <div class="dropdown-box-header">
+                        {# DROPDOWN BOX HEADER TITLE #}
+                        <p class="dropdown-box-header-title">Friend Requests</p>
+                        {# /DROPDOWN BOX HEADER TITLE #}
+
+                        {# DROPDOWN BOX HEADER ACTIONS #}
+                        <div class="dropdown-box-header-actions">
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Find Friends</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Settings</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+                        </div>
+                        {# /DROPDOWN BOX HEADER ACTIONS #}
+                    </div>
+                    {# /DROPDOWN BOX HEADER #}
+
+                    {# DROPDOWN BOX LIST #}
+                    <div class="dropdown-box-list no-hover" data-simplebar="init">
+                        <div class="simplebar-wrapper" style="margin: 0;">
+                            <div class="simplebar-height-auto-observer-wrapper">
+                                <div class="simplebar-height-auto-observer"></div>
+                            </div>
+                            <div class="simplebar-mask">
+                                <div class="simplebar-offset" style="right: 0; bottom: 0;">
+                                    <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden;">
+                                        <div class="simplebar-content" style="padding: 0;">
+                                            {# DROPDOWN BOX LIST ITEM #}
+                                            <div class="dropdown-box-list-item">
+                                                {# USER STATUS #}
+                                                <div class="user-status request">
+                                                    {# USER STATUS AVATAR #}
+                                                    <a class="user-status-avatar" href="">
+                                                        {# USER AVATAR #}
+                                                        <div class="user-avatar small no-outline">
+                                                            {# USER AVATAR CONTENT #}
+                                                            <div class="user-avatar-content">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-image-30-32"
+                                                                     data-src="img/avatar/16.jpg"
+                                                                     style="width: 30px; height: 32px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="30" height="32"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR CONTENT #}
+
+                                                            {# USER AVATAR PROGRESS #}
+                                                            <div class="user-avatar-progress">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-progress-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS #}
+
+                                                            {# USER AVATAR PROGRESS BORDER #}
+                                                            <div class="user-avatar-progress-border">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-border-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS BORDER #}
+
+                                                            {# USER AVATAR BADGE #}
+                                                            <div class="user-avatar-badge">
+                                                                {# USER AVATAR BADGE BORDER #}
+                                                                <div class="user-avatar-badge-border">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-22-24"
+                                                                         style="width: 22px; height: 24px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="22" height="24"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE BORDER #}
+
+                                                                {# USER AVATAR BADGE CONTENT #}
+                                                                <div class="user-avatar-badge-content">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-dark-16-18"
+                                                                         style="width: 16px; height: 18px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="16" height="18"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE CONTENT #}
+
+                                                                {# USER AVATAR BADGE TEXT #}
+                                                                <p class="user-avatar-badge-text">14</p>
+                                                                {# /USER AVATAR BADGE TEXT #}
+                                                            </div>
+                                                            {# /USER AVATAR BADGE #}
+                                                        </div>
+                                                        {# /USER AVATAR #}
+                                                    </a>
+                                                    {# /USER STATUS AVATAR #}
+
+                                                    {# USER STATUS TITLE #}
+                                                    <p class="user-status-title"><a class="bold" href="">Ginny
+                                                            Danvers</a></p>
+                                                    {# /USER STATUS TITLE #}
+
+                                                    {# USER STATUS TEXT #}
+                                                    <p class="user-status-text">6 friends in common</p>
+                                                    {# /USER STATUS TEXT #}
+
+                                                    {# ACTION REQUEST LIST #}
+                                                    <div class="action-request-list">
+                                                        {# ACTION REQUEST #}
+                                                        <div class="action-request accept">
+                                                            {# ACTION REQUEST ICON #}
+                                                            <svg class="action-request-icon icon-add-friend">
+                                                                <use xlink:href="#svg-add-friend"></use>
+                                                            </svg>
+                                                            {# /ACTION REQUEST ICON #}
+                                                        </div>
+                                                        {# /ACTION REQUEST #}
+
+                                                        {# ACTION REQUEST #}
+                                                        <div class="action-request decline">
+                                                            {# ACTION REQUEST ICON #}
+                                                            <svg class="action-request-icon icon-remove-friend">
+                                                                <use xlink:href="#svg-remove-friend"></use>
+                                                            </svg>
+                                                            {# /ACTION REQUEST ICON #}
+                                                        </div>
+                                                        {# /ACTION REQUEST #}
+                                                    </div>
+                                                    {# ACTION REQUEST LIST #}
+                                                </div>
+                                                {# /USER STATUS #}
+                                            </div>
+                                            {# /DROPDOWN BOX LIST ITEM #}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# /DROPDOWN BOX LIST #}
+
+                    {# DROPDOWN BOX BUTTON #}
+                    <a class="dropdown-box-button secondary" href="">View all Requests</a>
+                    {# /DROPDOWN BOX BUTTON #}
+                </div>
+                {# /DROPDOWN BOX #}
+            </div>
+            {# /ACTION LIST ITEM WRAP #}
+
+            {# ACTION LIST ITEM WRAP #}
+            <div class="header-list-item-wrap" style="position: relative;">
+                {# ACTION LIST ITEM #}
+                <div class="header-list-item header-dropdown-trigger">
+                    {# ACTION LIST ITEM ICON #}
+                    <svg class="header-list-item-icon icon-messages">
+                        <use xlink:href="#svg-messages">
+                            <symbol id="svg-messages" viewBox="0 0 20 20" preserveAspectRatio="xMinYMin meet">
+                                <path d="M12,2c1.103,0,2,0.897,2,2v5c0,1.103-0.897,2-2,2H8H7.754l-0.239,0.06L2,12.438V9V4c0-1.103,0.897-2,2-2H12M12,0H4C1.791,0,0,1.791,0,4v5v6l8-2h4c2.209,0,4-1.791,4-4V4C16,1.791,14.209,0,12,0L12,0z"></path>
+                                <path d="M12,5.012C12,5.558,11.558,6,11.013,6H4.987C4.442,6,4,5.558,4,5.012V4.988C4,4.442,4.442,4,4.987,4h6.025C11.558,4,12,4.442,12,4.988V5.012z"></path>
+                                <path d="M10,8.047C10,8.574,9.573,9,9.047,9H4.953C4.427,9,4,8.574,4,8.047V7.953C4,7.426,4.427,7,4.953,7h4.094C9.573,7,10,7.426,10,7.953V8.047z"></path>
+                                <path d="M17,5.142v2.136C17.595,7.625,18,8.263,18,9v5v3.438l-5.516-1.379L12.246,16H12H8c-0.737,0-1.375-0.405-1.722-1H4.142C4.588,16.722,6.139,18,8,18h4l8,2v-6V9C20,7.139,18.722,5.588,17,5.142z"></path>
+                            </symbol>
+                        </use>
+                    </svg>
+                    {# /ACTION LIST ITEM ICON #}
+                </div>
+                {# /ACTION LIST ITEM #}
+
+                {# DROPDOWN BOX #}
+                <div class="dropdown-box header-dropdown"
+                     style="position: absolute; z-index: 9999; top: 64px; right: 6px; opacity: 0; visibility: hidden; transform: translate(0px, -40px); transition: transform 0.4s ease-in-out 0s, opacity 0.4s ease-in-out 0s, visibility 0.4s ease-in-out 0s;">
+                    {# DROPDOWN BOX HEADER #}
+                    <div class="dropdown-box-header">
+                        {# DROPDOWN BOX HEADER TITLE #}
+                        <p class="dropdown-box-header-title">Messages</p>
+                        {# /DROPDOWN BOX HEADER TITLE #}
+
+                        {# DROPDOWN BOX HEADER ACTIONS #}
+                        <div class="dropdown-box-header-actions">
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Mark all as Read</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Settings</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+                        </div>
+                        {# /DROPDOWN BOX HEADER ACTIONS #}
+                    </div>
+                    {# /DROPDOWN BOX HEADER #}
+
+                    {# DROPDOWN BOX LIST #}
+                    <div class="dropdown-box-list medium" data-simplebar="init">
+                        <div class="simplebar-wrapper" style="margin: 0;">
+                            <div class="simplebar-height-auto-observer-wrapper">
+                                <div class="simplebar-height-auto-observer"></div>
+                            </div>
+                            <div class="simplebar-mask">
+                                <div class="simplebar-offset" style="right: 0; bottom: 0;">
+                                    <div class="simplebar-content-wrapper"
+                                         style="height: 100%; overflow: hidden scroll;">
+                                        <div class="simplebar-content" style="padding: 0;">
+                                            {# DROPDOWN BOX LIST ITEM #}
+                                            <a class="dropdown-box-list-item" href="">
+                                                {# USER STATUS #}
+                                                <div class="user-status">
+                                                    {# USER STATUS AVATAR #}
+                                                    <div class="user-status-avatar">
+                                                        {# USER AVATAR #}
+                                                        <div class="user-avatar small no-outline">
+                                                            {# USER AVATAR CONTENT #}
+                                                            <div class="user-avatar-content">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-image-30-32"
+                                                                     data-src="img/avatar/10.jpg"
+                                                                     style="width: 30px; height: 32px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="30" height="32"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR CONTENT #}
+
+                                                            {# USER AVATAR PROGRESS #}
+                                                            <div class="user-avatar-progress">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-progress-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS #}
+
+                                                            {# USER AVATAR PROGRESS BORDER #}
+                                                            <div class="user-avatar-progress-border">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-border-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS BORDER #}
+
+                                                            {# USER AVATAR BADGE #}
+                                                            <div class="user-avatar-badge">
+                                                                {# USER AVATAR BADGE BORDER #}
+                                                                <div class="user-avatar-badge-border">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-22-24"
+                                                                         style="width: 22px; height: 24px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="22" height="24"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE BORDER #}
+
+                                                                {# USER AVATAR BADGE CONTENT #}
+                                                                <div class="user-avatar-badge-content">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-dark-16-18"
+                                                                         style="width: 16px; height: 18px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="16" height="18"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE CONTENT #}
+
+                                                                {# USER AVATAR BADGE TEXT #}
+                                                                <p class="user-avatar-badge-text">5</p>
+                                                                {# /USER AVATAR BADGE TEXT #}
+                                                            </div>
+                                                            {# /USER AVATAR BADGE #}
+                                                        </div>
+                                                        {# /USER AVATAR #}
+                                                    </div>
+                                                    {# /USER STATUS AVATAR #}
+
+                                                    {# USER STATUS TITLE #}
+                                                    <p class="user-status-title"><span class="bold">The Green Goo</span>
+                                                    </p>
+                                                    {# /USER STATUS TITLE #}
+
+                                                    {# USER STATUS TEXT #}
+                                                    <p class="user-status-text">Can you stream that new game?</p>
+                                                    {# /USER STATUS TEXT #}
+
+                                                    {# USER STATUS TIMESTAMP #}
+                                                    <p class="user-status-timestamp floaty">10 days ago</p>
+                                                    {# /USER STATUS TIMESTAMP #}
+                                                </div>
+                                                {# /USER STATUS #}
+                                            </a>
+                                            {# /DROPDOWN BOX LIST ITEM #}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {# /DROPDOWN BOX LIST #}
+
+                    {# DROPDOWN BOX BUTTON #}
+                    <a class="dropdown-box-button primary" href="">View all Messages</a>
+                    {# /DROPDOWN BOX BUTTON #}
+                </div>
+                {# /DROPDOWN BOX #}
+            </div>
+            {# /ACTION LIST ITEM WRAP #}
+
+            {# ACTION LIST ITEM WRAP #}
+            <div class="header-list-item-wrap" style="position: relative;">
+                {# ACTION LIST ITEM #}
+                <div class="header-list-item unread header-dropdown-trigger">
+                    {# ACTION LIST ITEM ICON #}
+                    <svg class="header-list-item-icon icon-notification">
+                        <use xlink:href="#svg-notification">
+                            <symbol id="svg-notification" viewBox="0 0 20 20" preserveAspectRatio="xMinYMin meet">
+                                <path d="M18.583,14.127c-0.023-0.018-2.241-1.758-2.241-7.52C16.342,2.964,13.497,0,10.004,0C6.511,0,3.668,2.964,3.668,6.607c0,5.762-2.22,7.502-2.228,7.508c-0.365,0.254-0.525,0.725-0.397,1.158c0.129,0.434,0.517,0.73,0.957,0.73h16.007c0.433,0,0.81-0.293,0.943-0.719C19.086,14.861,18.932,14.389,18.583,14.127zM4.086,13.939C4.873,12.527,5.67,10.21,5.67,6.607c0-2.505,1.945-4.542,4.334-4.542c2.391,0,4.335,2.038,4.335,4.542c0,3.603,0.796,5.92,1.583,7.333H4.086z M12.418,17.146c-0.57-0.283-1.293-0.115-1.619,0.381c-0.126,0.191-0.327,0.326-0.567,0.383c-0.234,0.051-0.478,0.023-0.688-0.084c-0.138-0.07-0.255-0.174-0.336-0.297c-0.325-0.496-1.05-0.668-1.618-0.385c-0.568,0.283-0.766,0.914-0.44,1.408c0.286,0.438,0.7,0.803,1.194,1.055C8.854,19.867,9.421,20,9.997,20c0.281,0,0.564-0.031,0.843-0.096c0.856-0.197,1.573-0.676,2.016-1.348C13.182,18.061,12.984,17.432,12.418,17.146z"></path>
+                            </symbol>
+                        </use>
+                    </svg>
+                    {# /ACTION LIST ITEM ICON #}
+                </div>
+                {# /ACTION LIST ITEM #}
+
+                {# DROPDOWN BOX #}
+                <div class="dropdown-box header-dropdown"
+                     style="position: absolute; z-index: 9999; top: 64px; right: 6px; opacity: 0; visibility: hidden; transform: translate(0px, -40px); transition: transform 0.4s ease-in-out 0s, opacity 0.4s ease-in-out 0s, visibility 0.4s ease-in-out 0s;">
+                    {# DROPDOWN BOX HEADER #}
+                    <div class="dropdown-box-header">
+                        {# DROPDOWN BOX HEADER TITLE #}
+                        <p class="dropdown-box-header-title">Notifications</p>
+                        {# /DROPDOWN BOX HEADER TITLE #}
+
+                        {# DROPDOWN BOX HEADER ACTIONS #}
+                        <div class="dropdown-box-header-actions">
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Mark all as Read</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+
+                            {# DROPDOWN BOX HEADER ACTION #}
+                            <p class="dropdown-box-header-action">Settings</p>
+                            {# /DROPDOWN BOX HEADER ACTION #}
+                        </div>
+                        {# /DROPDOWN BOX HEADER ACTIONS #}
+                    </div>
+                    {# /DROPDOWN BOX HEADER #}
+
+                    {# DROPDOWN BOX LIST #}
+                    <div class="dropdown-box-list" data-simplebar="init">
+                        <div class="simplebar-wrapper" style="margin: 0;">
+                            <div class="simplebar-height-auto-observer-wrapper">
+                                <div class="simplebar-height-auto-observer"></div>
+                            </div>
+                            <div class="simplebar-mask">
+                                <div class="simplebar-offset" style="right: 0; bottom: 0;">
+                                    <div class="simplebar-content-wrapper"
+                                         style="height: 100%; overflow: hidden scroll;">
+                                        <div class="simplebar-content" style="padding: 0;">
+                                            {# DROPDOWN BOX LIST ITEM #}
+                                            <div class="dropdown-box-list-item">
+                                                {# USER STATUS #}
+                                                <div class="user-status notification">
+                                                    {# USER STATUS AVATAR #}
+                                                    <a class="user-status-avatar" href="">
+                                                        {# USER AVATAR #}
+                                                        <div class="user-avatar small no-outline">
+                                                            {# USER AVATAR CONTENT #}
+                                                            <div class="user-avatar-content">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-image-30-32"
+                                                                     data-src="img/avatar/05.jpg"
+                                                                     style="width: 30px; height: 32px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="30" height="32"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR CONTENT #}
+
+                                                            {# USER AVATAR PROGRESS #}
+                                                            <div class="user-avatar-progress">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-progress-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS #}
+
+                                                            {# USER AVATAR PROGRESS BORDER #}
+                                                            <div class="user-avatar-progress-border">
+                                                                {# HEXAGON #}
+                                                                <div class="hexagon-border-40-44"
+                                                                     style="width: 40px; height: 44px; position: relative;">
+                                                                    <canvas style="position: absolute; top: 0; left: 0;"
+                                                                            width="40" height="44"></canvas>
+                                                                </div>
+                                                                {# /HEXAGON #}
+                                                            </div>
+                                                            {# /USER AVATAR PROGRESS BORDER #}
+
+                                                            {# USER AVATAR BADGE #}
+                                                            <div class="user-avatar-badge">
+                                                                {# USER AVATAR BADGE BORDER #}
+                                                                <div class="user-avatar-badge-border">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-22-24"
+                                                                         style="width: 22px; height: 24px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="22" height="24"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE BORDER #}
+
+                                                                {# USER AVATAR BADGE CONTENT #}
+                                                                <div class="user-avatar-badge-content">
+                                                                    {# HEXAGON #}
+                                                                    <div class="hexagon-dark-16-18"
+                                                                         style="width: 16px; height: 18px; position: relative;">
+                                                                        <canvas style="position: absolute; top: 0; left: 0;"
+                                                                                width="16" height="18"></canvas>
+                                                                    </div>
+                                                                    {# /HEXAGON #}
+                                                                </div>
+                                                                {# /USER AVATAR BADGE CONTENT #}
+
+                                                                {# USER AVATAR BADGE TEXT #}
+                                                                <p class="user-avatar-badge-text">12</p>
+                                                                {# /USER AVATAR BADGE TEXT #}
+                                                            </div>
+                                                            {# /USER AVATAR BADGE #}
+                                                        </div>
+                                                        {# /USER AVATAR #}
+                                                    </a>
+                                                    {# /USER STATUS AVATAR #}
+
+                                                    {# USER STATUS TITLE #}
+                                                    <p class="user-status-title"><a class="bold" href="">Neko Bebop</a>
+                                                        posted a comment on your <a class="highlighted" href="">status
+                                                            update</a></p>
+                                                    {# /USER STATUS TITLE #}
+
+                                                    {# USER STATUS TIMESTAMP #}
+                                                    <p class="user-status-timestamp">3 hours ago</p>
+                                                    {# /USER STATUS TIMESTAMP #}
+
+                                                    {# USER STATUS ICON #}
+                                                    <div class="user-status-icon">
+                                                        {# ICON COMMENT #}
+                                                        <svg class="icon-comment">
+                                                            <use xlink:href="#svg-comment"></use>
+                                                        </svg>
+                                                        {# /ICON COMMENT #}
+                                                    </div>
+                                                    {# /USER STATUS ICON #}
+                                                </div>
+                                                {# /USER STATUS #}
+                                            </div>
+                                            {# /DROPDOWN BOX LIST ITEM #}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {# /DROPDOWN BOX LIST #}
+
+                    {# DROPDOWN BOX BUTTON #}
+                    <a class="dropdown-box-button secondary" href="">View all Notifications</a>
+                    {# /DROPDOWN BOX BUTTON #}
+                </div>
+                {# /DROPDOWN BOX #}
+            </div>
+            {# /ACTION LIST ITEM WRAP #}
         </div>
+        {# /ACTION LIST #}
     </div>
-</div>
+    {# /HEADER ACTIONS #}
+</header>
 
-{# Navbar sliding from right #}
-<div id="navbar" class="navbar">
-    <div class="flex align-center">
-        {% if app.user %}
-            {% if app.user.avatar %}
-                {% set avatar = asset('/uploads/images/avatars/'~ app.user.avatar.path)|imagine_filter('avatar') %}
-            {% else %}
-                {% set avatar = '/build/front/mascot/default_avatar.svg' %}
-            {% endif %}
-            <img src="{{ avatar }}" alt="Avatar" width="96" height="96" class="rounded">
-            <div class="flex column">
-                <span class="ml1 h2">{{ app.user.username }}</span>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <small>
-                        <a class="color-warning px1" href="{{ path('app_admin_dashboard_index') }}">
-                            {{ 'ui.admin'|trans|capitalize }}
-                        </a>
-                    </small>
-                {% endif %}
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                    <a class="color-warning px1" href="{{ path('home.index', {'_switch_user': '_exit'}) }}">
-                        <small>{{ 'ui.exit_impersonification'|trans|capitalize }}</small>
-                    </a>
-                {% endif %}
-            </div>
-        {% else %}
-            <div class="flex align-center mt1">
-                <a href="{{ path('security.index') }}">{{ 'ui.connexion'|trans|capitalize }}</a>
-                <span class="mx1">|</span>
-                <a href="{{ path('registration.register') }}">{{ 'ui.register'|trans|capitalize }}</a>
-            </div>
-        {% endif %}
-    </div>
-
-    {% if app.user %}
-        <div class="my2">
-            <details open>
-                <summary class="accordion h3">{{ 'ui.account'|trans|capitalize }}</summary>
-                <ul>
-                    <li>
-                        <a href="{{ path('account.index') }}">
-                            {{ 'ui.profile'|trans|capitalize }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('security.logout') }}" class="color-danger">
-                            {{ 'ui.logout'|trans|capitalize }}
-                        </a>
-                    </li>
-                </ul>
-            </details>
-        </div>
-    {% endif %}
-    <div class="my2">
-        <details open>
-            <summary class="accordion h3">{{ 'ui.search'|trans|capitalize }}</summary>
-            <ul>
-                <li>
-                    <a href="{{ path('calendar.index') }}">{{ 'ui.calendar'|trans|capitalize }}</a>
-                </li>
-                <li>
-                    <a href="{{ path('table.index') }}">{{ 'ui.tables'|trans|capitalize }}</a>
-                </li>
-                <li>
-                    <a href="{{ path('event.index') }}">{{ 'ui.events'|trans|capitalize }}</a>
-                </li>
-            </ul>
-        </details>
-    </div>
-</div>
+{% include 'front/menubar/footer.html.twig' %}

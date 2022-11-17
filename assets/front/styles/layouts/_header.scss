@@ -1,0 +1,198 @@
+.header,
+.header-actions,
+.header-logo,
+.header-logo_large,
+.header-logo_mobile {
+  display     : flex;
+  align-items : center;
+  height      : inherit;
+}
+
+.header {
+  position         : fixed;
+  top              : 0;
+  left             : 0;
+  right            : 0;
+  z-index          : z-index('menu');
+  justify-content  : space-between;
+  border-bottom    : calc(var(--gap) / 10) solid hsla(var(--clr-dark), .2);
+  background-color : hsl(var(--clr-extra-light));
+}
+
+.header-actions.mobile {
+  @include large-device {
+    display : flex;
+  }
+  display : none;
+}
+
+.header-mobile-menu-trigger {
+  @include large-device {
+    display : none;
+  }
+
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+  width           : calc((var(--gap) * 10));
+  cursor          : pointer;
+}
+
+.header-logo {
+  margin : calc(var(--gap) * 1) var(--gap);
+
+  &_large {
+    @include large-device {
+      display : flex;
+    }
+    display : none;
+  }
+
+  &_mobile {
+    @include large-device {
+      display : none;
+    }
+    display : flex;
+  }
+}
+
+.header-search-bar {
+  @include large-device {
+    height     : initial;
+    width      : 30%;
+    align-self : center;
+  }
+
+  position   : relative;
+  align-self : normal;
+
+  &_interactive-input {
+    @include large-device {
+      height : calc((var(--gap) * 6));
+    }
+
+    width    : 100%;
+    height   : 100%;
+    position : relative;
+
+    input {
+      @include large-device {
+        border-radius : var(--border-radius);
+      }
+
+      width            : 100%;
+      height           : 100%;
+      padding          : 0 calc((var(--gap) * 5)) 0 calc((var(--gap) * 1));
+      background-color : hsl(var(--clr-widget));
+      color            : hsl(var(--clr-light));
+      border           : none;
+      border-radius    : 0;
+      outline          : none;
+    }
+  }
+
+  &_interactive-wrap, &_interactive-action {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    width           : calc((var(--gap) * 5));
+    height          : 100%;
+    position        : absolute;
+    top             : 0;
+    right           : 0;
+    pointer-events  : none;
+
+    svg {
+      width        : calc((var(--gap) * 3));
+      aspect-ratio : 1;
+      fill         : hsla(var(--clr-light), .4);
+    }
+  }
+}
+
+.header-list {
+  @include large-device {
+    display : flex;
+  }
+
+  height   : inherit;
+  display  : none;
+  padding  : 0 calc((var(--gap) * 1.5));
+  position : relative;
+
+  &:before {
+    content          : '';
+    display          : block;
+    width            : calc((var(--gap) * .1));
+    height           : 100%;
+    background-color : hsl(var(--clr-widget));
+    position         : absolute;
+    top              : 0;
+    left             : 0;
+  }
+}
+
+.header-list-item-wrap {
+  position : relative;
+}
+
+.header-list-item {
+  display     : flex;
+  align-items : center;
+  height      : 100%;
+  padding     : 0 calc((var(--gap) * 2));
+  cursor      : pointer;
+
+  svg {
+    width        : calc((var(--gap) * 3));
+    aspect-ratio : 1;
+    fill         : hsl(var(--clr-widget));
+  }
+}
+
+.header-dropdown {
+  display          : none;
+
+  position         : absolute;
+  z-index          : z-index('modal');
+  top              : 64px;
+  right            : 6px;
+  opacity          : 0;
+  visibility       : hidden;
+  transform        : translate(0px, -40px);
+  transition       : transform 0.4s ease-in-out 0s, opacity 0.4s ease-in-out 0s, visibility 0.4s ease-in-out 0s;
+
+  width            : 384px;
+  border-radius    : 10px;
+  background-color : hsl(var(--clr-extra-light));
+  box-shadow       : 3px 5px 40px 0 rgba(94, 92, 154, .06);
+}
+
+.header-floaty {
+  @include large-device {
+    display : none;
+  }
+
+  position         : fixed;
+  left             : 0;
+  right            : 0;
+  bottom           : 0;
+  z-index          : z-index('menu');
+  display          : flex;
+  align-items      : center;
+  justify-content  : space-between;
+  background-color : hsl(var(--clr-extra-light));
+
+  &_item {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    padding         : calc(var(--gap) * 2) calc(var(--gap) * 6);
+
+    svg {
+      width        : calc((var(--gap) * 3));
+      aspect-ratio : 1;
+      fill         : hsl(var(--clr-widget));
+    }
+  }
+}

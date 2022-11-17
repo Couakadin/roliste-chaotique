@@ -1,0 +1,27 @@
+.progress-stat {
+  @include medium-device {
+    display : flex;
+  }
+
+  display        : none;
+  flex-direction : column;
+
+  &_info {
+    display         : flex;
+    align-items     : center;
+    justify-content : space-between;
+  }
+
+  &_bar {
+    width            : calc((var(--gap) * 25));
+    height           : calc((var(--gap) * .5));
+    background-color : hsla(var(--clr-dark), .1);
+    border-radius    : var(--border-radius);
+  }
+
+  &_current {
+    background-color : hsl(var(--clr-accent));
+    height           : inherit;
+    border-radius    : inherit;
+  }
+}

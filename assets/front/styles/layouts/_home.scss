@@ -1,11 +1,3 @@
-@import 'tools/mixins';
-
-// Modules
-// ==================
-@import 'modules/dynamique/carousel';
-
-// Page
-// ==================
 .home-intro {
   display               : grid;
   grid-template-columns : repeat(auto-fit, minmax(15em, 1fr));

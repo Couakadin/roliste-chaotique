@@ -1,0 +1,25 @@
+.burger {
+  width           : calc((var(--gap) * 3));
+  aspect-ratio    : 1;
+  display         : flex;
+  flex-direction  : column;
+  justify-content : space-around;
+}
+
+.burger-bar {
+  height           : calc((var(--gap) * .3));
+  background-color : hsl(var(--clr-light));
+  transition       : width .4s ease-in-out;
+
+  &:first-child {
+    width : calc((var(--gap) * 1));
+  }
+
+  &:nth-child(2) {
+    width : calc((var(--gap) * 2));
+  }
+
+  &:nth-child(3) {
+    width : 100%;
+  }
+}

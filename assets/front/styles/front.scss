@@ -3,6 +3,7 @@
 :root {
   // Var--Colors
   --clr-light           : 45, 27%, 91%;
+  --clr-extra-light     : 44, 13%, 83%;
   --clr-accent          : 350, 26%, 27%;
   --clr-widget          : 31, 9%, 52%;
   --clr-dark            : 10, 9%, 13%;
@@ -30,17 +31,58 @@
   --border-radius-small : calc(var(--border-radius) / 4);
 }
 
-// Tools
+// Abstracts
 // ==================
-@import 'tools/reset';
-@import 'tools/functions';
-@import 'tools/mixins';
-@import 'tools/layout';
-@import 'tools/typography';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
 
-// Modules
+// Base
 // ==================
-@import 'modules/visual/footer';
+@import 'base/reset';
+@import 'base/layout';
+@import 'base/typography';
+
+// layouts
+// ==================
+@import 'layouts/account';
+@import 'layouts/calendar';
+@import 'layouts/event';
+@import 'layouts/footer';
+@import 'layouts/header';
+@import 'layouts/hierarchy';
+@import 'layouts/home';
+@import 'layouts/security';
+@import 'layouts/table';
+
+// Components
+// ==================
+@import 'components/accordion';
+@import 'components/badge';
+@import 'components/breadcrumb';
+@import 'components/burger';
+@import 'components/button';
+@import 'components/card';
+@import 'components/carousel';
+@import 'components/checkbox';
+@import 'components/cookie';
+@import 'components/d-table';
+@import 'components/divider';
+@import 'components/dropdown';
+@import 'components/dropzone';
+@import 'components/flash';
+@import 'components/form';
+@import 'components/logo';
+@import 'components/modal';
+@import 'components/notification';
+@import 'components/pagination';
+@import 'components/progress';
+@import 'components/radio';
+@import 'components/section-banner';
+@import 'components/tooltip';
+
+// Vendor
+// ==================
+@import '~choices.js/public/assets/styles/choices.min.css';
 
 // Generic
 // ==================
@@ -73,7 +115,3 @@ small {font-size : var(--fs-200)}
   scrollbar-color : hsl(var(--clr-accent)) hsl(var(--clr-widget));
   scrollbar-width : thin;
 }
-
-// Vendor
-// ==================
-@import '~choices.js/public/assets/styles/choices.min.css';

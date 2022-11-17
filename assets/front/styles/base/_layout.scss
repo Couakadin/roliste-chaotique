@@ -1,12 +1,13 @@
 // Container
 // ==============
-.page-wrapper {
+.wrapper {
   display        : flex;
   flex-direction : column;
   width          : 100%;
   min-height     : 100vh;
+  margin-top     : 7rem;
 
-  .wrapper {flex-grow : 1;}
+  .wrap {flex-grow : 1;}
 }
 
 %container,
