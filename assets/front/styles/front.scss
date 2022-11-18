@@ -2,11 +2,14 @@
 // ==================
 :root {
   // Var--Colors
-  --clr-light           : 45, 27%, 91%;
-  --clr-extra-light     : 44, 13%, 83%;
-  --clr-accent          : 350, 26%, 27%;
-  --clr-widget          : 31, 9%, 52%;
-  --clr-dark            : 10, 9%, 13%;
+  --clr-light           : 45, 27%, 91%; // white
+  --clr-light-shade     : 44, 13%, 83%; // grey
+  --clr-light-brand     : 31, 9%, 52%; // bronze
+  --clr-light-accent    : 40, 100%, 71%; // yellow
+  --clr-dark-accent     : 350, 26%, 27%; // red
+  --clr-dark-brand      : 104, 10%, 21%; //green
+  --clr-dark-shade      : 23, 30%, 24%; // brown
+  --clr-dark            : 10, 9%, 13%; // black
 
   --clr-success         : 80, 45%, 69%;
   --clr-danger          : 8, 77%, 56%;
@@ -52,6 +55,7 @@
 @import 'layouts/hierarchy';
 @import 'layouts/home';
 @import 'layouts/security';
+@import 'layouts/sidebar';
 @import 'layouts/table';
 
 // Components
@@ -71,6 +75,7 @@
 @import 'components/dropzone';
 @import 'components/flash';
 @import 'components/form';
+@import 'components/hex';
 @import 'components/logo';
 @import 'components/modal';
 @import 'components/notification';
@@ -90,6 +95,8 @@ body {
   font-size   : var(--fs-300);
   font-family : var(--ff);
   word-break  : break-word;
+  margin-top  : 5.4rem;
+  margin-left : 20rem;
 
   &.overlay {overflow : hidden;}
 
@@ -107,11 +114,11 @@ hr {
 small {font-size : var(--fs-200)}
 
 ::selection {
-  background : hsl(var(--clr-accent));
+  background : hsl(var(--clr-dark-brand));
   color      : hsl(var(--clr-light));
 }
 
 * {
-  scrollbar-color : hsl(var(--clr-accent)) hsl(var(--clr-widget));
+  scrollbar-color : hsl(var(--clr-dark-brand)) hsl(var(--clr-light-accent));
   scrollbar-width : thin;
 }

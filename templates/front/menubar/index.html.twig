@@ -4,7 +4,7 @@
         {# LOGO #}
         <a href="" class="header-logo">
             {# ICON LOGO RC #}
-            <span class="header-logo_large">{{ source('@public/build/front/mascot/rc.svg') }}</span>
+            <span class="header-logo_large">{{ source('@public/build/front/mascot/rc-contrast.svg') }}</span>
             <span class="header-logo_mobile">{{ source('@public/build/front/mascot/avatar.svg') }}</span>
             {# /ICON LOGO RC #}
         </a>
@@ -623,4 +623,5 @@
     {# /HEADER ACTIONS #}
 </header>
 
+{% include 'front/menubar/sidebar.html.twig' %}
 {% include 'front/menubar/footer.html.twig' %}

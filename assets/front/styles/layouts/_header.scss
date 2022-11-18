@@ -5,7 +5,6 @@
 .header-logo_mobile {
   display     : flex;
   align-items : center;
-  height      : inherit;
 }
 
 .header {
@@ -13,10 +12,12 @@
   top              : 0;
   left             : 0;
   right            : 0;
-  z-index          : z-index('menu');
+  z-index          : z-index('menu') + 1;
+  height           : 5.4rem;
   justify-content  : space-between;
   border-bottom    : calc(var(--gap) / 10) solid hsla(var(--clr-dark), .2);
-  background-color : hsl(var(--clr-extra-light));
+  background-color : hsl(var(--clr-dark-brand));
+  color            : hsl(var(--clr-light));
 }
 
 .header-actions.mobile {
@@ -83,8 +84,7 @@
       width            : 100%;
       height           : 100%;
       padding          : 0 calc((var(--gap) * 5)) 0 calc((var(--gap) * 1));
-      background-color : hsl(var(--clr-widget));
-      color            : hsl(var(--clr-light));
+      background-color : hsl(var(--clr-light-shade));
       border           : none;
       border-radius    : 0;
       outline          : none;
@@ -105,7 +105,7 @@
     svg {
       width        : calc((var(--gap) * 3));
       aspect-ratio : 1;
-      fill         : hsla(var(--clr-light), .4);
+      fill         : hsla(var(--clr-dark), .5);
     }
   }
 }
@@ -125,7 +125,7 @@
     display          : block;
     width            : calc((var(--gap) * .1));
     height           : 100%;
-    background-color : hsl(var(--clr-widget));
+    background-color : hsl(var(--clr-light-shade));
     position         : absolute;
     top              : 0;
     left             : 0;
@@ -146,7 +146,7 @@
   svg {
     width        : calc((var(--gap) * 3));
     aspect-ratio : 1;
-    fill         : hsl(var(--clr-widget));
+    fill         : hsl(var(--clr-light-shade));
   }
 }
 
@@ -164,7 +164,7 @@
 
   width            : 384px;
   border-radius    : 10px;
-  background-color : hsl(var(--clr-extra-light));
+  background-color : hsl(var(--clr-light-shade));
   box-shadow       : 3px 5px 40px 0 rgba(94, 92, 154, .06);
 }
 
@@ -181,7 +181,7 @@
   display          : flex;
   align-items      : center;
   justify-content  : space-between;
-  background-color : hsl(var(--clr-extra-light));
+  background-color : hsl(var(--clr-dark-brand));
 
   &_item {
     display         : flex;
@@ -192,7 +192,7 @@
     svg {
       width        : calc((var(--gap) * 3));
       aspect-ratio : 1;
-      fill         : hsl(var(--clr-widget));
+      fill         : hsl(var(--clr-light-shade));
     }
   }
 }

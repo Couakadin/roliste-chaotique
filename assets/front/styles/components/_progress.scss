@@ -15,12 +15,12 @@
   &_bar {
     width            : calc((var(--gap) * 25));
     height           : calc((var(--gap) * .5));
-    background-color : hsla(var(--clr-dark), .1);
+    background-color : hsla(var(--clr-light-brand), .1);
     border-radius    : var(--border-radius);
   }
 
   &_current {
-    background-color : hsl(var(--clr-accent));
+    background-color : hsl(var(--clr-light-accent));
     height           : inherit;
     border-radius    : inherit;
   }

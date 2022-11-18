@@ -1,0 +1,21 @@
+.sidebar {
+  position         : fixed;
+  left             : 0;
+  top              : 5.4rem;
+  bottom           : 0;
+  z-index          : z-index('menu');
+  background-color : hsl(var(--clr-light-shade));
+  width            : 20rem;
+}
+
+.sidebar-content {
+  display         : flex;
+  flex-direction  : column;
+  align-items     : flex-start;
+  justify-content : space-between;
+}
+
+.sidebar-bg {
+  width: 100%;
+  aspect-ratio: 3 / 1;
+}

@@ -1,0 +1,30 @@
+.hex {
+  position        : absolute;
+  top             : 3rem;
+  left            : 0;
+  right           : 0;
+  display         : flex;
+  justify-content : center;
+  align-items     : center;
+
+  .outside {
+    position     : relative;
+    width        : 7rem;
+    aspect-ratio : 1 / 1.1;
+    background   : hsl(var(--clr-light-shade));
+    clip-path    : polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+
+  .inside {
+    position  : absolute;
+    top       : .625rem;
+    left      : .625rem;
+    right     : .625rem;
+    bottom    : .625rem;
+    clip-path : polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+
+    img {
+      object-fit : cover;
+    }
+  }
+}
