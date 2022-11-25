@@ -1,0 +1,51 @@
+hero-title: |
+  welcome to the domain %chaotic-roleplayer%!
+hero-text: |
+  Rôliste Chaotique is a French-speaking tabletop and online role-playing club.
+  Here, organization mixes deliciously with chaos!
+rolie-name: |
+  Rolie Chaos
+highlight: |
+  Highlight
+who-are-we:
+  title: |
+    Who are we?
+  text: |
+    %chaotic-roleplayer% is a French-speaking role-playing club. Created in 2019, the community has never stopped
+    grow, allowing old and new players to experience monthly adventures.
+    <br><br>
+    Our activities extend mainly between Mons and Charleroi, in Belgium, but we also organize
+    tables online. Hours are flexible and vary from event to event to suit as many people as possible
+    to have a better time together!
+what-is-roleplay:
+  title: |
+    Roleplay?
+  text: |
+    role-playing is a kind of board game... only better! Here, you embody a character like an actor (even without talent!):
+    you live adventures, challenges, mysteries and even romances through the skin of your avatar. And this,
+    in a group usually composed of 4 to 5 players and a game master.
+    <br><br>
+    Whether you're a fantasy lover, a science fiction buff or a horror amateur... role-playing
+    gives you hours of fun and is only limited by your imagination.
+how-participate:
+  title: |
+    How participate?
+  text: |
+    Want to join %chaotic-roleplayer%? The first step is to
+    <a href="%link_register%" class="link-line">create an account</a>. Then browse through the
+    <a href="%link_tables%" class="link-line">tables</a> offered to find a game you like. Ultimately,
+    you can join or create a
+    <a href="%link_events%" class="link-line">event</a> for this table at the date and place you want and voila:
+    all you have to do is play!
+    <br><br>
+    You are lost ? If in doubt, you can always
+    <a href="%link_contact%" class="link-line">contact</a> or us
+    <a href="%link_discord%" target="_blank" class="link-line">join</a> on Discord.
+join-us:
+  title: |
+    join us
+  text: |
+    Whether you're new or veteran, gamer or game master, medieval or sci-fi lover:
+    the doors of the domain will always be open to you!
+find-session-with-favorite-game: |
+  Find a session with your favorite game!

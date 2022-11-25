@@ -93,3 +93,8 @@
     }
   }
 }
+
+// Typography - Font face
+// ==================
+@include font-face('Montaga', '/public/build/front/fonts/montaga-regular', regular, null, woff2);
+@include font-face('Merienda One', '/public/build/front/fonts/meriendaone-regular', regular, null, woff2);

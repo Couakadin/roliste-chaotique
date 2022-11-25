@@ -1,40 +1,131 @@
 {% extends '@front/front.html.twig' %}
 
-{% block description 'meta.description.home'|trans|UCFirst %}
-{% block title 'ui.home'|trans|UCFirst %}
+{% block title 'home.title'|trans|UCFirst %}
+{% block description 'home.description'|trans({
+    '%chaotic-roleplayer%': 'chaotic-roleplayer'|trans
+})|UCFirst %}
 
 {% block body %}
-    <div class="home-intro container">
-        <section>
-            <h1 class="hero-title mb1 divider before">{{ ('ui.hero_title'|trans|capitalize)|raw }}</h1>
-            <p class="hero-text text-justify">{{ 'ui.hero_text'|trans }}</p>
-            <ul class="flex-no-mobile gap-1 mt1">
-                <li class="list-circle-inside">
-                    <a href="{{ path('home.new-player') }}">nouveau rôliste ?</a>
+    <header class="container mx-auto px-2 lg:px-0 grid xl:grid-cols-2 md:flex-row justify-items-center items-center mb-5">
+        <section class="text-center xl:text-justify">
+            <h1 class="font-merienda text-4xl md:text-6xl font-bold leading-snug divider-before">
+                {{ ('hero-title'|trans({
+                    '%chaotic-roleplayer%': '<span class="text-dark-brand">' ~ 'chaotic-roleplayer'|trans ~ '</span>'
+                })|UCFirst)|raw }}</h1>
+            <p class="text-xl mt-5">{{ 'hero-text'|trans|UCFirst }}</p>
+            <ul class="flex mt-4 justify-center xl:justify-start">
+                <li class="md:list-circle md:list-inside mr-5">
+                    <a href="">{{ 'btn.new_player'|trans }}</a>
                 </li>
-                <li class="list-circle-inside">
-                    <a href="{{ discord }}" target="_blank">rejoindre le Discord</a>
+                <li class="md:list-circle md:list-inside mr-5">
+                    <a href="" target="_blank">{{ 'btn.join-discord'|trans }}</a>
                 </li>
-                <li class="list-circle-inside">
-                    <a href="{{ path('calendar.index') }}">voir le calendrier</a>
+                <li class="md:list-circle md:list-inside">
+                    <a href="">{{ 'btn.see_calendar'|trans }}</a>
                 </li>
             </ul>
         </section>
-        <img srcset="{{ asset('build/front/mascot/rolie.svg') }} 180w, {{ asset('build/front/mascot/rolie.svg') }} 280w"
-             sizes="(max-width : 62em) 180px, 280px"
-             src="{{ asset('build/front/mascot/rolie.svg') }}" alt="Rolie Chaos" title="Rolie Chaos !">
+        <svg class="select-none hidden xl:block" viewBox="0 0 1200 700">
+            <use xlink:href="{{ asset('build/front/mascot/rolie.svg') }}#rolie"></use>
+        </svg>
+    </header>
+
+    <svg viewBox="0 0 1920 275">
+        <use xlink:href="{{ asset('build/front/tools/waves-top.svg') }}#waves-top"
+             class="fill-light-shade/25 dark:fill-dark-brand/25"></use>
+        <use xlink:href="{{ asset('build/front/tools/waves-bottom.svg') }}#waves-bottom"
+             class="fill-light-accent/25 dark:fill-dark-shade/25"></use>
+    </svg>
+
+    <section class="px-2 lg:px-0 text-center bg-gradient-to-b from-[#d4cec5] dark:from-[#392826]">
+        <h2 class="text-2xl divider-after">{{ 'highlight'|trans|UCFirst }}</h2>
+
+        <div class="container flex flex-col gap-8 mx-auto xl:grid xl:grid-cols-3 xl:gap-16 text-justify">
+            <section>
+                <h3 class="text-xl mb-2 text-center">{{ 'who-are-we.title'|trans|UCFirst }}</h3>
+                <p>{{ 'who-are-we.text'|trans({
+                        '%chaotic-roleplayer%': 'chaotic-roleplayer'|trans
+                    })|UCFirst|raw }}</p>
+            </section>
+
+            <section>
+                <h3 class="text-xl mb-2 text-center">{{ 'what-is-roleplay.title'|trans|UCFirst }}</h3>
+                <p>{{ 'what-is-roleplay.text'|trans|UCFirst|raw }}</p>
+            </section>
+
+            <section>
+                <h3 class="text-xl mb-2 text-center">{{ 'how-participate.title'|trans|UCFirst }}</h3>
+                <p>{{ 'how-participate.text'|trans({
+                        '%chaotic-roleplayer%': 'chaotic-roleplayer'|trans|UCFirst,
+                        '%link_register%': '',
+                        '%link_tables%': '',
+                        '%link_events%': '',
+                        '%link_contact%': '',
+                        '%link_discord%': discord
+                    })|UCFirst|raw }}
+                </p>
+            </section>
+
+            <div class="flex items-center">
+                <div class="mr-2">
+                    <span class="fa-4x fa-layers fa-fw text-light-accent">
+                    <i class="fa-regular fa-circle"></i>
+                    <i class="fa-solid fa-scroll" data-fa-transform="shrink-8"></i>
+                    </span>
+                </div>
+
+                <h3>
+                    Paramétrez vos séances selon vos préférences et invitez vos amis ou bien rendez-les
+                    publiques.
+                </h3>
+            </div>
+
+            <div class="flex items-center">
+                <div class="mr-2">
+                    <span class="fa-4x fa-layers fa-fw text-light-accent">
+                    <i class="fa-regular fa-circle"></i>
+                    <i class="fa-solid fa-users" data-fa-transform="shrink-8"></i>
+                    </span>
+                </div>
+
+                <h3>
+                    Trouvez des joueurs ou des maîtres du jeu proche de chez vous ou en ligne.
+                </h3>
+            </div>
+
+            <div class="flex items-center">
+                <div class="mr-2">
+                    <span class="fa-4x fa-layers fa-fw text-light-accent">
+                    <i class="fa-regular fa-circle"></i>
+                    <i class="fa-solid fa-hat-wizard" data-fa-transform="shrink-8"></i>
+                    </span>
+                </div>
+
+                <h3>
+                    Améliorez votre profil et obtenez des récompenses grâce à un système de jeu simple et discret.
+                </h3>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center my-5 py-5 bg-dark-shade/25">
+        <section class="container mx-auto">
+            <h2 class="text-2xl divider-after">{{ 'join-us.title'|trans|UCFirst }}</h2>
+            <p class="mb-5">{{ 'join-us.text'|trans|UCFirst }}</p>
+            <a href="{{ discord }}" target="_blank" class="btn-primary home-finder_link">
+                {{ 'btn.join-discord'|trans|UCFirst }}
+            </a>
+        </section>
     </div>
 
-    {{ source('@public/build/front/tools/waves.svg') }}
-
-    <section class="home-finder">
-        <h2 class="h2 text-center divider after">{{ 'ui.find_table'|trans|capitalize }}</h2>
-        <div class="text-right mb1 mr2">
-            <a href="{{ path('table.index') }}" class="link-line">
+    <section class="overflow-hidden">
+        <h2 class="text-2xl text-center divider-after">{{ 'find-session-with-favorite-game'|trans|capitalize }}</h2>
+        <div class="text-right mb-1 mr-2">
+            <a href="" class="link-line">
                 {{ 'ui.see_all_tables'|trans }}
             </a>
         </div>
-        <div class="relative" data-carousel="home">
+        <div class="position-relative" data-carousel="home">
             {% for table in tables %}
                 <div class="carousel"
                      style="background: url('{{ asset('/uploads/images/tables/' ~ table.picture)|imagine_filter('table_home') }}') center / cover;">
@@ -44,42 +135,4 @@
             {% endfor %}
         </div>
     </section>
-
-    <div class="home-invitation mt5 py5">
-        <section class="container text-center">
-            <h2 class="h2 text-center divider after">{{ 'ui.join_us'|trans|capitalize }}</h2>
-            <p class="text-center mb1 mr2">{{ 'ui.join_us_text'|trans|UCFirst }}</p>
-            <a href="{{ discord }}" target="_blank" class="btn-ternary flex center">
-                {{ 'ui.join_us_discord'|trans|UCFirst }}
-            </a>
-        </section>
-    </div>
-
-    <div class="container mt5">
-        <h2 class="h2 text-center divider after">{{ 'ui.highlight'|trans|capitalize }}</h2>
-
-        <div class="grid gap-3">
-            <section>
-                <h3 class="h3 text-center mb1">{{ 'ui.about_us'|trans|capitalize }}</h3>
-                <p class="text-justify">{{ 'ui.about_us_text'|trans|UCFirst|raw }}</p>
-            </section>
-
-            <section>
-                <h3 class="h3 text-center mb1">{{ 'ui.about_rp'|trans|capitalize }}</h3>
-                <p class="text-justify">{{ 'ui.about_rp_text'|trans|UCFirst|raw }}</p>
-            </section>
-
-            <section>
-                <h3 class="h3 text-center mb1">{{ 'ui.about_join_us'|trans|capitalize }}</h3>
-                <p class="text-justify">{{ 'ui.about_join_us_text'|trans({
-                        '%link_register%': path('registration.register'),
-                        '%link_tables%': path('table.index'),
-                        '%link_events%': path('event.index'),
-                        '%link_contact%': path('contact.index'),
-                        '%link_discord%': discord
-                    })|UCFirst|raw }}
-                </p>
-            </section>
-        </div>
-    </div>
 {% endblock %}

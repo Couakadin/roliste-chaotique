@@ -1,124 +1,35 @@
-// Variables
-// ==================
-:root {
-  // Var--Colors
-  --clr-light           : 45, 27%, 91%; // white
-  --clr-light-shade     : 44, 13%, 83%; // grey
-  --clr-light-brand     : 31, 9%, 52%; // bronze
-  --clr-light-accent    : 40, 100%, 71%; // yellow
-  --clr-dark-accent     : 350, 26%, 27%; // red
-  --clr-dark-brand      : 104, 10%, 21%; //green
-  --clr-dark-shade      : 23, 30%, 24%; // brown
-  --clr-dark            : 10, 9%, 13%; // black
-
-  --clr-success         : 80, 45%, 69%;
-  --clr-danger          : 8, 77%, 56%;
-  --clr-warning         : 29, 82%, 67%;
-  --clr-info            : 170, 35%, 61%;
-  // Var--Font-sizes
-  --fs-900              : 9.375rem;
-  --fs-800              : 6.25rem;
-  --fs-700              : 3.5rem;
-  --fs-600              : 2rem;
-  --fs-500              : 1.75rem;
-  --fs-400              : 1.125rem;
-  --fs-300              : 1rem;
-  --fs-200              : .875rem;
-  // Var--Font-families
-  --ff                  : 'Montaga', serif;
-  --ff-accent           : 'Merienda One', serif;
-  // Var--Spaces
-  --gap                 : .5rem;
-  // Var--Borders
-  --border-radius       : calc(var(--gap) * 2);
-  --border-radius-small : calc(var(--border-radius) / 4);
-}
-
 // Abstracts
 // ==================
-@import 'abstracts/functions';
-@import 'abstracts/mixins';
-
+@use 'abstracts/functions';
+@use 'abstracts/mixins';
 // Base
 // ==================
-@import 'base/reset';
-@import 'base/layout';
-@import 'base/typography';
 
-// layouts
-// ==================
-@import 'layouts/account';
-@import 'layouts/calendar';
-@import 'layouts/event';
-@import 'layouts/footer';
-@import 'layouts/header';
-@import 'layouts/hierarchy';
-@import 'layouts/home';
-@import 'layouts/security';
-@import 'layouts/sidebar';
-@import 'layouts/table';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// Components
-// ==================
-@import 'components/accordion';
-@import 'components/badge';
-@import 'components/breadcrumb';
-@import 'components/burger';
-@import 'components/button';
-@import 'components/card';
-@import 'components/carousel';
-@import 'components/checkbox';
-@import 'components/cookie';
-@import 'components/d-table';
-@import 'components/divider';
-@import 'components/dropdown';
-@import 'components/dropzone';
-@import 'components/flash';
-@import 'components/form';
-@import 'components/hex';
-@import 'components/logo';
-@import 'components/modal';
-@import 'components/notification';
-@import 'components/pagination';
-@import 'components/progress';
-@import 'components/radio';
-@import 'components/section-banner';
-@import 'components/tooltip';
+@layer base {
+  html {
+    font-family : Montaga, Proxima Nova, system-ui, sans-serif;
+    word-break  : break-word;
+  }
 
-// Vendor
-// ==================
-@import '~choices.js/public/assets/styles/choices.min.css';
-
-// Generic
-// ==================
-body {
-  font-size   : var(--fs-300);
-  font-family : var(--ff);
-  word-break  : break-word;
-  margin-top  : 5.4rem;
-  margin-left : 20rem;
-
-  &.overlay {overflow : hidden;}
-
-  &:not([class~='dark']) {
-    background-color : hsl(var(--clr-light));
-    color            : hsl(var(--clr-dark));
+  * {
+    scrollbar-color : #573339 #90857A;
+    scrollbar-width : thin;
   }
 }
 
-hr {
-  height     : calc(var(--gap) / 10);
-  background : hsl(var(--clr-dark));
-}
-
-small {font-size : var(--fs-200)}
-
-::selection {
-  background : hsl(var(--clr-dark-brand));
-  color      : hsl(var(--clr-light));
-}
-
-* {
-  scrollbar-color : hsl(var(--clr-dark-brand)) hsl(var(--clr-light-accent));
-  scrollbar-width : thin;
+@layer components {
+  .divider {
+    &-before:before, &-after:after {
+      content      : '';
+      display      : block;
+      max-width    : calc(.5em * 15);
+      aspect-ratio : 5/1;
+      margin       : .5em auto;
+      background   : url('/public/build/front/tools/divider.svg') no-repeat center / contain;
+    }
+  }
 }

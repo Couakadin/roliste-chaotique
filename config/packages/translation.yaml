@@ -4,5 +4,7 @@ framework:
         default_path: '%kernel.project_dir%/translations'
         paths:
             - '%kernel.project_dir%/translations/flashes'
+            - '%kernel.project_dir%/translations/seo'
+            - '%kernel.project_dir%/translations/btn'
         fallbacks:
             - fr

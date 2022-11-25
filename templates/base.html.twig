@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app.request.locale }}">
+<html lang="{{ app.request.locale }}" data-theme="light">
     <head>
         {# Responsive #}
         <meta charset="UTF-8">
@@ -16,12 +16,12 @@
         <meta name="theme-color" content="#ffffff">
         {# SEO #}
         <meta name="description" content="{% block description %}{% endblock %}">
-        <title>{% block title %}{% endblock %} – {{ 'ui.chaotic_roleplayer'|trans|capitalize }}</title>
+        <title>{% block title %}{% endblock %} – {{ 'chaotic-roleplayer'|trans|UCFirst }}</title>
         {% block metas %}{% endblock %}
         {% block stylesheets %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </head>
-    <body>
+    <body class="bg-light text-dark dark:bg-dark dark:text-light selection:text-light selection:bg-dark-brand dark:selection:bg-dark-accent">
         {% block base %}{% endblock %}
     </body>
 </html>
