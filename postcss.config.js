@@ -4,6 +4,7 @@ module.exports = {
         // but make sure you install these via yarn or npm!
 
         // add browserslist config to package.json (see below)
+        tailwindcss: {},
         autoprefixer: {},
         cssnano: {}
     }
