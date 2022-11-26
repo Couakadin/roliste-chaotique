@@ -15,6 +15,7 @@
         "doctrine/orm": "^2.10",
         "easycorp/easyadmin-bundle": "^4.0",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
+        "knplabs/knp-menu-bundle": "^3.2",
         "knplabs/knp-paginator-bundle": "^5.8",
         "knplabs/knp-time-bundle": "^1.19",
         "liip/imagine-bundle": "^2.7",

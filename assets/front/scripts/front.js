@@ -21,7 +21,9 @@ import '../bootstrap';
 import {Calendar} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
+// Vendor
 import '@fortawesome/fontawesome-free/js/all.min'
+import 'tw-elements';
 
 document.addEventListener('DOMContentLoaded', () => {
     const calendarEl = document.getElementById('calendar-holder');

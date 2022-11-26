@@ -22,6 +22,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Menu\MenuBuilder:
+        class: App\Menu\MenuBuilder
+        arguments: [ "@knp_menu.factory" ]
+        tags:
+            # The alias is what is used to retrieve the menu
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: mainMenu }
 
     App\Service\BadgeManager:
         class: App\Service\BadgeManager
