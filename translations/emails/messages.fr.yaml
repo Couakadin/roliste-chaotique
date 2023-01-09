@@ -18,7 +18,8 @@ email:
     body: |
       Oyez oyez %user%,
       <br>
-      La séance jeu de rôle <a href="%signedUrl%">%event%</a> à laquelle vous participez débutera dans une semaine, alors préparez-vous et chauffez vos dés !
+      La séance jeu de rôle <a href="%signedUrl%">%event%</a> à laquelle vous participez débutera dans deux jours, 
+      alors préparez-vous et chauffez vos dés !
 
 admin:
   inscription:

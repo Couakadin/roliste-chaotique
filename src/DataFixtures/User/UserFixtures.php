@@ -3,6 +3,7 @@
 namespace App\DataFixtures\User;
 
 use App\Entity\User\User;
+use App\Entity\User\UserParameter;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -33,7 +34,11 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $password = $this->passwordHash->hashPassword($user, 'password');
             $user->setPassword($password);
 
+            $userParameter = (new UserParameter())
+                ->setUser($user);
+
             $manager->persist($user);
+            $manager->persist($userParameter);
         }
 
         $admin = new User();
@@ -44,7 +49,11 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $password = $this->passwordHash->hashPassword($admin, 'password');
         $admin->setPassword($password);
 
+        $adminParameter = (new UserParameter())
+            ->setUser($admin);
+
         $manager->persist($admin);
+        $manager->persist($adminParameter);
         $manager->flush();
     }
 

@@ -144,6 +144,7 @@ ui:
   email: e-mail
   events: événements
   event: événement
+  event_email_reminder: me rappeler mes séances par e-mail
   exit_impersonification: quitter impersonification
   find_table: trouvez une table avec votre jeu préféré !
   forgotten_password: mot de passe oublié ?
@@ -181,6 +182,7 @@ ui:
   no_specified: non précisé
   one-shot: one-shot
   online: en ligne
+  options: options
   original_name: titre
   only_members: | 
     vous devez être membre de la table %table% pour y participer.
@@ -244,6 +246,7 @@ ui:
   event_past: cette événement est passé
   event_max: max. participants atteint
   total_participate: nombre de participants
+  statistics: statistiques
   storage: archives
   add_item: ajouter un fichier
   download: télécharger

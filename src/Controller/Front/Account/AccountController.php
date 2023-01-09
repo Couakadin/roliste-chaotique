@@ -6,6 +6,7 @@ use App\Entity\Notification\Notification;
 use App\Entity\Storage\Storage;
 use App\Entity\User\User;
 use App\Form\User\UserAvatarType;
+use App\Form\User\UserParameterType;
 use App\Form\User\UserPasswordType;
 use App\Form\User\UserProfileType;
 use App\Service\BadgeManager;
@@ -40,12 +41,13 @@ class AccountController extends AbstractController
     }
 
     /**
+     * @param Request $request
      * @param string|null $slug
      *
      * @return Response
      */
     #[Route('/{slug}', name: 'account.index')]
-    public function index(string $slug = null): Response
+    public function index(Request $request, string $slug = null): Response
     {
         $userRepo = $this->entityManager->getRepository(User::class);
 
@@ -61,11 +63,18 @@ class AccountController extends AbstractController
             ], Response::HTTP_PERMANENTLY_REDIRECT);
         }
 
-        $lastEvent = $userRepo->findLastEventByUser($user) ?: null;
+        $formParameter = $this->createForm(UserParameterType::class, $user->getUserParameter());
+        $formParameter->handleRequest($request);
 
-        return $this->render('@front/account/index.html.twig', [
+        if ($formParameter->isSubmitted() && $formParameter->isValid()) {
+            $formParameter->getData();
+
+            $this->entityManager->flush();
+        }
+
+        return $this->renderForm('@front/account/index.html.twig', [
             'user'      => $user,
-            'lastEvent' => $lastEvent
+            'formParameter' => $formParameter
         ]);
     }
 

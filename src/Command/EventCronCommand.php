@@ -5,8 +5,10 @@ namespace App\Command;
 use App\Email\Email;
 use App\Entity\Event\Event;
 use App\Entity\Notification\Notification;
+use App\Entity\User\User;
 use App\Repository\Event\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -54,8 +56,8 @@ class EventCronCommand extends Command
 
         $repository = $this->entityManager->getRepository(Event::class);
 
-        if ('week' === $input->getArgument('cron')) {
-            $this->oneWeekBefore($repository);
+        if ('days' === $input->getArgument('cron')) {
+            $this->twoDaysBefore($repository);
         }
 
         return Command::SUCCESS;
@@ -64,28 +66,39 @@ class EventCronCommand extends Command
     /**
      * @throws TransportExceptionInterface
      */
-    private function oneWeekBefore(EventRepository $repository): void
+    private function twoDaysBefore(EventRepository|EntityRepository $repository): void
     {
-        $events = $repository->findEventsWeekBefore();
+        $events = $repository->findEventsDaysBefore();
 
         if (0 < count($events)) {
             foreach ($events as $event) {
                 $master = $event->getMaster();
-                $event->addParticipate($master);
+                if ($master && $masterParameter = $master->getUserParameter()) {
+                    !$masterParameter->isEventEmailReminder() ?: $this->sendReminder($event, $master);
+                }
                 foreach ($event->getParticipate() as $participate) {
-                    $this->email->eventWeekBefore($event, $participate);
-
-                    // With the email, send a notification
-                    $notification = (new Notification())
-                        ->setUser($participate)
-                        ->setEvent($event)
-                        ->setIsRead(false)
-                        ->setType('event-soon');
-
-                    $this->entityManager->persist($notification);
+                    $participateParameter = $participate->getUserParameter();
+                    !$participateParameter->isEventEmailReminder() ?: $this->sendReminder($event, $participate);
                 }
             }
             $this->entityManager->flush();
         }
+    }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    private function sendReminder(Event $event, User $participate): void
+    {
+        $this->email->eventWeekBefore($event, $participate);
+
+        // With the email, send a notification
+        $notification = (new Notification())
+            ->setUser($participate)
+            ->setEvent($event)
+            ->setIsRead(false)
+            ->setType('event-soon');
+
+        $this->entityManager->persist($notification);
     }
 }

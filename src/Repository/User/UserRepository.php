@@ -59,24 +59,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
-
-    /**
-     * @param User $user
-     *
-     * @return float|int|mixed|string|null
-     *
-     * @throws NonUniqueResultException
-     */
-    public function findLastEventByUser(User $user): mixed
-    {
-        return $this->createQueryBuilder('u')
-            ->select('p.name, p.slug')
-            ->leftJoin('u.eventParticipate', 'p')
-            ->where('u.id = :user')
-            ->setParameter(':user', $user->getId())
-            ->orderBy('p.createdAt', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

@@ -10,7 +10,7 @@
         <div class="grid">
             <div class="card">
                 <h2 class="card_title h2 link-line">
-                    {{ 'ui.events'|trans|capitalize }}
+                    {{ 'ui.statistics'|trans|capitalize }}
                 </h2>
                 <ul class="card_body">
                     <li><span class="text-strong">
@@ -20,19 +20,6 @@
                     <li><span class="text-strong">
                             {{ 'ui.events_participated'|trans|capitalize}} :</span>
                         {{ user.eventParticipates|length }}
-                    </li>
-                    <li>
-                        <hr class="my1">
-                    </li>
-                    <li>
-                        <span class="text-strong">{{ 'ui.last_event'|trans|capitalize}} :</span>
-                        {% if lastEvent.slug %}
-                            <a href="{{ path('event.show', {'slug': lastEvent.slug}) }}">
-                                {{ lastEvent.name }}
-                            </a>
-                        {% else %}
-                            {{ 'ui.no_one'|trans }}
-                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -52,6 +39,26 @@
                             {{ 'ui.not_for_now'|trans|capitalize }}
                         {% endfor %}
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="grid mt2">
+            <div class="card">
+                <h2 class="card_title h2 link-line">{{ 'ui.options'|trans|capitalize }}</h2>
+                <div class="card_body">
+                    {{ form_start(formParameter) }}
+                    <div class="checkbox-container">
+                        {{ form_widget(formParameter.eventEmailReminder) }}
+                        {{ form_label(formParameter.eventEmailReminder) }}
+                        <span class="checkbox-title">
+                                {{ 'ui.event_email_reminder'|trans|capitalize }}
+                            </span>
+                        <div class="color-danger">
+                            {{ form_errors(formParameter.eventEmailReminder) }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary mt1">{{ 'ui.send'|trans|UCFirst }}</button>
+                    {{ form_end(formParameter) }}
                 </div>
             </div>
         </div>

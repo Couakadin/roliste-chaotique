@@ -133,6 +133,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Folder::class, orphanRemoval: true)]
     private Collection $folders;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserParameter $userParameter = null;
+
     public function __construct()
     {
         $this->eventMaster = new ArrayCollection();
@@ -698,6 +701,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $folder->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserParameter(): ?UserParameter
+    {
+        return $this->userParameter;
+    }
+
+    public function setUserParameter(UserParameter $userParameter): self
+    {
+        // set the owning side of the relation if necessary
+        if ($userParameter->getUser() !== $this) {
+            $userParameter->setUser($this);
+        }
+
+        $this->userParameter = $userParameter;
 
         return $this;
     }
