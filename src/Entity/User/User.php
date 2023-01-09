@@ -23,7 +23,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'rc_user')]
-#[UniqueEntity(fields: ['email', 'username', 'slug'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['email'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['username'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLES = [
@@ -343,10 +345,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $now = new DateTimeImmutable('now -20min');
 
-        if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
-            return false;
-        }
-        return true;
+        return $this->loggedAt->format('Y-m-d H:i:s') >= $now->format('Y-m-d H:i:s');
     }
 
     /**
