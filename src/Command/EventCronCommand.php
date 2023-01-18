@@ -69,7 +69,6 @@ class EventCronCommand extends Command
     private function twoDaysBefore(EventRepository|EntityRepository $repository): void
     {
         $events = $repository->findEventsDaysBefore();
-
         if (0 < count($events)) {
             foreach ($events as $event) {
                 $master = $event->getMaster();
@@ -90,7 +89,7 @@ class EventCronCommand extends Command
      */
     private function sendReminder(Event $event, User $participate): void
     {
-        $this->email->eventWeekBefore($event, $participate);
+        $this->email->eventDaysBefore($event, $participate);
 
         // With the email, send a notification
         $notification = (new Notification())

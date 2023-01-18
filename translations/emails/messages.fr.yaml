@@ -13,7 +13,7 @@ email:
       Si vous n'êtes pas l'auteur de cette requête, ne tenez pas compte de ce message.
       <br>
       <a href="%signedUrl%">Vérifier votre email</a> (la validation expirera le %expiredAt%).
-  event_week_before:
+  event_days_before:
     subject: un jeu de rôle aura bientôt lieu !
     body: |
       Oyez oyez %user%,
@@ -21,6 +21,15 @@ email:
       La séance jeu de rôle <a href="%signedUrl%">%event%</a> à laquelle vous participez débutera dans deux jours, 
       alors préparez-vous et chauffez vos dés !
 
+  new_event_for_user_in_favorite:
+    subject: une nouvelle séance vous attend !
+    body: |
+      Salutations %user%,
+      <br>
+      Une nouvelle séance a été créée pour la table « %table% ». Vous pouvez y jeter un oeil 
+      <a href="%signedUrl%">ici</a> !
+      <br>
+      Vous recevez cet e-mail car vous avez marqué cette table dans vos favoris.
 admin:
   inscription:
     subject: nouvelle inscription !
