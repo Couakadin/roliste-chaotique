@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block email %}
-    {{ ('email.event_week_before.body'|trans({
+    {{ ('email.new_event_for_user_in_favorite.body'|trans({
         '%signedUrl%': signedUrl,
         '%event%' : event,
-        '%user%' : user
+        '%user%' : user,
+        '%table%': table
         })|UCFirst)|sanitize_html
     }}
 {% endblock %}

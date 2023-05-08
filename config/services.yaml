@@ -48,3 +48,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: preRemove }
+
+    App\EventListener\EventListener:
+        class: App\EventListener\EventListener
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

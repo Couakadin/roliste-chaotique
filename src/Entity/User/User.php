@@ -23,7 +23,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'rc_user')]
-#[UniqueEntity(fields: ['email', 'username', 'slug'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['email'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['username'], message: 'entity.unique')]
+#[UniqueEntity(fields: ['slug'], message: 'entity.unique')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLES = [
@@ -130,6 +132,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Folder::class, orphanRemoval: true)]
     private Collection $folders;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserParameter $userParameter = null;
 
     public function __construct()
     {
@@ -343,10 +348,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $now = new DateTimeImmutable('now -20min');
 
-        if ($this->loggedAt->format('Y-m-d H:i:s') < $now->format('Y-m-d H:i:s')) {
-            return false;
-        }
-        return true;
+        return $this->loggedAt->format('Y-m-d H:i:s') >= $now->format('Y-m-d H:i:s');
     }
 
     /**
@@ -699,6 +701,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $folder->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserParameter(): ?UserParameter
+    {
+        return $this->userParameter;
+    }
+
+    public function setUserParameter(UserParameter $userParameter): self
+    {
+        // set the owning side of the relation if necessary
+        if ($userParameter->getUser() !== $this) {
+            $userParameter->setUser($this);
+        }
+
+        $this->userParameter = $userParameter;
 
         return $this;
     }

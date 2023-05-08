@@ -6,6 +6,7 @@ use App\Email\Email;
 use App\Email\EmailAdmin;
 use App\Entity\Token\Token;
 use App\Entity\User\User;
+use App\Entity\User\UserParameter;
 use App\Form\Security\RegistrationFormType;
 use App\Service\BadgeManager;
 use App\Service\TokenManager;
@@ -82,7 +83,12 @@ class RegistrationController extends AbstractController
             // User is now logged in
             $user->setLoggedAt(new DateTimeImmutable());
 
+            // User always has a parameter
+            $userParameter = (new UserParameter())
+                ->setUser($user);
+
             $entityManager->persist($user);
+            $entityManager->persist($userParameter);
             $entityManager->flush();
 
             // Unlock badge

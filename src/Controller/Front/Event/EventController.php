@@ -97,7 +97,7 @@ class EventController extends AbstractController
             if ('false' === $submittedParticipate) {
                 $data = $this->getUser();
 
-                $event->removeParticipate($data);
+                $event->removeParticipate($data ?? null);
 
                 $notification = (new Notification())
                     ->setUser($event->getMaster())
@@ -142,7 +142,7 @@ class EventController extends AbstractController
                 ->findAll();
 
             foreach ($users as $user) {
-                if ($user !== $event->getMaster() && $event->getTable()->getFavorite()->contains($user)) {
+                if ($user !== $event->getMaster() && $event->getTable()?->getFavorite()->contains($user)) {
                     $notification = (new Notification())
                         ->setUser($user)
                         ->setEvent($event)
@@ -169,32 +169,33 @@ class EventController extends AbstractController
     }
 
     /**
+     * @param string $slug
      * @param Request $request
-     * @param Event $event
      * @param EventRepository $eventRepository
      *
      * @return Response
      */
     #[Route('/edit/{slug}', name: 'event.edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function edit(string $slug, Request $request, EventRepository $eventRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
+        $event = $eventRepository->findOneBy(['slug' => $slug]);
 
-        if ($this->getUser() !== $event->getMaster()) {
-            return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()]);
+        if ($this->getUser() !== $event?->getMaster()) {
+            return $this->redirectToRoute('event.show', ['slug' => $event?->getSlug()]);
         }
 
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->add($event, true);
+            $eventRepository->add($event ?? null, true);
 
             $users = $this->entityManager->getRepository(User::class)
                 ->findAll();
 
             foreach ($users as $user) {
-                if ($user !== $event->getMaster() && $event->getParticipate()->contains($user)) {
+                if ($user !== $event?->getMaster() && $event?->getParticipate()->contains($user)) {
                     $notification = (new Notification())
                         ->setUser($user)
                         ->setEvent($event)
@@ -205,9 +206,9 @@ class EventController extends AbstractController
             }
             $this->entityManager->flush();
             // Flash user event edited
-            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event->getName()])));
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.edit.success', ['%event%' => $event?->getName()])));
 
-            return $this->redirectToRoute('event.show', ['slug' => $event->getSlug()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('event.show', ['slug' => $event?->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('@front/event/edit.html.twig', [
@@ -217,18 +218,20 @@ class EventController extends AbstractController
     }
 
     /**
+     * @param int $id
      * @param Request $request
-     * @param Event $event
      * @param EventRepository $eventRepository
      *
      * @return Response
      */
     #[Route('/{id}', name: 'event.delete', methods: ['POST'])]
-    public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
+    public function delete(int $id, Request $request, EventRepository $eventRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $event->getId(), $request->request->get('_token'))) {
-            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.delete.success', ['%event%' => $event->getName()])));
-            $eventRepository->remove($event, true);
+        $event = $eventRepository->find($id);
+
+        if ($this->isCsrfTokenValid('delete' . $event?->getId(), $request->request->get('_token'))) {
+            $this->addFlash('success', ucfirst($this->translator->trans('flash.event.delete.success', ['%event%' => $event?->getName()])));
+            $eventRepository->remove($event ?? null, true);
         }
 
         return $this->redirectToRoute('event.index', [], Response::HTTP_SEE_OTHER);

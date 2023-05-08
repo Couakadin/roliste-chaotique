@@ -81,18 +81,45 @@ class Email extends AbstractController
      *
      * @throws TransportExceptionInterface
      */
-    public function eventWeekBefore(Event $event, User $user): void
+    public function eventDaysBefore(Event $event, User $user): void
     {
-        $subject = $this->translator->trans('email.event_week_before.subject');
+        $subject = $this->translator->trans('email.event_days_before.subject');
 
         $email = (new TemplatedEmail())
             ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
             ->to($user->getEmail())
             ->subject(ucfirst($subject))
-            ->htmlTemplate('@email/website/event_week_before.html.twig')
+            ->htmlTemplate('@email/website/event_days_before.html.twig')
             ->context([
                 'subject' => $subject,
                 'event' => $event->getName(),
+                'user' => $user->getUsername(),
+                'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
+            ]);
+        $this->mailer->send($email);
+    }
+
+    /**
+     * @param Event $event
+     * @param User|UserInterface $user
+     *
+     * @return void
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function newEventForUserInFavorite(Event $event, User|UserInterface $user): void
+    {
+        $subject = $this->translator->trans('email.new_event_for_user_in_favorite.subject');
+
+        $email = (new TemplatedEmail())
+            ->from(new Address(self::ADMIN_EMAIL, self::ADMIN_NAME))
+            ->to($user->getEmail())
+            ->subject(ucfirst($subject))
+            ->htmlTemplate('@email/website/new_event_for_user_in_favorite.html.twig')
+            ->context([
+                'subject' => $subject,
+                'event' => $event->getName(),
+                'table' => $event->getTable(),
                 'user' => $user->getUsername(),
                 'signedUrl' => $this->generateUrl('event.show', ['slug' => $event->getSlug()], 0),
             ]);

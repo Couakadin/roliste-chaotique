@@ -144,14 +144,20 @@ class EventRepository extends ServiceEntityRepository
     /**
      * @return float|int|mixed|string
      */
-    public function findEventsWeekBefore(): mixed
+    public function findEventsDaysBefore(): mixed
     {
-        $week = new DateTimeImmutable('+1 week');
+        $days = new DateTimeImmutable('+2 days');
 
         return $this->createQueryBuilder('e')
+            ->leftJoin('e.master', 'm')
+            ->leftJoin('m.userParameter', 'mup')
+
             ->leftJoin('e.participate', 'p')
-            ->where('e.start LIKE :week')
-            ->setParameter('week', $week->format('Y-m-d') . '%')
+            ->leftJoin('p.userParameter', 'pup')
+
+            ->where('e.start LIKE :days')
+            ->setParameter('days', $days->format('Y-m-d') . '%')
+
             ->getQuery()
             ->getResult();
     }
